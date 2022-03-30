@@ -1,0 +1,70 @@
+name: spayindia
+description: Spay India a money response based fintech application service
+
+version: 1.0.1+2
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  get: ^4.3.8
+  shared_preferences: ^2.0.7
+  device_info: ^2.0.2
+  freezed: ^0.14.5
+  freezed_annotation:
+  dio: ^4.0.0
+  encrypt: ^5.0.1
+  font_awesome_flutter: ^9.1.0
+  pretty_dio_logger: ^1.1.1
+  connectivity_plus: ^1.1.0
+  screenshot: ^1.2.3
+  share: ^2.0.4
+  path_provider: ^2.0.6
+  lottie: ^1.2.1
+  dropdown_search: ^2.0.0
+  cupertino_icons: ^1.0.2
+  geolocator: ^8.0.0
+  app_settings: 4.1.1
+  image_picker: ^0.8.4+4
+  image_cropper: ^1.4.1
+  intl: ^0.17.0
+  flutter_exif_rotation: ^0.4.2
+  flutter_image_compress: ^1.1.0
+  infinite_scroll_pagination: ^3.1.0
+  qr_flutter: ^4.0.0
+  image_gallery_saver: ^1.7.1
+  permission_handler: ^8.3.0
+  countdown_progress_indicator: ^0.1.2
+  dotted_border: ^2.0.0+2
+  flutter_html_to_pdf: ^0.7.0
+  open_file: ^3.2.1
+  number_to_words: ^1.0.0
+  cloud_firestore: ^3.1.6
+  in_app_update: ^2.0.0
+  qr_code_scanner: ^0.6.1
+  flutter_svg: ^1.0.3
+  convex_bottom_bar: ^3.0.0
+  dart_ipify: ^1.1.1
+  webview_flutter: ^3.0.1
+  local_auth: ^1.1.11
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner:
+  flutter_lints: ^1.0.0
+  flutter_native_splash: ^1.2.4
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/home/
+    - assets/lottie/
+    - assets/json/

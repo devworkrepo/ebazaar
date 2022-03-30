@@ -1,0 +1,15 @@
+{
+  "code": 1,
+  "status": "success",
+  "message": "Transaction successful",
+  "mobile_no" : "7982607742",
+  "operator_name" : "Airtel Prepaid",
+  "transaction_no" : "2323123123",
+  "amount" : "100",
+  "rech_type" : "Mobile Prepaid",
+  "operator_refno" : "AS123123",
+  "trans_status" : "Success",
+  "trans_response" : "transaction success"
+
+}
+
