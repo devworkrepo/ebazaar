@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/exception.dart';
 import 'package:spayindia/component/progress.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/main/home/component/home_carousel_widget.dart';
 import 'package:spayindia/page/main/home/component/home_drawer.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/route_aware_widget.dart';
@@ -21,6 +22,7 @@ class HomePage extends GetView<HomeController> {
     return RouteAwareWidget(
       child: SafeArea(
         child: Scaffold(
+
           key: controller.scaffoldKey,
           drawer: const HomeDrawerWidget(),
           body: Obx(() => controller.userDetailObs.value.when(
@@ -55,7 +57,10 @@ class HomePage extends GetView<HomeController> {
                child: Column(
                  children: [
                    HomeHeaderSection(),
+
                    HomeServiceSection(onClick:(item)=> controller.onItemClick(item),),
+
+                   HomeCarouselWidget(),
 
                  ],
                ),

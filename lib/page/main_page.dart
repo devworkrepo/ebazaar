@@ -19,7 +19,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   var title = "Service";
   var bottomNavStyle =
-      const TextStyle(fontSize: 14, fontWeight: FontWeight.bold);
+      const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.white70);
   var backgroundColor = Colors.lightBlue[100];
   var bottomNavSelectedIndex = 2;
   var selectedItemColor = Colors.white;
@@ -66,28 +66,35 @@ class _MainPageState extends State<MainPage> {
   Widget _buildBottomNavigationBar() {
     return Obx(() => Visibility(
           visible: isBottomNavShowObs.value,
-          child: BottomNavigationBar(
-            key: bottomNavKey,
-            elevation: 10,
-            selectedLabelStyle: bottomNavStyle,
-            unselectedLabelStyle: bottomNavStyle,
-            // selectedItemColor: selectedItemColor,
-            // unselectedItemColor: Colors.white70,
-            // backgroundColor: Get.theme.primaryColor,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: bottomNavSelectedIndex,
-            onTap: _onBottomNavItemClick,
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.keyboard_return), label: "Refund"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.receipt_long_rounded), label: "Settlement"),
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.receipt_outlined), label: "Report"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: "Profile"),
-            ],
+          child: Container(
+            decoration: BoxDecoration(
+              color: Get.theme.primaryColor.withOpacity(.8),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(12), )
+            ),
+            child: BottomNavigationBar(
+              backgroundColor: Colors.transparent,
+              key: bottomNavKey,
+              elevation: 10,
+              selectedLabelStyle: bottomNavStyle,
+              unselectedLabelStyle: bottomNavStyle,
+              selectedItemColor: selectedItemColor,
+               unselectedItemColor: Colors.white60,
+              // backgroundColor: Get.theme.primaryColor,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: bottomNavSelectedIndex,
+              onTap: _onBottomNavItemClick,
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.keyboard_return), label: "Refund"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.receipt_long_rounded), label: "Settlement"),
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.receipt_outlined), label: "Report"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person), label: "Profile"),
+              ],
+            ),
           ),
         ));
 
@@ -109,8 +116,6 @@ class _MainPageState extends State<MainPage> {
         bottomNavSelectedIndex = i;
       }),
     );
-
-
   }
 
   void _onBottomNavItemClick(position) {
