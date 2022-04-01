@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/progress.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_controller.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_beneficiary_list_item.dart';
+import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_kyc_info_dialog.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/sender_header.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
@@ -40,7 +41,22 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
 
   SliverAppBar _buildSilverAppbar() {
     return SliverAppBar(
+      actions: [
+        PopupMenuButton<String>(
+          onSelected: (i){
+            controller.fetchKycInfo();
+          },
 
+          itemBuilder: (BuildContext context) {
+            return {'Kyc Info'}.map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(choice),
+              );
+            }).toList();
+          },
+        ),
+      ],
       expandedHeight: 180,
       pinned: true,
       title: const Text("Beneficiary List"),

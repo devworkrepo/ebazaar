@@ -92,7 +92,6 @@ enum HomeServiceType {
   moneyTransfer,
   matm,
   aeps,
-  aadhaarPay,
   recharge,
   dth,
   billPayment,
@@ -119,11 +118,7 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
     itemList.add(HomeServiceItem("Matm", "matm", HomeServiceType.matm));
   }
   if (user.isAeps.orFalse()) {
-    itemList.add(HomeServiceItem("Aeps", "aeps", HomeServiceType.aeps));
-  }
-  if (user.isAeps.orFalse()) {
-    itemList.add(
-        HomeServiceItem("Aadhaar Pay", "aeps", HomeServiceType.aadhaarPay));
+    itemList.add(HomeServiceItem("Aeps\nAadhaar Pay", "aeps", HomeServiceType.aeps));
   }
   if (user.isRecharge.orFalse()) {
     itemList

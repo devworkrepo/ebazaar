@@ -78,14 +78,14 @@ class ProviderPage extends GetView<ProviderController> {
                     },
                     isBig: controller.providerTypeObs.value == ProviderType.gas,
                   ),
-                  /*  _BuildBillServiceWidget(
-                    title: "Telephone",
+                   _BuildBillServiceWidget(
+                    title: "Landline",
                     svgName: "landline",
                     onClick: () {
                       controller.onBillTypeSelect(ProviderType.landline);
                     },
                     isBig: controller.providerTypeObs.value == ProviderType.landline,
-                  ),*/
+                  ),
                 ],
               ),
             ))) : const SizedBox()

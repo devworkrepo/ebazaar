@@ -1,15 +1,14 @@
 {
   "code": 1,
   "status": "success",
-  "message": "Transaction successful",
+  "message": "Recharge InProgress !",
   "mobile_no" : "7982607742",
-  "operator_name" : "Airtel Prepaid",
+  "operator_name" : "Airtel",
   "transaction_no" : "2323123123",
-  "amount" : "100",
-  "rech_type" : "Mobile Prepaid",
+  "amount" : "10",
+  "rech_type" : "Prepaid",
   "operator_refno" : "AS123123",
-  "trans_status" : "Success",
-  "trans_response" : "transaction success"
+  "trans_status" : "InProgress",
+  "trans_response" : "Recharge InProgress !"
 
 }
-

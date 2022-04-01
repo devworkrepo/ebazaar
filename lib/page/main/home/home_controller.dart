@@ -8,7 +8,7 @@ import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/main/home/component/home_service_section.dart';
-import 'package:spayindia/page/main/home/component/recharge_option_dialog.dart';
+import 'package:spayindia/page/main/home/component/bottom_sheet_option.dart';
 import 'package:spayindia/page/main_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/loca_auth.dart';
@@ -89,10 +89,14 @@ class HomeController extends GetxController {
   onItemClick(HomeServiceItem item) {
     switch (item.homeServiceType) {
       case HomeServiceType.aeps:
-        Get.toNamed(RouteName.aepsPage,arguments: false);
-        break;
-      case HomeServiceType.aadhaarPay:
-        Get.toNamed(RouteName.aepsPage, arguments: true);
+        Get.bottomSheet(AepsOptionDialog(
+          onAepsClick: () {
+            Get.toNamed(RouteName.aepsPage, arguments: false);
+          },
+          onAadhaarPayClick:  () {
+            Get.toNamed(RouteName.aepsPage, arguments: true);
+          },
+        ));
         break;
       case HomeServiceType.matm:
         Get.toNamed(RouteName.mamtPage);

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/confirm_amount_dialog.dart';
 import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
-import 'package:spayindia/model/recharge/bill_payment.dart';
 import 'package:spayindia/model/recharge/extram_param.dart';
 import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/model/recharge/response.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/recharge/provider/provider_controller.dart';
+import 'package:spayindia/page/response/bill_payment/bill_payment_txn_response_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
@@ -40,18 +40,13 @@ class BillPaymentController extends GetxController
   var fieldTwoController = TextEditingController();
   var fieldThreeController = TextEditingController();
   var amountController = TextEditingController();
+  var mpinController = TextEditingController();
 
   var extraParamResponseObs =
       Resource.onInit(data: BillExtraParamResponse()).obs;
   late BillExtraParamResponse extraParam;
   late BillInfoResponse billInfoResponse;
 
-  var fieldOneStr = "";
-  var fieldTwoStr = "";
-  var fieldThreeStr = "";
-  var mobileNumberStr = "";
-  var strAmount = "";
-  var strCustomerName = "";
   var strDueDate = "";
   var billContext = "";
 
@@ -95,45 +90,56 @@ class BillPaymentController extends GetxController
   }
 
   onProceed() {
-
-    if(actionType.value == BillPaymentActionType.fetchBill){
-      if(!_validateForFetchBill()) return;
+    if (!_validateForFetchBill()) return;
+    if (actionType.value == BillPaymentActionType.fetchBill) {
       _fetchBillInfo();
+    } else {
+      _confirmBillPayDialog();
     }
-
   }
 
   bool _validateForFetchBill() {
     var isValidate = billFormKey.currentState!.validate();
     if (!isValidate) return false;
-    fieldOneStr = fieldOneController.text.toString();
-    fieldTwoStr = fieldTwoController.text.toString();
-    fieldThreeStr = fieldThreeController.text.toString();
-    mobileNumberStr = mobileNumberController.text.toString();
     return true;
   }
 
 
 
   _confirmBillPayDialog() {
-    var value = checkBalance(appPreference.user.availableBalance, strAmount);
+    var value = checkBalance(appPreference.user.availableBalance,
+        amountWithoutRupeeSymbol(amountController));
     if (!value) return;
 
-    Get.dialog(AmountConfirmDialogWidget(
-        amount: amountController.text.toString(),
+    Get.dialog(
+        AmountConfirmDialogWidget(
+            isDecimal: true,
+            amount: amountController.text.toString(),
             detailWidget: [
               ListTitleValue(
                   title: "Number", value: fieldOneController.text.toString()),
               ListTitleValue(title: "Provider", value: provider.name),
             ],
             onConfirm: () {
-          //todo remove and implement bill payment transaction api
-          showFailureSnackbar(title: "Coming soon", message: "work on progress");
-          return;
               _makeBillPayment();
-            }),barrierDismissible: false);
-
+            }),
+        barrierDismissible: false);
   }
+
+  _paymentParam() => <String, String>{
+        "transaction_no": billInfoResponse.transactionNumber ?? "",
+        "cattype": getProviderInfo(providerType)?.requestParam ?? "",
+        "operatorid": provider.id,
+        "operatorcode": provider.operatorCode,
+        "operatorname": provider.name,
+        "customername": billInfoResponse.name ?? "",
+        "mobileno": mobileNumberController.text,
+        "amount": amountWithoutRupeeSymbol(amountController),
+        "field1": fieldOneController.text,
+        "field2": fieldTwoController.text,
+        "field3": fieldThreeController.text,
+        "mpin": mpinController.text,
+      };
 
   _makeBillPayment() async {
     var validBalance = checkBalance(appPreference.user.availableBalance,
@@ -144,32 +150,20 @@ class BillPaymentController extends GetxController
     StatusDialog.transaction();
     try {
       await appPreference.setIsTransactionApi(true);
-
-      BillPaymentResponse response =
-          await repo.makeBillPayment(<String, String>{
-        "latitude": position!.latitude.toString(),
-        "longitude": position!.longitude.toString(),
-        "provider": provider.id.toString(),
-        "number": fieldOneStr,
-        "customerMobileNumber": mobileNumberStr,
-        "CustomerName": strCustomerName,
-        "Duedate": strDueDate,
-        "context": billContext,
-        "amount": amountWithoutRupeeSymbol(amountController)
-      });
+      var response = (billInfoResponse.isPart ?? false)
+          ? await repo.makePartBillPayment(_paymentParam())
+          : await repo.makeOfflineBillPayment(_paymentParam());
       Get.back();
-      if (response.status == 1 ||
-          response.status == 2 ||
-          response.status == 3 ||
-          response.status == 24 ||
-          response.status == 34) {
-
+      if (response.code == 1) {
+        Get.to(() => BillPaymentTxnResponsePage(),
+            arguments: {"response": response, "type": providerType});
       } else {
-        StatusDialog.failure(title: response.message);
+        StatusDialog.failure(title: response.message ?? "message not found");
       }
     } catch (e) {
+      AppUtil.logger('Transaction Exception : ${e.toString()}');
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 
@@ -178,10 +172,10 @@ class BillPaymentController extends GetxController
       StatusDialog.progress(title: "Fetching");
 
       BillInfoResponse response = await repo.fetchBillInfo({
-        "field1": fieldOneStr,
-        "field2": fieldTwoStr,
-        "field3": fieldThreeStr,
-        "mobileno": mobileNumberStr,
+        "field1": fieldOneController.text,
+        "field2": fieldTwoController.text,
+        "field3": fieldThreeController.text,
+        "mobileno": mobileNumberController.text,
         "operatorid": provider.id.toString(),
         "transaction_no": extraParam.transactionNumber ?? "",
         "cattype": getProviderInfo(providerType)?.requestParam ?? "",
@@ -212,8 +206,6 @@ class BillPaymentController extends GetxController
         : "Pay Bill";
   }
 
-
-
   isFieldEnable(){
     return actionType.value == BillPaymentActionType.fetchBill;
   }
@@ -229,6 +221,7 @@ class BillPaymentController extends GetxController
     mobileNumberController.dispose();
     fieldTwoController.dispose();
     fieldThreeController.dispose();
+    mpinController.dispose();
     super.dispose();
   }
 }

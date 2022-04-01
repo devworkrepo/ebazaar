@@ -42,20 +42,20 @@ class _BuildSettingItem extends GetView<AppSettingController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Align(
+          const Align(
               alignment: Alignment.centerLeft,
-              child: const Text("Biometric Authentication",style: TextStyle(color:Colors.grey),)),
+              child: Text("Biometric Authentication",style: TextStyle(color:Colors.grey),)),
           Row(
             children: [
               Expanded(
                   child: Text(
-                "Enable Biometric Authenticaiton",
+                "Enable Biometric Authentication",
                 style: Get.textTheme.subtitle1,
               )),
               Obx(() => Switch.adaptive(
                   value: controller.isBiometricLoginEnable.value,
                   onChanged: (newValue) {
-                    controller.isBiometricLoginEnable.value = newValue;
+                    controller.setBiometricLogin(newValue);
                   }))
             ],
           ),

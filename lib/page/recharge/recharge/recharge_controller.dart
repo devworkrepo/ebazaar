@@ -1,7 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/confirm_amount_dialog.dart';
 import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/component/list_component.dart';
@@ -29,6 +27,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
   late String providerImage;
   late String providerName;
   late ProviderType providerType;
+  late String transactionNumber;
 
   //form controllers
   var rechargeFormKey = GlobalKey<FormState>();
@@ -52,6 +51,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     providerImage = argument["provider_image"];
     providerName = argument["provider_name"];
     providerType = argument["provider_type"];
+    transactionNumber = argument["transactionNumber"];
 
     _fetchCircles();
   }
@@ -80,9 +80,6 @@ class RechargeController extends GetxController with TransactionHelperMixin {
               ListTitleValue(title: "Provider", value: provider.name),
             ],
             onConfirm: () {
-              //todo remove and implement recharge transaction api
-              showFailureSnackbar(title: "Coming soon", message: "work on progress");
-              return;
               _makeMobileRecharge();
             }),
         barrierDismissible: false);
@@ -92,15 +89,12 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     StatusDialog.transaction();
     try {
       await appPreference.setIsTransactionApi(true);
-      RechargeResponse response = await repo.makeMobilePrepaidRecharge({
-        "mpin": mpinController.text,
-        "operatorid": provider.id.toString(),
-        "operatorname": provider.name.toString(),
-        "circleid": circle.id.toString(),
-        "circlename": circle.name.toString(),
-        "mobileno": numberController.text.toString(),
-        "amount": amountWithoutRupeeSymbol(amountController)
-      });
+      RechargeResponse response = (providerType == ProviderType.dth)
+          ? await repo.makeDthRecharge(_transactionParam())
+          : (providerType == ProviderType.prepaid)
+              ? await repo.makeMobilePrepaidRecharge(_transactionParam())
+              : await repo.makeMobilePostpaidRecharge(_transactionParam());
+
       Get.back();
       if (response.code == 1) {
         Get.to(RechargeTxnResponsePage(),
@@ -110,29 +104,38 @@ class RechargeController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 
+  _transactionParam() => {
+        "mpin": mpinController.text,
+        "transaction_no": transactionNumber,
+        "operatorid": provider.id.toString(),
+        "operatorname": provider.name.toString(),
+        "circleid": circle.id.toString(),
+        "circlename": circle.name.toString(),
+        "mobileno": numberController.text.toString(),
+        "amount": amountWithoutRupeeSymbol(amountController)
+      };
 
-  String getNumberLabel(){
-    if(providerType == ProviderType.prepaid || providerType == ProviderType.postpaid){
+  String getNumberLabel() {
+    if (providerType == ProviderType.prepaid ||
+        providerType == ProviderType.postpaid) {
       return "Mobile Number";
-    }
-    else if(providerType == ProviderType.dth){
+    } else if (providerType == ProviderType.dth) {
       return "Dth Number";
     }
     return "";
   }
 
-  String getNumberHintText(){
-    if(providerType == ProviderType.prepaid){
+  String getNumberHintText() {
+    if (providerType == ProviderType.prepaid) {
       return "Enter 10 digit prepaid mobile number";
     }
-    if(providerType == ProviderType.postpaid){
+    if (providerType == ProviderType.postpaid) {
       return "Enter 10 digit postpaid mobile number";
-    }
-    else if(providerType == ProviderType.dth){
+    } else if (providerType == ProviderType.dth) {
       return "Enter 6 - 14 digits DTH number";
     }
     return "";

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/model/recharge/bill_payment.dart';
@@ -17,12 +16,24 @@ class RechargeRepoImpl extends RechargeRepo {
     return ProviderResponse.fromJson(response.data);
   }
 
+  @override
+  Future<RechargeResponse> makeMobilePrepaidRecharge(
+      Map<String, String> data) async {
+    var response = await client.post("/PrepaidRecharge", data: data);
+    return RechargeResponse.fromJson(response.data);
+  }
 
   @override
-  Future<RechargeResponse> makeMobilePrepaidRecharge(Map<String, String> data) async {
-    //var response = await client.post("/PrepaidRecharge", data: data);
-    var response = await AppUtil.parseJsonFromAssets("recharge_response");
-    return RechargeResponse.fromJson(response);
+  Future<RechargeResponse> makeMobilePostpaidRecharge(
+      Map<String, String> data) async {
+    var response = await client.post("/PostpaidRecharge", data: data);
+    return RechargeResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<RechargeResponse> makeDthRecharge(Map<String, String> data) async {
+    var response = await client.post("/DTHRecharge", data: data);
+    return RechargeResponse.fromJson(response.data);
   }
 
   @override
@@ -38,10 +49,19 @@ class RechargeRepoImpl extends RechargeRepo {
   }
 
   @override
-  Future<BillPaymentResponse> makeBillPayment(data) async {
-    var response = await client.post("bill/payment", data: data);
+  Future<BillPaymentResponse> makeOfflineBillPayment(data) async {
+    var response = await client.post("/BillPaymentOffline", data: data);
+    //var response = await AppUtil.parseJsonFromAssets("bill_payment_response");
     return BillPaymentResponse.fromJson(response.data);
   }
+
+  @override
+  Future<BillPaymentResponse> makePartBillPayment(data) async {
+    var response = await client.post("/BillPaymentPart", data: data);
+   // var response = await AppUtil.parseJsonFromAssets("bill_payment_response");
+    return BillPaymentResponse.fromJson(response.data);
+  }
+
 
   @override
   Future<RechargeCircleResponse> fetchCircles(Map<String, String> data) async {

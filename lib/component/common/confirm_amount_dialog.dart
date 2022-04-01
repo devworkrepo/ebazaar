@@ -12,6 +12,7 @@ import '../text_field.dart';
 class AmountConfirmDialogWidget extends StatefulWidget {
   final Function onConfirm;
   final String? amount;
+  final bool isDecimal;
   final String title;
   final String? description;
   final List<ListTitleValue>? detailWidget;
@@ -19,6 +20,7 @@ class AmountConfirmDialogWidget extends StatefulWidget {
   const AmountConfirmDialogWidget(
       {required this.onConfirm,
       this.amount,
+      this.isDecimal = false,
       this.title = "Confirm Transaction ?",
       this.detailWidget,
       Key? key,
@@ -80,9 +82,11 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
   }
 
   _buildAmountTextWidget() {
-
-
-    var mAmount = int.parse(widget.amount?.substring(1).trim() ?? "0");
+    _amountInWorld() {
+      var mAmount = int.parse(widget.amount?.substring(1).trim() ?? "0");
+      return NumberToWord().convert("en-in", mAmount).toUpperCase() +
+          "Rupees Only/-";
+    }
 
     if (widget.amount == null) return const SizedBox();
     return Column(
@@ -95,7 +99,12 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
           style: Get.textTheme.headline1
               ?.copyWith(color: Colors.green, fontWeight: FontWeight.bold),
         ),
-        Text(NumberToWord().convert("en-in", mAmount ).toUpperCase() + "Rupees Only/-",style: TextStyle(color: Colors.grey),)
+        (widget.isDecimal)
+            ? const SizedBox()
+            : Text(
+                _amountInWorld(),
+                style: const TextStyle(color: Colors.grey),
+              )
       ],
     );
   }

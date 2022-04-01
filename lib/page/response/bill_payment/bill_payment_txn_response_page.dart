@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/transaction_page.dart';
 
-import 'recharge_txn_response_controller.dart';
+import 'bill_payment_txn_response_controller.dart';
 
 // ignore: must_be_immutable
-class RechargeTxnResponsePage extends GetView<RechargeTxnResponseController>
+class BillPaymentTxnResponsePage extends GetView<BillPaymentTxnResponseController>
     with TransactionPageComponent {
-  RechargeTxnResponsePage({Key? key}) : super(key: key);
+  BillPaymentTxnResponsePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(RechargeTxnResponseController());
+    Get.put(BillPaymentTxnResponseController());
 
     return baseTxnResponseWidget(
       child: screenshotHelperWidget(
@@ -21,17 +21,21 @@ class RechargeTxnResponsePage extends GetView<RechargeTxnResponseController>
           buildStatusIcon(getStatusIdFromString(controller.response.transactionStatus ?? "Pending")),
           buildStatusTitle(getStatusIdFromString(controller.response.transactionStatus ?? "Pending"),
               statusDescription: controller.response.transactionStatus),
-          buildMessage(controller.response.message),
-          buildTransactionTime("not available"),
+          buildMessage(controller.response.message ?? ""),
+          buildTransactionTime(controller.response.transactionDate ?? ""),
           buildProviderAndAmount(
-              title: controller.response.rechargeType ?? "",
-              subTitle: controller.getTitle(),
+              title: (controller.response.billType ?? "").toUpperCase(),
+              subTitle: controller.response.billerName ?? "",
               amount: controller.response.amount,
               imageSvgPath: controller.getSvgImage()),
           dividerListContainer(children: [
             buildTitleValueWidget(
                 title: "Mobile Number",
-                value: controller.response.mobileNumber ?? ""),
+                value: controller.response.customerMobile ?? ""),
+            buildTitleValueWidget(
+                title: "Name",
+                value: controller.response.name ?? ""),
+
             buildTitleValueWidget(
                 title: "Operator Name",
                 value: controller.response.operatorName ?? ""),

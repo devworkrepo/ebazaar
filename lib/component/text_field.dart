@@ -154,6 +154,7 @@ class AmountTextField extends StatelessWidget {
   final bool focus;
   final String hint;
   final String label;
+  final bool isDecimal;
   final Function(String)? onChange;
 
   const AmountTextField(
@@ -161,6 +162,7 @@ class AmountTextField extends StatelessWidget {
       this.validator,
       this.focus = false,
       this.enable = true,
+      this.isDecimal = false,
       this.hint = "Enter ₹ 0.0",
       this.label = "Amount",
       this.onChange,
@@ -175,10 +177,9 @@ class AmountTextField extends StatelessWidget {
       enable: enable,
       focus: focus,
       onChange: onChange,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        AmountInputValidator()
-      ],
+      inputFormatters: (isDecimal)
+          ? [AmountInputValidator()]
+          : [FilteringTextInputFormatter.digitsOnly, AmountInputValidator()],
       hint: hint,
       label: label,
       fontSize: 25,

@@ -9,6 +9,7 @@ import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/etns/on_string.dart';
 
 class ProviderController extends GetxController {
   ProviderType providerType = Get.arguments;
@@ -56,6 +57,7 @@ class ProviderController extends GetxController {
 
   onItemClick(Provider provider) {
     var arguments = {
+      "transactionNumber" : providerResponse.transactionNumber.orEmpty(),
       "provider": provider,
       "provider_type": providerType,
       "provider_name": getProviderInfo(providerType)?.name ?? "",
@@ -129,7 +131,7 @@ ProviderInfo? getProviderInfo(ProviderType type) {
     case ProviderType.prepaid:
       return ProviderInfo("Prepaid", "prepaid", "mobile");
     case ProviderType.postpaid:
-      return ProviderInfo("Postpaid", "Postpaid", "mobile");
+      return ProviderInfo("Postpaid", "Mobile Postpaid", "mobile");
     case ProviderType.dth:
       return ProviderInfo("Dth", "dth", "dth");
     case ProviderType.electricity:
@@ -139,7 +141,7 @@ ProviderInfo? getProviderInfo(ProviderType type) {
     case ProviderType.gas:
       return ProviderInfo("Gas", "gas", "gas");
     case ProviderType.landline:
-      return ProviderInfo("Telephone", "broadbank", "landline");
+      return ProviderInfo("LandLine", "Landline Postpaid", "landline");
     case ProviderType.insurance:
       return ProviderInfo("Insurance", "insurance", "insurance");
     default:

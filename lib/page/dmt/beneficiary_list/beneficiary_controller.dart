@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/common_confirm_dialog.dart';
 import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
@@ -7,6 +8,7 @@ import 'package:spayindia/model/dmt/account_search.dart';
 import 'package:spayindia/model/dmt/beneficiary.dart';
 import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
+import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_kyc_info_dialog.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/transfer_mode_dailog.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
@@ -187,5 +189,29 @@ class BeneficiaryListController extends GetxController {
             _fetchBeneficiary();
           }
     });
+  }
+
+  void fetchKycInfo() async {
+    if(!sender!.isKycVerified!){
+      showFailureSnackbar(title: "Kyc info not found", message: "Make sure that you have completed your kyc in our portal");
+      return;
+    }
+
+    try {
+      StatusDialog.progress(title: "Fetching...");
+      var response = await repo.kycInfo({
+        "mobileno": sender!.senderNumber ?? "",
+      });
+      Get.back();
+      if (response.code == 0) {
+        Get.dialog(DmtKycInfoDialog(response));
+      } else {
+        StatusDialog.failure(title: response.message);
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
+    }
+
   }
 }

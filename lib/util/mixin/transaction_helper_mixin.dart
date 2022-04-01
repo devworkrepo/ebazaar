@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,8 @@ import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 mixin TransactionHelperMixin {
 
    bool checkBalance(String? walletAmount,String amount) {
+
+     if(kDebugMode) return true;
 
     var title = "Wallet Balance";
     var msg = "unable to fetch you balance, please logout and try again!";

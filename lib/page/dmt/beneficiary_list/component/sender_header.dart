@@ -120,42 +120,39 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
         TextStyle(fontWeight: FontWeight.w500, color: HexColor("2ebf14"));
     return Wrap(
       children: [
-        GestureDetector(
-          onTap: () => controller.onNameChange(),
-          child: Text(
-            "[ Change Name ]",
-            style: style,
-          ),
-        ),
+        _buildIconTitleButton(
+            title: "Name", onClick: controller.onNameChange),
         const SizedBox(
-          width: 8,
+          width: 16,
         ),
-        GestureDetector(
-          onTap: ()=>controller.onMobileChange(),
-          child: Text(
-            "[ Change Mobile ]",
-            style: style,
-          ),
-        ),
+        _buildIconTitleButton(
+            title: "Mobile", onClick: controller.onMobileChange),
       ],
     );
   }
 
-  Row _buildIconTitle({required IconData icon, required String title}) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: 16,
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          title,
-          style: Get.textTheme.subtitle2?.copyWith(color: Colors.grey[700]),
-        )
-      ],
+  GestureDetector _buildIconTitleButton(
+      {required VoidCallback onClick, required String title}) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            "[ ",
+            style: TextStyle(color: Colors.green),
+          ),
+          const Icon(
+            Icons.edit,
+            color: Colors.green,
+            size: 17,
+          ),
+          Text(
+            "$title ]",
+            style: TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
     );
   }
 
@@ -166,36 +163,5 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
     );
   }
 
-  CircleAvatar _buildCircularAvatar() {
-    return CircleAvatar(
-      backgroundColor: AppColor.backgroundColor,
-      radius: 30,
-      child: const Icon(
-        Icons.person,
-        size: 40,
-      ),
-    );
-  }
 
-  _buildAddBeneButton() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        FloatingActionButton(
-          elevation: 1,
-          mini: true,
-          backgroundColor: Colors.green,
-          onPressed: onClick,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ),
-        const Text(
-          "Add New\nBeneficiary",
-          textAlign: TextAlign.center,
-        )
-      ],
-    );
-  }
 }

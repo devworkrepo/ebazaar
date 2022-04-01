@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -25,23 +26,37 @@ class AppCircleNetworkImage extends StatelessWidget {
       child: Container(
         height: size.toDouble(),
         width: size.toDouble(),
-        decoration: BoxDecoration(
+        clipBehavior: Clip.antiAlias,
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          image: DecorationImage(
-            image: NetworkImage(
-              imageUrl,
-            ),
-            fit: BoxFit.fill,
-          ),
         ),
-      ),
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: (context,url){
+           // return Icon(Icons.image_outlined,size: (size-8).toDouble(),);
+
+            return Stack(children: [
+              Center(child: Icon(Icons.image_search,size: (size-8).toDouble(),color: Colors.black45,)),
+              Center(
+
+                  child: CircularProgressIndicator(color: Colors.black45,))
+
+            ],);
+          },
+          errorWidget:(context,url,error){
+            return Icon(Icons.image_not_supported_outlined,size: (size-8).toDouble(),);
+          },
+          height: size.toDouble(),
+          width: size.toDouble(),
+        ),
+      )
     );
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: horizontalPadding.toDouble()),
       padding: const EdgeInsets.all(4),
       decoration:
-          BoxDecoration(color: HexColor("ECF8FD"), shape: BoxShape.circle),
+      BoxDecoration(color: HexColor("ECF8FD"), shape: BoxShape.circle),
       child: Image.network(
         imageUrl,
         height: size.toDouble(),
@@ -50,8 +65,6 @@ class AppCircleNetworkImage extends StatelessWidget {
     );
   }
 }
-
-
 
 
 class AppCircleAssetImage extends StatelessWidget {
@@ -66,7 +79,7 @@ class AppCircleAssetImage extends StatelessWidget {
       margin:  EdgeInsets.symmetric(horizontal: horizontalPadding.toDouble()),
       padding: const EdgeInsets.all(4),
       decoration:
-          BoxDecoration(color: HexColor("fff6f5"), shape: BoxShape.circle),
+      BoxDecoration(color: HexColor("fff6f5"), shape: BoxShape.circle),
       child: Image.asset(
         imagePath,
         color: Get.theme.primaryColorDark,
@@ -92,7 +105,7 @@ class AppCircleAssetSvg extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: horizontalPadding.toDouble()),
       padding: const EdgeInsets.all(4),
       decoration:
-          BoxDecoration(color: backgroundColor ?? HexColor("E0F6FF"), shape: BoxShape.circle),
+      BoxDecoration(color: backgroundColor ?? HexColor("E0F6FF"), shape: BoxShape.circle),
       child: SvgPicture.asset(
         imagePath,
         height: 50,

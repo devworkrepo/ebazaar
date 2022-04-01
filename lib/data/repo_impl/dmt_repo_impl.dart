@@ -4,6 +4,7 @@ import 'package:spayindia/model/bank.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/dmt/account_search.dart';
 import 'package:spayindia/model/dmt/calculate_charge.dart';
+import 'package:spayindia/model/dmt/kyc_info.dart';
 import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
 import 'package:spayindia/model/dmt/verification_charge.dart';
@@ -138,5 +139,11 @@ class DmtRepoImpl extends DmtRepo {
   //  var response = await AppUtil.parseJsonFromAssets("dmt_transaction_response");
     return DmtTransactionResponse.fromJson(response.data);
 
+  }
+
+  @override
+  Future<KycInfoResponse> kycInfo(data) async {
+    var response = await client.post("/SenderKycDetails", data: data);
+    return KycInfoResponse.fromJson(response.data);
   }
 }

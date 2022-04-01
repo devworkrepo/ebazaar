@@ -134,13 +134,25 @@ class BillPaymentPage extends GetView<BillPaymentController> {
                       : const SizedBox(),
                   Obx(() => (controller.actionType.value ==
                           BillPaymentActionType.payBill)
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: AmountBackgroundWidget(
-                              child: AmountTextField(
-                                  enable: controller.isAmountEnable() ?? true ,
+                      ? Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: AmountBackgroundWidget(
+                                  child: AmountTextField(
+                                      enable:
+                                          controller.isAmountEnable() ?? true,
+                                      focus: true,
+                                      controller: controller.amountController)),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            AmountBackgroundWidget(
+                                child: MPinTextField(
                                   focus: true,
-                                  controller: controller.amountController)),
+                                    controller: controller.mpinController))
+                          ],
                         )
                       : const SizedBox())
                 ],

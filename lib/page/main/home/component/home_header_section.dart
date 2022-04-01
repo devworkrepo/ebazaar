@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/component/image.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/hex_color.dart';
@@ -101,10 +102,8 @@ class _UserProfileAndCompanyName extends GetView<HomeController> {
 
         SizedBox(height: 8,),
 
-        CircleAvatar(
-          radius: 35,
-          backgroundImage: NetworkImage(AppConstant.profileBaseUrl + controller.user.picName.toString()),
-        )
+        AppCircleNetworkImage(AppConstant.profileBaseUrl+controller.user.picName.toString(),size: 70,),
+
       ],
     );
   }

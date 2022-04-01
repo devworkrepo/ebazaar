@@ -1,43 +1,39 @@
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:spayindia/model/dmt/response.dart';
+import 'package:spayindia/model/recharge/bill_payment.dart';
 import 'package:spayindia/model/recharge/recharge.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/util/app_util.dart';
 
-class RechargeTxnResponseController extends GetxController {
+class BillPaymentTxnResponseController extends GetxController {
   var screenshotController = ScreenshotController();
-  RechargeResponse response = Get.arguments["response"];
+  BillPaymentResponse response = Get.arguments["response"];
   ProviderType provider = Get.arguments["type"];
 
   String getSvgImage(){
-    if(provider == ProviderType.dth){
-      return "assets/home/dth.svg";
+    if(provider == ProviderType.electricity){
+      return "assets/home/electricity.svg";
+    }
+    if(provider == ProviderType.water){
+      return "assets/home/water.svg";
+    }
+    if(provider == ProviderType.gas){
+      return "assets/home/gas.svg";
+    }
+    if(provider == ProviderType.landline){
+      return "assets/home/landline.svg";
     }
     else {
-      return "assets/home/mobile.svg";
+      return "assets/home/electrcity.svg";
     }
   }
 
-  String getTitle(){
-    if(provider == ProviderType.dth){
-      return "Dth Recharge";
-    }
-   else if(provider == ProviderType.prepaid){
-      return "Prepaid Recharge";
-    }
-    else if(provider == ProviderType.postpaid){
-      return "Postpaid Recharge";
-    }
-    else {
-      return "Recharge";
-    }
-  }
 
   void captureAndShare() {
     AppUtil.captureAndShare(
         screenshotController: screenshotController,
         amount: response.amount.toString(),
-        type: getTitle());
+        type: (response.billerName?.toLowerCase() ?? "") + "Payment");
   }
 }

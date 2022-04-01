@@ -5,6 +5,7 @@ class ProviderResponse {
   late int code;
   late String status;
   late String message;
+  String? transactionNumber;
   List<Provider>? providers;
 
   ProviderResponse();
@@ -13,6 +14,7 @@ class ProviderResponse {
     code = json['code'];
     status = json['status'];
     message = json['message'];
+    transactionNumber = json['transaction_no'];
     if (json['opelist'] != null) {
       providers =
           List<Provider>.from(json["opelist"].map((e) => Provider.fromJson(e)));
