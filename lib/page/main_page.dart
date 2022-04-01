@@ -4,8 +4,11 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/status_bar_color_widget.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/page/main/home/home_page.dart';
+import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
+import 'package:spayindia/page/refund/refund_tab.dart';
+import 'package:spayindia/page/report/money_report/mone_report_controller.dart';
 import 'package:spayindia/page/report/tabs/transaction_tab.dart';
-
+import 'package:spayindia/util/tags.dart';
 
 var isBottomNavShowObs = true.obs;
 
@@ -132,13 +135,23 @@ class _MainPageState extends State<MainPage> {
 
   _bottomNavPage() {
     switch (bottomNavSelectedIndex) {
-
+      case 0:
+        Get.delete<DmtRefundController>(tag: AppTag.payoutRefundControllerTag);
+        Get.delete<DmtRefundController>(tag: AppTag.moneyRefundControllerTag);
+        return const RefundTabPage();
       case 2:
-        return HomePage();
+        return const HomePage();
       case 3:
-        return TransactionTabPage();
-      default :
-        return Center(child: Text("Work on Progress",style: Get.textTheme.headline6,) ,);
+        Get.delete<MoneyReportController>(tag: AppTag.payoutReportControllerTag);
+        Get.delete<MoneyReportController>(tag: AppTag.moneyReportControllerTag);
+        return const TransactionTabPage();
+      default:
+        return Center(
+          child: Text(
+            "Work on Progress",
+            style: Get.textTheme.headline6,
+          ),
+        );
     }
   }
 }

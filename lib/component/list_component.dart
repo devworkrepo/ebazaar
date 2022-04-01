@@ -47,33 +47,40 @@ class AppExpandListWidget extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            (!isExpanded.value)  ?
-            Row(children: [
-              SizedBox(width: 8,),
-              CircleAvatar(child: Icon(Icons.receipt_long_rounded))
-            ],) : SizedBox(),
-            Expanded(child: Container(
-              margin: (isExpanded.value)
-                  ? null
-                  : const EdgeInsets.symmetric(horizontal: 4),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.symmetric(vertical: 4),
-                child: Column(
-                  children: [
-                    _BuildHeaderSection(isExpanded.value,
-                        imageName: imageName,
-                        title: title,
-                        titleHeader: titleHeader,
-                        subTitle: subTitle,
-                        subTitleHeader: subTitleHeader,
-                        amount: amount,
-                        closingBalance: closingBalance,
-                        statusId: statusId,
-                        status: status,
-                        date: date),
-                    (isExpanded.value)
-                        ? const Divider(
+                  (!isExpanded.value)
+                      ? SizedBox()/* Row(
+                          children: const [
+                            SizedBox(
+                              width: 8,
+                            ),
+                            CircleAvatar(
+                                child: Icon(Icons.receipt_long_rounded))
+                          ],
+                        )*/
+                      : const SizedBox(),
+                  Expanded(
+                    child: Container(
+                      margin: (isExpanded.value)
+                          ? null
+                          : const EdgeInsets.symmetric(horizontal: 4),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        child: Column(
+                          children: [
+                            _BuildHeaderSection(isExpanded.value,
+                                imageName: imageName,
+                                title: title,
+                                titleHeader: titleHeader,
+                                subTitle: subTitle,
+                                subTitleHeader: subTitleHeader,
+                                amount: amount,
+                                closingBalance: closingBalance,
+                                statusId: statusId,
+                                status: status,
+                                date: date),
+                            (isExpanded.value)
+                                ? const Divider(
                       color: Colors.grey,
                     )
                         : const EmptyBox(),
@@ -84,8 +91,13 @@ class AppExpandListWidget extends StatelessWidget {
             ),)
           ],
         ),
-        (isExpanded.isFalse) ?  Divider(indent: 0,color: Colors.grey,) : SizedBox()
-      ],),
+        (isExpanded.isFalse)
+                  ? const Divider(
+                      indent: 0,
+                      color: Colors.grey,
+                    )
+                  : const SizedBox()
+            ],),
     ));
   }
 
@@ -210,23 +222,28 @@ class _BuildHeaderSection extends StatelessWidget {
     );
   }
 
-  _buildStatus() {
-    var textValue = (status.isNotEmpty)
-        ? status
-        : (statusId == 1)
-            ? "Success"
-            : ((statusId == 2) ? "Failed" : "Pending");
+  Widget _buildStatus() {
 
+    var mStatus = status.trim();
+    if(status.trim().isNotEmpty){
+       mStatus = status.trim().replaceAll(" ", "\n");
+    }
+    else{
+      mStatus = (statusId == 1)
+          ? "Success"
+          : ((statusId == 2) ? "Failed" : "Pending");
+    }
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: (isExpand) ? 8 : 0,vertical: 4),
       decoration: BoxDecoration(
         color: Colors.white70,
         borderRadius: BorderRadius.circular(12)
 
       ),
       child: Text(
-        textValue,
-        maxLines: 1,
+        mStatus,
+        maxLines: 2,
+        textAlign: TextAlign.center,
         style: Get.textTheme.subtitle1?.copyWith(
           fontSize: 14,
             color: ((statusId == 1 || status == "Credit")

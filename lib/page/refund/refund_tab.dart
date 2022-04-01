@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/page/report/fund_report/fund_report_page.dart';
-import 'package:spayindia/page/report/money_report/money_report_page.dart';
-import 'package:spayindia/page/route_aware_widget.dart';
+import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
 import 'package:spayindia/util/tags.dart';
 
+import 'dmt_refund/dmt_refund_page.dart';
 
-class TransactionTabPage extends StatefulWidget {
-  const TransactionTabPage({Key? key}) : super(key: key);
+
+class RefundTabPage extends StatefulWidget {
+  const RefundTabPage({Key? key}) : super(key: key);
 
   @override
-  State<TransactionTabPage> createState() => _TransactionTabPageState();
+  State<RefundTabPage> createState() => _RefundTabPageState();
 }
 
-class _TransactionTabPageState extends State<TransactionTabPage>
+class _RefundTabPageState extends State<RefundTabPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
@@ -33,14 +33,14 @@ class _TransactionTabPageState extends State<TransactionTabPage>
           return <Widget>[
             SliverAppBar(
               centerTitle: true,
-              title: const Text('Transaction Report'),
+              title: const Text('Refund'),
               pinned: true,
               floating: true,
               forceElevated: innerBoxIsScrolled,
               bottom: TabBar(
                 isScrollable: false,
                 tabs: const <Tab>[
-                  Tab(text: 'Dmt'),
+                  Tab(text: 'Money'),
                   Tab(text: 'Payout'),
                 ],
                 controller: _tabController,
@@ -51,8 +51,8 @@ class _TransactionTabPageState extends State<TransactionTabPage>
         body: TabBarView(
           controller: _tabController,
           children: const <Widget>[
-            MoneyReportPage(controllerTag: AppTag.moneyReportControllerTag,),
-            MoneyReportPage(controllerTag: AppTag.payoutReportControllerTag,),
+            DmtRefundPage(controllerTag: AppTag.moneyRefundControllerTag,),
+            DmtRefundPage(controllerTag: AppTag.payoutRefundControllerTag,),
           ],
         ),
       ),

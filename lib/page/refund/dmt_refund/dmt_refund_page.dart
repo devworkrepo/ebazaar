@@ -3,31 +3,32 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/api_component.dart';
 import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
-import 'package:spayindia/model/report/ledger.dart';
 import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/route_aware_widget.dart';
+import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
-import '../report_helper.dart';
-import '../report_search.dart';
-import 'mone_report_controller.dart';
+import '../../../model/refund/dmt_refund.dart';
+import '../../report/report_helper.dart';
+import '../../report/report_search.dart';
 
-class MoneyReportPage extends GetView<MoneyReportController> {
+class DmtRefundPage extends GetView<DmtRefundController> {
   final String controllerTag;
+
+  const DmtRefundPage({Key? key, required this.controllerTag})
+      : super(key: key);
 
   @override
   String? get tag => controllerTag;
 
-  const MoneyReportPage({Key? key, required this.controllerTag}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    Get.put(MoneyReportController(controllerTag), tag: controllerTag);
+    Get.put(DmtRefundController(controllerTag), tag: controllerTag);
+
     return Scaffold(
         body: Obx(() =>
-            controller.reportResponseObs.value.when(onSuccess: (data) {
+            controller.moneyReportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
-                if (data.reports!.isEmpty) {
+                if (data.list!.isEmpty) {
                   return const NoItemFoundWidget();
                 } else {
                   return _buildListBody();
@@ -38,13 +39,12 @@ class MoneyReportPage extends GetView<MoneyReportController> {
             }, onFailure: (e) {
               return ExceptionPage(error: e);
             }, onInit: (data) {
-            return ApiProgress(data);
-          })),
+              return ApiProgress(data);
+            })),
         floatingActionButton: FloatingActionButton.extended(
             icon: const Icon(Icons.search),
             onPressed: () => _onSearch(),
-            label: const Text("Search"))
-    );
+            label: const Text("Search")));
   }
 
   _onSearch() {
@@ -66,8 +66,7 @@ class MoneyReportPage extends GetView<MoneyReportController> {
   }
 
   RefreshIndicator _buildListBody() {
-
-    var list = controller.reportList;
+    var list = controller.moneyReportList;
     var count = list.length;
 
     return RefreshIndicator(
@@ -75,23 +74,31 @@ class MoneyReportPage extends GetView<MoneyReportController> {
         controller.swipeRefresh();
       },
       child: Card(
-        color:Colors.white,
-        margin: const EdgeInsets.only(bottom: 8,left: 8,right: 8,top: 8,),
-        child: ListView.builder(padding: const EdgeInsets.only(top: 0),itemBuilder: (context, index) {
-          return _BuildListItem(list[index],controller: controller,);
-        },itemCount: count,),
+        color: Colors.white,
+        margin: const EdgeInsets.only(
+          bottom: 8,
+          left: 8,
+          right: 8,
+          top: 8,
+        ),
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 0),
+          itemBuilder: (context, index) {
+            return _BuildListItem(list[index], controller);
+          },
+          itemCount: count,
+        ),
       ),
     );
   }
 }
 
-
-
 class _BuildListItem extends StatelessWidget {
-  final MoneyReport report;
-  final MoneyReportController controller;
+  final DmtRefund report;
+  final DmtRefundController controller;
 
-  const _BuildListItem(this.report, {Key? key,required this.controller}) : super(key: key);
+  const _BuildListItem(this.report, this.controller, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,28 +106,33 @@ class _BuildListItem extends StatelessWidget {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
         isExpanded: report.isExpanded,
-        title:""+ report.accountNumber.orNA(),
+        title: "" + report.accountNumber.orNA(),
         subTitle: report.beneficiaryName.orNA(),
-        date: "Date : "+report.date.orNA(),
+        date: "Date : " + report.transactionDate.orNA(),
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
-        statusId:  ReportHelperWidget.getStatusId(report.transactionStatus),
-
-
+        statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
         expandList: [
-          ListTitleValue(title: "Remitter Number", value: report.senderNubber.toString()),
-          ListTitleValue(title: "Txn Number", value: report.transactionNumber.toString()),
-          ListTitleValue(title: "Beneficary Name", value: report.beneficiaryName.toString()),
-          ListTitleValue(title: "Account Number", value: report.accountNumber.toString()),
-          ListTitleValue(title: "Transaction Type", value: report.transactionType.toString()),
-          ListTitleValue(title: "Commission", value: report.commission.toString()),
-          ListTitleValue(title: "UTR Number", value: report.utrNumber.toString()),
-          ListTitleValue(title: "Message", value: report.transactionMessage.toString()),
-
+          ListTitleValue(
+              title: "Remitter Number", value: report.senderNumber.toString()),
+          ListTitleValue(
+              title: "Txn Number", value: report.transactionNumber.toString()),
+          ListTitleValue(
+              title: "Beneficary Name",
+              value: report.beneficiaryName.toString()),
+          ListTitleValue(
+              title: "Account Number", value: report.accountNumber.toString()),
+          ListTitleValue(
+              title: "Transaction Type",
+              value: report.transactionType.toString()),
+          ListTitleValue(
+              title: "Commission", value: report.commission.toString()),
+          ListTitleValue(
+              title: "UTR Number", value: report.utrNumber.toString()),
+          ListTitleValue(
+              title: "Message", value: report.transactionMessage.toString()),
         ],
-     ),
+      ),
     );
   }
-
-
 }

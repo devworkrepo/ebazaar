@@ -8,7 +8,7 @@ import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/util/date_util.dart';
 
 
-class FundReportSearchDialog extends StatefulWidget {
+class CommonReportSeasrchDialog extends StatefulWidget {
   final String fromDate;
   final String toDate;
   final String status;
@@ -17,7 +17,7 @@ class FundReportSearchDialog extends StatefulWidget {
   final Function(String fromDate, String toDate, String searchInput,
       String searchInputType, String status) onSubmit;
 
-  const FundReportSearchDialog(
+  const CommonReportSeasrchDialog(
       {Key? key,
       required this.onSubmit,
       required this.fromDate,
@@ -30,7 +30,7 @@ class FundReportSearchDialog extends StatefulWidget {
   _SearchDialogWidgetState createState() => _SearchDialogWidgetState();
 }
 
-class _SearchDialogWidgetState extends State<FundReportSearchDialog> {
+class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
   var fromDateController = TextEditingController();
   var toDateController = TextEditingController();
   var searchInputController = TextEditingController();

@@ -12,7 +12,6 @@ class WalletFavListResponse{
     status = json['status'];
     favList = List.from(json["data"]).map((e) => WalletFav.fromJson(e)).toList();
 
-
   }
 
 }

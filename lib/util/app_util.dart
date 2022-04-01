@@ -11,8 +11,7 @@ import 'dart:developer';
 class AppUtil {
   static logger(value) {
     if (!kReleaseMode) {
-      log("AppLog : "+value.toString());
-      //print("AppLog : ${}");
+      print('\x1B[32m$value\x1B[0m');
     }
   }
 

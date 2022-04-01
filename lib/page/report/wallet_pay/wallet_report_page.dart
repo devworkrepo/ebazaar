@@ -46,7 +46,7 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
   }
 
   _onSearch() {
-    Get.bottomSheet(FundReportSearchDialog(
+    Get.bottomSheet(CommonReportSeasrchDialog(
       fromDate: controller.fromDate,
       toDate: controller.toDate,
       status: controller.searchStatus,

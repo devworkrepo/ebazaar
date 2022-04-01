@@ -1,33 +1,39 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
-import 'package:spayindia/model/report/ledger.dart';
+import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/tags.dart';
 
-class MoneyReportController extends GetxController {
+class DmtRefundController extends GetxController {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
   final String tag;
+
   String fromDate = "";
   String toDate = "";
   String searchStatus = "";
   String searchInput = "";
 
-  var reportResponseObs = Resource.onInit(data: MoneyReportResponse()).obs;
-  late List<MoneyReport> reportList;
-  MoneyReport? previousReport;
+  var moneyReportResponseObs =
+      Resource.onInit(data: DmtRefundListResponse()).obs;
+  late List<DmtRefund> moneyReportList;
+  DmtRefund? previousReport;
 
-  MoneyReportController(this.tag);
+  DmtRefundController(this.tag);
 
   @override
   void onInit() {
     super.onInit();
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
-    fetchReport();
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      fetchReport();
+    });
   }
 
   fetchReport() async {
@@ -39,16 +45,16 @@ class MoneyReportController extends GetxController {
         };
 
     try {
-      reportResponseObs.value = const Resource.onInit();
-      final response = (tag == AppTag.moneyReportControllerTag)
-          ? await repo.fetchMoneyTransactionList(_param())
-          : await repo.fetchPayoutTransactionList(_param());
+      moneyReportResponseObs.value = const Resource.onInit();
+      final response = (tag == AppTag.moneyRefundControllerTag)
+          ? await repo.dmtRefundList(_param())
+          : await repo.payoutRefundList(_param());
       if (response.code == 1) {
-        reportList = response.reports!;
+        moneyReportList = response.list!;
       }
-      reportResponseObs.value = Resource.onSuccess(response);
+      moneyReportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
-      reportResponseObs.value = Resource.onFailure(e);
+      moneyReportResponseObs.value = Resource.onFailure(e);
       Get.to(() => ExceptionPage(error: e));
     }
   }
@@ -61,7 +67,7 @@ class MoneyReportController extends GetxController {
     fetchReport();
   }
 
-  void onItemClick(MoneyReport report) {
+  void onItemClick(DmtRefund report) {
     if (previousReport == null) {
       report.isExpanded.value = true;
       previousReport = report;
@@ -78,5 +84,4 @@ class MoneyReportController extends GetxController {
   void onSearch() {
     fetchReport();
   }
-
 }

@@ -11,16 +11,20 @@ class HomeServiceSection extends GetView<HomeController> {
 
   const HomeServiceSection({Key? key, required this.onClick}) : super(key: key);
 
-  _svgPicture(name) {
-    return AppCircleAssetSvg("assets/home/$name.svg");
+  _svgPicture(name,int innerPadding) {
+    return AppCircleAssetSvg(
+      "assets/home/$name.svg",
+      size: 60,
+      innerPadding: innerPadding,
+    );
   }
 
-  _buildItem(String iconName, String title, {bool border = true}) {
+  _buildItem(String iconName, String title, {int innerPadding = 4}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _svgPicture(iconName),
+        _svgPicture(iconName, innerPadding),
         Center(
           child: Text(
             title,
@@ -80,7 +84,11 @@ class HomeServiceSection extends GetView<HomeController> {
         ),
         child: Center(
           child: (item.homeServiceType != HomeServiceType.none)
-              ? _buildItem(item.iconName, item.title)
+              ? _buildItem(item.iconName, item.title,
+                  innerPadding:
+                      (item.homeServiceType == HomeServiceType.walletPay)
+                          ? 8
+                          : 4)
               : const SizedBox(),
         ),
       ),

@@ -8,7 +8,6 @@ import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'data/app_pref.dart';

@@ -203,7 +203,7 @@ class BeneficiaryListController extends GetxController {
         "mobileno": sender!.senderNumber ?? "",
       });
       Get.back();
-      if (response.code == 0) {
+      if (response.code == 1) {
         Get.dialog(DmtKycInfoDialog(response));
       } else {
         StatusDialog.failure(title: response.message);

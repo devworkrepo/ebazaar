@@ -94,22 +94,26 @@ class AppCircleAssetSvg extends StatelessWidget {
   final String imagePath;
   final int horizontalPadding;
   final Color? backgroundColor;
+  final int size;
+  final int innerPadding ;
 
   const AppCircleAssetSvg(this.imagePath,
-      {this.horizontalPadding = 12, Key? key, this.backgroundColor})
+      {this.horizontalPadding = 12, Key? key, this.backgroundColor,this.size = 50,this.innerPadding = 4})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: size.toDouble(),
+      width: size.toDouble(),
       margin: EdgeInsets.symmetric(horizontal: horizontalPadding.toDouble()),
-      padding: const EdgeInsets.all(4),
       decoration:
       BoxDecoration(color: backgroundColor ?? HexColor("E0F6FF"), shape: BoxShape.circle),
-      child: SvgPicture.asset(
-        imagePath,
-        height: 50,
-        width: 50,
+      child: Padding(
+        padding:  EdgeInsets.all(innerPadding.toDouble()),
+        child: SvgPicture.asset(
+          imagePath,
+        ),
       ),
     );
   }
