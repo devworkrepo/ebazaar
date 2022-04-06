@@ -24,13 +24,12 @@ class DmtTransactionBankDetailWidget extends GetView<DmtTransactionController> {
     Beneficiary? beneficiary = controller.beneficiary;
     dmtType = controller.dmtType;
 
-    if (dmtType == DmtType.instantPay) {
       isBankVerified = beneficiary.bankVerified;
       accountNumber = "A/C : " + (beneficiary.accountNumber ?? "");
       beneficiaryName = beneficiary.name ?? "";
       bankName = beneficiary.bankName ?? "";
       ifscCode = beneficiary.ifscCode ?? "";
-    }
+
 
     return Card(
       color: Get.theme.primaryColorDark,

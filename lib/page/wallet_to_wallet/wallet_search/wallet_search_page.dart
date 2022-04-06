@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/api_component.dart';
 import 'package:spayindia/component/button.dart';
 import 'package:spayindia/component/image.dart';
 import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/model/wallet/wallet_fav.dart';
-import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_controller.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
+import 'package:spayindia/util/obx_widget.dart';
 
 class WalletSearchPage extends GetView<WalletSearchController> {
   const WalletSearchPage({Key? key}) : super(key: key);
@@ -99,14 +98,18 @@ class _BuildFavListWidget extends GetView<WalletSearchController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
+    return ObsResourceWidget(
+            obs: controller.favListResponseObs,
+            childBuilder: (data) => _buildList())
+        /*Obx(
         () => controller.favListResponseObs.value.when(onSuccess: (data) {
               return _buildList();
             }, onFailure: (e) {
               return ExceptionPage(error: e);
             }, onInit: (data) {
               return ApiProgress(data);
-            }));
+            }))*/
+        ;
   }
 
   Widget _buildList() {

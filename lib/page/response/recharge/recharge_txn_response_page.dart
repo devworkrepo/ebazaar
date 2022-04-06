@@ -21,8 +21,8 @@ class RechargeTxnResponsePage extends GetView<RechargeTxnResponseController>
           buildStatusIcon(getStatusIdFromString(controller.response.transactionStatus ?? "Pending")),
           buildStatusTitle(getStatusIdFromString(controller.response.transactionStatus ?? "Pending"),
               statusDescription: controller.response.transactionStatus),
-          buildMessage(controller.response.message),
-          buildTransactionTime("not available"),
+          buildMessage(controller.response.transactionResponse ?? ""),
+          buildTransactionTime(""),
           buildProviderAndAmount(
               title: controller.response.rechargeType ?? "",
               subTitle: controller.getTitle(),

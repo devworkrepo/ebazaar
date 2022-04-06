@@ -16,8 +16,13 @@ class DateUtil {
   }
 
 
-  static String currentDateInYyyyMmDd(){
-    return formatter.format(DateTime.now());
+  static String currentDateInYyyyMmDd({int? dayBefore}){
+    if(dayBefore == null) {
+      return formatter.format(DateTime.now());
+    } else {
+      return formatter.format(DateTime.now().subtract(Duration(days: dayBefore)));
+    }
   }
+
 
 }

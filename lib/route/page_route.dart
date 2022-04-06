@@ -1,36 +1,31 @@
-import 'package:spayindia/page/aeps/aeps_page.dart';
+import 'package:get/get.dart';
+import 'package:spayindia/page/aeps/aeps_e_kyc/aeps_e_kyc_page.dart';
+import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
 import 'package:spayindia/page/app_setting/app_setting_page.dart';
+import 'package:spayindia/page/auth/fogot_password/fogot_password_page.dart';
+import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_add/beneficiary_add_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_page.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_page.dart';
+import 'package:spayindia/page/dmt/import_beneficiary/import_beneficiary_tab.dart';
 import 'package:spayindia/page/dmt/search_sender/search_sender_page.dart';
 import 'package:spayindia/page/dmt/sender_add/sender_add_page.dart';
 import 'package:spayindia/page/dmt/sender_change/change_mobile/sender_change_mobile_page.dart';
 import 'package:spayindia/page/dmt/sender_change/change_name/sender_change_name_page.dart';
 import 'package:spayindia/page/fund/fund_request_page.dart';
-import 'package:spayindia/page/main/addhaar_kyc/aadhaar_kyc_page.dart';
-import 'package:spayindia/page/main/aeps_kyc/aeps_kyc_page.dart';
 import 'package:spayindia/page/main/change_password/change_password_page.dart';
 import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
-import 'package:spayindia/page/main/document_kyc/document_kyc_page.dart';
-import 'package:spayindia/page/main/settlement/add_bank/aeps_settlement_add_bank_page.dart';
-import 'package:spayindia/page/main/settlement/bank_list/aeps_settlement_bank_page.dart';
-import 'package:spayindia/page/main/settlement/transfer/aeps_settlement_transfer_page.dart';
+import 'package:spayindia/page/main_page.dart';
 import 'package:spayindia/page/matm/matm_page.dart';
 import 'package:spayindia/page/recharge/bill_payment/bill_payment_page.dart';
+import 'package:spayindia/page/recharge/provider/provider_page.dart';
+import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/page/report/fund_report/fund_report_page.dart';
 import 'package:spayindia/page/report/tabs/transaction_tab.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_transfer/wallet_transfer_page.dart';
 import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/page/auth/fogot_password/fogot_password_page.dart';
-import 'package:spayindia/page/auth/login/login_page.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/main_page.dart';
-import 'package:get/get.dart';
-import 'package:spayindia/page/recharge/provider/provider_page.dart';
-import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/test/test_image_picker.dart';
 
 final getAllPages = [
@@ -72,6 +67,10 @@ final getAllPages = [
     page: () => const AepsPage(),
   ),
   GetPage(
+    name: RouteName.aepsEkycPage,
+    page: () => const AepsEKycPage(),
+  ),
+  GetPage(
     name: RouteName.mamtPage,
     page: () => const MatmPage(),
   ),
@@ -98,7 +97,7 @@ final getAllPages = [
     page: () => const DmtTransactionPage(),
   ),
 
- GetPage(
+  GetPage(
     name: RouteName.dmtChangeSenderNamePage,
     page: () => const SenderNameChangePage(),
   ),
@@ -106,8 +105,10 @@ final getAllPages = [
     name: RouteName.dmtChangeSenderMobilePage,
     page: () => const SenderMobileChangePage(),
   ),
-
-
+  GetPage(
+    name: RouteName.dmtImportBeneficiaryPage,
+    page: () => const ImportBeneficiaryTabPage(),
+  ),
 
 
   GetPage(
@@ -117,6 +118,7 @@ final getAllPages = [
   GetPage(
     name: RouteName.fundReportPage,
     page: () => const FundRequestReportPage(),
+    arguments: "route",
   ),
 
 
@@ -137,35 +139,6 @@ final getAllPages = [
     page: () => const TransactionTabPage(),
   ),
   //kyc
-  GetPage(
-    name: RouteName.documentKycPage,
-    page: () => const DocumentKycPage(),
-  ),
-  GetPage(
-    name: RouteName.aadhaarKycPage,
-    page: () => const AadhaarKycPage(),
-  ),
-
-  GetPage(
-    name: RouteName.aepsKycKycPage,
-    page: () => const AepsKycPage(),
-  ),
-
-  GetPage(
-    name: RouteName.aepsSettlementBankListPage,
-    page: () => const AepsSettlementBankListPage(),
-  ),
-
-  GetPage(
-    name: RouteName.aepsSettlementAddBankPage,
-    page: () => const AepsSettlementAddBankPage(),
-  ),
-
-  GetPage(
-    name: RouteName.aepsSettlementTransferPage,
-    page: () => const AepsSettlementTransferPage(),
-  ),
-
 
   GetPage(
     name: RouteName.walletSearchPage,
@@ -186,7 +159,7 @@ final getAllPages = [
 
 _bindController(String controllerType) {
   switch (controllerType) {
-    /* case RouteName.homePage:
+  /* case RouteName.homePage:
       return BindingsBuilder(() => Get.lazyPut(() => HomeController()));
     case RouteName.secondPage:
       return BindingsBuilder(() => Get.lazyPut(() => SecondController()));*/

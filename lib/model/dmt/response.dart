@@ -12,6 +12,7 @@ class DmtBeneficiaryResponse {
   DmtBeneficiaryResponse();
 
   DmtBeneficiaryResponse.fromJson(Map<String, dynamic> json) {
+    code = json["code"];
     status = json["status"];
     message = json["message"];
     if (json["beneficiaries"] != null) {

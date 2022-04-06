@@ -76,14 +76,12 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
                      ? (controller.isSearchingSender.value)
                      ? const CircularProgressIndicator()
                      : AppButton(
-                     width: 100,
-                     text: "Search",
-                     onClick: () {
-                       if (controller.dmtType == DmtType.instantPay) {
-                         controller.onSearchClick();
-                       }
-                     })
-                     : const SizedBox(),
+                                  width: 100,
+                                  text: "Search",
+                                  onClick: () {
+                                    controller.onSearchClick();
+                                  })
+                          : const SizedBox(),
                )),
               ],
             ),

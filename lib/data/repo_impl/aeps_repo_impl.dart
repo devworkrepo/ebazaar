@@ -17,83 +17,23 @@ class AepsRepoImpl extends AepsRepo{
   NetworkClient client = Get.find();
   
   @override
-  Future<BankListResponse> fetchAepsBankList() async {
-    var response = await client.post("BanksList");
-    return BankListResponse.fromJson(response.data);
-
+  Future<AepsBankResponse> fetchAepsBankList() async {
+    var response = await client.post("/GetAEPSBanks");
+    return AepsBankResponse.fromJson(response.data);
   }
-
-  List<Bank> randomExpensesFromJson(String str) =>
-      List<Bank>.from(
-          json.decode(str).map((x) => Bank.fromJson(x)));
-
 
   @override
   Future<AepsTransactionResponse> aepsTransaction(data)async {
-  var response = await client.post("aeps/transaction",data: data);
+  var response = await client.post("/AEPSTransaction",data: data);
   return AepsTransactionResponse.fromJson(response.data);
   }
 
-
   @override
-  Future<AepsTransactionResponse> checkStatus(data)async {
-    var response = await client.get("aeps/table/check-status",queryParameters: data);
-    return AepsTransactionResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<AepsSettlementBankListResponse> fetchAepsSettlementBankList() async {
-    var response = await client.get("aeps-settlement/get-bank");
-    return AepsSettlementBankListResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<StatusMessageResponse> addSettlementBank(data) async {
-    var response = await client.post("aeps-settlement/add-bank",data: data);
-    return StatusMessageResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<StatusMessageResponse> settlementTransfer(data) async {
-    var response = await client.post("aeps-settlement/transaction",data: data);
-    return StatusMessageResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<AadhaarKycRequestOtp> aadhaarKycRequestOtp(data) async{
-    var response = await client.post("aadhaar-kyc/send-otp",data: data);
-    return AadhaarKycRequestOtp.fromJson(response.data);
-
+  Future<CommonResponse> eKycRequestOtp(data) async {
+    var response = await client.post("/SendKycOTP",data: data);
+    return CommonResponse.fromJson(response.data);
   }
 
 
-  @override
-  Future<StatusMessageResponse> aadhaarKycVerifyOtp(data) async{
-    var response = await client.post("aadhaar-kyc/verify-otp",data: data);
-    return StatusMessageResponse.fromJson(response.data);
-
-  }
-
-
-  @override
-  Future<DocumentKycDetailResponse> fetchKycDocumentDetails() async {
-
-    var response = await client.get("kyc-document/show");
-    return DocumentKycDetailResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<StatusMessageResponse> documentKycUploadFile(data) async{
-    var response = await client.post("kyc-document/upload",data: data);
-    return StatusMessageResponse.fromJson(response.data);
-
-  }
-
-  @override
-  Future<StatusMessageResponse> aepsSettlementDocumentUpload(data) async{
-    var response = await client.post("aeps-settlement/upload-document",data: data);
-    return StatusMessageResponse.fromJson(response.data);
-
-  }
 
 }

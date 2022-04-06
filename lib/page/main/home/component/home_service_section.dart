@@ -13,7 +13,7 @@ class HomeServiceSection extends GetView<HomeController> {
 
   _svgPicture(name,int innerPadding) {
     return AppCircleAssetSvg(
-      "assets/home/$name.svg",
+      "assets/svg/$name.svg",
       size: 60,
       innerPadding: innerPadding,
     );
@@ -98,6 +98,7 @@ class HomeServiceSection extends GetView<HomeController> {
 
 enum HomeServiceType {
   moneyTransfer,
+  payoutTransfer,
   matm,
   aeps,
   recharge,
@@ -121,6 +122,10 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
   if (/*user.isInstantPay.orFalse()*/ true) {
     itemList.add(HomeServiceItem(
         "Money Transfer", "money", HomeServiceType.moneyTransfer));
+  }
+  if ( user.isPayoutBond.orFalse()) {
+    itemList.add(HomeServiceItem(
+        "Payout Transfer", "money", HomeServiceType.payoutTransfer));
   }
   if (user.isMatm.orFalse()) {
     itemList.add(HomeServiceItem("Matm", "matm", HomeServiceType.matm));

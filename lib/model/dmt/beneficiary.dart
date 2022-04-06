@@ -9,6 +9,7 @@ class Beneficiary {
   String? senderNumber;
   String? validateStatus;
   RxBool isExpanded = false.obs;
+  RxBool isSelectedForImport = false.obs;
 
   bool get bankVerified {
     return (validateStatus == null)

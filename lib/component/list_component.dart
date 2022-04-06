@@ -236,7 +236,7 @@ class _BuildHeaderSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: (isExpand) ? 8 : 0,vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white70,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12)
 
       ),
@@ -328,7 +328,7 @@ class BuildListIcon extends StatelessWidget {
                 color: HexColor("ECF8FD"),
                 borderRadius: BorderRadius.circular(100)),
             child: Image.asset(
-              'assets/images/' + imageName!,
+              'assets/image/' + imageName!,
               height: 40,
               color: Get.theme.primaryColorDark,
             ),

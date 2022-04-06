@@ -283,11 +283,11 @@ class MobileTextField extends StatelessWidget {
       maxLength: 10,
       enable: enable,
       focus: focus,
-      prefixIcon: Icons.phone,
+      prefixIcon: Icons.mobile_friendly,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
-      hint: "Mobile is required*",
+      hint: "Enter 10 digits",
       label: label,
       inputType: TextInputType.number,
       rightButton: rightButton,

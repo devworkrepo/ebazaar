@@ -117,7 +117,7 @@ class _LoginForm extends GetView<LoginOtpController> {
   }
 
   _appLogo() => Image.asset(
-        "assets/images/logo.png",
+        "assets/image/logo.png",
         height: 70,
         width: 200,
       );

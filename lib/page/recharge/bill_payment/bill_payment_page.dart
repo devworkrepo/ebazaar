@@ -5,14 +5,13 @@ import 'package:spayindia/component/button.dart';
 import 'package:spayindia/component/common/amount_background.dart';
 import 'package:spayindia/component/common/wallet_widget.dart';
 import 'package:spayindia/component/image.dart';
-import 'package:spayindia/component/progress.dart';
 import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/model/recharge/extram_param.dart';
-import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/recharge/bill_payment/bill_payment_controller.dart';
 import 'package:spayindia/page/recharge/provider/provider_controller.dart';
 import 'package:spayindia/res/color.dart';
+import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
 
 class BillPaymentPage extends GetView<BillPaymentController> {
@@ -25,20 +24,24 @@ class BillPaymentPage extends GetView<BillPaymentController> {
       appBar: AppBar(
         title: Text(controller.providerName + " Bill Pay"),
       ),
-      body: Obx(
+      body: ObsResourceWidget(
+        obs: controller.extraParamResponseObs,
+        childBuilder: (data) => _buildBody(),
+      ) /*Obx(
           () => controller.extraParamResponseObs.value.when(onSuccess: (data) {
                 return _buildBody(data);
-              }, onFailure: (e) {
+              }, onFailure: ( e) {
                 return ExceptionPage(error: e);
               }, onInit: (data) {
                 return AppProgressbar(
                   data: data,
                 );
-              })),
+              }))*/
+      ,
     );
   }
 
-  _buildBody(BillExtraParamResponse data) {
+  _buildBody() {
     return Column(
       children: [
         Expanded(
@@ -46,7 +49,7 @@ class BillPaymentPage extends GetView<BillPaymentController> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildFormKey(data),
+                _buildFormKey(controller.extraParamResponse),
                 Obx(() {
                   if (controller.actionType.value ==
                       BillPaymentActionType.payBill) {
@@ -71,7 +74,7 @@ class BillPaymentPage extends GetView<BillPaymentController> {
     var imageName = getProviderInfo(controller.providerType)!.imageName;
     return Row(
       children: [
-        AppCircleAssetSvg("assets/home/$imageName.svg"),
+        AppCircleAssetSvg("assets/svg/$imageName.svg"),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,14 +121,14 @@ class BillPaymentPage extends GetView<BillPaymentController> {
                   MobileTextField(
                       enable: controller.isFieldEnable(),
                       controller: controller.mobileNumberController),
-                  (controller.extraParam.field2!.isNotEmpty)
+                  (controller.extraParamResponse.field2!.isNotEmpty)
                       ? (controller.providerType == ProviderType.insurance)
                           ? DobTextField(
                               enable: controller.isFieldEnable(),
                               controller: controller.fieldTwoController)
                           : _buildField2()
                       : const SizedBox(),
-                  (controller.extraParam.field3!.isNotEmpty)
+                  (controller.extraParamResponse.field3!.isNotEmpty)
                       ? (controller.providerType == ProviderType.insurance)
                           ? EmailTextField(
                               enable: controller.isFieldEnable(),
@@ -172,8 +175,8 @@ class BillPaymentPage extends GetView<BillPaymentController> {
         maxLength: 20,
         validator: (value) =>
             FormValidatorHelper.normalValidation(value, minLength: 6),
-        hint: "Enter ${controller.extraParam.field1}",
-        label: controller.extraParam.field1,
+        hint: "Enter ${controller.extraParamResponse.field1}",
+        label: controller.extraParamResponse.field1,
         controller: controller.fieldOneController);
   }
 
@@ -184,8 +187,8 @@ class BillPaymentPage extends GetView<BillPaymentController> {
         allCaps: true,
         validator: FormValidatorHelper.normalValidation,
         maxLength: 20,
-        hint: "Enter ${controller.extraParam.field3}",
-        label: controller.extraParam.field3,
+        hint: "Enter ${controller.extraParamResponse.field3}",
+        label: controller.extraParamResponse.field3,
         controller: controller.fieldThreeController);
   }
 
@@ -196,8 +199,8 @@ class BillPaymentPage extends GetView<BillPaymentController> {
         allCaps: true,
         maxLength: 20,
         validator: FormValidatorHelper.normalValidation,
-        hint: "Enter ${controller.extraParam.field2}",
-        label: controller.extraParam.field2,
+        hint: "Enter ${controller.extraParamResponse.field2}",
+        label: controller.extraParamResponse.field2,
         controller: controller.fieldTwoController);
   }
 

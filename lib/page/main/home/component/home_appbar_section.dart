@@ -25,7 +25,7 @@ class HomeAppbarSection extends StatelessWidget {
           ),
           AppAnimatedWidget(
             child: Image.asset(
-              "assets/images/logo.png",
+              "assets/image/logo.png",
             ),
           ),
           const Spacer(),

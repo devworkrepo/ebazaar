@@ -121,7 +121,7 @@ class _BuildBillServiceWidget extends StatelessWidget {
               height: (isBig) ? 60 : 45,
               width: 220,
               child:AppCircleAssetSvg(
-              "assets/home/${svgName}.svg",
+              "assets/svg/${svgName}.svg",
               backgroundColor: HexColor("91d2ed"),
             ),),
           ),
@@ -189,7 +189,7 @@ class _BuildItem extends GetView<ProviderController> {
               Opacity(
                 opacity: 0.7,
                 child: AppCircleAssetSvg(
-                    "assets/home/${getProviderInfo(controller.providerType)?.imageName ?? ""}.svg"),
+                    "assets/svg/${getProviderInfo(controller.providerType)?.imageName ?? ""}.svg"),
               ),
               const SizedBox(
                 width: 20,

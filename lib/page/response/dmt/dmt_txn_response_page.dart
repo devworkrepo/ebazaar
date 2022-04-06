@@ -22,12 +22,12 @@ class DmtTxnResponsePage extends GetView<DmtTxnResponseController>
           buildStatusTitle(getStatusIdFromString(controller.dmtTransactionResponse.status),
               statusDescription: controller.dmtTransactionResponse.status),
           buildMessage(controller.dmtTransactionResponse.message),
-          buildTransactionTime("not available"),
+          buildTransactionTime(""),
           buildProviderAndAmount(
               title: controller.dmtTransactionResponse.transactionType ?? "",
-              subTitle: "Money Transfer",
+              subTitle: controller.getSubTitle(),
               amount: controller.totalAmount,
-              imageSvgPath: "assets/home/money.svg"),
+              imageSvgPath: "assets/svg/money.svg"),
           dividerListContainer(children: [
             buildTitleValueWidget(
                 title: "Name",

@@ -6,9 +6,11 @@ import 'package:spayindia/route/page_route.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'data/app_pref.dart';
 
@@ -36,6 +38,12 @@ class MyApp extends StatefulWidget {
 //1a3656
 
 class _MyAppState extends State<MyApp> {
+
+
+
+
+
+
 
   AppPreference appPreference = Get.find();
   @override
@@ -88,5 +96,11 @@ class _MyAppState extends State<MyApp> {
         caption: TextStyle(
             fontSize: 14.0, fontWeight: FontWeight.w300, height: 1.2),
       );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
   }
 }

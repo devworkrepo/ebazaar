@@ -1,0 +1,13 @@
+{
+  "calcid": "05042022159451",
+  "calclists": [
+    {
+      "amount": "1000",
+      "charge": "10",
+      "srno": 1
+    }
+  ],
+  "code": 1,
+  "message": "Success !",
+  "status": "Success"
+}

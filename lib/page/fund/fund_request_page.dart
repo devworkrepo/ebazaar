@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/api_component.dart';
 import 'package:spayindia/component/button.dart';
 import 'package:spayindia/component/drop_down.dart';
 import 'package:spayindia/component/text_field.dart';
-import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/fund/fund_request_controller.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/validator.dart';
+
+import '../../util/obx_widget.dart';
 
 class FundRequestPage extends GetView<FundRequestController> {
   const FundRequestPage({Key? key}) : super(key: key);
@@ -18,20 +18,9 @@ class FundRequestPage extends GetView<FundRequestController> {
     Get.put(FundRequestController());
     return Scaffold(
       appBar: _buildAppbar(),
-      body: Obx(
-          () => controller.bankTypeResponseObs.value.when(onSuccess: (data) {
-                if (data.code == 1) {
-                  return _buildBody();
-                } else {
-                  return ExceptionPage(error: Exception(data.message));
-                }
-              }, onFailure: (e) {
-                return ExceptionPage(
-                  error: e,
-                );
-              }, onInit: (data) {
-                return ApiProgress(data);
-              })),
+      body: ObsResourceWidget(
+          obs: controller.bankTypeResponseObs,
+          childBuilder: (data) => _buildBody()),
     );
   }
 
@@ -43,14 +32,17 @@ class FundRequestPage extends GetView<FundRequestController> {
           Expanded(
               child: SingleChildScrollView(
             child: Column(
-              children: [
-                const FundRequestFormField(),
+              children: const [
+                FundRequestFormField(),
               ],
             ),
           )),
-          AppButton(
-              text: (controller.updateDetail != null) ? "Update Request" :  "Make Request",
-              onClick: () => controller.onFundRequestSubmitButtonClick())
+          Obx(() => AppButton(
+              text: (controller.updateDetail != null)
+                  ? "Update Request"
+                  : "Make Request" +
+                      (controller.paymentTypeObs.value.isNotEmpty ? "" : ""),
+              onClick: () => controller.onFundRequestSubmitButtonClick()))
         ],
       ),
     );
@@ -61,10 +53,12 @@ class FundRequestPage extends GetView<FundRequestController> {
       title:  Text("Fund Request ${(controller.updateDetail != null) ? "Update" : ""}"),
       actions: [
         PopupMenuButton<String>(
-          onSelected: (i){
-            Get.toNamed(RouteName.fundReportPage);
+          onSelected: (i) {
+            Get.toNamed(RouteName.fundReportPage, arguments: "fund_request")
+                ?.then((value) {
+              controller.onUpdateDetail(value);
+            });
           },
-
           itemBuilder: (BuildContext context) {
             return {'Report'}.map((String choice) {
               return PopupMenuItem<String>(
@@ -86,28 +80,36 @@ class FundRequestFormField extends GetView<FundRequestController> {
   Widget build(BuildContext context) {
     return Form(
       key: controller.fundRequestFormKey,
-      child: Column(children: [
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              children: [
-                  AppDropDown(
-                    list: controller.typeList.map((e) => e.name!).toList(),
-                    onChange: (value) {
-                      controller.paymentType = value;
-                    },
-                    selectedItem: (controller.updateDetail != null) ? controller.updateDetail!.type : null,
-                    label: "Payment Type",
-                  ),
-                AppDropDown(
-                  list: controller.accountList.map((e) => e.name!).toList(),
-                  onChange: (value) {
-                    controller.paymentAccount = value;
-                  },
-                  selectedItem: (controller.updateDetail != null) ? controller.updateDetail!.bankAccountNumber : null,
-                  label: "Payment Account",
-                ),
+      child: Column(
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  Obx(() => AppDropDown(
+                        list: controller.typeList.map((e) => e.name!).toList(),
+                        onChange: (value) {
+                          controller.paymentTypeObs.value = value;
+                        },
+                        selectedItem:
+                            (controller.paymentTypeObs.value.isNotEmpty)
+                                ? controller.paymentTypeObs.value
+                                : null,
+                        label: "Payment Type",
+                      )),
+                  Obx(() => AppDropDown(
+                        list:
+                            controller.accountList.map((e) => e.name!).toList(),
+                        onChange: (value) {
+                          controller.paymentAccountObs.value = value;
+                        },
+                        selectedItem:
+                            (controller.paymentTypeObs.value.isNotEmpty)
+                                ? controller.paymentAccountObs.value
+                                : null,
+                        label: "Payment Account",
+                      )),
                   AppTextField(
                     controller: controller.paymentDateController,
                     label: "Payment Date",

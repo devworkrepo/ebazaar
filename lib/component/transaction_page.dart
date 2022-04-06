@@ -67,7 +67,7 @@ mixin TransactionPageComponent {
 
   Widget appLogo() {
     return Image.asset(
-      "assets/images/logo.png",
+      "assets/image/logo.png",
       height: 50,
     );
   }
@@ -213,7 +213,7 @@ mixin TransactionPageComponent {
       child: Padding(
         padding: const EdgeInsets.only(top: 24,right: 16),
         child: Image.asset(
-          "assets/images/cancel.png",
+          "assets/image/cancel.png",
           height: 24,
           width: 24,
         ),
@@ -342,7 +342,7 @@ mixin TransactionPageComponent {
                       image: DecorationImage(
 
                           image:
-                          AssetImage("assets/images/background_receipt.png"),fit: BoxFit.fill),
+                          AssetImage("assets/image/background_receipt.png"),fit: BoxFit.fill),
 
                     ),
                     child: Column(

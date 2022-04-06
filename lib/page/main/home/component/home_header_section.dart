@@ -47,7 +47,7 @@ class _UserBalance extends GetView<HomeController> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 7),
           child: Row(children: [
-            Image.asset("assets/images/money_bag.png",height: 24,width: 24,color: Colors.white,),
+            Image.asset("assets/image/money_bag.png",height: 24,width: 24,color: Colors.white,),
             SizedBox(width: 8,),
             Text(controller.user.availableBalance ?? "0",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 24),),
 

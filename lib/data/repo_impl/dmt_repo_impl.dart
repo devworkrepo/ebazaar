@@ -146,4 +146,36 @@ class DmtRepoImpl extends DmtRepo {
     var response = await client.post("/SenderKycDetails", data: data);
     return KycInfoResponse.fromJson(response.data);
   }
+
+  @override
+  Future<DmtBeneficiaryResponse> fetchDeletedBeneficiary(Map<String, String> data) async {
+    var response = await client.post("/BeneficiaryArchiveList",data: data);
+    return DmtBeneficiaryResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> importRemitterBeneficiary(Map<String, String> data) async {
+    var response = await client.post("/ImportBeneficiary",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CalculateChargeResponse> calculatePayoutCharge(Map<String, String> data) async {
+    //var response = await AppUtil.parseJsonFromAssets("calculate_charge_response");
+    var response = await client.post("/CalcPayoutCharges",data: data);
+    return CalculateChargeResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<DmtTransactionResponse> payoutTransaction(Map<String, String> data) async {
+   // var response = await AppUtil.parseJsonFromAssets("dmt_transaction_response");
+    var response = await client.post("/PayoutTransaction",data: data);
+    return DmtTransactionResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> importDeletedBeneficiary(Map<String, String> data) async {
+   var response = await client.post("/ImportArchive",data: data);
+   return CommonResponse.fromJson(response.data);
+  }
 }

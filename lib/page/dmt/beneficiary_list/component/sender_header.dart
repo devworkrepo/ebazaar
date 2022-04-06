@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/res/color.dart';
+import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/util/hex_color.dart';
 
 import '../beneficiary_controller.dart';
@@ -54,32 +54,56 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Available Limit",
-                  style:
-                      Get.textTheme.subtitle1?.copyWith(color: Colors.white70),
-                ),
-                Obx(() => controller.showAvailableTransferLimitObs.value == true
-                    ? Text(
-                  "₹ ${(controller.sender!.isKycVerified!) ? controller.sender?.impsKycLimitView : controller.sender?.impsNKycLimitView}",
-                        style: Get.textTheme.headline3
-                            ?.copyWith(color: Colors.green),
-                      )
-                    : _buildViewLimitContainer()),
-                (!controller.sender!.isKycVerified!)
-                    ? Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: Text(
-                          "non-kyc",
-                          style: TextStyle(color: Colors.red.shade400),
-                        ))
-                    : const SizedBox()
+                _buildLimitTitleWidget(),
+                (controller.dmtType == DmtType.instantPay)
+                    ? Obx(() =>
+                        controller.showAvailableTransferLimitObs.value == true
+                            ? _buildLimitBalanceWidget()
+                            : _buildViewLimitContainer())
+                    : _buildLimitBalanceWidget(),
+                _buildNonKycWidget()
               ],
             )
             // _buildAddBeneButton()
           ],
         ),
       ),
+    );
+  }
+
+  Text _buildLimitBalanceWidget() {
+    if (controller.dmtType == DmtType.payout) {
+      return Text(
+        "₹ ${controller.sender!.payoutPer.toString()}",
+        style: Get.textTheme.headline3?.copyWith(color: Colors.green),
+      );
+    }
+
+    return Text(
+      "₹ ${(controller.sender!.isKycVerified!) ? controller.sender?.impsKycLimitView : controller.sender?.impsNKycLimitView}",
+      style: Get.textTheme.headline3?.copyWith(color: Colors.green),
+    );
+  }
+
+  SingleChildRenderObjectWidget _buildNonKycWidget() {
+    return (controller.dmtType == DmtType.instantPay)
+        ? (!controller.sender!.isKycVerified!)
+            ? Padding(
+                padding: const EdgeInsets.all(4),
+                child: Text(
+                  "non-kyc",
+                  style: TextStyle(color: Colors.red.shade400),
+                ))
+            : const SizedBox()
+        : const SizedBox();
+  }
+
+  Text _buildLimitTitleWidget() {
+    return Text(
+      (controller.dmtType == DmtType.instantPay)
+          ? "Available Limit"
+          : "Per Limit",
+      style: Get.textTheme.subtitle1?.copyWith(color: Colors.white70),
     );
   }
 

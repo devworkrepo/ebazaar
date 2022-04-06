@@ -12,10 +12,10 @@ class RechargeTxnResponseController extends GetxController {
 
   String getSvgImage(){
     if(provider == ProviderType.dth){
-      return "assets/home/dth.svg";
+      return "assets/svg/dth.svg";
     }
     else {
-      return "assets/home/mobile.svg";
+      return "assets/svg/mobile.svg";
     }
   }
 

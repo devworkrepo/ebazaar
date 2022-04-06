@@ -12,6 +12,8 @@ import 'package:spayindia/util/date_util.dart';
 class FundRequestReportController extends GetxController {
   MoneyRequestRepo repo = Get.find<MoneyRequestImpl>();
 
+  String origin = Get.arguments;
+
   String fromDate = "";
   String toDate = "";
   String searchStatus = "";
@@ -83,7 +85,13 @@ class FundRequestReportController extends GetxController {
       Get.back();
 
       if(response.code == 1){
-        Get.toNamed(RouteName.fundRequestPage,arguments: response);
+
+        if(origin == "route"){
+          Get.toNamed(RouteName.fundRequestPage,arguments: response);
+        }
+        else{
+          Get.back(result: response);
+        }
       }
       else{
         StatusDialog.failure(title: response.message);

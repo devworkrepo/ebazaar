@@ -13,19 +13,19 @@ class BillPaymentTxnResponseController extends GetxController {
 
   String getSvgImage(){
     if(provider == ProviderType.electricity){
-      return "assets/home/electricity.svg";
+      return "assets/svg/electricity.svg";
     }
     if(provider == ProviderType.water){
-      return "assets/home/water.svg";
+      return "assets/svg/water.svg";
     }
     if(provider == ProviderType.gas){
-      return "assets/home/gas.svg";
+      return "assets/svg/gas.svg";
     }
     if(provider == ProviderType.landline){
-      return "assets/home/landline.svg";
+      return "assets/svg/landline.svg";
     }
     else {
-      return "assets/home/electrcity.svg";
+      return "assets/svg/electrcity.svg";
     }
   }
 

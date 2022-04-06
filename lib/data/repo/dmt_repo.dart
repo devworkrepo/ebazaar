@@ -21,6 +21,7 @@ abstract class DmtRepo {
   Future<CommonResponse> senderRegistrationOtp(Map<String, String> data);
   Future<CalculateChargeResponse> calculateNonKycCharge(Map<String, String> data);
   Future<CalculateChargeResponse> calculateKycCharge(Map<String, String> data);
+  Future<CalculateChargeResponse> calculatePayoutCharge(Map<String, String> data);
   Future<DmtCheckStatusResponse> transactionCheckStatus(Map<String, String> data);
   Future<CommonResponse> beneficiaryDelete(Map<String, String> data);
   Future<DmtVerificationChargeResponse> accountVerificationCharge();
@@ -29,4 +30,8 @@ abstract class DmtRepo {
   Future<CommonResponse> changeSenderOtp(data);
   Future<DmtTransactionResponse> nonKycTransaction(Map<String, String> data);
   Future<DmtTransactionResponse> kycTransaction(Map<String, String> data);
+  Future<DmtTransactionResponse> payoutTransaction(Map<String, String> data);
+  Future<DmtBeneficiaryResponse> fetchDeletedBeneficiary(Map<String, String> data);
+  Future<CommonResponse> importRemitterBeneficiary(Map<String, String> data);
+  Future<CommonResponse> importDeletedBeneficiary(Map<String, String> data);
 }

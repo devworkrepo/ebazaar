@@ -34,9 +34,7 @@ class DmtSearchSenderController extends GetxController {
     if (numberController.text.toString().length == 10) {
       showSearchButton.value = true;
       WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-        if (dmtType == DmtType.instantPay) {
-          _searchSender();
-        }
+        _searchSender();
       });
     }
   }

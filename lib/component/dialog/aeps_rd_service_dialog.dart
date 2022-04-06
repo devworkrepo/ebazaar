@@ -35,7 +35,7 @@ class AepsRdServiceDialog extends StatelessWidget with DialogHelperMixin {
             Row(
               children: [
                 const AppCircleAssetImage(
-                  "assets/images/ic_aeps.png",
+                  "assets/image/ic_aeps.png",
                   horizontalPadding: 0,
                 ),
                 const SizedBox(

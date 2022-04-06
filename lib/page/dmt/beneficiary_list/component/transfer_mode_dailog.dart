@@ -5,22 +5,25 @@ import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/model/dmt/beneficiary.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
-import 'package:spayindia/page/recharge/recharge/component/recharge_confirm_dialog.dart';
-import 'package:spayindia/res/color.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
-import 'package:spayindia/util/validator.dart';
 
 import '../../dmt.dart';
 
 class TransferModeDialog extends StatefulWidget {
   const TransferModeDialog(
-      {Key? key, required this.beneficiary, required this.onClick,required this.senderInfo,required this.isLimitView})
+      {Key? key,
+      required this.beneficiary,
+      required this.onClick,
+      required this.senderInfo,
+      required this.dmtType,
+      required this.isLimitView})
       : super(key: key);
 
   final SenderInfo senderInfo;
   final bool isLimitView;
   final Beneficiary beneficiary;
-  final Function(String amount,DmtTransferType type) onClick;
+  final DmtType dmtType;
+  final Function(String amount, DmtTransferType type) onClick;
 
   @override
   _TransferModeDialogState createState() => _TransferModeDialogState();
@@ -126,9 +129,9 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
                         onClick: () {
                           if (_validateAmount()) {
                             var amount =amountWithoutRupeeSymbol( _amountController);
-                            if(_validateImps(amount)){
+                            if (_validateNeft(amount)) {
                               Get.back();
-                              widget.onClick(amount,DmtTransferType.neft);
+                              widget.onClick(amount, DmtTransferType.neft);
                             }
                           }
                         },
@@ -306,14 +309,17 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
       return "Enter valid amount";
     }
 
+    var minAmount = (widget.dmtType == DmtType.instantPay) ? 100 : 25001;
+    var maxAmount = (widget.dmtType == DmtType.instantPay) ? 25000 : 200000;
+
     var enteredAmountInDouble = double.parse(value);
     AppPreference appPreference = Get.find();
     var balance = appPreference.user.availableBalance;
     var balanceInDouble = double.parse(balance ?? "0");
 
 
-    if(enteredAmountInDouble <100 || enteredAmountInDouble> 25000){
-      return "Enter amount 100 - 25000";
+    if(enteredAmountInDouble <minAmount || enteredAmountInDouble> maxAmount){
+      return "Enter amount $minAmount - $maxAmount";
     }
 
     if(enteredAmountInDouble > balanceInDouble){

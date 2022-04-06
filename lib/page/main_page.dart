@@ -8,7 +8,9 @@ import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
 import 'package:spayindia/page/refund/refund_tab.dart';
 import 'package:spayindia/page/report/money_report/mone_report_controller.dart';
 import 'package:spayindia/page/report/tabs/transaction_tab.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/tags.dart';
+import 'package:upgrader/upgrader.dart';
 
 var isBottomNavShowObs = true.obs;
 
@@ -34,15 +36,29 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     appPreference.setIsTransactionApi(false);
-    abc();
-  }
 
-  void abc() async {
+    updateCheck();
 
   }
+
+  void updateCheck() async{
+    var isInitialized =await Upgrader().initialize();
+
+    AppUtil.logger("isInitialized : $isInitialized");
+
+   var isUpdateAvailable = Upgrader().isUpdateAvailable();
+
+
+    AppUtil.logger("isUpdateAvailable : $isUpdateAvailable");
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
+   var value= Upgrader().isUpdateAvailable();
+   AppUtil.logger("isupdate : $value");
+
     return WillPopScope(
       onWillPop: () async {
         if (bottomNavSelectedIndex == 2) {
@@ -57,10 +73,8 @@ class _MainPageState extends State<MainPage> {
       },
       child: StatusBarColorWidget(
         child: Scaffold(
-
           bottomNavigationBar: _buildBottomNavigationBar(),
           body: _bottomNavPage(),
-
         ),
       ),
     );

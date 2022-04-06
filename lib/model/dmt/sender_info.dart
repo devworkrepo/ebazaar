@@ -52,7 +52,6 @@ class SenderInfo{
                 senderName = json["remittername"];
                 senderNumber = json["mobileno"];
                 senderId = json["remitterid"];
-
                 senderNameObs.value = senderName ?? "";
                 senderNumberObs.value = senderNumber ?? "";
 

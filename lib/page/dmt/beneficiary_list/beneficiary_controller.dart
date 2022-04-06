@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/common_confirm_dialog.dart';
@@ -8,12 +10,16 @@ import 'package:spayindia/model/dmt/account_search.dart';
 import 'package:spayindia/model/dmt/beneficiary.dart';
 import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
+import 'package:spayindia/page/dmt/beneficiary_list/component/beneficiary_imported_dialog.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_kyc_info_dialog.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/transfer_mode_dailog.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
+
+import '../import_beneficiary/common.dart';
+
 
 class BeneficiaryListController extends GetxController {
   final Map<String, dynamic> args = Get.arguments;
@@ -64,7 +70,7 @@ class BeneficiaryListController extends GetxController {
 
       if (accountSearch != null) {
         var data = response.beneficiaries!.firstWhere(
-            (element) => element.accountNumber == accountSearch!.accountNumber);
+                (element) => element.accountNumber == accountSearch!.accountNumber);
         beneficiaries = [data];
       }
       else{
@@ -145,29 +151,31 @@ class BeneficiaryListController extends GetxController {
   onSendButtonClick(Beneficiary beneficiary) {
     Get.bottomSheet(TransferModeDialog(
       isLimitView: showAvailableTransferLimitObs.value,
-      senderInfo: sender!,
-      beneficiary: beneficiary,
-      onClick: (amount, type) {
-        Get.toNamed(RouteName.dmtTransactionPage, arguments: {
-          "sender": sender,
-          "beneficiary": beneficiary,
-          "dmtType": dmtType,
-          "type": type,
-          "amount": amount,
-          "isView": (showAvailableTransferLimitObs.value == true) ? "1" : "0"
-        });
-      },
-    ),isScrollControlled: true);
+          senderInfo: sender!,
+          beneficiary: beneficiary,
+          dmtType: dmtType,
+          onClick: (amount, type) {
+            Get.toNamed(RouteName.dmtTransactionPage, arguments: {
+              "sender": sender,
+              "beneficiary": beneficiary,
+              "dmtType": dmtType,
+              "type": type,
+              "amount": amount,
+              "isView":
+                  (showAvailableTransferLimitObs.value == true) ? "1" : "0",
+            });
+          },
+        ),isScrollControlled: true);
   }
 
   onNameChange() {
     Get.toNamed(RouteName.dmtChangeSenderNamePage,
-        arguments: {"sender": sender})?.then((value){
-          if(value != null){
-            var name = value as String;
-            sender?.senderName = name;
-            sender?.senderNameObs.value = name;
-          }
+        arguments: {"sender": sender})?.then((value) {
+      if (value != null) {
+        var name = value as String;
+        sender?.senderName = name;
+        sender?.senderNameObs.value = name;
+      }
     });
   }
 
@@ -184,10 +192,10 @@ class BeneficiaryListController extends GetxController {
 
   addBeneficiary() {
     Get.toNamed(RouteName.dmtBeneficiaryAddPage,
-        arguments: {"dmtType": dmtType, "mobile": sender!.senderNumber!})?.then((value){
-          if(value){
-            _fetchBeneficiary();
-          }
+        arguments: {"dmtType": dmtType, "mobile": sender!.senderNumber!})?.then((value) {
+      if (value) {
+        _fetchBeneficiary();
+      }
     });
   }
 
@@ -212,6 +220,38 @@ class BeneficiaryListController extends GetxController {
       Get.back();
       Get.to(() => ExceptionPage(error: e));
     }
-
   }
+
+  List<BeneficiaryListPopMenu> popupMenuList() => [
+        BeneficiaryListPopMenu(title: "Kyc Info", icon: Icons.qr_code_scanner),
+        BeneficiaryListPopMenu(
+            title: "Import Beneficiary", icon: Icons.import_export),
+      ];
+
+  onSelectPopupMenu(BeneficiaryListPopMenu i) {
+    if (i.title == "Kyc Info") {
+      fetchKycInfo();
+    } else if (i.title == "Import Beneficiary") {
+      Get.toNamed(RouteName.dmtImportBeneficiaryPage, arguments: sender!)
+          ?.then((value) {
+        if (value != null) {
+          if (value is List<ImportBeneficiaryMessage>) {
+            if (value.isNotEmpty) {
+              Get.bottomSheet(BeneficiaryImportedDialog(value),isScrollControlled: true)
+                  .then((value) {
+                    _fetchBeneficiary();
+              });
+            }
+          }
+        }
+      });
+    }
+  }
+}
+
+class BeneficiaryListPopMenu {
+  final String title;
+  final IconData icon;
+
+  BeneficiaryListPopMenu({required this.title, required this.icon});
 }

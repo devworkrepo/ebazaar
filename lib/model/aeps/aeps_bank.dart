@@ -5,23 +5,32 @@ class AepsBank{
   AepsBank._();
 
   AepsBank.fromJson(Map<String,dynamic> json){
-    id = json["iinno"];
-    name = json["bankName"];
+    id = json["id"];
+    name = json["name"];
   }
 }
 
-class AepsBankResponse{
-  late int status;
-  late String message;
+class AepsBankResponse {
+  late int code;
+  String? status;
+  String? message;
+  String? transactionNumber;
+  String? bcid;
+  bool? isEKcy;
   List<AepsBank>? aepsBankList;
 
   AepsBankResponse();
 
-  AepsBankResponse.fromJson(Map<String,dynamic> json){
+  AepsBankResponse.fromJson(Map<String, dynamic> json) {
+    code = json["code"];
     status = json["status"];
     message = json["message"];
-    if(json["bank_list"] != null ){
-      aepsBankList = List<AepsBank>.from(json["bank_list"].map((e)=>AepsBank.fromJson(e)));
+    transactionNumber = json["transaction_no"];
+    bcid = json["bcid"];
+    isEKcy = json["isekyc"];
+    if (json["banklist"] != null) {
+      aepsBankList = List<AepsBank>.from(
+          json["banklist"].map((e) => AepsBank.fromJson(e)));
     }
   }
 }

@@ -8,6 +8,7 @@ import 'package:spayindia/component/progress.dart';
 import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
 
 import 'beneficiary_add_controller.dart';
@@ -22,7 +23,7 @@ class BeneficiaryAddPage extends GetView<BeneficiaryAddController> {
       appBar: AppBar(
         title: const Text("Add Beneficiary"),
       ),
-      body: Obx(
+      body: ObsResourceWidget(obs: controller.bankListResponseObs,childBuilder:(data)=> _buildSenderAddForm(),) /*Obx(
           () => controller.bankListResponseObs.value.when(onSuccess: (data) {
                 if (data.code == 1) {
                   return _buildSenderAddForm();
@@ -37,7 +38,7 @@ class BeneficiaryAddPage extends GetView<BeneficiaryAddController> {
                 return AppProgressbar(
                   data: data,
                 );
-              })),
+              }))*/,
     );
   }
 

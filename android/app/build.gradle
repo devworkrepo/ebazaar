@@ -51,7 +51,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "app.spayindia.com"
+        applicationId "com.spayindia.app"
+       // applicationId "app.spayindia.com"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()

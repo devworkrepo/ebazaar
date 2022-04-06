@@ -5,6 +5,7 @@ import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
+import 'package:spayindia/page/refund/widget/refund_button_widget.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
 import '../../../model/refund/dmt_refund.dart';
@@ -132,6 +133,13 @@ class _BuildListItem extends StatelessWidget {
           ListTitleValue(
               title: "Message", value: report.transactionMessage.toString()),
         ],
+        actionWidget: RefundButtonWidget(onClick: (){
+          Get.bottomSheet(RefundBottomSheetDialog(
+            onProceed: (value){
+              controller.takeDmtRefund(value,report);
+            },
+          ),isScrollControlled: true);
+        },),
       ),
     );
   }

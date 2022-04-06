@@ -26,6 +26,7 @@ class RouteName {
   static const dmtTransactionResponsePage = "/dmt-transaction-response-page";
   static const dmtChangeSenderNamePage = "/dmt-change-sender-name-page";
   static const dmtChangeSenderMobilePage = "/dmt-change-sender-mobile-page";
+  static const dmtImportBeneficiaryPage = "/dmt-import-beneficiary-page";
 
 
   //fund request
@@ -51,7 +52,7 @@ class RouteName {
 //kyc
   static const documentKycPage = "/document-kyc-page";
   static const aadhaarKycPage = "/aadhaar-kyc-page";
-  static const aepsKycKycPage = "/aeps-kyc-page";
+  static const aepsEkycPage = "/aeps-kyc-page";
 
   //aeps settlement
   static const aepsSettlementBankListPage = "/aeps-settlement-bank-list-page";

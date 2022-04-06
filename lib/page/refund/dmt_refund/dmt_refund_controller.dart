@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/refund/dmt_refund.dart';
@@ -28,12 +29,28 @@ class DmtRefundController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       fetchReport();
     });
+  }
+
+  void takeDmtRefund(String mPin, DmtRefund report) async {
+    StatusDialog.progress();
+    var response = await repo.takeDmtRefund({
+      "transaction_no": report.transactionNumber ?? "",
+      "mpin": mPin,
+    });
+
+    Get.back();
+    if (response.code == 1) {
+      StatusDialog.success(title: response.message)
+          .then((value) => fetchReport());
+    } else {
+      StatusDialog.failure(title: response.message);
+    }
   }
 
   fetchReport() async {
@@ -60,7 +77,7 @@ class DmtRefundController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";

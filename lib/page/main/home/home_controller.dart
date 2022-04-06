@@ -108,6 +108,13 @@ class HomeController extends GetxController {
               arguments: {"dmtType": dmtType});
         }
         break;
+      case HomeServiceType.payoutTransfer:
+        {
+          var dmtType = DmtType.payout;
+          Get.toNamed(RouteName.dmtSearchSenderPage,
+              arguments: {"dmtType": dmtType});
+        }
+        break;
       case HomeServiceType.recharge:
         {
           Get.bottomSheet(RechargeOptionDialog(

@@ -13,5 +13,6 @@ abstract class ReportRepo{
   Future<MoneyReportResponse> fetchPayoutTransactionList(data);
   Future<DmtRefundListResponse> dmtRefundList(data);
   Future<DmtRefundListResponse> payoutRefundList(data);
+  Future<CommonResponse> takeDmtRefund(data);
 
 }

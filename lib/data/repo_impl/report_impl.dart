@@ -38,4 +38,10 @@ class ReportRepoImpl extends ReportRepo{
     return DmtRefundListResponse.fromJson(response.data);
   }
 
+  @override
+  Future<CommonResponse> takeDmtRefund(data) async {
+    var response = await  client.post("/ClaimDMTRefund",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
 }

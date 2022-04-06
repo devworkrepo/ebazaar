@@ -28,7 +28,6 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
 
   GlobalKey<FormState> fundRequestFormKey = GlobalKey<FormState>();
 
-  late WebViewController _webViewController;
   String selectedDate = DateUtil.formatter.format(DateTime.now());
 
   TextEditingController paymentDateController = TextEditingController();
@@ -36,8 +35,8 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
   TextEditingController remarkController = TextEditingController();
   TextEditingController uploadSlipController = TextEditingController();
   File? selectedImageFile;
-  late String paymentType;
-  late String paymentAccount;
+  var paymentTypeObs = "".obs;
+  var paymentAccountObs = "".obs;
 
   var bankTypeResponseObs = Resource
       .onInit(data: BankTypeDetailResponse())
@@ -66,19 +65,23 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
         typeList = response.typeList!;
         accountList = response.accountList!;
 
-        if (updateDetail != null) {
-          remarkController.text = updateDetail!.remark!;
-          amountController.text = "₹ ${updateDetail!.amount!}";
-          uploadSlipController.text = updateDetail!.picName!;
-          paymentDateController.text = updateDetail!.depositDate!;
-
-          paymentAccount = updateDetail!.bankAccountNumber!;
-          paymentType = updateDetail!.type!;
-        }
+        setupUpdateDetailData();
       }
       bankTypeResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       bankTypeResponseObs.value = Resource.onFailure(e);
+    }
+  }
+
+  void setupUpdateDetailData() {
+     if (updateDetail != null) {
+      remarkController.text = updateDetail!.remark!;
+      amountController.text = "₹ ${updateDetail!.amount!}";
+      uploadSlipController.text = updateDetail!.picName!;
+      paymentDateController.text = updateDetail!.depositDate!;
+
+      paymentAccountObs.value = updateDetail!.bankAccountNumber!;
+      paymentTypeObs.value = updateDetail!.type!;
     }
   }
 
@@ -164,8 +167,9 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {
+      AppUtil.logger(e.toString());
       Get.back();
-      Get.to(() => ExceptionPage(error: Exception(e)));
+     // Get.to(() => ExceptionPage(error: Exception(e)));
     }
   }
 
@@ -180,14 +184,19 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
       "sessionkey": appPreference.sessionKey,
       "dvckey": await AppUtil.getDeviceID(),
       "transaction_no": detail.transactionNumber!,
-      "paymenttype": paymentType,
-      "bankaccount": paymentAccount,
+      "paymenttype": paymentTypeObs.value,
+      "bankaccount": paymentAccountObs.value,
       "date": paymentDateController.text,
       "remark": remarkController.text,
       "amount": amountWithoutRupeeSymbol(amountController),
       "images ": fileData,
     };
-    param.addIf(updateDetail != null, "requestid", updateDetail!.requestId!);
+
+    if(updateDetail !=null){
+      var requestId = updateDetail?.requestId ?? "";
+      param.addIf(true, "requestid", requestId);
+    }
+
     return dio.FormData.fromMap(param);
   }
 
@@ -196,8 +205,13 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
         title: "Confirm Request ?",
         amount: amountController.text.toString(),
         onConfirm: () {
-          //_makeFundRequest();
+
           _moneyRequestBond();
         }));
+  }
+
+  void onUpdateDetail (MoneyRequestUpdateResponse value) {
+    updateDetail = value;
+    setupUpdateDetailData();
   }
 }

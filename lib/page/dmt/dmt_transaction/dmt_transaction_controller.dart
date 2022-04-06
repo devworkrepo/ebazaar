@@ -57,23 +57,22 @@ class DmtTransactionController extends GetxController
 
   _confirmDialog() {
     var widgetList = <ListTitleValue>[];
-    if (dmtType == DmtType.instantPay) {
-      widgetList = [
+
+    widgetList = [
         ListTitleValue(title: "Name", value: beneficiary.name ?? ""),
         ListTitleValue(
             title: "A/C No.", value: beneficiary.accountNumber ?? ""),
         ListTitleValue(title: "Bank", value: beneficiary.bankName ?? ""),
         ListTitleValue(title: "IFSc", value: beneficiary.ifscCode ?? ""),
       ];
-    }
 
     Get.dialog(AmountConfirmDialogWidget(
         amount: amount,
         detailWidget: widgetList,
         onConfirm: () {
-          if (dmtType == DmtType.instantPay) {
+
             _dmtTransfer();
-          }
+
         }));
   }
 
@@ -88,21 +87,29 @@ class DmtTransactionController extends GetxController
       StatusDialog.transaction();
 
       DmtTransactionResponse response;
-      if ((sender.isKycVerified ?? false)) {
-        response = await repo.kycTransaction(_transactionParam());
-      } else {
-        response = await repo.nonKycTransaction(_transactionParam());
+
+      switch (dmtType) {
+        case DmtType.instantPay:
+          if ((sender.isKycVerified ?? false)) {
+            response = await repo.kycTransaction(_transactionParam());
+          } else {
+            response = await repo.nonKycTransaction(_transactionParam());
+          }
+          break;
+        case DmtType.payout:
+          response = await repo.payoutTransaction(_transactionParam());
+          break;
       }
 
       Get.back();
 
-      if(response.code == 0){
+      if (response.code == 0) {
         StatusDialog.failure(title: response.message);
-      }
-      else{
-        Get.to(()=>DmtTxnResponsePage(),arguments: {
-          "response" : response,
+      } else {
+        Get.to(() => DmtTxnResponsePage(), arguments: {
+          "response": response,
           "amount" : amount,
+          "dmtType" : dmtType
         });
       }
 
@@ -135,11 +142,17 @@ class DmtTransactionController extends GetxController
 
       calculateChargeResponseObs.value = const Resource.onInit();
       CalculateChargeResponse response;
-      if (sender.isKycVerified!) {
-        response   = await repo.calculateKycCharge(param);
+
+      if (dmtType == DmtType.instantPay) {
+        if (sender.isKycVerified!) {
+          response = await repo.calculateKycCharge(param);
+        } else {
+          response = await repo.calculateNonKycCharge(param);
+        }
       } else {
-        response  = await repo.calculateNonKycCharge(param);
+        response = await repo.calculatePayoutCharge(param);
       }
+
       calculateChargeResponse = response;
       calculateChargeResponseObs.value = Resource.onSuccess(response);
     } catch (e) {

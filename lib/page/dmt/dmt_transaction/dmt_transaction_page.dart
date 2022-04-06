@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:number_to_words/number_to_words.dart';
-import 'package:spayindia/component/api_component.dart';
 import 'package:spayindia/component/button.dart';
 import 'package:spayindia/component/common/wallet_widget.dart';
 import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/component/bank_detail_widget.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/component/dmt_calculate_charge.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_controller.dart';
-import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
 
 import '../dmt.dart';
@@ -23,7 +22,10 @@ class DmtTransactionPage extends GetView<DmtTransactionController> {
       appBar: AppBar(
         title: Text(DmtHelper.getAppbarTitle(controller.dmtType)),
       ),
-      body: Obx(() {
+      body: ObsResourceWidget(
+        obs: controller.calculateChargeResponseObs,
+        childBuilder:(data)=> _buildBody(),
+      ) /*Obx(() {
         return controller.calculateChargeResponseObs.value.when(
             onSuccess: (data) {
           if (data.code == 1) {
@@ -36,7 +38,8 @@ class DmtTransactionPage extends GetView<DmtTransactionController> {
         }, onInit: (data) {
           return ApiProgress(data);
         });
-      }),
+      })*/
+      ,
     );
   }
 

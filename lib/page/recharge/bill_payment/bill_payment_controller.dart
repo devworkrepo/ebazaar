@@ -44,7 +44,7 @@ class BillPaymentController extends GetxController
 
   var extraParamResponseObs =
       Resource.onInit(data: BillExtraParamResponse()).obs;
-  late BillExtraParamResponse extraParam;
+  late BillExtraParamResponse extraParamResponse;
   late BillInfoResponse billInfoResponse;
 
   var strDueDate = "";
@@ -78,7 +78,7 @@ class BillPaymentController extends GetxController
           response.field2 = "Date of Birth";
           response.field3 = "Email ID";
         }
-        extraParam = response;
+        extraParamResponse = response;
         extraParamResponseObs.value = Resource.onSuccess(response);
       } else {
         throw "Extra param status was not success! please contact with admin";
@@ -177,7 +177,7 @@ class BillPaymentController extends GetxController
         "field3": fieldThreeController.text,
         "mobileno": mobileNumberController.text,
         "operatorid": provider.id.toString(),
-        "transaction_no": extraParam.transactionNumber ?? "",
+        "transaction_no": extraParamResponse.transactionNumber ?? "",
         "cattype": getProviderInfo(providerType)?.requestParam ?? "",
       });
       Get.back();

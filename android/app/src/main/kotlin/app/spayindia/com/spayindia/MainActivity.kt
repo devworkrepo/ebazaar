@@ -6,6 +6,7 @@ import app.spayindia.com.AppConstant
 import app.spayindia.com.AppConstant.AEPS_SERVICE_METHOD_NAME
 import app.spayindia.com.AppConstant.MATM_SERVICE_METHOD_NAME
 import app.spayindia.com.AppConstant.METHOD_CHANNEL
+import app.spayindia.com.AppConstant.RD_SERVICE_SERIAL_NUMBER
 import app.spayindia.com.XmPidParser
 import com.fingpay.microatmsdk.MicroAtmLoginScreen
 import com.fingpay.microatmsdk.utils.Constants
@@ -30,7 +31,7 @@ class MainActivity : FlutterFragmentActivity() {
             METHOD_CHANNEL
         ).setMethodCallHandler { call, rawResult ->
 
-            result= MethodResultWrapper(rawResult)
+            result = MethodResultWrapper(rawResult)
 
             when {
                 call.method.equals(AEPS_SERVICE_METHOD_NAME) -> {
@@ -38,6 +39,15 @@ class MainActivity : FlutterFragmentActivity() {
                 }
                 call.method.equals(MATM_SERVICE_METHOD_NAME) -> {
                     launchMatm(call)
+                }
+                call.method.equals(RD_SERVICE_SERIAL_NUMBER) -> {
+                   try{
+                       val mData =
+                           XmPidParser.getDeviceSerialNumber(call.argument<String>("pidData") ?: "")
+                       result!!.success(mData)
+                   }catch (e : Exception){
+                       result!!.error("0","Exception raised",e.message)
+                   }
                 }
             }
         }
@@ -158,7 +168,7 @@ class MainActivity : FlutterFragmentActivity() {
             val status: Boolean = intent.getBooleanExtra(Constants.TRANS_STATUS, false)
             val transAmount: Double = intent.getDoubleExtra(Constants.TRANS_AMOUNT, 0.0)
             val balAmount: Double = intent.getDoubleExtra(Constants.BALANCE_AMOUNT, 0.0)
-            val bankRrn: String= intent.getStringExtra(Constants.RRN) ?: ""
+            val bankRrn: String = intent.getStringExtra(Constants.RRN) ?: ""
             val bankName: String = intent.getStringExtra(Constants.BANK_NAME) ?: ""
             val cardNumber: String = intent.getStringExtra(Constants.CARD_NUM) ?: ""
             val message: String = intent.getStringExtra(Constants.MESSAGE) ?: ""

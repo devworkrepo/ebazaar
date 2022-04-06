@@ -13,7 +13,9 @@ showFailureSnackbar({
 showSuccessSnackbar({
   required String title,
   required String message,
+  SnackPosition position = SnackPosition.TOP
+
 }) {
   Get.snackbar(title, message,
-      backgroundColor: Colors.green, colorText: Colors.white);
+      backgroundColor: Colors.green, colorText: Colors.white,snackPosition: position);
 }

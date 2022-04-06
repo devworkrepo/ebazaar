@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/button.dart';
 import 'package:spayindia/component/drop_down.dart';
-import 'package:spayindia/component/progress.dart';
 import 'package:spayindia/component/radio.dart';
 import 'package:spayindia/component/status_bar_color_widget.dart';
 import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/util/input_validator.dart';
+import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
 
-import '../exception_page.dart';
 import 'aeps_controller.dart';
 
 class AepsPage extends GetView<AepsController> {
@@ -25,7 +24,10 @@ class AepsPage extends GetView<AepsController> {
         appBar: AppBar(
           title: Text(controller.getTitle()),
         ),
-        body: Obx(() =>
+        body: ObsResourceWidget(
+          obs: controller.aepsBankListResponseObs,
+          childBuilder: (data) => _buildBody(),
+        ) /*Obx(() =>
             controller.aepsBankListResponseObs.value.when(onSuccess: (data) {
 
                 controller.bankList = data.banks;
@@ -37,7 +39,8 @@ class AepsPage extends GetView<AepsController> {
               return AppProgressbar(
                 data: data,
               );
-            })),
+            }))*/
+        ,
       ),
     );
   }
@@ -95,11 +98,11 @@ class AepsPage extends GetView<AepsController> {
                       MobileTextField(controller: controller.mobileController),
                       AppDropDown(
                         maxHeight: Get.height *0.75,
-                        list: List.from(controller.bankList.map((e) => e.bankName)),
+                        list: List.from(controller.bankList.map((e) => e.name)),
                         onChange: (value) {
                           try {
                             controller.selectedAepsBank = controller.bankList
-                                .firstWhere((element) => element.bankName == value);
+                                .firstWhere((element) => element.name == value);
                           } catch (e) {
                             controller.selectedAepsBank = null;
                             Get.snackbar("Bank is not selected",
@@ -147,20 +150,12 @@ class AepsPage extends GetView<AepsController> {
                         ),
                         AppRadioButton<AepsTransactionType>(
                           groupValue: controller.aepsTransactionType.value,
-                          value: AepsTransactionType.balanceEquiry,
+                          value: AepsTransactionType.balanceEnquiry,
                           title: "Balance Enquiry",
                           onChange: (AepsTransactionType type) {
                             controller.aepsTransactionType.value = type;
                           },
                         ),
-                        AppRadioButton<AepsTransactionType>(
-                       groupValue: controller.aepsTransactionType.value,
-                                value: AepsTransactionType.miniStatement,
-                                title: "Mini Statement",
-                                onChange: (AepsTransactionType type) {
-                                  controller.aepsTransactionType.value = type;
-                                },
-                              ),
                             ],
                           ),
                         ),
@@ -204,6 +199,5 @@ class AepsPage extends GetView<AepsController> {
 
 enum AepsTransactionType {
   cashWithdrawal,
-  balanceEquiry,
-  miniStatement,
+  balanceEnquiry,
 }

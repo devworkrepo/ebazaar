@@ -73,7 +73,7 @@ class RechargePage extends GetView<RechargeController> {
     return Row(
       children: [
         AppCircleAssetSvg(
-            "assets/home/${getProviderInfo(controller.providerType)?.imageName}.svg"),
+            "assets/svg/${getProviderInfo(controller.providerType)?.imageName}.svg"),
         Expanded(
           child: Text(
             controller.provider.name,

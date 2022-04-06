@@ -10,7 +10,7 @@ class AppBackgroundImage extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage("assets/images/login_background.png"))),
+                image: AssetImage("assets/image/login_background.png"))),
         child: child,
       );
   }

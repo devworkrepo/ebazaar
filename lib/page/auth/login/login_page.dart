@@ -98,7 +98,7 @@ class _LoginForm extends GetView<LoginController> {
   _appLogo() => Container(
     color: Colors.transparent,
     child: Image.asset(
-          "assets/images/logo.png",
+          "assets/image/logo.png",
           width: 100,
         ),
   );

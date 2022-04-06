@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/progress.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_controller.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_beneficiary_list_item.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_kyc_info_dialog.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/sender_header.dart';
-import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
+import 'package:spayindia/util/obx_widget.dart';
 
 class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   const BeneficiaryListPage({Key? key}) : super(key: key);
@@ -18,15 +16,19 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>controller.addBeneficiary(),
+        onPressed: () => controller.addBeneficiary(),
         child: const Icon(Icons.add),
       ),
-      body: Obx(() => controller.beneficiaryResponseObs.value.when(
+      body: ObsResourceWidget(
+          obs: controller.beneficiaryResponseObs,
+          childBuilder: (data)=>_buildBody())
+      /*Obx(() => controller.beneficiaryResponseObs.value.when(
           onSuccess: (data) => _buildBody(),
           onFailure: (e) => ExceptionPage(error: e),
           onInit: (data) => AppProgressbar(
                 data: data,
-              ))),
+              )))*/
+      ,
     );
   }
 
@@ -42,16 +44,17 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   SliverAppBar _buildSilverAppbar() {
     return SliverAppBar(
       actions: [
-        PopupMenuButton<String>(
-          onSelected: (i){
-            controller.fetchKycInfo();
-          },
-
+        PopupMenuButton<BeneficiaryListPopMenu>(
+          onSelected: (i)=>controller.onSelectPopupMenu(i),
           itemBuilder: (BuildContext context) {
-            return {'Kyc Info'}.map((String choice) {
-              return PopupMenuItem<String>(
+            return controller.popupMenuList().map((BeneficiaryListPopMenu choice) {
+              return PopupMenuItem<BeneficiaryListPopMenu>(
                 value: choice,
-                child: Text(choice),
+                child: Row(children: [
+                  Icon(choice.icon,size: 24,color: Colors.black,),
+                  const SizedBox(width: 8,),
+                  Text(choice.title)
+                ],),
               );
             }).toList();
           },
@@ -83,6 +86,8 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   }
 
   SliverList _buildSilverList() {
+
+
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, int index) {
@@ -102,3 +107,4 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
     );
   }
 }
+

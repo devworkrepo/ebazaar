@@ -109,7 +109,7 @@ class _BuildItem extends StatelessWidget {
               children: [
                 SizedBox(
                   width: 60,
-                    child: SvgPicture.asset("assets/home/$svgName.svg",)),
+                    child: SvgPicture.asset("assets/svg/$svgName.svg",)),
                 Text(
                   title,
                   style: Get.textTheme.bodyText1,
