@@ -1,6 +1,7 @@
 package app.spayindia.com.spayindia
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.annotation.NonNull
 import app.spayindia.com.AppConstant
 import app.spayindia.com.AppConstant.AEPS_SERVICE_METHOD_NAME
@@ -66,6 +67,18 @@ class MainActivity : FlutterFragmentActivity() {
             val latitude = call.argument<Double>("latitude")
             val longitude = call.argument<Double>("longitude")
             val type = call.argument<Int>("type")
+
+            Toast.makeText(this, "merchantUserId $merchantUserId", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "merchantPassword $merchantPassword", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "superMerchantId $superMerchantId", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "amount $amount", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "remark $remark", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "mobileNumber $mobileNumber", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "txnId $txnId", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "imei $imei", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "latitude $latitude", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "longitude $longitude", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "type $type", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(
                 this@MainActivity,
