@@ -164,15 +164,14 @@ class MainActivity : FlutterFragmentActivity() {
             "Unable to parse result data for micro-atm activity, please contact with admin!";
 
         try {
-
-            val status: Boolean = intent.getBooleanExtra(Constants.TRANS_STATUS, false)
-            val transAmount: Double = intent.getDoubleExtra(Constants.TRANS_AMOUNT, 0.0)
-            val balAmount: Double = intent.getDoubleExtra(Constants.BALANCE_AMOUNT, 0.0)
-            val bankRrn: String = intent.getStringExtra(Constants.RRN) ?: ""
-            val bankName: String = intent.getStringExtra(Constants.BANK_NAME) ?: ""
-            val cardNumber: String = intent.getStringExtra(Constants.CARD_NUM) ?: ""
-            val message: String = intent.getStringExtra(Constants.MESSAGE) ?: ""
-            val time: String = intent.getStringExtra(Constants.TIME_STAMP) ?: ""
+            val status: Boolean = data?.getBooleanExtra(Constants.TRANS_STATUS, false) ?: false
+            val transAmount: Double = data?.getDoubleExtra(Constants.TRANS_AMOUNT, 0.0) ?: 0.0
+            val balAmount: Double = data?.getDoubleExtra(Constants.BALANCE_AMOUNT, 0.0) ?: 0.0
+            val bankRrn: String = data?.getStringExtra(Constants.RRN) ?: ""
+            val bankName: String = data?.getStringExtra(Constants.BANK_NAME) ?: ""
+            val cardNumber: String = data?.getStringExtra(Constants.CARD_NUM) ?: ""
+            val message: String = data?.getStringExtra(Constants.MESSAGE) ?: ""
+            val time: String = data?.getStringExtra(Constants.TIME_STAMP) ?: ""
 
 
             result?.success(

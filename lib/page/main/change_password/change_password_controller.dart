@@ -18,13 +18,11 @@ class ChangePasswordController extends GetxController {
   var formKey = GlobalKey<FormState>();
 
   changePassword() async {
-    //todo remove and implement  change password api
-    showFailureSnackbar(title: "Coming soon", message: "work on progress");
-    return;
+
     try {
       StatusDialog.progress(title: "Progressing");
 
-      var response = await repo.changePassword(
+      var response = await repo.requestOtp(
           {
             "old_password": oldPasswordController.text.toString(),
             "new_password": newPasswordController.text.toString(),
@@ -32,7 +30,7 @@ class ChangePasswordController extends GetxController {
           });
       Get.back();
 
-      if (response.status == 1) {
+      if (response.code == 1) {
         StatusDialog.success(title: response.message)
             .then((value) => Get.offAllNamed(RouteName.loginPage));
       } else {

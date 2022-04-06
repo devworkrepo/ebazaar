@@ -12,6 +12,8 @@ import 'package:spayindia/model/kyc/document_kyc_list.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
 
+import '../../model/matm/matm_request_response.dart';
+
 class AepsRepoImpl extends AepsRepo{
   
   NetworkClient client = Get.find();
@@ -31,6 +33,18 @@ class AepsRepoImpl extends AepsRepo{
   @override
   Future<CommonResponse> eKycRequestOtp(data) async {
     var response = await client.post("/SendKycOTP",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<MatmRequestResponse> initiateMatm(data) async {
+    var response = await client.post("/MatmTransactionRequest",data: data);
+    return MatmRequestResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> getMamtTransactionNumber() async {
+    var response = await client.post("/GetTransactionNo",);
     return CommonResponse.fromJson(response.data);
   }
 

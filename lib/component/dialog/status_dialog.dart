@@ -215,7 +215,7 @@ class StatusDialog {
     );
   }
 
-  static pending({required String title}) {
+  static Future pending({required String title}) {
     return Get.dialog(
       _StatusDialog(
         title: title,

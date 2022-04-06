@@ -29,34 +29,24 @@ class HomeRepoImpl extends HomeRepo {
     return UserDetail.fromJson(response.data);
   }
 
+
+
   @override
-  Future<StatusMessageResponse> verifyPin(data) async {
-    var response = await client.post("verify-pin",data: data);
-    return StatusMessageResponse.fromJson(response.data);
+  Future<CommonResponse> requestOtp(data) async {
+    var response = await client.post("/ChangeOTP",data : data);
+    return CommonResponse.fromJson(response.data);
   }
 
   @override
-  Future<StatusMessageResponse> changePassword(data) async{
-    var response = await client.post("change-password",data: data);
-    return StatusMessageResponse.fromJson(response.data);
+  Future<CommonResponse> changePassword(data) async {
+    var response = await client.post("/ChangePassword",data : data);
+    return CommonResponse.fromJson(response.data);
   }
 
   @override
-  Future<StatusMessageResponse> requestOtpForGenerateMPin() async {
-    var response = await client.get("/generate-otp-for-pin");
-    return StatusMessageResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<StatusMessageResponse> verifyGenerateMPin(data) async {
-    var response = await client.post("/verify-generated-pin",data: data);
-    return StatusMessageResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<NewsResponse> fetchNews() async {
-    var response = await client.get("news");
-    return NewsResponse.fromJson(response.data);
+  Future<CommonResponse> changePin(data) async {
+    var response = await client.post("/ChangeMPIN",data : data);
+    return CommonResponse.fromJson(response.data);
   }
 
 

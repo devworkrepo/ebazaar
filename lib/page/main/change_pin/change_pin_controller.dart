@@ -17,14 +17,12 @@ class ChangePinController extends GetxController {
   var formKey = GlobalKey<FormState>();
 
   requestOtp() async {
-    //todo remove and implement change pin api
-    showFailureSnackbar(title: "Coming soon", message: "work on progress");
-    return;
+
     try {
       StatusDialog.progress(title: "Generating Otp");
-      var response = await repo.requestOtpForGenerateMPin();
+      var response = await repo.requestOtp({"otptype" : "mpin"});
       Get.back();
-      if (response.status == 1) {
+      if (response.code == 1) {
         Get.dialog(OtpDialogWidget(
           onSubmit: (String otp) {
             verifyOtp(otp);
@@ -42,13 +40,12 @@ class ChangePinController extends GetxController {
   verifyOtp(String otp) async {
     try {
       StatusDialog.progress(title: "Verifying");
-      var response = await repo.verifyGenerateMPin({
-        "txn_pin": newMPinController.text.toString(),
-        "confirm_txn_pin": confirmMPinController.text.toString(),
+      var response = await repo.changePin({
+        "newpin": newMPinController.text.toString(),
         "otp": otp,
       });
       Get.back();
-      if (response.status == 1) {
+      if (response.code == 1) {
         StatusDialog.success(title: response.message)
             .then((value) => Get.back());
       } else {
