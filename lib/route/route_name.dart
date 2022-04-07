@@ -43,21 +43,20 @@ class RouteName {
   static const changePassword = "/change-password";
   static const changePin = "/change-pin";
 
+
+
   //report
   static const transactionReportPage = "/transaction-report-page";
   static const aepsAllReportPage = "/aeps-all-report-page";
   static const complainListPage = "/complain-list-page";
   static const complainPostPage = "/complain-post-page";
 
-//kyc
-  static const documentKycPage = "/document-kyc-page";
-  static const aadhaarKycPage = "/aadhaar-kyc-page";
+
   static const aepsEkycPage = "/aeps-kyc-page";
 
-  //aeps settlement
-  static const aepsSettlementBankListPage = "/aeps-settlement-bank-list-page";
-  static const aepsSettlementAddBankPage = "/aeps-settlement-add-bank-page";
-  static const aepsSettlementTransferPage = "/aeps-settlement-transfer-page";
+
+
+  static const aepsOnboardingPage = "/aeps-onboarding-page";
 
 
   //wallet to wallet

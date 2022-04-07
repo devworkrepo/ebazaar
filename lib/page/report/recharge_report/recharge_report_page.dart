@@ -4,30 +4,27 @@ import 'package:spayindia/component/api_component.dart';
 import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/model/report/dmt.dart';
+import 'package:spayindia/model/report/recharge.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/route_aware_widget.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
 import '../report_helper.dart';
 import '../report_search.dart';
-import 'mone_report_controller.dart';
+import 'recharge_report_controller.dart';
 
-class MoneyReportPage extends GetView<MoneyReportController> {
-  final String controllerTag;
+class RechargeReportPage extends GetView<RechargeReportController> {
 
-  @override
-  String? get tag => controllerTag;
-
-  const MoneyReportPage({Key? key, required this.controllerTag}) : super(key: key);
+  const RechargeReportPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MoneyReportController(controllerTag), tag: controllerTag);
+    Get.put(RechargeReportController());
     return Scaffold(
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
-                if (data.reports!.isEmpty) {
+                if (data.rechargeReport!.isEmpty) {
                   return const NoItemFoundWidget();
                 } else {
                   return _buildListBody();
@@ -78,7 +75,7 @@ class MoneyReportPage extends GetView<MoneyReportController> {
         color:Colors.white,
         margin: const EdgeInsets.only(bottom: 8,left: 8,right: 8,top: 8,),
         child: ListView.builder(padding: const EdgeInsets.only(top: 0),itemBuilder: (context, index) {
-          return _BuildListItem(list[index],controller: controller,);
+          return _BuildListItem(list[index],);
         },itemCount: count,),
       ),
     );
@@ -87,11 +84,11 @@ class MoneyReportPage extends GetView<MoneyReportController> {
 
 
 
-class _BuildListItem extends StatelessWidget {
-  final MoneyReport report;
-  final MoneyReportController controller;
+class _BuildListItem extends GetView<RechargeReportController> {
+  final RechargeReport report;
 
-  const _BuildListItem(this.report, {Key? key,required this.controller}) : super(key: key);
+
+  const _BuildListItem(this.report, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,23 +96,20 @@ class _BuildListItem extends StatelessWidget {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
         isExpanded: report.isExpanded,
-        title:""+ report.accountNumber.orNA(),
-        subTitle: report.beneficiaryName.orNA(),
-        date: "Date : "+report.date.orNA(),
+        title:""+ report.mobileNumber.orNA(),
+        subTitle: report.rechargeType.orNA().toUpperCase(),
+        date: "Date : "+report.transactionDate.orNA(),
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId:  ReportHelperWidget.getStatusId(report.transactionStatus),
 
 
         expandList: [
-          ListTitleValue(title: "Remitter Number", value: report.senderNubber.toString()),
-          ListTitleValue(title: "Txn Number", value: report.transactionNumber.toString()),
-          ListTitleValue(title: "Beneficary Name", value: report.beneficiaryName.toString()),
-          ListTitleValue(title: "Account Number", value: report.accountNumber.toString()),
-          ListTitleValue(title: "Transaction Type", value: report.transactionType.toString()),
-          ListTitleValue(title: "Commission", value: report.commission.toString()),
-          ListTitleValue(title: "UTR Number", value: report.utrNumber.toString()),
-          ListTitleValue(title: "Message", value: report.transactionMessage.toString()),
+          ListTitleValue(title: "Operator Name", value: report.operatorName.toString()),
+          ListTitleValue(title: "Pay Id", value: report.payId.toString()),
+          ListTitleValue(title: "Ref Mobile No", value: report.refMobileNumber.toString()),
+          ListTitleValue(title: "Operator Ref", value: report.operatorRefNumber.toString()),
+          ListTitleValue(title: "Message", value: report.transactionResponse.toString()),
 
         ],
      ),

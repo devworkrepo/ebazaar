@@ -67,14 +67,32 @@ class HomeDrawerWidget extends GetView<HomeController> {
                   _NavSubTitle(
                     title: "Change Password",
                     onClick: () => Get.toNamed(RouteName.changePassword),
-                    count: 2,
+                    count: 1,
                   ),
 
                   _NavSubTitle(
                     title: "Change Pin",
                     onClick: () => Get.toNamed(RouteName.changePin),
                     underline: false,
-                    count: 3,
+                    count: 2,
+                  )
+                ],
+              ),
+              _NavTitle(
+                title: "Aeps Service",
+                icon: Icons.fingerprint,
+                children: [
+                  _NavSubTitle(
+                    title: "On Board",
+                    onClick: () => Get.toNamed(RouteName.aepsOnboardingPage),
+                    count: 1,
+                  ),
+
+                  _NavSubTitle(
+                    title: "E-Kyc",
+                    onClick: () => Get.toNamed(RouteName.changePin),
+                    underline: false,
+                    count: 2,
                   )
                 ],
               ),

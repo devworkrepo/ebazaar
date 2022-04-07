@@ -6,8 +6,13 @@ import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/page/main/home/home_page.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
 import 'package:spayindia/page/refund/refund_tab.dart';
+import 'package:spayindia/page/report/aeps_matm_report/aeps_matm_report_controller.dart';
 import 'package:spayindia/page/report/money_report/mone_report_controller.dart';
-import 'package:spayindia/page/report/tabs/transaction_tab.dart';
+import 'package:spayindia/page/report/recharge_report/recharge_report_controller.dart';
+import 'package:spayindia/page/report/transaction_tab.dart';
+import 'package:spayindia/page/statement/account_statement/account_statement_controller.dart';
+import 'package:spayindia/page/statement/credit_debit/credit_debit_controller.dart';
+import 'package:spayindia/page/statement/statement_tab.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/tags.dart';
 import 'package:upgrader/upgrader.dart';
@@ -153,11 +158,20 @@ class _MainPageState extends State<MainPage> {
         Get.delete<DmtRefundController>(tag: AppTag.payoutRefundControllerTag);
         Get.delete<DmtRefundController>(tag: AppTag.moneyRefundControllerTag);
         return const RefundTabPage();
+      case 1:
+        Get.delete<AccountStatementController>(tag: AppTag.accountStatementControllerTag);
+        Get.delete<AccountStatementController>(tag: AppTag.aepsStatementControllerTag);
+        Get.delete<CreditDebitController>(tag: AppTag.creditStatementControllerTag);
+        Get.delete<CreditDebitController>(tag: AppTag.debitStatementControllerTag);
+        return const StatementTabPage();
       case 2:
         return const HomePage();
       case 3:
         Get.delete<MoneyReportController>(tag: AppTag.payoutReportControllerTag);
         Get.delete<MoneyReportController>(tag: AppTag.moneyReportControllerTag);
+        Get.delete<RechargeReportController>();
+        Get.delete<AepsMatmReportController>(tag: AppTag.aepsReportControllerTag);
+        Get.delete<AepsMatmReportController>(tag: AppTag.matmReportControllerTag);
         return const TransactionTabPage();
       default:
         return Center(

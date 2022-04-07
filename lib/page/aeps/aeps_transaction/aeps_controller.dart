@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/confirm_amount_dialog.dart';
 import 'package:spayindia/component/dialog/aeps_rd_service_dialog.dart';
 import 'package:spayindia/component/dialog/status_dialog.dart';
@@ -64,7 +63,7 @@ class AepsController extends GetxController with TransactionHelperMixin {
           if (data.code == 1) {
             bankListResponse = data;
             bankList = data.aepsBankList!;
-            if (data.isEKcy!) {
+            if (!data.isEKcy!) {
               Get.bottomSheet(
                   EkycInfoWidget(onClick: () {
                     Get.back();
@@ -121,20 +120,19 @@ class AepsController extends GetxController with TransactionHelperMixin {
       transactionType = "Balance Enquiry";
     }
 
-    var isAmountNull = (isAadhaarPay)
+    var isAmountNull = (isAadhaarPay ||
+            aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
         ? false
-        : (aepsTransactionType.value == AepsTransactionType.balanceEnquiry)
-            ? true
-            : false;
+        : true;
 
     Get.dialog(AmountConfirmDialogWidget(
         amount: (isAmountNull) ? null : amountController.text.toString(),
         detailWidget: [
           ListTitleValue(
-              title: "Aadhaar Number",
+              title: "Aadhaar No.",
               value: aadhaarNumberController.text.toString()),
-          ListTitleValue(title: "Transaction Type", value: transactionType),
-          ListTitleValue(title: "Bank", value: selectedAepsBank?.name ?? ""),
+          ListTitleValue(title: "Txn Type", value: transactionType),
+          ListTitleValue(title: "Bank Name", value: selectedAepsBank?.name ?? ""),
         ],
         onConfirm: () {
           _aepsTransaction(data);

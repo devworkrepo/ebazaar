@@ -22,11 +22,13 @@ import 'package:spayindia/page/recharge/bill_payment/bill_payment_page.dart';
 import 'package:spayindia/page/recharge/provider/provider_page.dart';
 import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/page/report/fund_report/fund_report_page.dart';
-import 'package:spayindia/page/report/tabs/transaction_tab.dart';
+import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_transfer/wallet_transfer_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/test/test_image_picker.dart';
+
+import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 
 final getAllPages = [
   GetPage(
@@ -69,6 +71,10 @@ final getAllPages = [
   GetPage(
     name: RouteName.aepsEkycPage,
     page: () => const AepsEKycPage(),
+  ),
+  GetPage(
+    name: RouteName.aepsOnboardingPage,
+    page: () => const AepsOnboardingPage(),
   ),
   GetPage(
     name: RouteName.mamtPage,

@@ -46,11 +46,14 @@ class MatmController extends GetxController
     }
 
     Get.dialog(AmountConfirmDialogWidget(
+        amount: (transactionType.value == MatmTransactionType.cashWithdrawal)
+            ? amountController.text
+            : null,
         title: "Matm Transaction ? ",
         detailWidget: [
-          ListTitleValue(title: "Mobile Number", value: mobileController.text),
+          ListTitleValue(title: "Mobile No.", value: mobileController.text),
           ListTitleValue(
-              title: "Transaction Type", value: getTransactionTypeInString()),
+              title: "Txn Type", value: getTransactionTypeInString()),
         ],
         onConfirm: () {
           _getTransactionNumber();
@@ -81,7 +84,9 @@ class MatmController extends GetxController
         "cust_mobile": mobileController.text,
         "txntype": getSpayRequestTxnType(),
         "deviceid": await AppUtil.getDeviceID(),
-        "amount": amountWithoutRupeeSymbol(amountController),
+        "amount": transactionType.value == MatmTransactionType.balanceEnquiry
+            ? "0"
+            : amountWithoutRupeeSymbol(amountController),
         "latitude": position!.latitude.toString(),
         "longitude": position!.longitude.toString()
       });

@@ -59,6 +59,7 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
                 _buildTitleWidget(),
                 _buildDescription(),
                 _buildAmountTextWidget(),
+                SizedBox(height: 16,),
                 _buildDetailWidgets(),
                 // _buildAmountWidget(),
                 SizedBox(
@@ -115,37 +116,38 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
     }
 
     return AmountBackgroundWidget(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 12,
-          ),
-          ...widget.detailWidget!.map((e) => Column(
-                children: [
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          flex: 2,
-                          child: Text(
-                            e.title,
-                            style: Get.textTheme.subtitle1,
-                          )),
-                      const BuildDotWidget(),
-                      Expanded(
-                          flex: 5,
-                          child: Text(
-                            e.value,
-                            style: Get.textTheme.subtitle1
-                                ?.copyWith(fontWeight: FontWeight.w400),
-                          )),
-                    ],
-                  )
-                ],
-              ))
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+
+            ...widget.detailWidget!.map((e) => Column(
+                  children: [
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            flex: 3,
+                            child: Text(
+                              e.title,
+                              style: Get.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.w400,fontSize: 16),
+                            )),
+                        const BuildDotWidget(),
+                        Expanded(
+                            flex: 5,
+                            child: Text(
+                              e.value,
+                              style: Get.textTheme.subtitle1
+                                  ?.copyWith(fontWeight: FontWeight.w400),
+                            )),
+                      ],
+                    )
+                  ],
+                ))
+          ],
+        ),
       ),
     );
   }

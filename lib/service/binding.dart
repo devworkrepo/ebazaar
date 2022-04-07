@@ -4,7 +4,6 @@ import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/data/repo_impl/kyc_impl.dart';
 import 'package:spayindia/data/repo_impl/money_request_impl.dart';
 import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
@@ -32,7 +31,6 @@ appBinding() async {
   Get.lazyPut(() => DmtRepoImpl(),fenix: true);
   Get.lazyPut(() => AepsRepoImpl(),fenix: true);
   Get.lazyPut(() => ReportRepoImpl(),fenix: true);
-  Get.lazyPut(() => KycRepoImpl(),fenix: true);
   Get.lazyPut(() => SignupRepoImpl(),fenix: true);
   Get.lazyPut(() => WalletRepoImpl(),fenix: true);
   Get.lazyPut(() => MoneyRequestImpl(),fenix: true);

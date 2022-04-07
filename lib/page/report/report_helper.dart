@@ -17,18 +17,27 @@ class ReportHelperWidget{
  static int getStatusId(String? status) {
     if (status == null) {
       return 0;
-    }
-    else if (status.toLowerCase() == "declined") {
+    } else if (status.toLowerCase() == "declined" ||
+        status.toLowerCase() == "failed" ||
+        status.toLowerCase() == "failure" ||
+        status.toLowerCase() == "cancel" ||
+        status.toLowerCase() == "reject"
+    ) {
       return 2;
-    }
-    else if (status.toLowerCase() == "accepted" ||
-        status.toLowerCase() == "accept" || status.toLowerCase() == "success"){
+    } else if (status.toLowerCase() == "accepted" ||
+        status.toLowerCase() == "accept" ||
+        status.toLowerCase() == "success" ||
+        status.toLowerCase() == "successful" ||
+        status.toLowerCase() == "credited" ||
+        status.toLowerCase() == "credit"
+    ) {
       return 1;
-    }
-    else if(status.toLowerCase() == "initiated"){
+    } else if (status.toLowerCase() == "initiated" ||
+        status.toLowerCase() == "refunded" ||
+        status.toLowerCase() == "inprogress"
+    ) {
       return 4;
-    }
-    else {
+    } else {
       return 3;
     }
   }

@@ -4,7 +4,6 @@ import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/kyc/document_kyc_list.dart';
 import 'package:spayindia/model/news.dart';
 import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/model/user/user.dart';

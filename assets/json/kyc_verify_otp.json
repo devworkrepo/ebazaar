@@ -1,0 +1,7 @@
+{
+  "code" :1 ,
+  "status" :"Success" ,
+  "message" :  "Otp has verified successfully",
+  "encodeFPTxnId" : "testingTxnId",
+  "primaryKeyId" :  "testing_id"
+}

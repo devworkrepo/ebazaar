@@ -2,30 +2,27 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/dmt.dart';
+import 'package:spayindia/model/report/recharge.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
-import 'package:spayindia/util/tags.dart';
 
-class MoneyReportController extends GetxController {
+class RechargeReportController extends GetxController {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
-  final String tag;
   String fromDate = "";
   String toDate = "";
   String searchStatus = "";
   String searchInput = "";
 
-  var reportResponseObs = Resource.onInit(data: MoneyReportResponse()).obs;
-  late List<MoneyReport> reportList;
-  MoneyReport? previousReport;
-
-  MoneyReportController(this.tag);
+  var reportResponseObs = Resource.onInit(data: RechargeReportResponse()).obs;
+  late List<RechargeReport> reportList;
+  RechargeReport? previousReport;
 
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 7);
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
   }
@@ -40,11 +37,9 @@ class MoneyReportController extends GetxController {
 
     try {
       reportResponseObs.value = const Resource.onInit();
-      final response = (tag == AppTag.moneyReportControllerTag)
-          ? await repo.fetchMoneyTransactionList(_param())
-          : await repo.fetchPayoutTransactionList(_param());
+      final response = await repo.fetchRechargeTransactionList(_param());
       if (response.code == 1) {
-        reportList = response.reports!;
+        reportList = response.rechargeReport!;
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -54,14 +49,14 @@ class MoneyReportController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 7);
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
     fetchReport();
   }
 
-  void onItemClick(MoneyReport report) {
+  void onItemClick(RechargeReport report) {
     if (previousReport == null) {
       report.isExpanded.value = true;
       previousReport = report;
@@ -78,5 +73,4 @@ class MoneyReportController extends GetxController {
   void onSearch() {
     fetchReport();
   }
-
 }
