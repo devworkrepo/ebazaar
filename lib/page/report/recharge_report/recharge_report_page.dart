@@ -3,10 +3,8 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/api_component.dart';
 import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
-import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/model/report/recharge.dart';
 import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/route_aware_widget.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
 import '../report_helper.dart';
@@ -74,7 +72,9 @@ class RechargeReportPage extends GetView<RechargeReportController> {
       child: Card(
         color:Colors.white,
         margin: const EdgeInsets.only(bottom: 8,left: 8,right: 8,top: 8,),
-        child: ListView.builder(padding: const EdgeInsets.only(top: 0),itemBuilder: (context, index) {
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 0,bottom: 100),
+          itemBuilder: (context, index) {
           return _BuildListItem(list[index],);
         },itemCount: count,),
       ),

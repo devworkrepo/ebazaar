@@ -10,7 +10,7 @@ abstract class MoneyRequestRepo{
   Future<BankTypeDetailResponse> fetchBankType();
   Future<CommonResponse> makeRequest(dio.FormData data);
   Future<CommonResponse> updateRequest(dio.FormData data);
-  Future<MoneyRequestBond> requestBond(dio.FormData data);
+  Future<BondResponse> requestBond(dio.FormData data);
   Future<FundRequestReportResponse> fetchReport(data);
   Future<MoneyRequestUpdateResponse> fetchUpdateInfo(data);
 }

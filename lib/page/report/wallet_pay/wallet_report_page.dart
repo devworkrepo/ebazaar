@@ -71,7 +71,9 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
         controller.swipeRefresh();
       },
       child: Card(
-        child: ListView.builder(itemBuilder: (context, index) {
+        child: ListView.builder(
+          padding: EdgeInsets.only(top: 0,bottom: 100),
+          itemBuilder: (context, index) {
           return _BuildListItem(list[index]);
         },itemCount: count,),
       ),

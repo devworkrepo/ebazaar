@@ -18,6 +18,7 @@ abstract class AepsRepo {
   //matm
   Future<CommonResponse> getMamtTransactionNumber();
   Future<MatmRequestResponse> initiateMatm(data);
+  Future<CommonResponse> updateMatmDataToServer(data);
 
   //onbaording
   Future<AepsStateListResponse> getAepsState();

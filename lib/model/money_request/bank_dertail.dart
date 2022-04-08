@@ -41,16 +41,16 @@ class MoneyRequestBank{
 
 
 
-class MoneyRequestBond {
+class BondResponse {
   late int code;
   late String status;
   late String message;
   String? content;
 
 
-  MoneyRequestBond();
+  BondResponse();
 
-  MoneyRequestBond.fromJson(Map<String, dynamic> json) {
+  BondResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'].toString();
     code = json["code"];

@@ -27,6 +27,9 @@ class MatmController extends GetxController
   var mobileController = TextEditingController();
   var amountController = TextEditingController();
   var transactionType = MatmTransactionType.cashWithdrawal.obs;
+  String? transactionNumber;
+  MatmRequestResponse? requestResponse;
+  bool updateToServerCalled = false;
 
   @override
   void onInit() {
@@ -64,9 +67,11 @@ class MatmController extends GetxController
     try {
       StatusDialog.progress(title: "Initiating Transaction...");
       var response = await repo.getMamtTransactionNumber();
-
       if (response.code == 1) {
-        _initiateTransaction(response.transactionNumber!);
+        transactionNumber ??= response.transactionNumber;
+        if (requestResponse == null) {
+          _initiateTransaction();
+        }
       } else {
         Get.back();
         StatusDialog.failure(title: response.message);
@@ -77,9 +82,9 @@ class MatmController extends GetxController
     }
   }
 
-  _initiateTransaction(String transactionNumber) async {
+  _initiateTransaction() async {
     try {
-      var response = await repo.initiateMatm({
+      requestResponse = await repo.initiateMatm({
         "transaction_no": transactionNumber,
         "cust_mobile": mobileController.text,
         "txntype": getSpayRequestTxnType(),
@@ -91,10 +96,11 @@ class MatmController extends GetxController
         "longitude": position!.longitude.toString()
       });
       Get.back();
-      if (response.code == 1) {
-        _callMatmNativeMethod(response);
+      if (requestResponse!.code == 1) {
+        _callMatmNativeMethod();
       } else {
-        StatusDialog.failure(title: response.message ?? "Not available");
+        StatusDialog.failure(
+            title: requestResponse!.message ?? "Not available");
       }
     } catch (e) {
       Get.back();
@@ -102,47 +108,60 @@ class MatmController extends GetxController
     }
   }
 
-  _callMatmNativeMethod(MatmRequestResponse response) async {
+  _callMatmNativeMethod() async {
     try {
-
       var params = {
-        "merchantUserId": response.loginId ?? "",
-        "merchantPassword": response.loginPin ?? "",
-        "superMerchantId": response.superMerchantId ?? "",
+        "merchantUserId": requestResponse?.loginId ?? "",
+        "merchantPassword": requestResponse?.loginPin ?? "",
+        "superMerchantId": requestResponse?.superMerchantId ?? "",
         "amount": amountWithoutRupeeSymbol(amountController),
         "remark": "transaction",
         "mobileNumber": mobileController.text,
-        "txnId": "tr${response.txnId ?? ""}",
+        "txnId": "tr${requestResponse?.txnId ?? ""}",
         "imei": await AppUtil.getDeviceID(),
         "latitude": position!.latitude,
         "longitude": position!.longitude,
         "type": _transactionTypeInCode(),
       };
       var result = await NativeCall.launchMatmService(params);
-
-      AppUtil.logger("params : $params");
-      AppUtil.logger(result);
-
       var data = MatmResult.fromJson(result);
-      Get.to(()=>MatmTxnResponsePage(),arguments: {
-        "response" : data,
-        "txnType" : transactionType.value
-      });
-
-
-
+      if (!updateToServerCalled) {
+        updateToServerCalled = true;
+        _updateToServer(data);
+      }
     } on PlatformException catch (e) {
-
       AppUtil.logger("matmlog1 : ${e.toString()}");
-
-      /*StatusDialog.pending(
+      StatusDialog.pending(
               title: "Transaction in Pending, please check transaction status")
-          .then((value) => Get.back());*/
+          .then((value) => Get.back());
     } catch (e) {
       AppUtil.logger("matmlog2 : ${e.toString()}");
-     /* StatusDialog.pending(
-          title: "Transaction in Pending, please check transaction status")
-          .then((value) => Get.back());*/
+      StatusDialog.pending(
+              title: "Transaction in Pending, please check transaction status")
+          .then((value) => Get.back());
+    }
+  }
+
+  _updateToServer(MatmResult result) async {
+    StatusDialog.progress(title: "Updating to Server");
+    try {
+      await repo.updateMatmDataToServer({
+        "status": (result.status) ? "1" : "2",
+        "clientId": requestResponse!.clientId ?? "",
+        "balanceamt": result.balAmount.toString(),
+        "bankName": result.bankName,
+        "cardNumber": result.cardNumber,
+        "bankRRN": result.bankRrn,
+        "message": result.message,
+        "providerTxnId": requestResponse!.txnId ?? "",
+      });
+      Get.back();
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
+    } finally {
+      Get.to(() => MatmTxnResponsePage(),
+          arguments: {"response": result, "txnType": transactionType.value});
     }
   }
 

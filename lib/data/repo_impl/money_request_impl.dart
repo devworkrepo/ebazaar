@@ -36,7 +36,7 @@ class MoneyRequestImpl extends MoneyRequestRepo{
   }
 
   @override
-  Future<MoneyRequestBond> requestBond(dio.FormData data) async {
+  Future<BondResponse> requestBond(dio.FormData data) async {
 
     var response = await client.post("/GetMoneyRequestBond",data: data,options: Options(
         contentType : "application/json",
@@ -44,7 +44,7 @@ class MoneyRequestImpl extends MoneyRequestRepo{
           "Accept" : "application/json"
         }
     ));
-    return MoneyRequestBond.fromJson(response.data);
+    return BondResponse.fromJson(response.data);
   }
 
   @override

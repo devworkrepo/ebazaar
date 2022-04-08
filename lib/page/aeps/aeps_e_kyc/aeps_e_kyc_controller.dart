@@ -120,6 +120,7 @@ class AepsEKycController extends GetxController {
         "deviceSerialNumber": deviceSerialController.text.toString(),
         "encodeFPTxnId": kycResponse.encodeFPTxnId ?? "",
         "primaryKeyId": kycResponse.primaryKeyId ?? "",
+        "otp": otpController.text
       });
       Get.back();
 
@@ -159,8 +160,8 @@ class AepsEKycController extends GetxController {
     Get.dialog(AepsRdServiceDialog(
       onClick: (rdServicePackageUrl) async {
         try {
-          var result =
-          await NativeCall.launchAepsService({"packageUrl": rdServicePackageUrl});
+          var result = await NativeCall.launchAepsService(
+              {"packageUrl": rdServicePackageUrl, "isTransaction": false});
           _authKyc(result);
         } on PlatformException catch (e) {
           var description =
@@ -176,7 +177,6 @@ class AepsEKycController extends GetxController {
   }
 
   _authKyc(String biometricData) async {
-
     Future<Map<String,String>> _params() async => {
       "ipAddress": await Ipify.ipv4(),
       "deviceSerialNumber": deviceSerialController.text.toString(),
@@ -192,14 +192,14 @@ class AepsEKycController extends GetxController {
     AppUtil.logger("params : "+ mdata.toString());
 
     try {
-      StatusDialog.progress(title : "E-Kyc Authenticating");
-      var response = await repo.eKycVerifyOtp(await _params());
+      StatusDialog.progress(title: "E-Kyc Authenticating");
+      var response = await repo.eKycAuthenticate(await _params());
       Get.back();
       if (response.code == 1) {
-        StatusDialog.success(title: response.message ?? "")
+        StatusDialog.success(title: response.message)
             .then((value) => Get.back());
       } else {
-        StatusDialog.failure(title: response.message ?? "");
+        StatusDialog.failure(title: response.message);
       }
     } catch (e) {
       Get.back();

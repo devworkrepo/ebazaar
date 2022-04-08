@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/confirm_amount_dialog.dart';
 import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/component/list_component.dart';
@@ -17,6 +18,8 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+
+import '../../fund/component/bond_dialog.dart';
 
 class DmtTransactionController extends GetxController
     with TransactionHelperMixin, LocationHelperMixin {
@@ -52,27 +55,55 @@ class DmtTransactionController extends GetxController
 
   void onProceed() async {
     if (!formKey.currentState!.validate()) return;
-    _confirmDialog();
+    if (!(appPreference.user.isPayoutBond ?? false)) {
+      _fetchBondInfo();
+    } else {
+      _confirmDialog();
+    }
+  }
+
+  _fetchBondInfo() async {
+    StatusDialog.progress(title: "Fetching Payout Bond");
+    try {
+      var response = await repo.fetchPayoutBond();
+      Get.back();
+      if (response.code == 1) {
+        Get.dialog(BondDialog(
+          data: response.content!,
+          onAccept: () {
+            _confirmDialog();
+          },
+          onReject: () {
+            showFailureSnackbar(
+                title: "Payout Bond Rejected",
+                message:
+                    "To proceed transaction need to accept payout bond. Without it transaction can't be proceed further.");
+          },
+        ));
+      } else {
+        StatusDialog.failure(title: response.message);
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: Exception(e)));
+    }
   }
 
   _confirmDialog() {
     var widgetList = <ListTitleValue>[];
 
     widgetList = [
-        ListTitleValue(title: "Name", value: beneficiary.name ?? ""),
-        ListTitleValue(
-            title: "A/C No.", value: beneficiary.accountNumber ?? ""),
-        ListTitleValue(title: "Bank", value: beneficiary.bankName ?? ""),
-        ListTitleValue(title: "IFSc", value: beneficiary.ifscCode ?? ""),
-      ];
+      ListTitleValue(title: "Name", value: beneficiary.name ?? ""),
+      ListTitleValue(title: "A/C No.", value: beneficiary.accountNumber ?? ""),
+      ListTitleValue(title: "Bank", value: beneficiary.bankName ?? ""),
+      ListTitleValue(title: "IFSc", value: beneficiary.ifscCode ?? ""),
+    ];
 
     Get.dialog(AmountConfirmDialogWidget(
         amount: amount,
         detailWidget: widgetList,
         onConfirm: () {
-
-            _dmtTransfer();
-
+          _dmtTransfer();
         }));
   }
 

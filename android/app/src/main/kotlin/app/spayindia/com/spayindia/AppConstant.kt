@@ -20,6 +20,10 @@ object AppConstant {
        <Opts env="P" fCount="1" fType="0" format="0" iCount="0" iType="0" pCount="0" pType="0" pidVer="2.0" posh="UNKNOWN" timeout="10000"/>
     </PidOptions>"""
         const val INTENT_ACTION = "in.gov.uidai.rdservice.fp.CAPTURE"
+
+        const val PID_OPTION_KYC = """
+        <PidOptions ver="1.0"><Opts env="P" fCount="1" fType="0" iCount="0" format="0" pidVer="2.0" timeout="15000" wadh="E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=" posh="UNKNOWN" /></PidOptions>
+    """
     }
 
 

@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/button.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class MoneyRequestBondDialog extends StatelessWidget {
+class BondDialog extends StatelessWidget {
   final VoidCallback onAccept;
   final VoidCallback onReject;
   final String data;
 
-  const MoneyRequestBondDialog(
+  const BondDialog(
       {Key? key,
       required this.data,
       required this.onAccept,

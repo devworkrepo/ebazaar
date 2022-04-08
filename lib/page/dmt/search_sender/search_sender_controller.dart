@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/model/dmt/account_search.dart';
@@ -18,6 +19,7 @@ class DmtSearchSenderController extends GetxController {
   var numberController = TextEditingController();
   DmtType dmtType = Get.arguments["dmtType"];
   String? mobile = Get.arguments["mobile"];
+  AppPreference appPreference = Get.find();
 
   //GlobalKey<FormState> senderSearchFormkey = GlobalKey<FormState>();
 

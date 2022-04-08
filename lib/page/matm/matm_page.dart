@@ -1,13 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/drop_down.dart';
-import 'package:spayindia/component/progress.dart';
 import 'package:spayindia/component/radio.dart';
 import 'package:spayindia/component/status_bar_color_widget.dart';
 import 'package:spayindia/component/text_field.dart';
-import 'package:spayindia/util/input_validator.dart';
 import 'package:spayindia/util/validator.dart';
 
 import 'matm_controller.dart';
@@ -123,7 +120,7 @@ class MatmPage extends GetView<MatmController> {
                                 controller: controller.amountController,
                                 validator: (value) =>
                                     FormValidatorHelper.amount(value,
-                                        minAmount: 100, maxAmount: 10000),
+                                        minAmount: (kDebugMode) ? 1 : 100, maxAmount: 10000),
                               )
                             ],
                           ),

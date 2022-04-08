@@ -1,7 +1,0 @@
-{
-  "code" :1 ,
-  "status" :"Success" ,
-  "message" :  "Otp sent successfully",
-  "encodeFPTxnId" : "testingTxnId",
-  "primaryKeyId" :  "testing_id"
-}

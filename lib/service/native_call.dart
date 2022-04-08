@@ -9,7 +9,7 @@ class NativeCall {
   static const _matmServiceMethodName = "launch_matm_service";
   static const _rdServiceSerialNumber = "rd_service_serial_number";
 
-  static Future<String> launchAepsService(Map<String, String> data) async {
+  static Future<String> launchAepsService(Map<String, dynamic> data) async {
     final String result =
         await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
     return result;

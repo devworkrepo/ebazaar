@@ -25,7 +25,7 @@ class MoneyReportController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
   }
@@ -54,7 +54,7 @@ class MoneyReportController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";

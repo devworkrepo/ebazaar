@@ -26,6 +26,7 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
           children: [
             _buildSearchTypeWidget(),
             _buildSearchSenderForm(),
+            (controller.dmtType == DmtType.payout) ? _buildPayoutBondWidget() : const SizedBox()
           ],
         ),
       ),
@@ -137,6 +138,27 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _buildPayoutBondWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+      child: Card(
+        color: Colors.red,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Wrap(
+            children: [
+              Text(
+                "Note : - Dear Merchants Please be note that this service is for your vendor payout transfer not for the use of Domestic money transfer transactions if you use this service of Domestic money transfer you will be held liable for all the taxable liability. Spay India is not responcialble for this missuse of the service.",
+                style: Get.textTheme.bodyText1
+                    ?.copyWith(color: Colors.white.withOpacity(0.8)),
+              )
+            ],
           ),
         ),
       ),

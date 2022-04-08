@@ -8,6 +8,7 @@ import 'package:spayindia/model/dmt/kyc_info.dart';
 import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
 import 'package:spayindia/model/dmt/verification_charge.dart';
+import 'package:spayindia/model/money_request/bank_dertail.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
 
@@ -126,17 +127,12 @@ class DmtRepoImpl extends DmtRepo {
   @override
   Future<DmtTransactionResponse> kycTransaction(Map<String, String> data)  async{
     var response = await client.post("/KycTransaction", data: data);
-
-    //todo remove local response
-   // var response = await AppUtil.parseJsonFromAssets("dmt_transaction_response");
     return DmtTransactionResponse.fromJson(response.data);
   }
 
   @override
   Future<DmtTransactionResponse> nonKycTransaction(Map<String, String> data) async {
     var response = await client.post("/NonKycTransaction", data: data);
-    //todo remove local response
-  //  var response = await AppUtil.parseJsonFromAssets("dmt_transaction_response");
     return DmtTransactionResponse.fromJson(response.data);
 
   }
@@ -161,14 +157,12 @@ class DmtRepoImpl extends DmtRepo {
 
   @override
   Future<CalculateChargeResponse> calculatePayoutCharge(Map<String, String> data) async {
-    //var response = await AppUtil.parseJsonFromAssets("calculate_charge_response");
     var response = await client.post("/CalcPayoutCharges",data: data);
     return CalculateChargeResponse.fromJson(response.data);
   }
 
   @override
   Future<DmtTransactionResponse> payoutTransaction(Map<String, String> data) async {
-   // var response = await AppUtil.parseJsonFromAssets("dmt_transaction_response");
     var response = await client.post("/PayoutTransaction",data: data);
     return DmtTransactionResponse.fromJson(response.data);
   }
@@ -177,5 +171,11 @@ class DmtRepoImpl extends DmtRepo {
   Future<CommonResponse> importDeletedBeneficiary(Map<String, String> data) async {
    var response = await client.post("/ImportArchive",data: data);
    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<BondResponse> fetchPayoutBond()  async{
+    var response = await client.post("/GetPayoutBond");
+    return BondResponse.fromJson(response.data);
   }
 }

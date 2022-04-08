@@ -8,9 +8,11 @@ import 'package:spayindia/model/dmt/sender_info.dart';
 import 'package:spayindia/model/dmt/verification_charge.dart';
 
 import '../../model/dmt/kyc_info.dart';
+import '../../model/money_request/bank_dertail.dart';
 
 abstract class DmtRepo {
   Future<SenderInfo> searchSender(Map<String, String> data);
+  Future<BondResponse> fetchPayoutBond();
   Future<AccountSearchResponse> searchAccount(Map<String, String> data);
   Future<BankListResponse> fetchBankList();
   Future<AccountVerifyResponse> verifyAccount(data);

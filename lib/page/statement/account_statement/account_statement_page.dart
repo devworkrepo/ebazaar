@@ -71,15 +71,10 @@ class AccountStatementPage extends GetView<AccountStatementController> {
         controller.swipeRefresh();
       },
       child: Card(
+        margin: const EdgeInsets.only(bottom: 8,left: 8,right: 8,top: 8,),
         color: Colors.white,
-        margin: const EdgeInsets.only(
-          bottom: 8,
-          left: 8,
-          right: 8,
-          top: 8,
-        ),
         child: ListView.builder(
-          padding: const EdgeInsets.only(top: 0),
+          padding: const EdgeInsets.only(top: 0,bottom: 100),
           itemBuilder: (context, index) {
             return _BuildListItem(
               list[index],

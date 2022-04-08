@@ -42,13 +42,15 @@ class MainActivity : FlutterFragmentActivity() {
                     launchMatm(call)
                 }
                 call.method.equals(RD_SERVICE_SERIAL_NUMBER) -> {
-                   try{
-                       val mData =
-                           XmPidParser.getDeviceSerialNumber(call.argument<String>("pidData") ?: "")
-                       result!!.success(mData)
-                   }catch (e : Exception){
-                       result!!.error("0","Exception raised",e.message)
-                   }
+                    try {
+                        val mData =
+                            XmPidParser.getDeviceSerialNumber(
+                                call.argument<String>("pidData") ?: ""
+                            )
+                        result!!.success(mData)
+                    } catch (e: Exception) {
+                        result!!.error("0", "Exception raised", e.message)
+                    }
                 }
             }
         }
@@ -100,11 +102,15 @@ class MainActivity : FlutterFragmentActivity() {
     private fun captureAepsPidData(call: MethodCall) {
 
         val rdServicePackageUrl = call.argument<String>("packageUrl");
+        val isTransaction = call.argument<Boolean>("isTransaction") ?: true
         try {
             val intent = Intent()
             intent.setPackage(rdServicePackageUrl)
             intent.action = AppConstant.Aeps.INTENT_ACTION
-            intent.putExtra("PID_OPTIONS", AppConstant.Aeps.PID_OPTION)
+            intent.putExtra(
+                "PID_OPTIONS",
+                if (isTransaction) AppConstant.Aeps.PID_OPTION else AppConstant.Aeps.PID_OPTION_KYC
+            )
             startActivityForResult(intent, AppConstant.AEPS_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
             result?.error(

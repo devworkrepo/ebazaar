@@ -152,13 +152,13 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
   _moneyRequestBond() async {
     StatusDialog.progress();
     try {
-      MoneyRequestBond response =
+      BondResponse response =
           await repo.requestBond(await _moneyRequestParam());
 
       Get.back();
 
       if (response.code == 1) {
-        Get.dialog(MoneyRequestBondDialog(
+        Get.dialog(BondDialog(
           data: response.content!,
           onAccept: () {_makeFundRequest(true,);},
           onReject: () {_makeFundRequest(false);},

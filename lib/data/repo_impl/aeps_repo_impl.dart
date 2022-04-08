@@ -56,30 +56,32 @@ class AepsRepoImpl extends AepsRepo{
 
   @override
   Future<CommonResponse> eKycAuthenticate(data) async {
-    //var response = await client.post("/KycAuth", data: data);
-    var response = await AppUtil.parseJsonFromAssets("kyc_auth");
-    return CommonResponse.fromJson(response);
+    var response = await client.post("/KycAuth", data: data);
+    return CommonResponse.fromJson(response.data);
   }
 
   @override
   Future<EKycResponse> eKycResendOtp(data) async {
-  //  var response = await client.post("/SendKycOTP", data: data);
-    var response = await AppUtil.parseJsonFromAssets("kyc_resend_otp");
-    return EKycResponse.fromJson(response);
+    var response = await client.post("/ResendKycOTP", data: data);
+    return EKycResponse.fromJson(response.data);
   }
 
   @override
   Future<EKycResponse> eKycSendOtp(data) async {
-    //var response = await client.post("/SendKycOTP", data: data);
-    var response = await AppUtil.parseJsonFromAssets("kyc_request_otp");
-    return EKycResponse.fromJson(response);
+    var response = await client.post("/SendKycOTP", data: data);
+    return EKycResponse.fromJson(response.data);
   }
 
   @override
   Future<EKycResponse> eKycVerifyOtp(data) async {
-    //var response = await client.post("/VerifyKycOTP", data: data);
-    var response = await AppUtil.parseJsonFromAssets("kyc_verify_otp");
-    return EKycResponse.fromJson(response);
+    var response = await client.post("/VerifyKycOTP", data: data);
+    return EKycResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> updateMatmDataToServer(data) async {
+    var response = await client.post("/MatmTransactionUpdate", data: data);
+    return CommonResponse.fromJson(response.data);
   }
 
 

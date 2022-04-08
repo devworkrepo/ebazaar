@@ -63,7 +63,7 @@ class AepsController extends GetxController with TransactionHelperMixin {
           if (data.code == 1) {
             bankListResponse = data;
             bankList = data.aepsBankList!;
-            if (!data.isEKcy!) {
+            if (data.isEKcy!) {
               Get.bottomSheet(
                   EkycInfoWidget(onClick: () {
                     Get.back();
@@ -94,8 +94,8 @@ class AepsController extends GetxController with TransactionHelperMixin {
     Get.dialog(AepsRdServiceDialog(
       onClick: (rdServicePackageUrl) async {
         try {
-          var result =
-              await NativeCall.launchAepsService({"packageUrl": rdServicePackageUrl});
+          var result = await NativeCall.launchAepsService(
+              {"packageUrl": rdServicePackageUrl, "isTransaction": true});
           _onRdServiceResult(result);
         } on PlatformException catch (e) {
           var description =
@@ -147,7 +147,10 @@ class AepsController extends GetxController with TransactionHelperMixin {
         "bankName": selectedAepsBank?.name ?? "",
         "txntype": _transactionTypeInCode(),
         "devicetype": appPreference.rdService,
-        "amount": amountWithoutRupeeSymbol(amountController),
+        "amount": (isAadhaarPay ||
+                aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+            ? amountWithoutRupeeSymbol(amountController)
+            : "0",
         "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
         "mobileno": mobileController.text.toString(),
         "latitude": position.latitude.toString(),
@@ -168,18 +171,11 @@ class AepsController extends GetxController with TransactionHelperMixin {
         StatusDialog.failure(title: response.message ?? "");
       }
     } catch (e) {
+      await appPreference.setIsTransactionApi(true);
       Get.back();
-      if (aepsTransactionType.value == AepsTransactionType.cashWithdrawal ||
-          isAadhaarPay) {
-        await appPreference.setIsTransactionApi(true);
-        Get.back();
-        Get.off(ExceptionPage(
-          error: e,
-        ));
-      } else {
-        Get.back();
-        Get.to(() => ExceptionPage(error: e));
-      }
+      Get.off(ExceptionPage(
+        error: e,
+      ));
     }
   }
 

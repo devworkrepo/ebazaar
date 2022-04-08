@@ -22,7 +22,7 @@ class RechargeReportController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 7);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
   }
@@ -49,7 +49,7 @@ class RechargeReportController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 7);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
