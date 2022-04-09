@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/common/animate_icon_widget.dart';
+import 'package:spayindia/res/color.dart';
 
 class HomeAppbarSection extends StatelessWidget {
   final VoidCallback onDrawerOpen;
@@ -14,12 +15,16 @@ class HomeAppbarSection extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
-          IconButton(
-              onPressed: onDrawerOpen,
-              icon: const Icon(
-                Icons.menu,
-                size: 32,
-              )),
+          Card(
+            color: Colors.white.withOpacity(0.9),
+            shape : RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+            child: IconButton(
+                onPressed: onDrawerOpen,
+                icon: const Icon(
+                  Icons.menu,
+                  size: 24,
+                )),
+          ),
           const SizedBox(
             width: 12,
           ),

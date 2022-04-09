@@ -81,6 +81,11 @@ class UnauthorizedException extends _BaseException {
   String message;
 }
 
+class BadRequestException extends _BaseException {
+  BadRequestException({this.message = "Bad Api Request"}) : super(msg: message);
+  String message;
+}
+
 
 class SessionExpireException extends _BaseException {
   SessionExpireException({this.message = "Session Key Expired, Please Login Again !."}) : super(msg: message);
@@ -96,6 +101,10 @@ getDioException(error) {
 
         if((error.response?.statusCode ?? 0) == 401){
           return UnauthorizedException();
+        }
+
+        if((error.response?.statusCode ?? 0) == 400){
+          return BadRequestException();
         }
 
         switch (error.type) {

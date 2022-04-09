@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/auth_repo.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
 import 'package:spayindia/model/user/login.dart';
+import 'package:spayindia/page/auth/login/login_tac_dialog.dart';
 import 'package:spayindia/page/auth/login_otp/verifying_device_dailog.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
@@ -43,6 +45,18 @@ class LoginController extends GetxController {
       mobileController.text = "7982607742";
       passwordController.text = "Akash@123";
     }
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+
+      if(!appPreference.isLoginBondAccepted){
+        Get.dialog(LoginTermAndConditionDialog(onAccept: () async{
+          await appPreference.setIsLoginBondAccepted(true);
+        }, onReject: () async{
+         await  appPreference.setIsLoginBondAccepted(false);
+          exit(0);
+        }));
+      }
+    });
 
     AppUpdateUtil.checkUpdate();
   }

@@ -156,7 +156,7 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
               Text(
                 "Note : - Dear Merchants Please be note that this service is for your vendor payout transfer not for the use of Domestic money transfer transactions if you use this service of Domestic money transfer you will be held liable for all the taxable liability. Spay India is not responcialble for this missuse of the service.",
                 style: Get.textTheme.bodyText1
-                    ?.copyWith(color: Colors.white.withOpacity(0.8)),
+                    ?.copyWith(color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.w500),
               )
             ],
           ),

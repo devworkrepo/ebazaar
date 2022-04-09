@@ -17,14 +17,14 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<UserBalance> fetchUserBalance() async {
     var response = await client.get("user/balance");
-
     return UserBalance.fromJson(response.data);
   }
 
 
   @override
   Future<UserDetail> fetchAgentInfo() async {
-    var response = await client.post("GetAgentInfo");
+   var response = await client.post("GetAgentInfo");
+   // var response = await AppUtil.parseJsonFromAssets("agent_info_response");
     return UserDetail.fromJson(response.data);
   }
 

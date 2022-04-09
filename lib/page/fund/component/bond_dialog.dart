@@ -36,8 +36,8 @@ class BondDialog extends StatelessWidget {
               Row(
                 children: [
                   Expanded(child: AppButton(text: "Accept", onClick: (){
-                    onAccept();
                     Get.back();
+                    onAccept();
                   })),
                   const SizedBox(
                     width: 16,
@@ -46,8 +46,8 @@ class BondDialog extends StatelessWidget {
                       child: AppButton(
                     text: "Reject",
                     onClick: (){
-                      onReject();
                       Get.back();
+                      onReject();
                     },
                     background: Colors.red,
                   ))

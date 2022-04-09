@@ -29,10 +29,10 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   var title = "Service";
   var bottomNavStyle =
-      const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.white70);
+       TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Get.theme.primaryColorDark);
   var backgroundColor = Colors.lightBlue[100];
   var bottomNavSelectedIndex = 2;
-  var selectedItemColor = Colors.white;
+  var selectedItemColor = Get.theme.primaryColorDark;
   var bottomNavKey = GlobalKey();
 
   AppPreference appPreference = Get.find();
@@ -89,18 +89,18 @@ class _MainPageState extends State<MainPage> {
     return Obx(() => Visibility(
           visible: isBottomNavShowObs.value,
           child: Container(
-            decoration: BoxDecoration(
+           /* decoration: BoxDecoration(
               color: Get.theme.primaryColor.withOpacity(.8),
               borderRadius: BorderRadius.vertical(top: Radius.circular(12), )
-            ),
+            ),*/
             child: BottomNavigationBar(
-              backgroundColor: Colors.transparent,
+             backgroundColor: Colors.white,
               key: bottomNavKey,
               elevation: 10,
               selectedLabelStyle: bottomNavStyle,
               unselectedLabelStyle: bottomNavStyle,
               selectedItemColor: selectedItemColor,
-               unselectedItemColor: Colors.white60,
+               unselectedItemColor: Colors.black45,
               // backgroundColor: Get.theme.primaryColor,
               type: BottomNavigationBarType.fixed,
               currentIndex: bottomNavSelectedIndex,
@@ -142,7 +142,7 @@ class _MainPageState extends State<MainPage> {
 
   void _onBottomNavItemClick(position) {
     setState(() {
-      selectedItemColor = Colors.white;
+      selectedItemColor = Get.theme.primaryColorDark;
       bottomNavSelectedIndex = position;
       if (position == 0) {
         title = "Service";

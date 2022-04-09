@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:spayindia/model/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spayindia/util/security/encription.dart';
 
 class AppPreference {
   final SharedPreferences _sharedPreferences;
@@ -15,6 +16,7 @@ class AppPreference {
   final _password = "password";
   final _mobileNumber = "mobile_number";
   final _isTransactionApi = "is_transaction_api";
+  final _isLoginBondAccepted = "is_login_bond_accepted";
   final _rdService = "rd_service";
   final _biometricServiceEnable = "biometric_service_enable";
 
@@ -61,6 +63,15 @@ class AppPreference {
   }
 
 
+  setIsLoginBondAccepted(bool value) async {
+    _saveBoolData(_isLoginBondAccepted, value);
+  }
+
+  bool get isLoginBondAccepted {
+    return _retrieveBoolData(_isLoginBondAccepted);
+  }
+
+
   setIsLoginCheck(bool value) => _saveBoolData(_isLoginCheck, value);
 
   bool get isLoginCheck => _retrieveBoolData(_isLoginCheck);
@@ -70,10 +81,17 @@ class AppPreference {
 
   bool get isBiometricAuthentication => _retrieveBoolData(_biometricServiceEnable,defaultValue: true);
 
-  _saveStringData(String key, String value) =>
-      _sharedPreferences.setString(key, value);
+  _saveStringData(String key, String value){
+   var eData = Encryption.aesEncrypt(value);
+   return  _sharedPreferences.setString(key, eData);
+  }
 
-  _retrieveStringData(String key) => _sharedPreferences.getString(key) ?? "";
+  _retrieveStringData(String key) {
+   var dData = _sharedPreferences.getString(key) ?? "";
+   if(dData.isEmpty) return "";
+   if(dData == "na") return "";
+   return Encryption.aepDecrypt(dData);
+  }
 
   _saveBoolData(String key, bool value) =>
       _sharedPreferences.setBool(key, value);
@@ -83,14 +101,37 @@ class AppPreference {
   Future<bool> logout() async {
     await setIsTransactionApi(false);
     await setUser(UserDetail.fromJson({
-      "code" : 0,
-      "message" :"",
-      "status" : ""
+      "code" : 1,
+      "message" : "na",
+      "status" : "na",
+      "agentId" : "na",
+      "fullName" : "na",
+      "outletName" : "na",
+      "picName" : "na",
+      "agentCode" : "na",
+      "userType" : "na",
+      "availableBalance" : "0",
+      "openBalance" : "0",
+      "creditBalance" : "0",
+      "isPayoutBond" : false,
+      "isWalletPay" : false,
+      "isRecharge" : false,
+      "isDth" : false,
+      "isInsurance" : false,
+      "isInstantPay" : false,
+      "isBill" : false,
+      "isCreditCard" : false,
+      "isPaytmWallet" : false,
+      "isLic" : false,
+      "isOtt" : false,
+      "isBillPart" : false,
+      "isAeps" : false,
+      "isMatm" : false,
     }));
     await setIsLoginCheck(false);
-    await setPassword("");
-    await setMobileNumber("");
-    await setSessionKey("");
+    await setPassword("na");
+    await setMobileNumber("na");
+    await setSessionKey("na");
     return true;
   }
 }

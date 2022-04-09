@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
+import 'package:spayindia/res/color.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
 
@@ -9,120 +11,157 @@ import '../../logout_confirm_dialog.dart';
 class HomeDrawerWidget extends GetView<HomeController> {
   const HomeDrawerWidget({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
-
+    final Color color = Get.theme.primaryColorDark;
     return Drawer(elevation: 16,
       child: Material(
         child: SafeArea(
-          child: ListView(
+          child: Card(
+            color: Colors.white.withOpacity(0.9),
+            clipBehavior: Clip.antiAlias,
+            margin: const EdgeInsets.all(4),
+            child: ListView(
 
-            children: [
+              children: [
 
-              _buildUserInfo(),
+                _buildUserInfo(),
 
-              ListTile(
-                onTap: (){
-                  Get.back();
-                },
-                title: Text(
-                  "Home",
-                  style: Get.textTheme.subtitle1,
-                ),
-                leading: const Icon(Icons.home),
-              ),
-
-
-              _NavTitle(
-                title: "Reports",
-                icon: Icons.receipt_outlined,
-                children: [
-                  _NavSubTitle(
-                    title: "Transaction",
-                    onClick: () {
+                Card(
+                  child: ListTile(
+                    onTap: (){
                       Get.back();
-                      Get.toNamed(RouteName.transactionReportPage);
+                      controller.fetchUserDetails();
                     },
-                    count: 1,
+                    title: Text(
+                      "Home",
+                      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
+                    ),
+                    leading:  Icon(Icons.home,color: color,),
                   ),
-                  _NavSubTitle(
-                    title: "Fund Report",
-                    onClick: ()=>Get.toNamed(RouteName.fundReportPage),
-                    count: 2,
-                  ),
-                  /*_NavSubTitle(
-                    title: "Wallet Pay",
-                    onClick: ()=>Get.toNamed(RouteName.aepsAllReportPage),
-                    count: 2,
-                  ),*/
-                ],
-              ),
-
-
-
-              _NavTitle(
-                title: "User Auth",
-                icon: Icons.password,
-                children: [
-                  _NavSubTitle(
-                    title: "Change Password",
-                    onClick: () => Get.toNamed(RouteName.changePassword),
-                    count: 1,
-                  ),
-
-                  _NavSubTitle(
-                    title: "Change Pin",
-                    onClick: () => Get.toNamed(RouteName.changePin),
-                    underline: false,
-                    count: 2,
-                  )
-                ],
-              ),
-              _NavTitle(
-                title: "Aeps Service",
-                icon: Icons.fingerprint,
-                children: [
-                  _NavSubTitle(
-                    title: "On Board",
-                    onClick: () => Get.toNamed(RouteName.aepsOnboardingPage),
-                    count: 1,
-                  ),
-
-                  _NavSubTitle(
-                    title: "E-Kyc",
-                    onClick: () => Get.toNamed(RouteName.changePin),
-                    underline: false,
-                    count: 2,
-                  )
-                ],
-              ),
-
-              ListTile(
-                onTap: (){
-                 Get.toNamed(RouteName.appSetting);
-
-                },
-                title: Text(
-                  "App Setting",
-                  style: Get.textTheme.subtitle1,
                 ),
-                leading: const Icon(Icons.settings),
-              ),
 
-              ListTile(
-                onTap: (){
-                  Get.dialog(LogoutConfirmDialog(onConfirm: (){
-                    controller.logout();
-                  },));
 
-                },
-                title: Text(
-                  "Logout",
-                  style: Get.textTheme.subtitle1,
+                Card(
+                  child: _NavTitle(
+                    title: "Reports",
+                    icon: Icons.receipt_outlined,
+                    children: [
+                      _NavSubTitle(
+                        title: "Transaction",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(RouteName.transactionReportPage);
+                        },
+                        count: 1,
+                      ),
+                      _NavSubTitle(
+                        title: "Fund Report",
+                        onClick: (){
+                          Get.back();
+                          Get.toNamed(RouteName.fundReportPage,arguments: "route");
+                        },
+                        count: 2,
+                      ),
+                      /*_NavSubTitle(
+                        title: "Wallet Pay",
+                        onClick: ()=>Get.toNamed(RouteName.aepsAllReportPage),
+                        count: 2,
+                      ),*/
+                    ],
+                  ),
                 ),
-                leading: const Icon(Icons.power_settings_new),
-              ),
-            ],
+
+
+
+                Card(
+                  child: _NavTitle(
+                    title: "User Auth",
+                    icon: Icons.password,
+                    children: [
+                      _NavSubTitle(
+                        title: "Change Password",
+                        onClick: (){
+                          Get.back();
+                          Get.toNamed(RouteName.changePassword);
+                        },
+                        count: 1,
+                      ),
+
+                      _NavSubTitle(
+                        title: "Change Pin",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(RouteName.changePin);
+                        },
+                        underline: false,
+                        count: 2,
+                      )
+                    ],
+                  ),
+                ),
+                Card(
+                  child: _NavTitle(
+                    title: "Aeps Service",
+                    icon: Icons.fingerprint,
+                    children: [
+                      _NavSubTitle(
+                        title: "OnBoarding",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(RouteName.aepsOnboardingPage);
+                        },
+                        count: 1,
+                      ),
+
+                      _NavSubTitle(
+                        title: "E-Kyc",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(RouteName.aepsEkycPage);
+                        },
+                        underline: false,
+                        count: 2,
+                      )
+                    ],
+                  ),
+                ),
+
+                Card(
+                  child: ListTile(
+                    onTap: (){
+                      Get.back();
+                     Get.toNamed(RouteName.appSetting);
+
+                    },
+                    title: Text(
+                      "App Setting",
+                      style: Get.textTheme.subtitle1?.copyWith(color:color,fontWeight: FontWeight.bold),
+                    ),
+                    leading:  Icon(Icons.settings,color: color,),
+                  ),
+                ),
+
+                Card(
+                  child: ListTile(
+                    onTap: (){
+                      Get.back();
+                      Get.dialog(LogoutConfirmDialog(onConfirm: (){
+                        controller.logout();
+                      },));
+
+                    },
+                    title: Text(
+                      "Logout",
+                      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
+                    ),
+                    leading:  Icon(Icons.power_settings_new,color: color,),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -130,30 +169,32 @@ class HomeDrawerWidget extends GetView<HomeController> {
   }
 
    _buildUserInfo() {
-
-    return Container(
+    return Card(
       color: Get.theme.primaryColor,
-      padding: EdgeInsets.all(16),
-      child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Get.theme.primaryColorDark,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        onError: (_, __) {}, image: NetworkImage(AppConstant.profileBaseUrl+controller.user.picName!), fit: BoxFit.contain),
+
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Get.theme.primaryColorDark,
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          onError: (_, __) {}, image: NetworkImage(AppConstant.profileBaseUrl+controller.user.picName!), fit: BoxFit.contain),
+                    ),
                   ),
-                ),
-                  SizedBox(height: 8),
-                Text("Welcome",style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),),
-                  SizedBox(height: 4),
-                Text("${controller.appPreference.user.fullName} - ${controller.appPreference.user.userType}",style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
-                  SizedBox(height: 4),
-                Text(controller.appPreference.mobileNumber,style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
-              ],),
+                    SizedBox(height: 8),
+                  Text("Welcome",style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),),
+                    SizedBox(height: 4),
+                  Text("${controller.appPreference.user.fullName} - ${controller.appPreference.user.userType}",style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
+                    SizedBox(height: 4),
+                  Text(controller.appPreference.mobileNumber,style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
+                ],),
+      ),
     );
   }
 }
@@ -176,11 +217,11 @@ class _NavTitle extends StatelessWidget {
         maintainState: true,
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         iconColor: Get.theme.primaryColorDark,
-        leading: Icon(icon),
+        leading: Icon(icon,color: Get.theme.primaryColorDark,),
         childrenPadding: const EdgeInsets.only(left: 0, right: 8, bottom: 16),
         title: Text(
           title,
-          style: Get.textTheme.subtitle1,
+          style: Get.textTheme.subtitle1?.copyWith(color: Get.theme.primaryColorDark,fontWeight: FontWeight.bold),
         ),
         children: children,
       ),
@@ -215,7 +256,7 @@ class _NavSubTitle extends StatelessWidget {
         children: [
           Padding(
             padding:
-                const EdgeInsets.only(left: 32, right: 8, top: 8, bottom: 8),
+                const EdgeInsets.only(left: 32, right: 8, top: 12, bottom: 12),
             child: Row(
               children: [
                 Container(
@@ -227,7 +268,7 @@ class _NavSubTitle extends StatelessWidget {
                     style: const TextStyle(color: Colors.white),
                   )),
                   decoration: BoxDecoration(
-                      color: Get.theme.primaryColor,
+                      color: Get.theme.primaryColorLight,
                       borderRadius: BorderRadius.circular(30)),
                 ),
                 const SizedBox(
@@ -235,15 +276,11 @@ class _NavSubTitle extends StatelessWidget {
                 ),
                 Text(title,
                     style: Get.textTheme.subtitle1
-                        ?.copyWith(fontWeight: FontWeight.w400,color: Colors.black54,fontSize: 16))
+                        ?.copyWith(fontWeight: FontWeight.w500,color: Colors.black54,fontSize: 16))
               ],
             ),
           ),
-          (underline)
-              ? const Divider(
-                  thickness: 0.5,
-                )
-              : const SizedBox()
+
         ],
       ),
     );

@@ -1,0 +1,27 @@
+{
+  "code": 1,
+  "message": "Agent Info Fetched Successful !",
+  "status": "Success",
+  "agentid": "1508",
+  "fullname": "Deepak Verma",
+  "outlet_name": "ARB Telecom",
+  "picname": "91728435097545752043.jpg",
+  "agentcode": "SPR01508",
+  "usertype": "Retailer",
+  "availbalance": "2096.05",
+  "openbalance": "2096.05",
+  "creditbalance": "0",
+  "is_payout_bond": true,
+  "is_walletpay": true,
+  "is_instantpay": false,
+  "is_recharge": true,
+  "is_dth": true,
+  "is_insurance": true,
+  "is_bill": true,
+  "is_creditcard": true,
+  "is_paytmwalle": null,
+  "is_lic": true,
+  "is_ott": true,
+  "is_billpart": true
+
+}

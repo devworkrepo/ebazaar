@@ -38,7 +38,7 @@ class MatmPage extends GetView<MatmController> {
           ),
         ),
         AppButton(
-          text: "Capture and Proceed",
+          text: "Proceed",
           onClick: controller.onProceed,
         )
       ],

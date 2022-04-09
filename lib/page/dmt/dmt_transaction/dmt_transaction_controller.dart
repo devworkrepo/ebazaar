@@ -55,7 +55,8 @@ class DmtTransactionController extends GetxController
 
   void onProceed() async {
     if (!formKey.currentState!.validate()) return;
-    if (!(appPreference.user.isPayoutBond ?? false)) {
+    if (!(appPreference.user.isPayoutBond ?? false) &&
+        dmtType == DmtType.payout) {
       _fetchBondInfo();
     } else {
       _confirmDialog();

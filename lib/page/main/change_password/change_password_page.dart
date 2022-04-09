@@ -20,8 +20,11 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                children: const [_BuildFormWidget()],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: const [_BuildFormWidget()],
+                ),
               ),
             ),
           ),

@@ -98,6 +98,13 @@ class _ExceptionPageState extends State<ExceptionPage> {
           title: "Unauthorized Access!",
           message: exception.message.toString());
     }
+    else if (exception is BadRequestException) {
+      shouldGoLoginPage = true;
+      return _buildLottieWidget(
+          lottieType: LottieType.server,
+          title: "Bad Request",
+          message: exception.message.toString());
+    }
     else if (exception is SessionExpireException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(

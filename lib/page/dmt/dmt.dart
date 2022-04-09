@@ -10,7 +10,7 @@ class DmtHelper{
       return "Money Transfer";
     }
     else if(dmtType == DmtType.payout){
-      return "Payout";
+      return "Payout Transfer";
     }
     else {
       return "Not Implemented Type";

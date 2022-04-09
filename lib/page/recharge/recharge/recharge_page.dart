@@ -39,25 +39,28 @@ class RechargePage extends GetView<RechargeController> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        _buildTopSection(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        _buildRechargeFormKey(),
-                      ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          _buildTopSection(),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          _buildRechargeFormKey(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const WalletWidget()
-              ],
+                  const WalletWidget()
+                ],
+              ),
             ),
           ),
         ),

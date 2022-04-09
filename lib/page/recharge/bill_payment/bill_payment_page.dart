@@ -46,19 +46,22 @@ class BillPaymentPage extends GetView<BillPaymentController> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildFormKey(controller.extraParamResponse),
-                Obx(() {
-                  if (controller.actionType.value ==
-                      BillPaymentActionType.payBill) {
-                    return const WalletWidget();
-                  } else {
-                    return const SizedBox();
-                  }
-                })
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildFormKey(controller.extraParamResponse),
+                  Obx(() {
+                    if (controller.actionType.value ==
+                        BillPaymentActionType.payBill) {
+                      return const WalletWidget();
+                    } else {
+                      return const SizedBox();
+                    }
+                  })
+                ],
+              ),
             ),
           ),
         ),
