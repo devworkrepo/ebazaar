@@ -13,8 +13,7 @@ class HomeCarouselWidget extends StatefulWidget {
 
 class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
   var images = [
-    "https://en.pimg.jp/049/657/723/1/49657723.jpg",
-    "https://thumbs.dreamstime.com/b/word-teamwork-banner-text-color-vector-illustration-113527269.jpg"
+    "https://spayindia.in/images/spay_features.png",
   ];
 
   int activeIndex = 0;
@@ -33,7 +32,7 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
                 autoPlay: true,
                 viewportFraction: 0.95,
                 enlargeStrategy: CenterPageEnlargeStrategy.height,
-                height: 156,
+                height: 176,
                 onPageChanged: (index, reason) {
                   setState(() {
                     activeIndex = index;
@@ -65,24 +64,28 @@ class _BuildItem extends StatelessWidget {
       width: double.infinity,
       child: LayoutBuilder(builder: (context,constraint){
         return Card(
+          color: Colors.blue[900],
           elevation: 10,
           clipBehavior: Clip.antiAlias,
           margin: const EdgeInsets.all(4),
-          child: CachedNetworkImage(
-            placeholder: (context, url) => const Center(
-                child: Icon(
-                  Icons.image_search,
-                  color: Colors.black45,
-                  size: 100,
-                )),
-            errorWidget: (context,url,error)=>const Center(
-                child: Icon(
-                  Icons.image_not_supported_outlined,
-                  color: Colors.black45,
-                  size: 100,
-                )),
-            imageUrl: imageUrl,
-            fit: BoxFit.fill,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CachedNetworkImage(
+              placeholder: (context, url) => const Center(
+                  child: Icon(
+                    Icons.image_search,
+                    color: Colors.black45,
+                    size: 100,
+                  )),
+              errorWidget: (context,url,error)=>const Center(
+                  child: Icon(
+                    Icons.image_not_supported_outlined,
+                    color: Colors.black45,
+                    size: 100,
+                  )),
+              imageUrl: imageUrl,
+              fit: BoxFit.fill,
+            ),
           ),
         );
       },),

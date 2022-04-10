@@ -34,7 +34,7 @@ class LoginTermAndConditionDialog extends StatelessWidget {
                         child: Text("User preference will be store in strong cryptography. "
                             "Login session will be for 8 hours, once you login into app you will be get direct "
                             "access to homepage for 8 hours. After 8 hours again need to login and verify "
-                            "login with otp. App access is secure with biometric authentication you can enable "
+                            "with otp. App access is secure with biometric authentication you can enable "
                             "and disable into spay app settings. If your device doesn't  support biometric "
                             "authentication you will get direct access to homepage without any login information "
                             "for 8 hours. So if you wish login first to access your spay retailer account just "

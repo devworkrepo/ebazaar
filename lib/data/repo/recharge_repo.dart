@@ -11,16 +11,16 @@ abstract class RechargeRepo{
 
   Future<ProviderResponse> fetchProviders(Map<String,String> data);
   Future<RechargeCircleResponse> fetchCircles(Map<String,String> data);
-  Future<RechargeResponse> makeMobilePrepaidRecharge(Map<String,String> data);
-  Future<RechargeResponse> makeDthRecharge(Map<String,String> data);
-  Future<RechargeResponse> makeMobilePostpaidRecharge(Map<String,String> data);
+  Future<RechargeResponse> makeMobilePrepaidRecharge(Map<String,String> data, CancelToken? cancelToken);
+  Future<RechargeResponse> makeDthRecharge(Map<String,String> data, CancelToken? cancelToken);
+  Future<RechargeResponse> makeMobilePostpaidRecharge(Map<String,String> data, CancelToken? cancelToken);
 
   //bill payment
 
   Future<BillExtraParamResponse> fetchExtraParam(data);
   Future<BillInfoResponse> fetchBillInfo(data);
-  Future<BillPaymentResponse> makeOfflineBillPayment(data);
-  Future<BillPaymentResponse> makePartBillPayment(data);
+  Future<BillPaymentResponse> makeOfflineBillPayment(data, CancelToken? cancelToken);
+  Future<BillPaymentResponse> makePartBillPayment(data, CancelToken? cancelToken);
 
 
 }

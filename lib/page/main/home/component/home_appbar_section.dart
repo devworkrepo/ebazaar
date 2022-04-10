@@ -16,13 +16,14 @@ class HomeAppbarSection extends StatelessWidget {
       child: Row(
         children: [
           Card(
-            color: Colors.white.withOpacity(0.9),
+            color:Colors.white,
             shape : RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
             child: IconButton(
                 onPressed: onDrawerOpen,
-                icon: const Icon(
+                icon:  Icon(
                   Icons.menu,
                   size: 24,
+                  color: Get.theme.primaryColorDark,
                 )),
           ),
           const SizedBox(

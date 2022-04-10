@@ -35,6 +35,7 @@ class RouteName {
   static const fundRequestBankListPage = "/fund-request-bank-list-page";
   static const fundRequestPage = "/fund-request-page";
   static const fundReportPage = "/fund-report-page";
+  static const walletReportPage = "/wallet-report-page";
   static const fundRequestUpiPage = "/fund-request-upi-page";
   static const showQRCodePage = "/show-qr-code-page";
 

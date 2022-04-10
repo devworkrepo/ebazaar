@@ -7,6 +7,7 @@ import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/service/network_client.dart';
 
 import '../../model/report/recharge.dart';
+import '../../model/report/wallet.dart';
 import '../../model/statement/account_statement.dart';
 import '../../model/statement/credit_debit_statement.dart';
 
@@ -85,6 +86,12 @@ class ReportRepoImpl extends ReportRepo{
   Future<CreditDebitStatementResponse> fetchDebitStatement(data) async {
     var response = await  client.post("/GetDebitList",data: data);
     return CreditDebitStatementResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<WalletPayReportResponse> fetchWalletPayReport(data) async {
+    var response = await  client.post("/GetWalletList",data: data);
+    return WalletPayReportResponse.fromJson(response.data);
   }
 
 }

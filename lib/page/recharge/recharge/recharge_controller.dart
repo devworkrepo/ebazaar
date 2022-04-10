@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/common/confirm_amount_dialog.dart';
@@ -89,12 +90,13 @@ class RechargeController extends GetxController with TransactionHelperMixin {
   _makeMobileRecharge() async {
     StatusDialog.transaction();
     try {
+      cancelToken = CancelToken();
       await appPreference.setIsTransactionApi(true);
       RechargeResponse response = (providerType == ProviderType.dth)
-          ? await repo.makeDthRecharge(_transactionParam())
+          ? await repo.makeDthRecharge(_transactionParam(),cancelToken)
           : (providerType == ProviderType.prepaid)
-              ? await repo.makeMobilePrepaidRecharge(_transactionParam())
-              : await repo.makeMobilePostpaidRecharge(_transactionParam());
+              ? await repo.makeMobilePrepaidRecharge(_transactionParam(),cancelToken)
+              : await repo.makeMobilePostpaidRecharge(_transactionParam(),cancelToken);
 
       Get.back();
       if (response.code == 1) {
@@ -182,6 +184,11 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     numberController.dispose();
     amountController.dispose();
     mpinController.dispose();
+    if(cancelToken!= null){
+      if(!(cancelToken?.isCancelled ?? false)){
+        cancelToken?.cancel("Transaction was initiate but didn't catch response");
+      }
+    }
     super.dispose();
   }
 }

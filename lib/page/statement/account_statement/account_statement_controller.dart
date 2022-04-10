@@ -15,8 +15,6 @@ class AccountStatementController extends GetxController {
 
   String fromDate = "";
   String toDate = "";
-  String searchStatus = "";
-  String searchInput = "";
 
   var reportResponseObs = Resource
       .onInit(data: AccountStatementResponse())
@@ -41,8 +39,6 @@ class AccountStatementController extends GetxController {
         {
           "fromdate": fromDate,
           "todate": toDate,
-          "requestno": searchInput,
-          "status": searchStatus,
         };
 
     try {
@@ -63,8 +59,6 @@ class AccountStatementController extends GetxController {
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    searchStatus = "";
-    searchInput = "";
     fetchReport();
   }
 

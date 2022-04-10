@@ -31,7 +31,7 @@ class RechargeReportController extends GetxController {
     _param() => {
           "fromdate": fromDate,
           "todate": toDate,
-          "requestno": searchInput,
+          "transaction_no": searchInput,
           "status": searchStatus,
         };
 

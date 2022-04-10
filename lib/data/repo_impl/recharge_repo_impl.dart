@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/model/recharge/bill_payment.dart';
@@ -18,21 +19,21 @@ class RechargeRepoImpl extends RechargeRepo {
 
   @override
   Future<RechargeResponse> makeMobilePrepaidRecharge(
-      Map<String, String> data) async {
-    var response = await client.post("/PrepaidRecharge", data: data);
+      Map<String, String> data,CancelToken? cancelToken) async {
+    var response = await client.post("/PrepaidRecharge", data: data,cancelToken: cancelToken);
     return RechargeResponse.fromJson(response.data);
   }
 
   @override
   Future<RechargeResponse> makeMobilePostpaidRecharge(
-      Map<String, String> data) async {
-    var response = await client.post("/PostpaidRecharge", data: data);
+      Map<String, String> data,CancelToken? cancelToken) async {
+    var response = await client.post("/PostpaidRecharge", data: data,cancelToken: cancelToken);
     return RechargeResponse.fromJson(response.data);
   }
 
   @override
-  Future<RechargeResponse> makeDthRecharge(Map<String, String> data) async {
-    var response = await client.post("/DTHRecharge", data: data);
+  Future<RechargeResponse> makeDthRecharge(Map<String, String> data,CancelToken? cancelToken) async {
+    var response = await client.post("/DTHRecharge", data: data,cancelToken: cancelToken);
     return RechargeResponse.fromJson(response.data);
   }
 
@@ -49,15 +50,15 @@ class RechargeRepoImpl extends RechargeRepo {
   }
 
   @override
-  Future<BillPaymentResponse> makeOfflineBillPayment(data) async {
-    var response = await client.post("/BillPaymentOffline", data: data);
+  Future<BillPaymentResponse> makeOfflineBillPayment(data,cancelToken) async {
+    var response = await client.post("/BillPaymentOffline", data: data,cancelToken: cancelToken);
     //var response = await AppUtil.parseJsonFromAssets("bill_payment_response");
     return BillPaymentResponse.fromJson(response.data);
   }
 
   @override
-  Future<BillPaymentResponse> makePartBillPayment(data) async {
-    var response = await client.post("/BillPaymentPart", data: data);
+  Future<BillPaymentResponse> makePartBillPayment(data,cancelToken) async {
+    var response = await client.post("/BillPaymentPart", data: data,cancelToken: cancelToken);
    // var response = await AppUtil.parseJsonFromAssets("bill_payment_response");
     return BillPaymentResponse.fromJson(response.data);
   }

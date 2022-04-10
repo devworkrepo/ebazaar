@@ -53,7 +53,7 @@ class MoneyReportPage extends GetView<MoneyReportController> {
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           status: controller.searchStatus,
-          inputFieldOneTile: "Request Number",
+          inputFieldOneTile: "Transaction Number",
           onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
@@ -99,8 +99,8 @@ class _BuildListItem extends StatelessWidget {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
         isExpanded: report.isExpanded,
-        title:""+ report.accountNumber.orNA(),
-        subTitle: report.beneficiaryName.orNA(),
+        title:"A/C    : "+ report.accountNumber.orNA(),
+        subTitle:"Name : "+ report.beneficiaryName.orNA(),
         date: "Date : "+report.date.orNA(),
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),

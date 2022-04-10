@@ -39,7 +39,7 @@ class FundRequestPage extends GetView<FundRequestController> {
           )),
           Obx(() => AppButton(
               text: (controller.updateDetail != null)
-                  ? "Update Request"
+                  ? "Update Request" +((controller.paymentTypeObs.value.isNotEmpty) ? "" : "")
                   : "Make Request" +
                       (controller.paymentTypeObs.value.isNotEmpty ? "" : ""),
               onClick: () => controller.onFundRequestSubmitButtonClick()))

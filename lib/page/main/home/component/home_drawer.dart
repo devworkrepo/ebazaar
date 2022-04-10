@@ -65,11 +65,11 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         count: 2,
                       ),
-                      /*_NavSubTitle(
+                      _NavSubTitle(
                         title: "Wallet Pay",
-                        onClick: ()=>Get.toNamed(RouteName.aepsAllReportPage),
+                        onClick: ()=>Get.toNamed(RouteName.walletReportPage),
                         count: 2,
-                      ),*/
+                      ),
                     ],
                   ),
                 ),

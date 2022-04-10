@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/common.dart';
@@ -116,6 +117,7 @@ class DmtTransactionController extends GetxController
     await appPreference.setIsTransactionApi(true);
 
     try {
+      cancelToken =CancelToken();
       StatusDialog.transaction();
 
       DmtTransactionResponse response;
@@ -123,13 +125,13 @@ class DmtTransactionController extends GetxController
       switch (dmtType) {
         case DmtType.instantPay:
           if ((sender.isKycVerified ?? false)) {
-            response = await repo.kycTransaction(_transactionParam());
+            response = await repo.kycTransaction(_transactionParam(),cancelToken);
           } else {
-            response = await repo.nonKycTransaction(_transactionParam());
+            response = await repo.nonKycTransaction(_transactionParam(),cancelToken);
           }
           break;
         case DmtType.payout:
-          response = await repo.payoutTransaction(_transactionParam());
+          response = await repo.payoutTransaction(_transactionParam(),cancelToken);
           break;
       }
 
@@ -202,6 +204,11 @@ class DmtTransactionController extends GetxController
   void dispose() {
     mpinController.dispose();
     remarkController.dispose();
+    if(cancelToken!= null){
+      if(!(cancelToken?.isCancelled ?? false)){
+        cancelToken?.cancel("Transaction was initiate but didn't catch response");
+      }
+    }
     super.dispose();
   }
 }

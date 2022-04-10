@@ -99,7 +99,6 @@ class _ExceptionPageState extends State<ExceptionPage> {
           message: exception.message.toString());
     }
     else if (exception is BadRequestException) {
-      shouldGoLoginPage = true;
       return _buildLottieWidget(
           lottieType: LottieType.server,
           title: "Bad Request",

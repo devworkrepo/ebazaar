@@ -162,7 +162,7 @@ class _BuildHeaderSection extends StatelessWidget {
   }) : super(key: key);
 
   _buildTitle() {
-    var color =  (isExpand) ? Colors.white : Colors.black;
+    var color =  (isExpand) ? Colors.white : Get.theme.primaryColor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -53,7 +53,7 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           status: controller.searchStatus,
-          inputFieldOneTile: "Request Number",
+          inputFieldOneTile: "Transaction Number",
           onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;

@@ -16,7 +16,6 @@ class CreditDebitController extends GetxController {
 
   String fromDate = "";
   String toDate = "";
-  String searchStatus = "";
   String searchInput = "";
 
   var reportResponseObs = Resource
@@ -42,8 +41,7 @@ class CreditDebitController extends GetxController {
         {
           "fromdate": fromDate,
           "todate": toDate,
-          "requestno": searchInput,
-          "status": searchStatus,
+          "refno": searchInput,
         };
 
     try {
@@ -64,7 +62,6 @@ class CreditDebitController extends GetxController {
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    searchStatus = "";
     searchInput = "";
     fetchReport();
   }

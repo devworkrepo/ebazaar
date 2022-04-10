@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/common/confirm_amount_dialog.dart';
@@ -149,10 +150,11 @@ class BillPaymentController extends GetxController
 
     StatusDialog.transaction();
     try {
+      cancelToken = CancelToken();
       await appPreference.setIsTransactionApi(true);
       var response = (billInfoResponse.isPart ?? false)
-          ? await repo.makePartBillPayment(_paymentParam())
-          : await repo.makeOfflineBillPayment(_paymentParam());
+          ? await repo.makePartBillPayment(_paymentParam(),cancelToken)
+          : await repo.makeOfflineBillPayment(_paymentParam(),cancelToken);
       Get.back();
       if (response.code == 1) {
         Get.to(() => BillPaymentTxnResponsePage(),
@@ -222,6 +224,11 @@ class BillPaymentController extends GetxController
     fieldTwoController.dispose();
     fieldThreeController.dispose();
     mpinController.dispose();
+    if(cancelToken!= null){
+      if(!(cancelToken?.isCancelled ?? false)){
+        cancelToken?.cancel("Transaction was initiate but didn't catch response");
+      }
+    }
     super.dispose();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/model/bank.dart';
@@ -125,14 +126,14 @@ class DmtRepoImpl extends DmtRepo {
   }
 
   @override
-  Future<DmtTransactionResponse> kycTransaction(Map<String, String> data)  async{
-    var response = await client.post("/KycTransaction", data: data);
+  Future<DmtTransactionResponse> kycTransaction(Map<String, String> data,CancelToken? cancelToken)  async{
+    var response = await client.post("/KycTransaction", data: data,cancelToken: cancelToken);
     return DmtTransactionResponse.fromJson(response.data);
   }
 
   @override
-  Future<DmtTransactionResponse> nonKycTransaction(Map<String, String> data) async {
-    var response = await client.post("/NonKycTransaction", data: data);
+  Future<DmtTransactionResponse> nonKycTransaction(Map<String, String> data,CancelToken? cancelToken) async {
+    var response = await client.post("/NonKycTransaction", data: data,cancelToken: cancelToken);
     return DmtTransactionResponse.fromJson(response.data);
 
   }
@@ -162,9 +163,9 @@ class DmtRepoImpl extends DmtRepo {
   }
 
   @override
-  Future<DmtTransactionResponse> payoutTransaction(Map<String, String> data) async {
-    var response = await client.post("/PayoutTransaction",data: data);
-    return DmtTransactionResponse.fromJson(response.data);
+  Future<DmtTransactionResponse> payoutTransaction(Map<String, String> data,CancelToken? cancelToken) async {
+    var response = await client.post("/PayoutTransaction",data: data, cancelToken: cancelToken);
+    return DmtTransactionResponse.fromJson(response.data,);
   }
 
   @override

@@ -11,7 +11,7 @@ import 'package:spayindia/util/date_util.dart';
 class CommonReportSeasrchDialog extends StatefulWidget {
   final String fromDate;
   final String toDate;
-  final String status;
+  final String? status;
   final String? inputFieldOneTile;
 
   final Function(String fromDate, String toDate, String searchInput,
@@ -22,7 +22,7 @@ class CommonReportSeasrchDialog extends StatefulWidget {
       required this.onSubmit,
       required this.fromDate,
       required this.toDate,
-      required this.status,
+      this.status,
       this.inputFieldOneTile})
       : super(key: key);
 
@@ -81,7 +81,7 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                     });
                   },
                 ),
-                AppDropDown(
+                (widget.status != null) ? AppDropDown(
                   maxHeight: Get.height/0.75,
                   list: _listOfStatus,
                   label: "Select Status",
@@ -89,14 +89,14 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                   mode: Mode.BOTTOM_SHEET,
                   searchMode: false,
                   selectedItem:
-                      (widget.status.isNotEmpty) ? widget.status : null,
+                  (widget.status!.isNotEmpty) ? widget.status : null,
                   validator: (value) {
                     return null;
                   },
                   onChange: (value) {
                     status = value;
                   },
-                ),
+                ) : SizedBox(),
                 (widget.inputFieldOneTile == null)
                     ? const SizedBox()
                     : AppTextField(

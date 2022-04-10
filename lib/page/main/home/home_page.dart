@@ -66,6 +66,7 @@ class HomePage extends GetView<HomeController> {
                      HomeServiceSection(onClick:(item)=> controller.onItemClick(item),),
 
                      HomeCarouselWidget(),
+                     SizedBox(height: 24,),
 
                    ],
                  ),

@@ -7,6 +7,7 @@ import 'package:spayindia/model/fund/request_report.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
+import '../../../model/report/wallet.dart';
 import '../report_helper.dart';
 import 'wallet_report_controller.dart';
 import '../report_search.dart';
@@ -22,10 +23,10 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
         title: const Text("Wallet Pay Report"),
       ),
       body: Obx(() =>
-          controller.fundRequestReportResponseObs.value.when(onSuccess: (data) {
+          controller.reportResponseObs.value.when(onSuccess: (data) {
             if (data.code == 1) {
-              if(data.moneyList!.isEmpty){
-                return NoItemFoundWidget();
+              if(data.reports!.isEmpty){
+                return const NoItemFoundWidget();
               }
               else {
                return  _buildListBody();
@@ -49,13 +50,9 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
     Get.bottomSheet(CommonReportSeasrchDialog(
       fromDate: controller.fromDate,
       toDate: controller.toDate,
-      status: controller.searchStatus,
-      inputFieldOneTile : "Request Number",
       onSubmit: (fromDate, toDate, searchInput,searchInputType, status) {
         controller.fromDate = fromDate;
         controller.toDate = toDate;
-        controller.searchInput = searchInput;
-        controller.searchStatus = status;
         controller.onSearch();
       },
     ),isScrollControlled: true);
@@ -63,7 +60,7 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
 
   RefreshIndicator _buildListBody() {
 
-    var list = controller.fundReportList;
+    var list = controller.reportList;
     var count = list.length;
 
     return RefreshIndicator(
@@ -84,7 +81,7 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
 
 
 class _BuildListItem extends GetView<WalletPayReportController> {
-  final FundRequestReport report;
+  final WalletPayReport report;
 
   const _BuildListItem(this.report, {Key? key}) : super(key: key);
 
@@ -94,32 +91,20 @@ class _BuildListItem extends GetView<WalletPayReportController> {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
         isExpanded: report.isExpanded,
-        title: report.bankAccountName.orNA(),
-        subTitle:"Type : "+ report.type.orNA(),
-        date: "Date : "+report.addedDate.orNA(),
+        title: "Received By : "+report.receivedBy.orNA(),
+        subTitle:"Ref : "+ report.refNumber.orNA(),
+        date: "Date : "+report.date.orNA(),
         amount: report.amount.toString(),
-        status: report.status.toString(),
-        statusId:  ReportHelperWidget.getStatusId(report.status),
+        status: report.payStatus.toString(),
+        statusId:  ReportHelperWidget.getStatusId(report.payStatus),
 
 
         expandList: [
-          ListTitleValue(title: "Deposit Date", value: report.depositeDate.toString()),
-          ListTitleValue(title: "Modified Date", value: report.modifiedDate.toString()),
-          ListTitleValue(title: "Ref Number", value: report.referenceNumber.toString()),
+          ListTitleValue(title: "Paid By", value: report.paidBy.toString()),
+          ListTitleValue(title: "Message", value: report.payMessage.toString()),
           ListTitleValue(title: "Remark", value: report.remark.toString()),
-          ListTitleValue(title: "Modified Remark", value: report.modifiedRemark.toString()),
 
-        ],
-        actionWidget: (report.status!.toLowerCase() == "initiated") ? Container(
-          padding: EdgeInsets.only(top: 12),
-          child: OutlinedButton(onPressed: (){controller.onUpdateClick(report);}, child:Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.update),
-              SizedBox(width: 12,),
-              Text("Update")
-            ],)),
-        ) : SizedBox()),
+        ],)
     );
   }
 

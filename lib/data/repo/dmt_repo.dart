@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:spayindia/model/bank.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/dmt/account_search.dart';
@@ -30,9 +31,9 @@ abstract class DmtRepo {
   Future<CommonResponse> changeSenderName(data);
   Future<CommonResponse> changeSenderMobile(data);
   Future<CommonResponse> changeSenderOtp(data);
-  Future<DmtTransactionResponse> nonKycTransaction(Map<String, String> data);
-  Future<DmtTransactionResponse> kycTransaction(Map<String, String> data);
-  Future<DmtTransactionResponse> payoutTransaction(Map<String, String> data);
+  Future<DmtTransactionResponse> nonKycTransaction(Map<String, String> data,CancelToken? cancelToken);
+  Future<DmtTransactionResponse> kycTransaction(Map<String, String> data,CancelToken? cancelToken);
+  Future<DmtTransactionResponse> payoutTransaction(Map<String, String> data,CancelToken? cancelToken);
   Future<DmtBeneficiaryResponse> fetchDeletedBeneficiary(Map<String, String> data);
   Future<CommonResponse> importRemitterBeneficiary(Map<String, String> data);
   Future<CommonResponse> importDeletedBeneficiary(Map<String, String> data);

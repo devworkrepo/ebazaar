@@ -23,6 +23,7 @@ import 'package:spayindia/page/recharge/provider/provider_page.dart';
 import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/page/report/fund_report/fund_report_page.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
+import 'package:spayindia/page/report/wallet_pay/wallet_report_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_transfer/wallet_transfer_page.dart';
 import 'package:spayindia/route/route_name.dart';
@@ -125,6 +126,11 @@ final getAllPages = [
     name: RouteName.fundReportPage,
     page: () => const FundRequestReportPage(),
     arguments: "route",
+  ),
+
+  GetPage(
+    name: RouteName.walletReportPage,
+    page: () => const WalletPayReportPage()
   ),
 
 

@@ -49,13 +49,11 @@ class CreditDebitPage extends GetView<CreditDebitController> {
         CommonReportSeasrchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
-          status: controller.searchStatus,
-          inputFieldOneTile: "Request Number",
+          inputFieldOneTile: "Ref Number",
           onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
-            controller.searchStatus = status;
             controller.onSearch();
           },
         ),

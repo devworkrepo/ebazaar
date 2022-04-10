@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,6 +8,8 @@ import 'package:spayindia/service/location.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 
 mixin TransactionHelperMixin {
+
+  CancelToken? cancelToken;
 
    bool checkBalance(String? walletAmount,String amount) {
 

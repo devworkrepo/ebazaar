@@ -21,7 +21,7 @@ class WalletSearchPage extends GetView<WalletSearchController> {
         actions: [
           PopupMenuButton<String>(
             onSelected: (i){
-              Get.toNamed(RouteName.fundReportPage);
+              Get.toNamed(RouteName.walletReportPage);
             },
 
             itemBuilder: (BuildContext context) {

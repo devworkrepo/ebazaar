@@ -16,7 +16,6 @@ class DmtRefundController extends GetxController {
 
   String fromDate = "";
   String toDate = "";
-  String searchStatus = "";
   String searchInput = "";
 
   var moneyReportResponseObs =
@@ -57,8 +56,8 @@ class DmtRefundController extends GetxController {
     _param() => {
           "fromdate": fromDate,
           "todate": toDate,
-          "requestno": searchInput,
-          "status": searchStatus,
+          "transaction_no": searchInput,
+
         };
 
     try {
@@ -79,7 +78,6 @@ class DmtRefundController extends GetxController {
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    searchStatus = "";
     searchInput = "";
     fetchReport();
   }

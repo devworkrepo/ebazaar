@@ -49,13 +49,9 @@ class AccountStatementPage extends GetView<AccountStatementController> {
         CommonReportSeasrchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
-          status: controller.searchStatus,
-          inputFieldOneTile: "Request Number",
           onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
-            controller.searchInput = searchInput;
-            controller.searchStatus = status;
             controller.onSearch();
           },
         ),
