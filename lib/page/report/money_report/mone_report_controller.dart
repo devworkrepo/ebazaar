@@ -7,6 +7,9 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/tags.dart';
 
+import '../../../component/dialog/status_dialog.dart';
+import '../report_helper.dart';
+
 class MoneyReportController extends GetxController {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
@@ -50,6 +53,27 @@ class MoneyReportController extends GetxController {
     } catch (e) {
       reportResponseObs.value = Resource.onFailure(e);
       Get.to(() => ExceptionPage(error: e));
+    }
+  }
+
+  void requeryTransaction(MoneyReport report) async {
+    StatusDialog.progress();
+    var response = (tag == AppTag.moneyReportControllerTag)
+        ? await repo.requeryDmtTransaction({
+            "transaction_no": report.transactionNumber ?? "",
+          })
+        : await repo.requeryPayoutTransaction({
+            "transaction_no": report.transactionNumber ?? "",
+          });
+
+    Get.back();
+    if (response.code == 1) {
+      ReportHelperWidget.requeryStatus(response.trans_response ?? "InProgress",
+          response.trans_response ?? "Message not found", () {
+        fetchReport();
+      });
+    } else {
+      StatusDialog.failure(title: response.message ?? "Something went wrong");
     }
   }
 

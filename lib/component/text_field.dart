@@ -521,3 +521,58 @@ class AppSearchField extends StatelessWidget {
   }
 }
 
+class AadhaarTextField extends StatelessWidget {
+  final TextEditingController controller;
+  const AadhaarTextField({Key? key,required this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return   AppTextField(
+        inputType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          AadhaarInputValidator()
+        ],
+        maxLength: 14,
+        hint: "Aadhaar number",
+        label: "Aadhaar Number",
+        validator: (value) {
+          if (value!.length == 14) {
+            return null;
+          } else {
+            return "Enter 12 digits aadhaar number";
+          }
+        },
+        controller: controller);
+  }
+}
+
+class CardTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final bool enable;
+  const CardTextField({Key? key,required this.controller,this.enable=true}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return   AppTextField(
+      enable: enable,
+        inputType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          AadhaarInputValidator()
+        ],
+        maxLength: 19,
+        hint: "Required*",
+        label: "Card Number",
+        validator: (value) {
+          if (value!.length == 19) {
+            return null;
+          } else {
+            return "Enter 16 digits card number";
+          }
+        },
+        controller: controller);
+  }
+}
+
+

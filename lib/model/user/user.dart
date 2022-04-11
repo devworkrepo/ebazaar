@@ -51,7 +51,7 @@ class UserDetail {
     isInstantPay = json['is_instantpay'];
     isBill = json['is_bill'];
     isCreditCard = json['is_creditcard'];
-    isPaytmWallet = json['is_paytmwalle'];
+    isPaytmWallet = json['is_paytmwallet'];
     isLic = json['is_lic'];
     isOtt = json['is_ott'];
     isBillPart = json['is_billpart'];

@@ -123,7 +123,7 @@ class LoginOtpController extends GetxController  {
 
       Get.back();
 
-      if (response.status == "1") {
+      if (response.code == 1) {
         showSuccessSnackbar(title: "Resent Otp", message: response.message);
         resendButtonVisibilityObs.value = false;
       } else {

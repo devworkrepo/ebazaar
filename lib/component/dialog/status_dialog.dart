@@ -32,7 +32,7 @@ class BaseDialogContainer extends StatelessWidget {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: BorderRadius.circular(12),
                     color: Colors.white),
                 child: child,
               ),

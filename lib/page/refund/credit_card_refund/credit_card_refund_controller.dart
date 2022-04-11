@@ -1,30 +1,57 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
-import 'package:spayindia/model/report/dmt.dart';
-import 'package:spayindia/model/report/recharge.dart';
+import 'package:spayindia/model/refund/credit_card.dart';
+import 'package:spayindia/model/refund/recharge.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
-class RechargeReportController extends GetxController {
+class CreditCardRefundController extends GetxController {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
   String fromDate = "";
   String toDate = "";
-  String searchStatus = "";
   String searchInput = "";
 
-  var reportResponseObs = Resource.onInit(data: RechargeReportResponse()).obs;
-  late List<RechargeReport> reportList;
-  RechargeReport? previousReport;
+  var reportResponseObs =
+      Resource.onInit(data: CreditRefundListResponse()).obs;
+  late List<CreditCardRefund> reports;
+  CreditCardRefund? previousReport;
+
 
   @override
   void onInit() {
     super.onInit();
     fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    fetchReport();
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      fetchReport();
+    });
+  }
+
+  void takeRefund(String mPin, CreditCardRefund report) async {
+   try{
+     StatusDialog.progress();
+     var response = await repo.takeCreditCardRefund({
+       "transaction_no": report.transactionNumber ?? "",
+       "mpin": mPin,
+     });
+
+     Get.back();
+     if (response.code == 1) {
+       StatusDialog.success(title: response.message)
+           .then((value) => fetchReport());
+     } else {
+       StatusDialog.failure(title: response.message);
+     }
+   }catch(e){
+     Get.back();
+     Get.to(()=>ExceptionPage(error: e));
+   }
   }
 
   fetchReport() async {
@@ -32,14 +59,14 @@ class RechargeReportController extends GetxController {
           "fromdate": fromDate,
           "todate": toDate,
           "transaction_no": searchInput,
-          "status": searchStatus,
+
         };
 
     try {
       reportResponseObs.value = const Resource.onInit();
-      final response = await repo.fetchRechargeTransactionList(_param());
+      final response = await repo.creditCardRefundList(_param());
       if (response.code == 1) {
-        reportList = response.reports!;
+        reports = response.reports!;
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -51,12 +78,11 @@ class RechargeReportController extends GetxController {
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    searchStatus = "";
     searchInput = "";
     fetchReport();
   }
 
-  void onItemClick(RechargeReport report) {
+  void onItemClick(CreditCardRefund report) {
     if (previousReport == null) {
       report.isExpanded.value = true;
       previousReport = report;

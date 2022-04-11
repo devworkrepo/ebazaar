@@ -1,12 +1,16 @@
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/refund/credit_card.dart';
 import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/service/network_client.dart';
 
+import '../../model/refund/recharge.dart';
+import '../../model/report/credit_card.dart';
 import '../../model/report/recharge.dart';
+import '../../model/report/requery.dart';
 import '../../model/report/wallet.dart';
 import '../../model/statement/account_statement.dart';
 import '../../model/statement/credit_debit_statement.dart';
@@ -92,6 +96,55 @@ class ReportRepoImpl extends ReportRepo{
   Future<WalletPayReportResponse> fetchWalletPayReport(data) async {
     var response = await  client.post("/GetWalletList",data: data);
     return WalletPayReportResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<RechargeRefundListResponse> rechargeRefundList(data) async {
+    var response = await  client.post("/GetRefundRechagesList",data: data);
+    return RechargeRefundListResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> takeRechargeRefund(data) async {
+    var response = await  client.post("/ClaimRechargeRefund",data: data);
+    return CommonResponse.fromJson(response.data);
+
+  }
+
+  @override
+  Future<ReportRequeryResponse> requeryDmtTransaction(data) async {
+    var response = await  client.post("/RequeryTransaction",data: data);
+    return ReportRequeryResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<ReportRequeryResponse> requeryPayoutTransaction(data) async {
+    var response = await  client.post("/RequeryPayout",data: data);
+    return ReportRequeryResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CreditCardReportResponse> fetchCreditCardReport(data) async {
+    var response = await  client.post("/GetCreditTransactionList",data: data);
+    return CreditCardReportResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<ReportRequeryResponse> requeryCreditCardTransaction(data) async {
+    var response = await  client.post("/RequeryCreditTransaction",data: data);
+    return ReportRequeryResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CreditRefundListResponse> creditCardRefundList(data) async {
+    var response = await  client.post("/GetRefundCreditList",data: data);
+    return CreditRefundListResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> takeCreditCardRefund(data) async {
+    var response = await  client.post("/ClaimCreditCardRefund",data: data);
+    return CommonResponse.fromJson(response.data);
   }
 
 }

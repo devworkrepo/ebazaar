@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
+import 'package:spayindia/model/bank.dart';
 import 'package:spayindia/model/recharge/bill_payment.dart';
 import 'package:spayindia/model/recharge/extram_param.dart';
 import 'package:spayindia/model/recharge/recharge.dart';
 import 'package:spayindia/model/recharge/response.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
+
+import '../../model/recharge/credit_card.dart';
 
 class RechargeRepoImpl extends RechargeRepo {
   final NetworkClient client = Get.find();
@@ -68,5 +71,31 @@ class RechargeRepoImpl extends RechargeRepo {
   Future<RechargeCircleResponse> fetchCircles(Map<String, String> data) async {
     var response = await client.post("/GetCircles", data: data);
     return RechargeCircleResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<BankListResponse> fetchCreditCardBank() async {
+    var response = await client.post("/GetCreditBanks");
+    return BankListResponse.fromJson(response.data);
+  }
+
+
+  @override
+  Future<CreditCardTypeResponse> fetchCreditCardType() async{
+    var response = await client.post("/GetCardTypes");
+    return CreditCardTypeResponse.fromJson(response.data);
+  }
+
+
+  @override
+  Future<CreditCardLimitResponse> fetchCreditLimit(data) async {
+    var response = await client.post("/GetCreditLimit",data: data);
+    return CreditCardLimitResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CreditCardPaymentResponse> makeCardPayment(data,CancelToken? cancelToken) async {
+    var response = await client.post("/PostCreditTransaction",data: data,cancelToken: cancelToken);
+    return CreditCardPaymentResponse.fromJson(response.data);
   }
 }

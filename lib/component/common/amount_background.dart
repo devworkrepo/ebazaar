@@ -9,7 +9,7 @@ class AmountBackgroundWidget extends StatelessWidget {
     return  Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.grey[200]),
+          color: Colors.grey[100]),
       padding: const EdgeInsets.all(8),
       child: child,
     );

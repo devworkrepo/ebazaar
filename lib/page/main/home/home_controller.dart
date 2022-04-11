@@ -7,8 +7,8 @@ import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/main/home/component/home_service_section.dart';
 import 'package:spayindia/page/main/home/component/bottom_sheet_option.dart';
+import 'package:spayindia/page/main/home/component/home_service_section.dart';
 import 'package:spayindia/page/main_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/loca_auth.dart';
@@ -147,6 +147,12 @@ class HomeController extends GetxController {
       case HomeServiceType.walletPay:
         {
           Get.toNamed(RouteName.walletSearchPage);
+        }
+        break;
+
+      case HomeServiceType.creditCard:
+        {
+          Get.toNamed(RouteName.creditCardPage);
         }
         break;
       default:

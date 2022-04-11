@@ -3,26 +3,21 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/api_component.dart';
 import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
-import 'package:spayindia/model/report/dmt.dart';
+import 'package:spayindia/model/report/credit_card.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
-
 import '../../../component/common/report_action_button.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
-import 'mone_report_controller.dart';
+import 'credit_card_report_controller.dart';
 
-class MoneyReportPage extends GetView<MoneyReportController> {
-  final String controllerTag;
+class CreditCardReportPage extends GetView<CreditCardReportController> {
 
-  @override
-  String? get tag => controllerTag;
-
-  const MoneyReportPage({Key? key, required this.controllerTag}) : super(key: key);
+  const CreditCardReportPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MoneyReportController(controllerTag), tag: controllerTag);
+    Get.put(CreditCardReportController());
     return Scaffold(
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
@@ -38,8 +33,8 @@ class MoneyReportPage extends GetView<MoneyReportController> {
             }, onFailure: (e) {
               return ExceptionPage(error: e);
             }, onInit: (data) {
-            return ApiProgress(data);
-          })),
+              return ApiProgress(data);
+            })),
         floatingActionButton: FloatingActionButton.extended(
             icon: const Icon(Icons.search),
             onPressed: () => _onSearch(),
@@ -53,7 +48,7 @@ class MoneyReportPage extends GetView<MoneyReportController> {
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           status: controller.searchStatus,
-          inputFieldOneTile: "Transaction Number",
+          inputFieldOneTile: "Request Number",
           onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
@@ -77,9 +72,11 @@ class MoneyReportPage extends GetView<MoneyReportController> {
       child: Card(
         color:Colors.white,
         margin: const EdgeInsets.only(bottom: 8,left: 8,right: 8,top: 8,),
-        child: ListView.builder(padding: const EdgeInsets.only(top: 0,bottom: 100),itemBuilder: (context, index) {
-          return _BuildListItem(list[index],controller: controller,);
-        },itemCount: count,),
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 0,bottom: 100),
+          itemBuilder: (context, index) {
+            return _BuildListItem(list[index],);
+          },itemCount: count,),
       ),
     );
   }
@@ -87,11 +84,11 @@ class MoneyReportPage extends GetView<MoneyReportController> {
 
 
 
-class _BuildListItem extends StatelessWidget {
-  final MoneyReport report;
-  final MoneyReportController controller;
+class _BuildListItem extends GetView<CreditCardReportController> {
+  final CreditCardReport report;
 
-  const _BuildListItem(this.report, {Key? key,required this.controller}) : super(key: key);
+
+  const _BuildListItem(this.report, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,40 +96,34 @@ class _BuildListItem extends StatelessWidget {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
         isExpanded: report.isExpanded,
-        title: "A/C    : " + report.accountNumber.orNA(),
-        subTitle: "Bank  : " + report.bankName.orNA(),
-        date: "Date : " + report.date.orNA(),
+        title:"Card No  : "+ report.cardNumber.orNA(),
+        subTitle:"Bank : "+ report.bankName.orNA().toUpperCase(),
+        date: "Date : "+report.date.orNA(),
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
-        statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
+        statusId:  ReportHelperWidget.getStatusId(report.transactionStatus),
+
+
         expandList: [
-          ListTitleValue(
-              title: "Remitter Number", value: report.senderNubber.toString()),
-          ListTitleValue(
-              title: "Txn Number", value: report.transactionNumber.toString()),
-          ListTitleValue(
-              title: "Beneficiary Name",
-              value: report.beneficiaryName.toString()),
-          ListTitleValue(
-              title: "Account Number", value: report.accountNumber.toString()),
-          ListTitleValue(
-              title: "Transaction Type",
-              value: report.transactionType.toString()),
-          ListTitleValue(
-              title: "Commission", value: report.commission.toString()),
-          ListTitleValue(
-              title: "UTR Number", value: report.utrNumber.toString()),
-          ListTitleValue(
-              title: "Message", value: report.transactionMessage.toString()),
+          ListTitleValue(title: "Name", value: report.cardHolderName.toString()),
+          ListTitleValue(title: "Mobile Number", value: report.mobileNumber.toString()),
+          ListTitleValue(title: "Card Type", value: report.cardType.toString()),
+          ListTitleValue(title: "Txn Number", value: report.transactionNumber.toString()),
+          ListTitleValue(title: "Utr Number", value: report.utrNumber.toString()),
+          ListTitleValue(title: "IFSC Code", value: report.ifscCode.toString()),
+          ListTitleValue(title: "Charge", value: report.charge.toString()),
+          ListTitleValue(title: "Commission", value: report.commission.toString()),
+          ListTitleValue(title: "Message", value: report.transactionMessage.toString()),
+
         ],
         actionWidget: (report.transactionStatus!.toLowerCase() == "inprogress")
             ? ReportActionButton(
-                title: "Re-query",
-                icon: Icons.refresh,
-                onClick: () {
-                  controller.requeryTransaction(report);
-                },
-              )
+          title: "Re-query",
+          icon: Icons.refresh,
+          onClick: () {
+            controller.requeryTransaction(report);
+          },
+        )
             : SizedBox(),
       ),
     );

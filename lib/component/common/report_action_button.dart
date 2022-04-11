@@ -59,10 +59,12 @@ class _RefundBottomSheetDialogState extends State<RefundBottomSheetDialog> {
   }
 }
 
-class RefundButtonWidget extends StatelessWidget {
+class ReportActionButton extends StatelessWidget {
+  final String title ;
+  final IconData icon;
   final VoidCallback onClick;
 
-  const RefundButtonWidget({required this.onClick, Key? key}) : super(key: key);
+  const ReportActionButton({required this.title, required this.icon,required this.onClick, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,13 +75,13 @@ class RefundButtonWidget extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children:  [
             Icon(
-              Icons.keyboard_return_sharp,
+              icon,
               color: Colors.black,
             ),
             Text(
-              "Take Refund",
+              title,
               style: TextStyle(color: Colors.black),
             )
           ],

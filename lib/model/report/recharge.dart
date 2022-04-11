@@ -6,7 +6,7 @@ class RechargeReportResponse {
   String? message;
   String? totalCount;
   String? totalAmount;
-  List<RechargeReport>? rechargeReport;
+  List<RechargeReport>? reports;
 
   RechargeReportResponse();
 
@@ -17,7 +17,7 @@ class RechargeReportResponse {
     totalCount = json['totalcount'].toString();
     totalAmount = json['totalamt'].toString();
     if (json["rechlist"] != null) {
-      rechargeReport = List.from(json['rechlist'])
+      reports = List.from(json['rechlist'])
           .map((e) => RechargeReport.fromJson(e))
           .toList();
     }

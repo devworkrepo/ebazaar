@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spayindia/model/report/credit_card.dart';
+import 'package:spayindia/page/credit_card/credit_card_page.dart';
+import 'package:spayindia/page/report/credit_card_report/credit_card_report_page.dart';
 import 'package:spayindia/page/report/money_report/money_report_page.dart';
 import 'package:spayindia/page/report/recharge_report/recharge_report_page.dart';
 import 'package:spayindia/util/tags.dart';
@@ -20,7 +23,7 @@ class _TransactionTabPageState extends State<TransactionTabPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 6, vsync: this);
   }
 
   @override
@@ -46,6 +49,7 @@ class _TransactionTabPageState extends State<TransactionTabPage>
                   Tab(text: 'Matm'),
                   Tab(text: 'Aeps'),
                   Tab(text: 'Recharge'),
+                  Tab(text: 'Credit Card'),
                 ],
                 controller: _tabController,
               ),
@@ -60,6 +64,7 @@ class _TransactionTabPageState extends State<TransactionTabPage>
             AepsMatmReportPage(controllerTag: AppTag.matmReportControllerTag,),
             AepsMatmReportPage(controllerTag: AppTag.aepsReportControllerTag,),
             RechargeReportPage(),
+            CreditCardReportPage(),
           ],
         ),
       ),

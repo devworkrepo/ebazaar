@@ -18,7 +18,7 @@ class AppDropDown extends StatelessWidget {
   const AppDropDown(
       {required this.list,
       required this.onChange,
-      this.hint = "Hint",
+      this.hint = "Required*",
       this.label = "Label",
       this.validator,
       this.hideLabel = false,
@@ -37,7 +37,7 @@ class AppDropDown extends StatelessWidget {
         mode: mode,
 
         dropdownSearchDecoration:  InputDecoration(
-          errorStyle: TextStyle(color: Get.theme.primaryColorLight),
+          errorStyle: TextStyle(color: Get.theme.primaryColorLight,fontWeight: FontWeight.w400),
           prefixIcon: Icon(Icons.input),
           label: Text(label),
           labelStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 15),
@@ -65,10 +65,10 @@ class AppDropDown extends StatelessWidget {
             return validator!(value);
           } else {
             if (value == null) {
-              return "select $hint";
+              return "select $label";
             }
             if (value == "") {
-              return "select $hint";
+              return "select $label";
             } else
               return null;
           }

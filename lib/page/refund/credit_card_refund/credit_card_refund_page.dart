@@ -5,31 +5,30 @@ import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
+import 'package:spayindia/page/refund/recharge_refund/recharge_refund_controller.dart';
 import 'package:spayindia/component/common/report_action_button.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
+import '../../../model/refund/credit_card.dart';
 import '../../../model/refund/dmt_refund.dart';
+import '../../../model/refund/recharge.dart';
 import '../../report/report_helper.dart';
 import '../../report/report_search.dart';
+import 'credit_card_refund_controller.dart';
 
-class DmtRefundPage extends GetView<DmtRefundController> {
-  final String controllerTag;
+class CreditCardRefundPage extends GetView<CreditCardRefundController> {
 
-  const DmtRefundPage({Key? key, required this.controllerTag})
-      : super(key: key);
-
-  @override
-  String? get tag => controllerTag;
+  const CreditCardRefundPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(DmtRefundController(controllerTag), tag: controllerTag);
+    Get.put(CreditCardRefundController());
 
     return Scaffold(
         body: Obx(() =>
-            controller.moneyReportResponseObs.value.when(onSuccess: (data) {
+            controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
-                if (data.list!.isEmpty) {
+                if (data.reports!.isEmpty) {
                   return const NoItemFoundWidget();
                 } else {
                   return _buildListBody();
@@ -65,7 +64,7 @@ class DmtRefundPage extends GetView<DmtRefundController> {
   }
 
   RefreshIndicator _buildListBody() {
-    var list = controller.moneyReportList;
+    var list = controller.reports;
     var count = list.length;
 
     return RefreshIndicator(
@@ -83,7 +82,7 @@ class DmtRefundPage extends GetView<DmtRefundController> {
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0),
           itemBuilder: (context, index) {
-            return _BuildListItem(list[index], controller);
+            return _BuildListItem(list[index]);
           },
           itemCount: count,
         ),
@@ -92,11 +91,9 @@ class DmtRefundPage extends GetView<DmtRefundController> {
   }
 }
 
-class _BuildListItem extends StatelessWidget {
-  final DmtRefund report;
-  final DmtRefundController controller;
-
-  const _BuildListItem(this.report, this.controller, {Key? key})
+class _BuildListItem extends GetView<CreditCardRefundController> {
+  final CreditCardRefund report;
+  const _BuildListItem(this.report, {Key? key})
       : super(key: key);
 
   @override
@@ -105,31 +102,22 @@ class _BuildListItem extends StatelessWidget {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
         isExpanded: report.isExpanded,
-        title: "" + report.accountNumber.orNA(),
-        subTitle: report.beneficiaryName.orNA(),
-        date: "Date : " + report.transactionDate.orNA(),
+        title: "Card No : " + report.cardNumber.orNA(),
+        subTitle: report.bank.orNA().toUpperCase(),
+        date: "Date : " + report.date.orNA(),
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
         expandList: [
-          ListTitleValue(
-              title: "Remitter Number", value: report.senderNumber.toString()),
-          ListTitleValue(
-              title: "Txn Number", value: report.transactionNumber.toString()),
-          ListTitleValue(
-              title: "Beneficary Name",
-              value: report.beneficiaryName.toString()),
-          ListTitleValue(
-              title: "Account Number", value: report.accountNumber.toString()),
-          ListTitleValue(
-              title: "Transaction Type",
-              value: report.transactionType.toString()),
-          ListTitleValue(
-              title: "Commission", value: report.commission.toString()),
-          ListTitleValue(
-              title: "UTR Number", value: report.utrNumber.toString()),
-          ListTitleValue(
-              title: "Message", value: report.transactionMessage.toString()),
+          ListTitleValue(title: "Name", value: report.cardHolderName.toString()),
+          ListTitleValue(title: "Mobile Number", value: report.mobileNumber.toString()),
+          ListTitleValue(title: "Card Type", value: report.cardType.toString()),
+          ListTitleValue(title: "Txn Number", value: report.transactionNumber.toString()),
+          ListTitleValue(title: "Utr Number", value: report.utrNumber.toString()),
+          ListTitleValue(title: "IFSC Code", value: report.ifsc.toString()),
+          ListTitleValue(title: "Charge", value: report.charge.toString()),
+          ListTitleValue(title: "Commission", value: report.commission.toString()),
+          ListTitleValue(title: "Message", value: report.transactionMessage.toString()),
         ],
         actionWidget: ReportActionButton(
           title: "Take Refund",
@@ -137,7 +125,7 @@ class _BuildListItem extends StatelessWidget {
           onClick: (){
           Get.bottomSheet(RefundBottomSheetDialog(
             onProceed: (value){
-              controller.takeDmtRefund(value,report);
+              controller.takeRefund(value,report);
             },
           ),isScrollControlled: true);
         },),

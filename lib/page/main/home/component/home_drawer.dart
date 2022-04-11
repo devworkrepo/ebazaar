@@ -6,6 +6,7 @@ import 'package:spayindia/res/color.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
 
+import '../../../../component/image.dart';
 import '../../logout_confirm_dialog.dart';
 
 class HomeDrawerWidget extends GetView<HomeController> {
@@ -177,21 +178,12 @@ class HomeDrawerWidget extends GetView<HomeController> {
         child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Get.theme.primaryColorDark,
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          onError: (_, __) {}, image: NetworkImage(AppConstant.profileBaseUrl+controller.user.picName!), fit: BoxFit.contain),
-                    ),
-                  ),
-                    SizedBox(height: 8),
+                    AppCircleNetworkImage(AppConstant.profileBaseUrl+controller.user.picName.toString(),size: 70,),
+                    const SizedBox(height: 8),
                   Text("Welcome",style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                   Text("${controller.appPreference.user.fullName} - ${controller.appPreference.user.userType}",style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                   Text(controller.appPreference.mobileNumber,style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
                 ],),
       ),

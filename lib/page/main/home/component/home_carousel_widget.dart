@@ -14,6 +14,9 @@ class HomeCarouselWidget extends StatefulWidget {
 class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
   var images = [
     "https://spayindia.in/images/spay_features.png",
+    "https://spayindia.in/images/spay_features.png",
+    "https://spayindia.in/images/spay_features.png",
+    "https://spayindia.in/images/spay_features.png",
   ];
 
   int activeIndex = 0;
@@ -32,7 +35,7 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
                 autoPlay: true,
                 viewportFraction: 0.95,
                 enlargeStrategy: CenterPageEnlargeStrategy.height,
-                height: 176,
+                height: 156,
                 onPageChanged: (index, reason) {
                   setState(() {
                     activeIndex = index;
@@ -65,7 +68,7 @@ class _BuildItem extends StatelessWidget {
       child: LayoutBuilder(builder: (context,constraint){
         return Card(
           color: Colors.blue[900],
-          elevation: 10,
+          elevation: 1,
           clipBehavior: Clip.antiAlias,
           margin: const EdgeInsets.all(4),
           child: Padding(

@@ -17,6 +17,9 @@ class RouteName {
   static const aepsPage = "/aeps";
   static const mamtPage = "/matm";
 
+  //credit card
+  static const creditCardPage = "/credit_card_page";
+
   //dmt
   static const dmtSearchSenderPage = "/dmt-search-sender-page";
   static const dmtBeneficiaryListPage = "/dmt-beneficiary_list-page";

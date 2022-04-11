@@ -183,7 +183,7 @@ class _BuildHeaderSection extends StatelessWidget {
   }
 
   _buildSubtitle() {
-    var color = (isExpand) ? Colors.white70 : Colors.black;
+    var color = (isExpand) ? Colors.white70 : Colors.black87;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -195,7 +195,7 @@ class _BuildHeaderSection extends StatelessWidget {
           subTitle,
           maxLines: 1,
           style: Get.textTheme.subtitle1?.copyWith(
-              fontWeight: FontWeight.w400, fontSize: 14, color: color),
+              fontWeight: FontWeight.w400, fontSize: 16, color: color),
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -339,8 +339,9 @@ class BuildListIcon extends StatelessWidget {
 class BuildLeftListWidget extends StatelessWidget {
   final String title;
   final Color? color;
+  final int? fontSize;
 
-  const BuildLeftListWidget(this.title, {Key? key,this.color}) : super(key: key);
+  const BuildLeftListWidget(this.title, {Key? key,this.color,this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -349,7 +350,7 @@ class BuildLeftListWidget extends StatelessWidget {
       child: Text(
         title,
         style: Get.textTheme.subtitle1?.copyWith(
-          fontSize: 14,
+          fontSize: (fontSize ?? 14).toDouble(),
             fontWeight: FontWeight.w400, color: color ?? Colors.black54,),
       ),
     );
@@ -373,8 +374,9 @@ class BuildDotWidget extends StatelessWidget {
 class BuildRightListWidget extends StatelessWidget {
   final String title;
   final Color? color;
+  final int? fontSize;
 
-  const BuildRightListWidget(this.title, {Key? key,this.color}) : super(key: key);
+  const BuildRightListWidget(this.title, {Key? key,this.color, this. fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -383,7 +385,7 @@ class BuildRightListWidget extends StatelessWidget {
       child: Text(
         title,
         style: Get.textTheme.subtitle1?.copyWith(
-          fontSize: 14,
+          fontSize: (fontSize ?? 14).toDouble(),
             fontWeight: FontWeight.w400,
             color: color ?? Get.theme.primaryColor),
       ),

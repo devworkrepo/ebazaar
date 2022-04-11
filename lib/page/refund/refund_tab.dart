@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_page.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
+import 'package:spayindia/page/refund/recharge_refund/recharge_refund_page.dart';
 import 'package:spayindia/util/tags.dart';
 
 import 'dmt_refund/dmt_refund_page.dart';
@@ -19,7 +21,7 @@ class _RefundTabPageState extends State<RefundTabPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -38,10 +40,12 @@ class _RefundTabPageState extends State<RefundTabPage>
               floating: true,
               forceElevated: innerBoxIsScrolled,
               bottom: TabBar(
-                isScrollable: false,
+                isScrollable: true,
                 tabs: const <Tab>[
                   Tab(text: 'Money'),
                   Tab(text: 'Payout'),
+                  Tab(text: 'Recharge'),
+                  Tab(text: 'Credit Card'),
                 ],
                 controller: _tabController,
               ),
@@ -53,6 +57,8 @@ class _RefundTabPageState extends State<RefundTabPage>
           children: const <Widget>[
             DmtRefundPage(controllerTag: AppTag.moneyRefundControllerTag,),
             DmtRefundPage(controllerTag: AppTag.payoutRefundControllerTag,),
+            RechargeRefundPage(),
+            CreditCardRefundPage()
           ],
         ),
       ),

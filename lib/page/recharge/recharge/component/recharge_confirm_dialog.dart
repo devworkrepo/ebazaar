@@ -103,7 +103,8 @@ class BuildTitleValueWidget extends StatelessWidget {
   final String title;
   final String value;
   final Color? color;
-  const BuildTitleValueWidget({Key? key,required this.title,required this.value,this.color}) : super(key: key);
+  final int? fontSize;
+  const BuildTitleValueWidget({Key? key,required this.title,required this.value,this.color,this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,9 +112,9 @@ class BuildTitleValueWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          BuildLeftListWidget(title,color: color,),
+          BuildLeftListWidget(title,color: color,fontSize: fontSize,),
           BuildDotWidget(color : color),
-          BuildRightListWidget(value,color: color,)
+          BuildRightListWidget(value,color: color,fontSize : fontSize)
         ],
       ),
     );

@@ -33,6 +33,7 @@ class MoneyReport {
   String? transactionNumber;
   String? senderNubber;
   String? beneficiaryName;
+  String? bankName;
   String? accountNumber;
   String? ifscCode;
   String? amount;
@@ -50,6 +51,7 @@ class MoneyReport {
      calcId = json['calcid'];
      transactionNumber = json['transaction_no'];
      senderNubber = json['remitter_mobile'];
+     bankName = json['bank'];
      beneficiaryName = json['bene_name'];
      accountNumber = json['account_no'];
      ifscCode = json['ifsc'];

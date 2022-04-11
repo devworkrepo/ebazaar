@@ -5,6 +5,7 @@ import 'package:spayindia/page/app_setting/app_setting_page.dart';
 import 'package:spayindia/page/auth/fogot_password/fogot_password_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
+import 'package:spayindia/page/credit_card/credit_card_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_add/beneficiary_add_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_page.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_page.dart';
@@ -21,7 +22,6 @@ import 'package:spayindia/page/matm/matm_page.dart';
 import 'package:spayindia/page/recharge/bill_payment/bill_payment_page.dart';
 import 'package:spayindia/page/recharge/provider/provider_page.dart';
 import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
-import 'package:spayindia/page/report/fund_report/fund_report_page.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/report/wallet_pay/wallet_report_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_page.dart';
@@ -30,6 +30,7 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/test/test_image_picker.dart';
 
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
+import '../page/report/fund_report/fund_report_page.dart';
 
 final getAllPages = [
   GetPage(
@@ -80,6 +81,10 @@ final getAllPages = [
   GetPage(
     name: RouteName.mamtPage,
     page: () => const MatmPage(),
+  ),
+  GetPage(
+    name: RouteName.creditCardPage,
+    page: () => const CreditCardPage(),
   ),
   GetPage(
     name: RouteName.dmtSearchSenderPage,

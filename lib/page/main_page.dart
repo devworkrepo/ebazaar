@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 import 'package:spayindia/component/status_bar_color_widget.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/page/main/home/home_page.dart';
+import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_controller.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
+import 'package:spayindia/page/refund/recharge_refund/recharge_refund_controller.dart';
 import 'package:spayindia/page/refund/refund_tab.dart';
 import 'package:spayindia/page/report/aeps_matm_report/aeps_matm_report_controller.dart';
+import 'package:spayindia/page/report/credit_card_report/credit_card_report_controller.dart';
 import 'package:spayindia/page/report/money_report/mone_report_controller.dart';
 import 'package:spayindia/page/report/recharge_report/recharge_report_controller.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
@@ -157,6 +160,8 @@ class _MainPageState extends State<MainPage> {
       case 0:
         Get.delete<DmtRefundController>(tag: AppTag.payoutRefundControllerTag);
         Get.delete<DmtRefundController>(tag: AppTag.moneyRefundControllerTag);
+        Get.delete<RechargeRefundController>();
+        Get.delete<CreditCardRefundController>();
         return const RefundTabPage();
       case 1:
         Get.delete<AccountStatementController>(tag: AppTag.accountStatementControllerTag);
@@ -172,6 +177,7 @@ class _MainPageState extends State<MainPage> {
         Get.delete<RechargeReportController>();
         Get.delete<AepsMatmReportController>(tag: AppTag.aepsReportControllerTag);
         Get.delete<AepsMatmReportController>(tag: AppTag.matmReportControllerTag);
+        Get.delete<CreditCardReportController>();
         return const TransactionTabPage();
       default:
         return Center(

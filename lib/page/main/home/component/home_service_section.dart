@@ -11,7 +11,7 @@ class HomeServiceSection extends GetView<HomeController> {
 
   const HomeServiceSection({Key? key, required this.onClick}) : super(key: key);
 
-  _svgPicture(name,int innerPadding) {
+  _svgPicture(name, int innerPadding) {
     return AppCircleAssetSvg(
       "assets/svg/$name.svg",
       size: 60,
@@ -19,12 +19,25 @@ class HomeServiceSection extends GetView<HomeController> {
     );
   }
 
-  _buildItem(String iconName, String title, {int innerPadding = 4}) {
+  _pngPicture(name, int innerPadding) {
+    return AppCircleAssetPng(
+      "assets/image/$name.png",
+      size: 60,
+      innerPadding: innerPadding,
+    );
+  }
+
+  _buildItem(String iconName, String title, HomeServiceType homeServiceType,
+      {int innerPadding = 4}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _svgPicture(iconName, innerPadding),
+        (homeServiceType == HomeServiceType.creditCard ||
+                homeServiceType == HomeServiceType.lic ||
+                homeServiceType == HomeServiceType.paytmWallet)
+            ? _pngPicture(iconName, innerPadding)
+            : _svgPicture(iconName, innerPadding),
         Center(
           child: Text(
             title,
@@ -84,15 +97,28 @@ class HomeServiceSection extends GetView<HomeController> {
         ),
         child: Center(
           child: (item.homeServiceType != HomeServiceType.none)
-              ? _buildItem(item.iconName, item.title,
+              ? _buildItem(item.iconName, item.title, item.homeServiceType,
                   innerPadding:
-                      (item.homeServiceType == HomeServiceType.walletPay)
-                          ? 8
-                          : 4)
+                      innerPadding(item))
               : const SizedBox(),
         ),
       ),
     );
+  }
+
+  int innerPadding(HomeServiceItem item) {
+
+
+    if(item.homeServiceType == HomeServiceType.walletPay) {
+      return 8;
+    } else if(item.homeServiceType == HomeServiceType.paytmWallet) {
+      return 12;
+    }  else if(item.homeServiceType == HomeServiceType.lic) {
+      return 12;
+    } else {
+      return 4;
+    }
+
   }
 }
 
@@ -106,6 +132,9 @@ enum HomeServiceType {
   billPayment,
   walletPay,
   insurance,
+  creditCard,
+  lic,
+  paytmWallet,
   none
 }
 
@@ -134,41 +163,61 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
     itemList.add(HomeServiceItem("Aeps\nAadhaar Pay", "aeps", HomeServiceType.aeps));
   }
   if (user.isRecharge.orFalse()) {
-    itemList
-        .add(HomeServiceItem("Recharge", "mobile", HomeServiceType.recharge));
+    itemList.add(HomeServiceItem(
+        "Mobile\nRecharge", "mobile", HomeServiceType.recharge));
   }
   if (user.isDth.orFalse()) {
-    itemList.add(HomeServiceItem("DTH", "dth", HomeServiceType.dth));
+    itemList.add(HomeServiceItem("DTH\nRecharge", "dth", HomeServiceType.dth));
   }
   if (user.isBill.orFalse()) {
     itemList.add(HomeServiceItem(
-        "Bill Payment", "electricity", HomeServiceType.billPayment));
+        "Bill\nPayment", "electricity", HomeServiceType.billPayment));
   }
   if (user.isWalletPay.orFalse()) {
     itemList.add(
         HomeServiceItem("Wallet Pay", "wallet", HomeServiceType.walletPay));
   }
   if (user.isInsurance.orFalse()) {
-    itemList.add(
-        HomeServiceItem("Insurance", "insurance", HomeServiceType.insurance));
+    itemList.add(HomeServiceItem(
+        "Loan\nInsurance", "insurance", HomeServiceType.insurance));
+  }
+
+  if (user.isCreditCard.orFalse()) {
+    itemList.add(HomeServiceItem(
+        "Pay Credit\nCard Bill", "card", HomeServiceType.creditCard));
+  }
+  if (user.isLic.orFalse()) {
+    itemList.add(HomeServiceItem("LIC\nPremium", "lic", HomeServiceType.lic));
+  }
+  if (user.isPaytmWallet.orFalse()) {
+    itemList.add(HomeServiceItem(
+        "Load Paytm\nWallet", "paytm", HomeServiceType.paytmWallet));
   }
 
   var length = itemList.length;
 
-  if(length == 3 || length == 6 || length == 9 || length == 12 || length == 15 || length == 18){
-
-  }
-  else if(length == 2 || length == 5 || length == 8|| length == 11 || length == 14 || length == 17){
+  if (length == 3 ||
+      length == 6 ||
+      length == 9 ||
+      length == 12 ||
+      length == 15 ||
+      length == 18) {
+  } else if (length == 2 ||
+      length == 5 ||
+      length == 8 ||
+      length == 11 ||
+      length == 14 ||
+      length == 17) {
     itemList.add(HomeServiceItem("", "", HomeServiceType.none));
-
-  }
-  else if(length == 1 || length == 4 || length == 7|| length == 10 || length == 13 || length == 16){
+  } else if (length == 1 ||
+      length == 4 ||
+      length == 7 ||
+      length == 10 ||
+      length == 13 ||
+      length == 16) {
     itemList.add(HomeServiceItem("", "", HomeServiceType.none));
     itemList.add(HomeServiceItem("", "", HomeServiceType.none));
-
   }
-
-
 
   return itemList;
 }

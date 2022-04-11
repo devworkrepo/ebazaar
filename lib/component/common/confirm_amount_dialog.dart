@@ -47,7 +47,7 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
   Widget build(BuildContext context) {
     return BaseDialogContainer(
       backPress: true,
-      padding: 10,
+      padding: 20,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Stack(
@@ -129,10 +129,10 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
                     Row(
                       children: [
                         Expanded(
-                            flex: 3,
+                            flex: 4,
                             child: Text(
                               e.title,
-                              style: Get.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.w400,fontSize: 16),
+                              style: Get.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.w500,fontSize: 16),
                             )),
                         const BuildDotWidget(),
                         Expanded(
@@ -140,7 +140,7 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
                             child: Text(
                               e.value,
                               style: Get.textTheme.subtitle1
-                                  ?.copyWith(fontWeight: FontWeight.w400),
+                                  ?.copyWith(fontWeight: FontWeight.w500,color: Get.theme.primaryColor),
                             )),
                       ],
                     )

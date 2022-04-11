@@ -22,7 +22,7 @@ class RechargeReportPage extends GetView<RechargeReportController> {
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
-                if (data.rechargeReport!.isEmpty) {
+                if (data.reports!.isEmpty) {
                   return const NoItemFoundWidget();
                 } else {
                   return _buildListBody();

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spayindia/component/button.dart';
 
+import '../../component/dialog/status_dialog.dart';
+
 enum TransactionReportType {
   ledger,
   aeps,
@@ -14,6 +16,30 @@ enum TransactionReportType {
 }
 
 class ReportHelperWidget{
+
+  static void requeryStatus(String transactionStatus,String message,VoidCallback callback) async{
+
+      int transStatus = ReportHelperWidget.getStatusId(
+          (transactionStatus.isEmpty)
+              ? "InProgress"
+              : transactionStatus);
+      if (transStatus == 1) {
+        StatusDialog.success(title: message)
+            .then((value) => callback());
+      } else if (transStatus == 2) {
+        StatusDialog.failure(title: message)
+            .then((value) => callback());
+      } else if (transStatus == 3) {
+        StatusDialog.pending(title: message)
+            .then((value) => callback());
+      }
+      else if (transStatus == 4) {
+        StatusDialog.pending(title: message)
+            .then((value) => callback());
+      }
+
+  }
+
  static int getStatusId(String? status) {
     if (status == null) {
       return 0;
