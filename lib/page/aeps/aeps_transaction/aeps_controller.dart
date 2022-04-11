@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/common/confirm_amount_dialog.dart';
 import 'package:spayindia/component/dialog/aeps_rd_service_dialog.dart';
@@ -15,7 +14,6 @@ import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
 import 'package:spayindia/page/aeps/widget/ekyc_info_widget.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/response/aeps/aeps_txn_response_page.dart';
-import 'package:spayindia/service/location.dart';
 import 'package:spayindia/service/native_call.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
@@ -23,8 +21,10 @@ import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
 import '../../../route/route_name.dart';
+import '../../../util/mixin/location_helper_mixin.dart';
 
-class AepsController extends GetxController with TransactionHelperMixin {
+class AepsController extends GetxController
+    with TransactionHelperMixin, LocationHelperMixin {
   AepsRepo repo = Get.find<AepsRepoImpl>();
   AppPreference appPreference = Get.find();
 
@@ -38,8 +38,6 @@ class AepsController extends GetxController with TransactionHelperMixin {
   var amountController = TextEditingController();
 
   late List<AepsBank> bankList;
-
-  late Position position;
 
   AepsBank? selectedAepsBank;
 
@@ -83,10 +81,10 @@ class AepsController extends GetxController with TransactionHelperMixin {
   void onProceed() async {
     var isValidate = aepsFormKey.currentState!.validate();
     if (!isValidate) return;
-    try{
-      position = await LocationService.determinePosition();
-      AppUtil.logger("Position : "+position.toString());
-    }catch(e){
+    try {
+      await validateLocation(progress: true);
+      AppUtil.logger("Position : " + position.toString());
+    } catch(e){
       return;
     }
 
@@ -98,11 +96,8 @@ class AepsController extends GetxController with TransactionHelperMixin {
               {"packageUrl": rdServicePackageUrl, "isTransaction": true});
           _onRdServiceResult(result);
         } on PlatformException catch (e) {
-          var description =
-              "${(e.message) ?? "Capture failed, please try again! "} ${(e.details ?? "")}";
+          StatusDialog.failure(title: "Fingerprint capture failed, please try again");
 
-          Get.snackbar("Aeps Capture failed", description,
-              backgroundColor: Colors.red, colorText: Colors.white);
         } catch (e) {
           Get.to(() => ExceptionPage(error: e));
         }
@@ -153,8 +148,8 @@ class AepsController extends GetxController with TransactionHelperMixin {
             : "0",
         "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
         "mobileno": mobileController.text.toString(),
-        "latitude": position.latitude.toString(),
-        "longitude": position.longitude.toString(),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
         "biometricData": data,
         "bcid": bankListResponse.bcid ?? "",
         "transaction_no": bankListResponse.transactionNumber ?? "",

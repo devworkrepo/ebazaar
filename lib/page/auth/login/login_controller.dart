@@ -33,7 +33,7 @@ class LoginController extends GetxController {
   void onInit() {
     super.onInit();
     appPreference.setIsTransactionApi(false);
-    appPreference.setSessionKey("");
+    appPreference.setSessionKey("na");
     isLoginCheck.value = appPreference.isLoginCheck;
 
     if(appPreference.isLoginCheck){

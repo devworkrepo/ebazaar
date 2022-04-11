@@ -42,15 +42,13 @@ class MainActivity : FlutterFragmentActivity() {
                     launchMatm(call)
                 }
                 call.method.equals(RD_SERVICE_SERIAL_NUMBER) -> {
-                    try {
+
                         val mData =
                             XmPidParser.getDeviceSerialNumber(
                                 call.argument<String>("pidData") ?: ""
                             )
                         result!!.success(mData)
-                    } catch (e: Exception) {
-                        result!!.error("0", "Exception raised", e.message)
-                    }
+
                 }
             }
         }
@@ -91,11 +89,11 @@ class MainActivity : FlutterFragmentActivity() {
             }
             startActivityForResult(intent, AppConstant.MATM_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
-            result?.error(
+            /*result?.error(
                 "99",
                 "Enable to launch Micro-Atm Activity, please contact with admin",
                 "exception"
-            )
+            )*/
         }
     }
 
@@ -113,11 +111,11 @@ class MainActivity : FlutterFragmentActivity() {
             )
             startActivityForResult(intent, AppConstant.AEPS_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
-            result?.error(
+           /* result?.error(
                 "99",
                 "Captured failed, please check biometric device is connected",
                 "exception"
-            )
+            )*/
         }
     }
 
@@ -195,6 +193,7 @@ class MainActivity : FlutterFragmentActivity() {
                 )
             )
         } catch (e: Exception) {
+
             result?.error(
                 "99",
                 exceptionMessage,

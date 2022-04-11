@@ -25,6 +25,9 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 4,
+        ),
         CarouselSlider.builder(
             itemCount: images.length,
             itemBuilder: (context, index, realIndex) {
@@ -35,7 +38,7 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
                 autoPlay: true,
                 viewportFraction: 0.95,
                 enlargeStrategy: CenterPageEnlargeStrategy.height,
-                height: 156,
+                height: 165,
                 onPageChanged: (index, reason) {
                   setState(() {
                     activeIndex = index;
