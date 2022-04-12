@@ -28,13 +28,21 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
               ),
             ),
           ),
-          AppButton(
-              text: "Proceed",
+          Obx(()=> AppButton(
+              text: (controller.changePasswordActionTypeObs.value ==
+                  ChangePasswordActionType.requestOtp)
+                  ? "Request M-Pin Otp"
+                  : "Verify M-Pin",
               onClick: () {
                 if (controller.formKey.currentState!.validate()) {
-                  controller.changePassword();
+                  if (controller.changePasswordActionTypeObs.value ==
+                      ChangePasswordActionType.requestOtp) {
+                    controller.requestOtp();
+                  } else {
+                    controller.changePassword();
+                  }
                 }
-              })
+              }))
         ],
       ),
     );
@@ -91,6 +99,14 @@ class _BuildFormWidget extends GetView<ChangePasswordController> {
                       return null;
                     },
                   ),
+
+                  Obx(() => (controller.changePasswordActionTypeObs.value ==
+                      ChangePasswordActionType.changePassword)
+                      ? OtpTextField(
+                    controller: controller.otpController,
+                    maxLength: 6,
+                  )
+                      : const SizedBox())
                 ],
               ),
             ),

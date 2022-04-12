@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/common/animate_icon_widget.dart';
+import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/res/color.dart';
 
-class HomeAppbarSection extends StatelessWidget {
+class HomeAppbarSection extends GetView<HomeController> {
   final VoidCallback onDrawerOpen;
 
   const HomeAppbarSection({Key? key, required this.onDrawerOpen})
@@ -11,44 +14,52 @@ class HomeAppbarSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Row(
-        children: [
-          Card(
-            color:Colors.white,
-            shape : RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-            child: IconButton(
-                onPressed: onDrawerOpen,
-                icon:  Icon(
-                  Icons.menu,
-                  size: 24,
-                  color: Get.theme.primaryColorDark,
-                )),
-          ),
-          const SizedBox(
-            width: 12,
-          ),
-          AppAnimatedWidget(
-            child: Image.asset(
-              "assets/image/logo.png",
+    return Obx(()=>Card(
+      margin: EdgeInsets.zero,
+      shadowColor: Colors.blue.withOpacity(controller.appbarBackgroundOpacity.value),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      elevation: controller.appbarElevation.value,
+      color: Colors.white.withOpacity(controller.appbarBackgroundOpacity.value),
+
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Card(
+              color:Colors.white,
+              shape : RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              child: IconButton(
+                  onPressed: onDrawerOpen,
+                  icon:  Icon(
+                    Icons.menu,
+                    size: 24,
+                    color: Get.theme.primaryColorDark,
+                  )),
             ),
-          ),
-          const Spacer(),
-          IconButton(
-            color: Get.theme.primaryColorDark,
-            iconSize: 32,
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_active),
-          ),
-          IconButton(
-            color: Get.theme.primaryColorDark,
-            iconSize: 32,
-            onPressed: () {},
-            icon: const Icon(Icons.info),
-          )
-        ],
+            const SizedBox(
+              width: 12,
+            ),
+            AppAnimatedWidget(
+              child: Image.asset(
+                "assets/image/logo.png",
+              ),
+            ),
+            const Spacer(),
+            IconButton(
+              color: Get.theme.primaryColorDark,
+              iconSize: 32,
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_active),
+            ),
+            IconButton(
+              color: Get.theme.primaryColorDark,
+              iconSize: 32,
+              onPressed: () {},
+              icon: const Icon(Icons.info),
+            )
+          ],
+        ),
       ),
-    );
+    ));
   }
 }

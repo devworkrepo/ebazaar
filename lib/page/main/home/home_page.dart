@@ -51,19 +51,23 @@ class HomePage extends GetView<HomeController> {
           children: [
 
             Image.asset("assets/image/header_background.png",width: double.infinity,height: 350,fit: BoxFit.fill,),
-             SingleChildScrollView(
-               child: Column(children: [
-               HomeAppbarSection(
-                 onDrawerOpen: (){
-                   controller.scaffoldKey.currentState?.openDrawer();
-                 },
-               ),
-                 HomeHeaderSection(),
-                 HomeCarouselWidget(),
-                 HomeServiceSection(onClick:(item)=> controller.onItemClick(item),),
-                 SizedBox(height: 8,),
-           ],),
+             Column(children: [
+             HomeAppbarSection(
+               onDrawerOpen: (){
+                 controller.scaffoldKey.currentState?.openDrawer();
+               },
              ),
+              Expanded(child: SingleChildScrollView(
+                controller: controller.scrollController,
+                child: Column(
+                children: [
+                  HomeHeaderSection(),
+                  HomeCarouselWidget(),
+                  HomeServiceSection(onClick:(item)=> controller.onItemClick(item),),
+                  SizedBox(height: 8,),
+                ],
+              ),))
+           ],),
           ],
         );
     } else {

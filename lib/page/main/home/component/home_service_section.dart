@@ -110,13 +110,13 @@ class HomeServiceSection extends GetView<HomeController> {
 
 
     if(item.homeServiceType == HomeServiceType.walletPay) {
-      return 8;
+      return 12;
     } else if(item.homeServiceType == HomeServiceType.paytmWallet) {
-      return 12;
+      return 16;
     }  else if(item.homeServiceType == HomeServiceType.lic) {
-      return 12;
+      return 16;
     } else {
-      return 4;
+      return 8;
     }
 
   }

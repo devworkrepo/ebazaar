@@ -430,8 +430,10 @@ mixin TransactionPageComponent {
               ),
             ),
             (imagePath != null)
-                ? AppCircleAssetImage(
+                ? AppCircleAssetPng(
                     imagePath,
+                    size: 60,
+                    innerPadding: 12,
                   )
                 : const SizedBox(),
             (imageUrl != null)

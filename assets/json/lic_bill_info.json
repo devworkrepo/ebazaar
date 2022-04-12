@@ -1,0 +1,13 @@
+{
+  "amount": "100",
+  "billdate":null,
+  "billinfo": "127284850",
+  "code": 1,
+  "duedate": null,
+  "ispart": true,
+  "message": "BillFetchSuccessfully!",
+  "name": "Sh****Ka**",
+  "operatorcode": "TR240",
+  "status": "Success",
+  "transaction_no": "12042022109427"
+}

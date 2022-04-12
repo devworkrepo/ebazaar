@@ -1,0 +1,16 @@
+{
+  "code": 1,
+  "status": "Success",
+  "message": "Transaction Successful",
+  "outlet_name": "AB Communication",
+  "outlet_mobileno": "7982607742",
+  "card_holder": "Akash Kumar Das",
+  "credit_cardno": "1231983198371",
+  "card_type": "Visa",
+  "addeddate": "01/01/1998",
+  "trans_no": "9372983342",
+  "amount": "100",
+  "utr_no": "394395729",
+  "trans_status": "Success",
+  "trans_response": "Successful"
+}

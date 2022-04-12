@@ -38,7 +38,11 @@ class DmtRefundController extends GetxController {
 
   void takeDmtRefund(String mPin, DmtRefund report) async {
     StatusDialog.progress();
-    var response = await repo.takeDmtRefund({
+    var response = (tag == AppTag.moneyRefundControllerTag) ?
+    await repo.takeDmtRefund({
+      "transaction_no": report.transactionNumber ?? "",
+      "mpin": mPin,
+    }) : await repo.takePayoutRefund({
       "transaction_no": report.transactionNumber ?? "",
       "mpin": mPin,
     });

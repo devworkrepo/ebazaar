@@ -40,6 +40,8 @@ class NetworkClient {
 
     dio.interceptors.add(InterceptorsWrapper(
       onResponse: (Response response, ResponseInterceptorHandler handler) {
+        AppUtil.logger(response.data.toString());
+
         if (response.statusCode == 200) {
           if (response.data is List) {
             final mData = response.data;

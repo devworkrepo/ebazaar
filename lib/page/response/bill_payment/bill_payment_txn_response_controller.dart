@@ -9,7 +9,7 @@ import 'package:spayindia/util/app_util.dart';
 class BillPaymentTxnResponseController extends GetxController {
   var screenshotController = ScreenshotController();
   BillPaymentResponse response = Get.arguments["response"];
-  ProviderType provider = Get.arguments["type"];
+  ProviderType? provider = Get.arguments["type"];
 
   String getSvgImage(){
     if(provider == ProviderType.electricity){
@@ -25,8 +25,12 @@ class BillPaymentTxnResponseController extends GetxController {
       return "assets/svg/landline.svg";
     }
     else {
-      return "assets/svg/electrcity.svg";
+      return "assets/svg/electricity.svg";
     }
+  }
+
+  String getPngImage(){
+    return "assets/image/lic.png";
   }
 
 

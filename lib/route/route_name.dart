@@ -12,6 +12,7 @@ class RouteName {
   static const providerPage = "/provider-page";
   static const rechargePage = "/recharge-page";
   static const billPaymentPage = "/bll-payment-page";
+  static const licPaymentPage = "/lic-payment-page";
 
   //aeps
   static const aepsPage = "/aeps";

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/dialog/otp_dialog.dart';
 import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/util/validator.dart';
 
@@ -29,14 +28,21 @@ class ChangePinPage extends GetView<ChangePinController> {
               ),
             ),
           ),
-          AppButton(
-              text: "Change Pin",
-              onClick: () {
-
-                if (controller.formKey.currentState!.validate()) {
-                  controller.requestOtp();
-                }
-              })
+         Obx(()=> AppButton(
+             text: (controller.changePinActionTypeObs.value ==
+                 ChangePinActionType.requestOtp)
+                 ? "Request M-Pin Otp"
+                 : "Verify M-Pin",
+             onClick: () {
+               if (controller.formKey.currentState!.validate()) {
+                 if (controller.changePinActionTypeObs.value ==
+                     ChangePinActionType.requestOtp) {
+                   controller.requestOtp();
+                 } else {
+                   controller.verifyOtp();
+                 }
+               }
+             }))
         ],
       ),
     );
@@ -62,14 +68,8 @@ class _BuildFormWidget extends GetView<ChangePinController> {
               key: controller.formKey,
               child: Column(
                 children: [
-                  AppTextField(
+                  MPinTextField(
                     controller: controller.newMPinController,
-                    label: "New M-Pin",
-                    inputType: TextInputType.number,
-                    hint: "Required*",
-                    passwordMode: true,
-                    maxLength: 4,
-                    validator: (value) => FormValidatorHelper.mpin(value),
                   ),
                   AppTextField(
                     controller: controller.confirmMPinController,
@@ -77,7 +77,7 @@ class _BuildFormWidget extends GetView<ChangePinController> {
                     inputType: TextInputType.number,
                     hint: "Required*",
                     passwordMode: true,
-                    maxLength: 4,
+                    maxLength: 6,
                     validator: (value) {
                       if (value == null) {
                         return "Confirm M-PIN didn't matched!";
@@ -90,6 +90,13 @@ class _BuildFormWidget extends GetView<ChangePinController> {
                       }
                     },
                   ),
+                  Obx(() => (controller.changePinActionTypeObs.value ==
+                          ChangePinActionType.changePin)
+                      ? OtpTextField(
+                          controller: controller.otpController,
+                          maxLength: 6,
+                        )
+                      : const SizedBox())
                 ],
               ),
             ),

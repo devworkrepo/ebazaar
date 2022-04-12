@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/model/bank.dart';
+import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/recharge/bill_payment.dart';
 import 'package:spayindia/model/recharge/extram_param.dart';
 import 'package:spayindia/model/recharge/recharge.dart';
@@ -89,13 +90,35 @@ class RechargeRepoImpl extends RechargeRepo {
 
   @override
   Future<CreditCardLimitResponse> fetchCreditLimit(data) async {
-    var response = await client.post("/GetCreditLimit",data: data);
+    var response = await client.post("/GetCreditLimit", data: data);
     return CreditCardLimitResponse.fromJson(response.data);
   }
 
   @override
-  Future<CreditCardPaymentResponse> makeCardPayment(data,CancelToken? cancelToken) async {
-    var response = await client.post("/PostCreditTransaction",data: data,cancelToken: cancelToken);
+  Future<CreditCardPaymentResponse> makeCardPayment(
+      data, CancelToken? cancelToken) async {
+    var response = await client.post("/PostCreditTransaction",
+        data: data, cancelToken: cancelToken);
     return CreditCardPaymentResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<BillInfoResponse> fetchLicBillInfo(data) async {
+    var response = await client.post("/FetchLicBill", data: data);
+    return BillInfoResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<BillPaymentResponse> makeLicOnlineBillPayment(
+      data, CancelToken? cancelToken) async {
+    var response = await client.post("/LicTransaction",
+        data: data, cancelToken: cancelToken);
+    return BillPaymentResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> fetchCardTransactionNumber() async {
+    var response = await client.post("/GetTransactionNo");
+    return CommonResponse.fromJson(response.data);
   }
 }

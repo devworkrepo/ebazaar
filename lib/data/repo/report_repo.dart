@@ -29,6 +29,7 @@ abstract class ReportRepo{
   Future<RechargeRefundListResponse> rechargeRefundList(data);
   Future<CreditRefundListResponse> creditCardRefundList(data);
   Future<CommonResponse> takeDmtRefund(data);
+  Future<CommonResponse> takePayoutRefund(data);
   Future<CommonResponse> takeRechargeRefund(data);
   Future<CommonResponse> takeCreditCardRefund(data);
 

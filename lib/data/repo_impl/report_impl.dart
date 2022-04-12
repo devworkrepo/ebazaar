@@ -51,6 +51,12 @@ class ReportRepoImpl extends ReportRepo{
   }
 
   @override
+  Future<CommonResponse> takePayoutRefund(data) async {
+    var response = await  client.post("/ClaimPayoutRefund",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
   Future<RechargeReportResponse> fetchRechargeTransactionList(data) async {
     var response = await  client.post("/GetRechagesList",data: data);
     return RechargeReportResponse.fromJson(response.data);
@@ -146,5 +152,7 @@ class ReportRepoImpl extends ReportRepo{
     var response = await  client.post("/ClaimCreditCardRefund",data: data);
     return CommonResponse.fromJson(response.data);
   }
+
+
 
 }

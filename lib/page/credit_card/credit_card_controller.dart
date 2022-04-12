@@ -15,6 +15,8 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
+import '../response/credit_card/credit_card_txn_response_page.dart';
+
 class CreditCardController extends GetxController with TransactionHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
   var initialObs = Resource
@@ -87,21 +89,41 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
 
               ],
               onConfirm: () {
-                _makePayment();
+                _fetchTransactionNumber();
               }),
           barrierDismissible: false);
     }
 
 
   }
+
+  _fetchTransactionNumber() async{
+    try{
+
+      StatusDialog.progress();
+      var response = await repo.fetchCardTransactionNumber();
+      Get.back();
+      if(response.code == 1){
+        _makePayment(response.transactionNumber!);
+      }
+      else{
+        StatusDialog.failure(title: response.message );
+      }
+    }catch(e){
+      Get.back();
+      Get.to(()=>ExceptionPage(error: e));
+    }
+
+
+  }
   
-  _makePayment() async {
-    
+  _makePayment(String transactionNumber) async {
     try{
       await appPreference.setIsTransactionApi(true);
       cancelToken = CancelToken();
       StatusDialog.transaction();
       var param = {
+        "transaction_no" : transactionNumber,
         "mpin" : mpinController.text,
         "amount" : amountWithoutRupeeSymbol(amountController),
         "mobileno" : mobileController.text,
@@ -115,19 +137,18 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
       var response = await repo.makeCardPayment(param, cancelToken);
       Get.back();
       if(response.code == 1){
-
+        Get.to(()=>CreditCardTxnResponsePage(),arguments: {
+          "response" : response
+        });
       }
       else{
         StatusDialog.failure(title: response.message ?? "Something went wrong!!");
       }
     }catch(e){
       Get.back();
-      AppUtil.logger("Transaction exception : ${e.toString()}");
      // Get.to(()=>ExceptionPage(error: e));
+      AppUtil.logger("error : ${e.toString()}");
     }
-    
-    
-    
   }
 
   _fetchCreditLimit() async {

@@ -15,6 +15,7 @@ import 'package:spayindia/service/loca_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_update_util.dart';
+import 'package:spayindia/util/app_util.dart';
 
 var isLocalAuthDone = false;
 class HomeController extends GetxController {
@@ -26,17 +27,47 @@ class HomeController extends GetxController {
   var userDetailObs = Resource.onInit(data: UserDetail()).obs;
   late UserDetail user;
 
+  late ScrollController scrollController;
 
+  var appbarBackgroundOpacity = 0.0.obs;
+  var appbarElevation = 0.0.obs;
 
   @override
   void onInit() {
     super.onInit();
+    scrollController = ScrollController();
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      scrollController.addListener(_scrollListener);
+    });
     AppUpdateUtil.checkUpdate();
   }
 
-  fetchUserDetails() async {
+  _scrollListener() {
 
-   WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    var mOffset = scrollController.offset;
+
+    if (mOffset < 101) {
+      var colorOpacity = 0.01 * mOffset;
+
+      if (colorOpacity > 1) {
+        colorOpacity = 1;
+      }
+      if (colorOpacity < 0) {
+        colorOpacity = 0;
+      }
+      appbarBackgroundOpacity.value = colorOpacity;
+
+      var elevation = 20 * colorOpacity;
+
+
+      appbarElevation.value = elevation;
+    }
+
+  }
+
+  fetchUserDetails() async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
     });
 
@@ -155,6 +186,11 @@ class HomeController extends GetxController {
           Get.toNamed(RouteName.creditCardPage);
         }
         break;
+      case HomeServiceType.lic:
+        {
+          Get.toNamed(RouteName.licPaymentPage);
+        }
+        break;
       default:
         break;
     }
@@ -189,4 +225,5 @@ enum ProviderType {
   landline,
   broadband,
   insurance,
+  lic,
 }

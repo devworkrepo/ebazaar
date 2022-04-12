@@ -20,6 +20,7 @@ import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
 import 'package:spayindia/page/main_page.dart';
 import 'package:spayindia/page/matm/matm_page.dart';
 import 'package:spayindia/page/recharge/bill_payment/bill_payment_page.dart';
+import 'package:spayindia/page/recharge/lic_online_payment/lic_online_page.dart';
 import 'package:spayindia/page/recharge/provider/provider_page.dart';
 import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
@@ -65,6 +66,10 @@ final getAllPages = [
   GetPage(
     name: RouteName.billPaymentPage,
     page: () => const BillPaymentPage(),
+  ),
+  GetPage(
+    name: RouteName.licPaymentPage,
+    page: () => const LicOnlinePagePage(),
   ),
   GetPage(
     name: RouteName.aepsPage,

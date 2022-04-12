@@ -1,7 +1,9 @@
 class BillPaymentResponse {
 
+
+
   late int code;
-  late String status;
+  String? status;
   String? message;
   String ? transactionNumber;
   String ? transactionDate;
@@ -13,6 +15,9 @@ class BillPaymentResponse {
   String ? billType;
   String ? operatorRefNumber;
   String ? transactionStatus;
+  String? mobileNumber;
+  String? rechargeType;
+  String? transactionResponse;
 
   BillPaymentResponse();
 
@@ -30,6 +35,10 @@ class BillPaymentResponse {
     operatorRefNumber = json["operator_refno"];
     transactionStatus = json["trans_status"];
     operatorName = json["operator_name"];
+    //lic payment
+    mobileNumber = json["mobile_no"];
+    rechargeType = json["rech_type"];
+    transactionResponse = json["trans_response"];
   }
 
 }

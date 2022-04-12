@@ -22,13 +22,16 @@ abstract class RechargeRepo{
 
   Future<BillExtraParamResponse> fetchExtraParam(data);
   Future<BillInfoResponse> fetchBillInfo(data);
+  Future<BillInfoResponse> fetchLicBillInfo(data);
   Future<BillPaymentResponse> makeOfflineBillPayment(data, CancelToken? cancelToken);
   Future<BillPaymentResponse> makePartBillPayment(data, CancelToken? cancelToken);
+  Future<BillPaymentResponse> makeLicOnlineBillPayment(data, CancelToken? cancelToken);
 
   //card
   Future<BankListResponse> fetchCreditCardBank();
   Future<CreditCardTypeResponse> fetchCreditCardType();
   Future<CreditCardLimitResponse> fetchCreditLimit(data);
+  Future<CommonResponse> fetchCardTransactionNumber();
   Future<CreditCardPaymentResponse> makeCardPayment(data, CancelToken? cancelToken);
 
 

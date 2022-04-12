@@ -91,33 +91,45 @@ class _MainPageState extends State<MainPage> {
   Widget _buildBottomNavigationBar() {
     return Obx(() => Visibility(
           visible: isBottomNavShowObs.value,
-          child: Container(
+          child: Card(
+            margin: EdgeInsets.zero,
+            color: Colors.white,
+            shadowColor: Colors.blue,
+            elevation: 20,
            /* decoration: BoxDecoration(
               color: Get.theme.primaryColor.withOpacity(.8),
               borderRadius: BorderRadius.vertical(top: Radius.circular(12), )
             ),*/
-            child: BottomNavigationBar(
-             backgroundColor: Colors.white,
-              key: bottomNavKey,
-              elevation: 10,
-              selectedLabelStyle: bottomNavStyle,
-              unselectedLabelStyle: bottomNavStyle,
-              selectedItemColor: selectedItemColor,
-               unselectedItemColor: Colors.black45,
-              // backgroundColor: Get.theme.primaryColor,
-              type: BottomNavigationBarType.fixed,
-              currentIndex: bottomNavSelectedIndex,
-              onTap: _onBottomNavItemClick,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.keyboard_return), label: "Refund"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.receipt_long_rounded), label: "Settlement"),
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.receipt_outlined), label: "Report"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.person), label: "Profile"),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+
+                Container(height: 1,width: Get.width,color: Colors.grey[300],),
+                BottomNavigationBar(
+                 backgroundColor: Colors.white,
+                  key: bottomNavKey,
+                  elevation: 20,
+
+                  selectedLabelStyle: bottomNavStyle,
+                  unselectedLabelStyle: bottomNavStyle,
+                  selectedItemColor: selectedItemColor,
+                   unselectedItemColor: Colors.black45,
+                  // backgroundColor: Get.theme.primaryColor,
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: bottomNavSelectedIndex,
+                  onTap: _onBottomNavItemClick,
+                  items: const [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.keyboard_return), label: "Refund"),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.receipt_long_rounded), label: "Settlement"),
+                    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.receipt_outlined), label: "Report"),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.person), label: "Profile"),
+                  ],
+                ),
               ],
             ),
           ),
