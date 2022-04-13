@@ -37,10 +37,13 @@ class HomeController extends GetxController {
     super.onInit();
     scrollController = ScrollController();
 
+    appPreference.setIsTransactionApi(false);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       scrollController.addListener(_scrollListener);
     });
     AppUpdateUtil.checkUpdate();
+
+
   }
 
   _scrollListener() {
@@ -93,7 +96,7 @@ class HomeController extends GetxController {
       userDetailObs.value = Resource.onFailure(e);
 
       if (getDioException(e) is SessionExpireException) {
-        Get.offAllNamed(RouteName.loginPage);
+        Get.offAllNamed(AppRoute.loginPage);
       } else {
         Get.off(ExceptionPage(
           error: e,
@@ -105,16 +108,16 @@ class HomeController extends GetxController {
 
 
   onTopUpButtonClick (){
-    Get.toNamed(RouteName.fundRequestOptionPage);
+    Get.toNamed(AppRoute.fundRequestOptionPage);
   }
 
   onQRCodeButtonClick() {
-    Get.toNamed(RouteName.showQRCodePage);
+    Get.toNamed(AppRoute.showQRCodePage);
   }
 
   void logout() async {
     await appPreference.logout();
-    Get.offAllNamed(RouteName.loginPage);
+    Get.offAllNamed(AppRoute.loginPage);
   }
 
   onItemClick(HomeServiceItem item) {
@@ -122,27 +125,27 @@ class HomeController extends GetxController {
       case HomeServiceType.aeps:
         Get.bottomSheet(AepsOptionDialog(
           onAepsClick: () {
-            Get.toNamed(RouteName.aepsPage, arguments: false);
+            Get.toNamed(AppRoute.aepsPage, arguments: false);
           },
           onAadhaarPayClick:  () {
-            Get.toNamed(RouteName.aepsPage, arguments: true);
+            Get.toNamed(AppRoute.aepsPage, arguments: true);
           },
         ));
         break;
       case HomeServiceType.matm:
-        Get.toNamed(RouteName.mamtPage);
+        Get.toNamed(AppRoute.mamtPage);
         break;
       case HomeServiceType.moneyTransfer:
         {
           var dmtType = DmtType.instantPay;
-          Get.toNamed(RouteName.dmtSearchSenderPage,
+          Get.toNamed(AppRoute.dmtSearchSenderPage,
               arguments: {"dmtType": dmtType});
         }
         break;
       case HomeServiceType.payoutTransfer:
         {
           var dmtType = DmtType.payout;
-          Get.toNamed(RouteName.dmtSearchSenderPage,
+          Get.toNamed(AppRoute.dmtSearchSenderPage,
               arguments: {"dmtType": dmtType});
         }
         break;
@@ -150,45 +153,55 @@ class HomeController extends GetxController {
         {
           Get.bottomSheet(RechargeOptionDialog(
             onPrepaidClick: () {
-              Get.toNamed(RouteName.providerPage, arguments: ProviderType.prepaid);
+              Get.toNamed(AppRoute.providerPage, arguments: ProviderType.prepaid);
             },
             onPostpaidClick: () {
-              Get.toNamed(RouteName.providerPage, arguments: ProviderType.postpaid);
+              Get.toNamed(AppRoute.providerPage, arguments: ProviderType.postpaid);
             },
           ));
         }
         break;
       case HomeServiceType.dth:
         {
-          Get.toNamed(RouteName.providerPage, arguments: ProviderType.dth);
+          Get.toNamed(AppRoute.providerPage, arguments: ProviderType.dth);
         }
         break;
       case HomeServiceType.billPayment:
         {
-          Get.toNamed(RouteName.providerPage,
+          Get.toNamed(AppRoute.providerPage,
               arguments: ProviderType.electricity);
         }
         break;
       case HomeServiceType.insurance:
         {
-          Get.toNamed(RouteName.providerPage,
+          Get.toNamed(AppRoute.providerPage,
               arguments: ProviderType.insurance);
         }
         break;
       case HomeServiceType.walletPay:
         {
-          Get.toNamed(RouteName.walletSearchPage);
+          Get.toNamed(AppRoute.walletSearchPage);
         }
         break;
 
       case HomeServiceType.creditCard:
         {
-          Get.toNamed(RouteName.creditCardPage);
+          Get.toNamed(AppRoute.creditCardPage);
         }
         break;
       case HomeServiceType.lic:
         {
-          Get.toNamed(RouteName.licPaymentPage);
+          Get.toNamed(AppRoute.licPaymentPage);
+        }
+        break;
+      case HomeServiceType.paytmWallet:
+        {
+          Get.toNamed(AppRoute.paytmWalletLoadPage);
+        }
+        break;
+      case HomeServiceType.ott:
+        {
+          Get.toNamed(AppRoute.ottOperatorPage);
         }
         break;
       default:
@@ -197,7 +210,7 @@ class HomeController extends GetxController {
   }
 
   onAddFundClick() {
-    Get.toNamed(RouteName.fundRequestPage);
+    Get.toNamed(AppRoute.fundRequestPage);
   }
 }
 
@@ -225,5 +238,5 @@ enum ProviderType {
   landline,
   broadband,
   insurance,
-  lic,
+  ott
 }

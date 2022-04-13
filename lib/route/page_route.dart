@@ -19,6 +19,8 @@ import 'package:spayindia/page/main/change_password/change_password_page.dart';
 import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
 import 'package:spayindia/page/main_page.dart';
 import 'package:spayindia/page/matm/matm_page.dart';
+import 'package:spayindia/page/ott/ott_operator/ott_operator_page.dart';
+import 'package:spayindia/page/paytm_wallet/paytm_wallet_page.dart';
 import 'package:spayindia/page/recharge/bill_payment/bill_payment_page.dart';
 import 'package:spayindia/page/recharge/lic_online_payment/lic_online_page.dart';
 import 'package:spayindia/page/recharge/provider/provider_page.dart';
@@ -31,150 +33,169 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/test/test_image_picker.dart';
 
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
+import '../page/ott/ott_plan/ott_plan_page.dart';
+import '../page/ott/ott_transaction/ott_transaction_page.dart';
 import '../page/report/fund_report/fund_report_page.dart';
 
 final getAllPages = [
   GetPage(
-    name: RouteName.mainPage,
+    name: AppRoute.mainPage,
     page: () => const MainPage(),
   ),
   GetPage(
-    name: RouteName.testPage,
+    name: AppRoute.testPage,
     page: () => const TestImagePicker(),
   ),
 
   GetPage(
-    name: RouteName.loginPage,
+    name: AppRoute.loginPage,
     page: () => const LoginPage(),
   ),
   GetPage(
-    name: RouteName.loginOtpPage,
+    name: AppRoute.loginOtpPage,
     page: () => const LoginOtpPage(),
   ),
   GetPage(
-    name: RouteName.forgotPasswordPage,
+    name: AppRoute.forgotPasswordPage,
     page: () => const ForgotPasswordPage(),
   ),
   GetPage(
-    name: RouteName.providerPage,
+    name: AppRoute.providerPage,
     page: () => const ProviderPage(),
   ),
   GetPage(
-    name: RouteName.rechargePage,
+    name: AppRoute.rechargePage,
     page: () => const RechargePage(),
   ),
   GetPage(
-    name: RouteName.billPaymentPage,
+    name: AppRoute.billPaymentPage,
     page: () => const BillPaymentPage(),
   ),
   GetPage(
-    name: RouteName.licPaymentPage,
+    name: AppRoute.licPaymentPage,
     page: () => const LicOnlinePagePage(),
   ),
   GetPage(
-    name: RouteName.aepsPage,
+    name: AppRoute.aepsPage,
     page: () => const AepsPage(),
   ),
   GetPage(
-    name: RouteName.aepsEkycPage,
+    name: AppRoute.aepsEkycPage,
     page: () => const AepsEKycPage(),
   ),
   GetPage(
-    name: RouteName.aepsOnboardingPage,
+    name: AppRoute.aepsOnboardingPage,
     page: () => const AepsOnboardingPage(),
   ),
   GetPage(
-    name: RouteName.mamtPage,
+    name: AppRoute.mamtPage,
     page: () => const MatmPage(),
   ),
   GetPage(
-    name: RouteName.creditCardPage,
+    name: AppRoute.creditCardPage,
     page: () => const CreditCardPage(),
   ),
   GetPage(
-    name: RouteName.dmtSearchSenderPage,
+    name: AppRoute.dmtSearchSenderPage,
     page: () => const DmtSearchSenderPage(),
   ),
   GetPage(
-    name: RouteName.dmtBeneficiaryListPage,
+    name: AppRoute.dmtBeneficiaryListPage,
     page: () => const BeneficiaryListPage(),
   ),
 
   GetPage(
-    name: RouteName.dmtSenderAddPage,
+    name: AppRoute.dmtSenderAddPage,
     page: () => const SenderAddPage(),
   ),
 
   GetPage(
-    name: RouteName.dmtBeneficiaryAddPage,
+    name: AppRoute.dmtBeneficiaryAddPage,
     page: () => const BeneficiaryAddPage(),
   ),
   GetPage(
-    name: RouteName.dmtTransactionPage,
+    name: AppRoute.dmtTransactionPage,
     page: () => const DmtTransactionPage(),
   ),
 
   GetPage(
-    name: RouteName.dmtChangeSenderNamePage,
+    name: AppRoute.dmtChangeSenderNamePage,
     page: () => const SenderNameChangePage(),
   ),
   GetPage(
-    name: RouteName.dmtChangeSenderMobilePage,
+    name: AppRoute.dmtChangeSenderMobilePage,
     page: () => const SenderMobileChangePage(),
   ),
   GetPage(
-    name: RouteName.dmtImportBeneficiaryPage,
+    name: AppRoute.dmtImportBeneficiaryPage,
     page: () => const ImportBeneficiaryTabPage(),
   ),
 
 
   GetPage(
-    name: RouteName.fundRequestPage,
+    name: AppRoute.fundRequestPage,
     page: () => const FundRequestPage(),
   ),
   GetPage(
-    name: RouteName.fundReportPage,
+    name: AppRoute.fundReportPage,
     page: () => const FundRequestReportPage(),
     arguments: "route",
   ),
 
   GetPage(
-    name: RouteName.walletReportPage,
+    name: AppRoute.walletReportPage,
     page: () => const WalletPayReportPage()
   ),
 
 
   GetPage(
-    name: RouteName.changePassword,
+    name: AppRoute.changePassword,
     page: () => const ChangePasswordPage(),
   ),
 
   GetPage(
-    name: RouteName.changePin,
+    name: AppRoute.changePin,
     page: () => const ChangePinPage(),
   ),
 
   //report
 
   GetPage(
-    name: RouteName.transactionReportPage,
+    name: AppRoute.transactionReportPage,
     page: () => const TransactionTabPage(),
   ),
   //kyc
 
   GetPage(
-    name: RouteName.walletSearchPage,
+    name: AppRoute.walletSearchPage,
     page: () => const WalletSearchPage(),
   ),
 
 
   GetPage(
-    name: RouteName.walletTransferPage,
+    name: AppRoute.walletTransferPage,
     page: () => const WalletTransferPage(),
   ),
   GetPage(
-    name: RouteName.appSetting,
+    name: AppRoute.appSetting,
     page: () => const AppSettingPage(),
+  ),
+  GetPage(
+    name: AppRoute.paytmWalletLoadPage,
+    page: () => const PaytmWalletPage(),
+  ),
+  GetPage(
+    name: AppRoute.ottOperatorPage,
+    page: () => const OttOperatorPage(),
+  ),
+  GetPage(
+    name: AppRoute.ottPlanPage,
+    page: () => const OttPlanPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.ottTransactionPage,
+    page: () => const OttTransactionPage(),
   ),
 
 ];

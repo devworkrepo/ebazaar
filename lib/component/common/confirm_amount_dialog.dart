@@ -47,26 +47,29 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
   Widget build(BuildContext context) {
     return BaseDialogContainer(
       backPress: true,
-      padding: 20,
+      padding: 30,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Stack(
           children: [
             _buildCrossButton(),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildTitleWidget(),
-                _buildDescription(),
-                _buildAmountTextWidget(),
-                SizedBox(height: 16,),
-                _buildDetailWidgets(),
-                // _buildAmountWidget(),
-                SizedBox(
-                  height: 16,
-                ),
-                _buildConfirmButtonWidget()
-              ],
+            SizedBox(
+              width: Get.width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildTitleWidget(),
+                  _buildDescription(),
+                  _buildAmountTextWidget(),
+                  SizedBox(height: 16,),
+                  _buildDetailWidgets(),
+                  // _buildAmountWidget(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  _buildConfirmButtonWidget()
+                ],
+              ),
             )
           ],
         ),
@@ -154,13 +157,17 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
 
   _buildConfirmButtonWidget() {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: AppButton(
-          text: "Confirm & Proceed",
-          onClick: () {
-            Get.back();
-                widget.onConfirm();
-          }),
+      padding: const EdgeInsets.only(top: 8.0,bottom: 8),
+      child: SizedBox(
+        width: 200,
+        child: AppButton(
+          isRounded: true,
+            text: "Confirm & Proceed",
+            onClick: () {
+              Get.back();
+                  widget.onConfirm();
+            }),
+      ),
     );
   }
 
@@ -205,7 +212,7 @@ class _AmountConfirmDialogWidgetState extends State<AmountConfirmDialogWidget>
           child: const Icon(
             Icons.cancel,
             size: 32,
-            color: Colors.red,
+            color: Colors.grey,
           ),
         ));
   }

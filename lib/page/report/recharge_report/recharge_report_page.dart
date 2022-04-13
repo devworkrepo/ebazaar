@@ -49,11 +49,41 @@ class RechargeReportPage extends GetView<RechargeReportController> {
           toDate: controller.toDate,
           status: controller.searchStatus,
           inputFieldOneTile: "Request Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
+          statusList: [
+            "Success",
+            "InProgress",
+            "Initiated",
+            "Failed",
+            "Refund Pending",
+            "Refunded",
+          ],
+          typeList: [ "Prepaid",
+            "DTH",
+            "Mobile Postpaid",
+            "Landline Postpaid",
+            "Electricity",
+            "GAS",
+            "Water",
+            "CMS",
+            "Insurance",
+            "Loan",
+            "Fastag",
+            "Education",
+            "Entertainment",
+            "Cable",
+            "Broadband Postpaid",
+            "LPG GAS",
+            "Municipal Taxes",
+            "Housing Society",
+            "Municipal Services",
+            "Hospital",
+            "Subscription"],
+          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,rechargeType) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
             controller.searchStatus = status;
+            controller.rechargeType = rechargeType;
             controller.onSearch();
           },
         ),

@@ -118,15 +118,15 @@ class ReportRepoImpl extends ReportRepo{
   }
 
   @override
-  Future<ReportRequeryResponse> requeryDmtTransaction(data) async {
+  Future<TransactionInfoResponse> requeryDmtTransaction(data) async {
     var response = await  client.post("/RequeryTransaction",data: data);
-    return ReportRequeryResponse.fromJson(response.data);
+    return TransactionInfoResponse.fromJson(response.data);
   }
 
   @override
-  Future<ReportRequeryResponse> requeryPayoutTransaction(data) async {
+  Future<TransactionInfoResponse> requeryPayoutTransaction(data) async {
     var response = await  client.post("/RequeryPayout",data: data);
-    return ReportRequeryResponse.fromJson(response.data);
+    return TransactionInfoResponse.fromJson(response.data);
   }
 
   @override
@@ -136,9 +136,9 @@ class ReportRepoImpl extends ReportRepo{
   }
 
   @override
-  Future<ReportRequeryResponse> requeryCreditCardTransaction(data) async {
+  Future<TransactionInfoResponse> requeryCreditCardTransaction(data) async {
     var response = await  client.post("/RequeryCreditTransaction",data: data);
-    return ReportRequeryResponse.fromJson(response.data);
+    return TransactionInfoResponse.fromJson(response.data);
   }
 
   @override
@@ -150,6 +150,13 @@ class ReportRepoImpl extends ReportRepo{
   @override
   Future<CommonResponse> takeCreditCardRefund(data) async {
     var response = await  client.post("/ClaimCreditCardRefund",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+
+  @override
+  Future<CommonResponse> rechargeValues() async {
+    var response = await  client.post("/GetRechValues");
     return CommonResponse.fromJson(response.data);
   }
 

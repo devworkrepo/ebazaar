@@ -25,7 +25,7 @@ mixin TransactionPageComponent {
           return goBack;
         }
         else{
-          Get.offAllNamed(RouteName.mainPage);
+          Get.offAllNamed(AppRoute.mainPage);
           return goBack;
         }
       },
@@ -43,7 +43,7 @@ mixin TransactionPageComponent {
                   Get.back();
                 }
                 else{
-                  Get.offAllNamed(RouteName.mainPage);
+                  Get.offAllNamed(AppRoute.mainPage);
                 }
               }),
               Expanded(

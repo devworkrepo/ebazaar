@@ -54,7 +54,7 @@ class FundRequestPage extends GetView<FundRequestController> {
       actions: [
         PopupMenuButton<String>(
           onSelected: (i) {
-            Get.toNamed(RouteName.fundReportPage, arguments: "fund_request")
+            Get.toNamed(AppRoute.fundReportPage, arguments: "fund_request")
                 ?.then((value) {
               controller.onUpdateDetail(value);
             });

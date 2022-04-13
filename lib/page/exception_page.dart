@@ -30,10 +30,10 @@ class _ExceptionPageState extends State<ExceptionPage> {
       onWillPop: () async {
 
         if(shouldGoLoginPage){
-          Get.offAllNamed(RouteName.loginPage);
+          Get.offAllNamed(AppRoute.loginPage);
         }
         if (shouldGoMainPage) {
-          Get.offAllNamed(RouteName.mainPage);
+          Get.offAllNamed(AppRoute.mainPage);
           return false;
         } else {
           return  true;
@@ -166,7 +166,7 @@ class _ExceptionPageState extends State<ExceptionPage> {
             children: [
               const SizedBox(height: 24,),
               AppButton(text: "Login Now", onClick: (){
-                Get.offAllNamed(RouteName.loginPage);
+                Get.offAllNamed(AppRoute.loginPage);
               },width: 250,)
             ],
           ) : const SizedBox()

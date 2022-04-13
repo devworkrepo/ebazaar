@@ -53,7 +53,7 @@ class CreditCardRefundPage extends GetView<CreditCardRefundController> {
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           inputFieldOneTile: "Transaction Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
+          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;

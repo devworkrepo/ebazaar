@@ -67,9 +67,9 @@ class ProviderController extends GetxController {
     if (providerType == ProviderType.prepaid ||
         providerType == ProviderType.prepaid ||
         providerType == ProviderType.dth) {
-      Get.toNamed(RouteName.rechargePage, arguments: arguments);
+      Get.toNamed(AppRoute.rechargePage, arguments: arguments);
     } else {
-      Get.toNamed(RouteName.billPaymentPage, arguments: arguments);
+      Get.toNamed(AppRoute.billPaymentPage, arguments: arguments);
     }
   }
 

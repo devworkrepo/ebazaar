@@ -197,7 +197,7 @@ class _BuildItem extends GetView<ProviderController> {
               Expanded(
                 child: Text(
                   provider.name,
-                  style: Get.textTheme.headline6?.copyWith(fontWeight: FontWeight.w500),
+                  style: Get.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.w500),
                 ),
               )
             ],

@@ -1,0 +1,13 @@
+{
+  "amount": "100",
+  "code": 1,
+  "message": "Request accepted",
+  "mobile_no": "7982607742",
+  "operator_name": "Paytm Wallet",
+  "operator_refno": "",
+  "rech_type": "Paytm Wallet",
+  "status": "Success",
+  "trans_response": "Request accepted",
+  "trans_status": "Successful",
+  "transaction_no": "12042022251061"
+}

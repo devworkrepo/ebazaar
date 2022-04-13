@@ -50,7 +50,7 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
     Get.bottomSheet(CommonReportSeasrchDialog(
       fromDate: controller.fromDate,
       toDate: controller.toDate,
-      onSubmit: (fromDate, toDate, searchInput,searchInputType, status) {
+      onSubmit: (fromDate, toDate, searchInput,searchInputType, status,_) {
         controller.fromDate = fromDate;
         controller.toDate = toDate;
         controller.onSearch();

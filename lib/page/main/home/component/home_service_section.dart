@@ -35,6 +35,7 @@ class HomeServiceSection extends GetView<HomeController> {
       children: [
         (homeServiceType == HomeServiceType.creditCard ||
                 homeServiceType == HomeServiceType.lic ||
+                homeServiceType == HomeServiceType.ott ||
                 homeServiceType == HomeServiceType.paytmWallet)
             ? _pngPicture(iconName, innerPadding)
             : _svgPicture(iconName, innerPadding),
@@ -135,6 +136,7 @@ enum HomeServiceType {
   creditCard,
   lic,
   paytmWallet,
+  ott,
   none
 }
 
@@ -192,6 +194,10 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
   if (user.isPaytmWallet.orFalse()) {
     itemList.add(HomeServiceItem(
         "Load Paytm\nWallet", "paytm", HomeServiceType.paytmWallet));
+  }
+  if (user.isOtt.orFalse()) {
+    itemList.add(HomeServiceItem(
+        "OTT\nSubscription", "ott", HomeServiceType.ott));
   }
 
   var length = itemList.length;

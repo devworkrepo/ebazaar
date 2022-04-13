@@ -1,6 +1,7 @@
-class RouteName {
+class AppRoute {
   static const mainPage = "/";
   static const testPage = "/test";
+
   //auth
   static const loginPage = "/login";
   static const deviceVerificationPage = "/device-verification-page";
@@ -56,19 +57,19 @@ class RouteName {
   static const complainListPage = "/complain-list-page";
   static const complainPostPage = "/complain-post-page";
 
-
   static const aepsEkycPage = "/aeps-kyc-page";
-
-
 
   static const aepsOnboardingPage = "/aeps-onboarding-page";
 
-
   //wallet to wallet
-static const walletSearchPage = "/wallet-search-page";
-static const walletTransferPage = "/wallet-transfer-page";
+  static const walletSearchPage = "/wallet-search-page";
+  static const walletTransferPage = "/wallet-transfer-page";
 
+//paytm wallet load
+  static const paytmWalletLoadPage = "/paytm_wallet_load_page";
 
-static const appSetting = "/app-setting-page";
-
+  static const appSetting = "/app-setting-page";
+  static const ottOperatorPage = "/ott-operator-page";
+  static const ottPlanPage = "/ott-plan-page";
+  static const ottTransactionPage = "/ott-transaction-page";
 }

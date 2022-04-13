@@ -6,7 +6,6 @@ import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/dmt/search_sender/search_sender_controller.dart';
 
-DmtSearchSenderController? dmtSearchSenderController;
 
 class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
   const DmtSearchSenderPage({Key? key}) : super(key: key);
@@ -15,8 +14,7 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
   Widget build(BuildContext context) {
 
     Get.put( DmtSearchSenderController());
-
-    dmtSearchSenderController = controller;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(DmtHelper.getAppbarTitle(controller.dmtType)),

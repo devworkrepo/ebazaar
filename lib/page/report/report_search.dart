@@ -13,9 +13,11 @@ class CommonReportSeasrchDialog extends StatefulWidget {
   final String toDate;
   final String? status;
   final String? inputFieldOneTile;
+  final List<String>? statusList;
+  final List<String>? typeList;
 
   final Function(String fromDate, String toDate, String searchInput,
-      String searchInputType, String status) onSubmit;
+      String searchInputType, String status, String rechargeType) onSubmit;
 
   const CommonReportSeasrchDialog(
       {Key? key,
@@ -23,7 +25,9 @@ class CommonReportSeasrchDialog extends StatefulWidget {
       required this.fromDate,
       required this.toDate,
       this.status,
-      this.inputFieldOneTile})
+      this.inputFieldOneTile,
+      this.statusList,
+      this.typeList})
       : super(key: key);
 
   @override
@@ -39,6 +43,7 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
   var searchInput = "";
   var status = "";
   var searchInputType = "";
+  var rechargeType = "";
 
   @override
   void initState() {
@@ -82,21 +87,38 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                   },
                 ),
                 (widget.status != null) ? AppDropDown(
-                  maxHeight: Get.height/0.75,
-                  list: _listOfStatus,
-                  label: "Select Status",
-                  hint: "Select Status Search",
-                  mode: Mode.BOTTOM_SHEET,
-                  searchMode: false,
-                  selectedItem:
-                  (widget.status!.isNotEmpty) ? widget.status : null,
-                  validator: (value) {
-                    return null;
-                  },
-                  onChange: (value) {
-                    status = value;
-                  },
-                ) : SizedBox(),
+                  maxHeight: Get.height / 0.75,
+                        list: widget.statusList ?? _listOfStatus,
+                        label: "Select Status",
+                        hint: "Select Status Search",
+                        mode: Mode.BOTTOM_SHEET,
+                        searchMode: false,
+                        selectedItem:
+                            (widget.status!.isNotEmpty) ? widget.status : null,
+                        validator: (value) {
+                          return null;
+                        },
+                        onChange: (value) {
+                          status = value;
+                        },
+                      )
+                    : SizedBox(),
+                (widget.typeList != null)
+                    ? AppDropDown(
+                        maxHeight: Get.height / 0.75,
+                        list: widget.typeList!,
+                        label: "Select Recharge Type",
+                        hint: "Select Recharge Type",
+                        mode: Mode.BOTTOM_SHEET,
+                        searchMode: false,
+                        validator: (value) {
+                          return null;
+                        },
+                        onChange: (value) {
+                          rechargeType = value;
+                        },
+                      )
+                    : const SizedBox(),
                 (widget.inputFieldOneTile == null)
                     ? const SizedBox()
                     : AppTextField(
@@ -117,7 +139,12 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                   var searchInput = searchInputController.text.toString();
                   Get.back();
                   widget.onSubmit(
-                      fromDate, tomDate, searchInput, searchInputType, (status == "All") ? "" : status);
+                      fromDate,
+                      tomDate,
+                      searchInput,
+                      searchInputType,
+                      (status == "All") ? "" : status,
+                      rechargeType);
                 }
               },
               child: Padding(

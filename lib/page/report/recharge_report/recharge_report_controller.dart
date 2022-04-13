@@ -14,6 +14,7 @@ class RechargeReportController extends GetxController {
   String toDate = "";
   String searchStatus = "";
   String searchInput = "";
+  String rechargeType = "";
 
   var reportResponseObs = Resource.onInit(data: RechargeReportResponse()).obs;
   late List<RechargeReport> reportList;
@@ -24,15 +25,22 @@ class RechargeReportController extends GetxController {
     super.onInit();
     fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
     toDate = DateUtil.currentDateInYyyyMmDd();
+    fetchRechargeValue();
     fetchReport();
   }
 
+  fetchRechargeValue() async {
+    repo.rechargeValues();
+  }
+
   fetchReport() async {
-    _param() => {
+    _param() =>
+        {
           "fromdate": fromDate,
           "todate": toDate,
           "transaction_no": searchInput,
           "status": searchStatus,
+          "rech_type": rechargeType,
         };
 
     try {
@@ -53,6 +61,7 @@ class RechargeReportController extends GetxController {
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
+    rechargeType="";
     fetchReport();
   }
 
@@ -73,4 +82,5 @@ class RechargeReportController extends GetxController {
   void onSearch() {
     fetchReport();
   }
+
 }

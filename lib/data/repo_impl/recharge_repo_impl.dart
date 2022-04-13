@@ -3,13 +3,17 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/model/bank.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/ott/ott_operator.dart';
 import 'package:spayindia/model/recharge/bill_payment.dart';
 import 'package:spayindia/model/recharge/extram_param.dart';
 import 'package:spayindia/model/recharge/recharge.dart';
 import 'package:spayindia/model/recharge/response.dart';
+import 'package:spayindia/model/report/requery.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
 
+import '../../model/ott/ott_plan.dart';
+import '../../model/paytm_wallet/paytm_wallet.dart';
 import '../../model/recharge/credit_card.dart';
 
 class RechargeRepoImpl extends RechargeRepo {
@@ -117,8 +121,38 @@ class RechargeRepoImpl extends RechargeRepo {
   }
 
   @override
-  Future<CommonResponse> fetchCardTransactionNumber() async {
+  Future<CommonResponse> fetchTransactionNumber() async {
     var response = await client.post("/GetTransactionNo");
     return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<TransactionInfoResponse> verifyPaytmWallet(data) async {
+    var response = await client.post("/VerifyPaytmWallet");
+    return TransactionInfoResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<PaytmLoadTransactionResponse> paymtWalletLoadTransaction(data) async {
+    var response = await client.post("/PaytmWalletTransaction",data: data);
+    return PaytmLoadTransactionResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<OttOperatorListResponse> fetchOttOperators() async {
+    var response = await client.post("/GetOTTOperators");
+    return OttOperatorListResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<OttPlanResponse> fetchOttPlan(data) async {
+    var response = await client.post("/FetchOTTPlans",data: data);
+    return OttPlanResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<RechargeResponse> ottTransaction(data) async {
+    var response = await client.post("/OTTTransaction",data: data);
+    return RechargeResponse.fromJson(response.data);
   }
 }

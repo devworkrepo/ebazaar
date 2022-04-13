@@ -101,7 +101,7 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
     try{
 
       StatusDialog.progress();
-      var response = await repo.fetchCardTransactionNumber();
+      var response = await repo.fetchTransactionNumber();
       Get.back();
       if(response.code == 1){
         _makePayment(response.transactionNumber!);

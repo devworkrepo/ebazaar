@@ -29,6 +29,11 @@ class RechargeTxnResponseController extends GetxController {
     else if(provider == ProviderType.postpaid){
       return "Postpaid Recharge";
     }
+
+    else if(provider == ProviderType.ott){
+      return "OTT Subscription";
+    }
+
     else {
       return "Recharge";
     }

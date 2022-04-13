@@ -54,7 +54,7 @@ class DmtRefundPage extends GetView<DmtRefundController> {
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           inputFieldOneTile: "Transaction Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
+          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;

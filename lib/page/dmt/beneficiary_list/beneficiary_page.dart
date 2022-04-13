@@ -69,7 +69,7 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
           senderName: controller.sender?.senderNameObs.value ?? "",
           limit: controller.sender?.impsNKycLimitView ?? "",
           onClick: () {
-            Get.toNamed(RouteName.dmtBeneficiaryAddPage, arguments: {
+            Get.toNamed(AppRoute.dmtBeneficiaryAddPage, arguments: {
               "mobile": controller.sender!.senderNumber!,
               "dmtType": controller.dmtType
             })?.then((value) {

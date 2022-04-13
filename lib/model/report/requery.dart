@@ -1,11 +1,11 @@
-class ReportRequeryResponse {
+class TransactionInfoResponse {
   late int code;
   String? status;
   String? message;
   String? trans_status;
   String? trans_response;
 
-  ReportRequeryResponse.fromJson(Map<String, dynamic> json) {
+  TransactionInfoResponse.fromJson(Map<String, dynamic> json) {
     code = json["code"];
     status = json["status"];
     message = json["message"];

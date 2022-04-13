@@ -7,7 +7,11 @@ import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/model/recharge/recharge.dart';
 import 'package:spayindia/model/recharge/recharge_plan.dart';
 import 'package:spayindia/model/recharge/response.dart';
+import 'package:spayindia/model/report/requery.dart';
 
+import '../../model/ott/ott_operator.dart';
+import '../../model/ott/ott_plan.dart';
+import '../../model/paytm_wallet/paytm_wallet.dart';
 import '../../model/recharge/credit_card.dart';
 
 abstract class RechargeRepo{
@@ -31,8 +35,19 @@ abstract class RechargeRepo{
   Future<BankListResponse> fetchCreditCardBank();
   Future<CreditCardTypeResponse> fetchCreditCardType();
   Future<CreditCardLimitResponse> fetchCreditLimit(data);
-  Future<CommonResponse> fetchCardTransactionNumber();
+  Future<CommonResponse> fetchTransactionNumber();
   Future<CreditCardPaymentResponse> makeCardPayment(data, CancelToken? cancelToken);
+
+  //paytm load
+
+  Future<TransactionInfoResponse> verifyPaytmWallet(data);
+  Future<PaytmLoadTransactionResponse> paymtWalletLoadTransaction(data);
+
+  //ott
+  Future<OttOperatorListResponse> fetchOttOperators();
+  Future<OttPlanResponse> fetchOttPlan(data);
+  Future<RechargeResponse> ottTransaction(data);
+
 
 
 

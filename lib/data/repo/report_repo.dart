@@ -22,6 +22,7 @@ abstract class ReportRepo{
   Future<AepsReportResponse> fetchMatmTransactionList(data);
   Future<WalletPayReportResponse> fetchWalletPayReport(data);
   Future<CreditCardReportResponse> fetchCreditCardReport(data);
+  Future<CommonResponse> rechargeValues();
 
   //refund
   Future<DmtRefundListResponse> dmtRefundList(data);
@@ -34,9 +35,9 @@ abstract class ReportRepo{
   Future<CommonResponse> takeCreditCardRefund(data);
 
   //re-query
-  Future<ReportRequeryResponse> requeryDmtTransaction(data);
-  Future<ReportRequeryResponse> requeryPayoutTransaction(data);
-  Future<ReportRequeryResponse> requeryCreditCardTransaction(data);
+  Future<TransactionInfoResponse> requeryDmtTransaction(data);
+  Future<TransactionInfoResponse> requeryPayoutTransaction(data);
+  Future<TransactionInfoResponse> requeryCreditCardTransaction(data);
 
 
   //statement

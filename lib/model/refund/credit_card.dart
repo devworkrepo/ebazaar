@@ -54,8 +54,8 @@ class CreditCardRefund {
     cardType = json["card_type"];
     ifsc = json["ifsc"];
     bank = json["bank"];
-    charge = json["charge"];
-    commission = json["commision"];
+    charge = json["charge"].toString();
+    commission = json["commision"].toString();
     utrNumber = json["utr_no"];
     transactionMessage = json["trans_message"];
   }

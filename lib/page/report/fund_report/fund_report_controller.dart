@@ -89,7 +89,7 @@ class FundRequestReportController extends GetxController {
       if(response.code == 1){
 
         if(origin == "route"){
-          Get.toNamed(RouteName.fundRequestPage,arguments: response);
+          Get.toNamed(AppRoute.fundRequestPage,arguments: response);
         }
         else{
           Get.back(result: response);

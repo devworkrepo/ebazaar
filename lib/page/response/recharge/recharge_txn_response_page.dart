@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/transaction_page.dart';
+import 'package:spayindia/page/main/home/home_controller.dart';
 
 import 'recharge_txn_response_controller.dart';
 
@@ -18,8 +19,11 @@ class RechargeTxnResponsePage extends GetView<RechargeTxnResponseController>
       child: screenshotHelperWidget(
         screenshotController: controller.screenshotController,
         children: [
-          buildStatusIcon(getStatusIdFromString(controller.response.transactionStatus ?? "Pending")),
-          buildStatusTitle(getStatusIdFromString(controller.response.transactionStatus ?? "Pending"),
+          buildStatusIcon(getStatusIdFromString(
+              controller.response.transactionStatus ?? "Pending")),
+          buildStatusTitle(
+              getStatusIdFromString(
+                  controller.response.transactionStatus ?? "Pending"),
               statusDescription: controller.response.transactionStatus),
           buildMessage(controller.response.transactionResponse ?? ""),
           buildTransactionTime(""),
@@ -27,7 +31,12 @@ class RechargeTxnResponsePage extends GetView<RechargeTxnResponseController>
               title: controller.response.rechargeType ?? "",
               subTitle: controller.getTitle(),
               amount: controller.response.amount,
-              imageSvgPath: controller.getSvgImage()),
+              imageSvgPath: (controller.provider != ProviderType.ott)
+                  ? controller.getSvgImage()
+                  : null,
+              imagePath: (controller.provider == ProviderType.ott)
+                  ? "assets/image/ott.png"
+                  : null),
           dividerListContainer(children: [
             buildTitleValueWidget(
                 title: "Mobile Number",

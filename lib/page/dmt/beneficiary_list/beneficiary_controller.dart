@@ -155,7 +155,7 @@ class BeneficiaryListController extends GetxController {
           beneficiary: beneficiary,
           dmtType: dmtType,
           onClick: (amount, type) {
-            Get.toNamed(RouteName.dmtTransactionPage, arguments: {
+            Get.toNamed(AppRoute.dmtTransactionPage, arguments: {
               "sender": sender,
               "beneficiary": beneficiary,
               "dmtType": dmtType,
@@ -169,7 +169,7 @@ class BeneficiaryListController extends GetxController {
   }
 
   onNameChange() {
-    Get.toNamed(RouteName.dmtChangeSenderNamePage,
+    Get.toNamed(AppRoute.dmtChangeSenderNamePage,
         arguments: {"sender": sender})?.then((value) {
       if (value != null) {
         var name = value as String;
@@ -180,7 +180,7 @@ class BeneficiaryListController extends GetxController {
   }
 
   onMobileChange() {
-    Get.toNamed(RouteName.dmtChangeSenderMobilePage,
+    Get.toNamed(AppRoute.dmtChangeSenderMobilePage,
         arguments: {"sender": sender})?.then((value){
       if(value != null){
         var mobile = value as String;
@@ -191,7 +191,7 @@ class BeneficiaryListController extends GetxController {
   }
 
   addBeneficiary() {
-    Get.toNamed(RouteName.dmtBeneficiaryAddPage,
+    Get.toNamed(AppRoute.dmtBeneficiaryAddPage,
         arguments: {"dmtType": dmtType, "mobile": sender!.senderNumber!})?.then((value) {
       if (value) {
         _fetchBeneficiary();
@@ -232,7 +232,7 @@ class BeneficiaryListController extends GetxController {
     if (i.title == "Kyc Info") {
       fetchKycInfo();
     } else if (i.title == "Import Beneficiary") {
-      Get.toNamed(RouteName.dmtImportBeneficiaryPage, arguments: sender!)
+      Get.toNamed(AppRoute.dmtImportBeneficiaryPage, arguments: sender!)
           ?.then((value) {
         if (value != null) {
           if (value is List<ImportBeneficiaryMessage>) {

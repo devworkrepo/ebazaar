@@ -6,11 +6,9 @@ import 'package:spayindia/route/page_route.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
-import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:upgrader/upgrader.dart';
 
 import 'data/app_pref.dart';
 
@@ -69,7 +67,7 @@ class _MyAppState extends State<MyApp> {
           navigatorObservers: [routeObserver],
           theme: themeData,
          // initialRoute: RouteName.deviceVerificationPage,
-          initialRoute: (appPreference.sessionKey.isEmpty) ? RouteName.loginPage : RouteName.mainPage,
+          initialRoute: (appPreference.sessionKey.isEmpty || appPreference.sessionKey == "na") ? AppRoute.loginPage : AppRoute.mainPage,
           getPages: getAllPages),
     );
   }

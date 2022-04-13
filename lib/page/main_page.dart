@@ -43,8 +43,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    appPreference.setIsTransactionApi(false);
-
+    setTransactionApi();
     updateCheck();
 
   }
@@ -199,6 +198,11 @@ class _MainPageState extends State<MainPage> {
           ),
         );
     }
+  }
+
+  void setTransactionApi() async {
+   await appPreference.setIsTransactionApi(false);
+
   }
 }
 

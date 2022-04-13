@@ -50,7 +50,7 @@ class CreditDebitPage extends GetView<CreditDebitController> {
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           inputFieldOneTile: "Ref Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status) {
+          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;

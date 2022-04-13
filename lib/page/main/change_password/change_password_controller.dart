@@ -54,7 +54,7 @@ class ChangePasswordController extends GetxController {
       if (response.code == 1) {
         StatusDialog.success(title: response.message).then((value) {
           appPreference.logout();
-          Get.offAllNamed(RouteName.loginPage);
+          Get.offAllNamed(AppRoute.loginPage);
         });
       } else {
         StatusDialog.failure(title: response.message);

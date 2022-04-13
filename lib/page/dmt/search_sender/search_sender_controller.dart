@@ -110,13 +110,13 @@ class DmtSearchSenderController extends GetxController {
 
       if (sender.code == 1) {
         final args = {"sender": sender, "dmtType": dmtType, "account" : accountSearch};
-        Get.toNamed(RouteName.dmtBeneficiaryListPage, arguments: args);
+        Get.toNamed(AppRoute.dmtBeneficiaryListPage, arguments: args);
       } else if (sender.code == 2) {
         final args = {
           "mobile": mobile,
           "dmtType": dmtType,
         };
-        Get.toNamed(RouteName.dmtSenderAddPage, arguments: args);
+        Get.toNamed(AppRoute.dmtSenderAddPage, arguments: args);
       } else {
         StatusDialog.failure(title: sender.message);
       }

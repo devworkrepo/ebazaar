@@ -54,7 +54,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "Transaction",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(RouteName.transactionReportPage);
+                          Get.toNamed(AppRoute.transactionReportPage);
                         },
                         count: 1,
                       ),
@@ -62,13 +62,13 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "Fund Report",
                         onClick: (){
                           Get.back();
-                          Get.toNamed(RouteName.fundReportPage,arguments: "route");
+                          Get.toNamed(AppRoute.fundReportPage,arguments: "route");
                         },
                         count: 2,
                       ),
                       _NavSubTitle(
                         title: "Wallet Pay",
-                        onClick: ()=>Get.toNamed(RouteName.walletReportPage),
+                        onClick: ()=>Get.toNamed(AppRoute.walletReportPage),
                         count: 2,
                       ),
                     ],
@@ -86,7 +86,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "Change Password",
                         onClick: (){
                           Get.back();
-                          Get.toNamed(RouteName.changePassword);
+                          Get.toNamed(AppRoute.changePassword);
                         },
                         count: 1,
                       ),
@@ -95,7 +95,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "Change Pin",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(RouteName.changePin);
+                          Get.toNamed(AppRoute.changePin);
                         },
                         underline: false,
                         count: 2,
@@ -112,7 +112,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "OnBoarding",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(RouteName.aepsOnboardingPage);
+                          Get.toNamed(AppRoute.aepsOnboardingPage);
                         },
                         count: 1,
                       ),
@@ -121,7 +121,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "E-Kyc",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(RouteName.aepsEkycPage);
+                          Get.toNamed(AppRoute.aepsEkycPage);
                         },
                         underline: false,
                         count: 2,
@@ -134,7 +134,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                   child: ListTile(
                     onTap: (){
                       Get.back();
-                     Get.toNamed(RouteName.appSetting);
+                     Get.toNamed(AppRoute.appSetting);
 
                     },
                     title: Text(

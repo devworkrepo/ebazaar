@@ -47,7 +47,7 @@ class WalletSearchController extends GetxController{
       Get.back();
 
       if(response.code == 1){
-        Get.toNamed(RouteName.walletTransferPage,arguments: response);
+        Get.toNamed(AppRoute.walletTransferPage,arguments: response);
       }
       else{
         StatusDialog.failure(title: response.message);

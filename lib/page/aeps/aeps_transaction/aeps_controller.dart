@@ -65,7 +65,7 @@ class AepsController extends GetxController
               Get.bottomSheet(
                   EkycInfoWidget(onClick: () {
                     Get.back();
-                    Get.offAndToNamed(RouteName.aepsEkycPage);
+                    Get.offAndToNamed(AppRoute.aepsEkycPage);
                   }, onCancel: () {
                     Get.back();
                     Get.back();

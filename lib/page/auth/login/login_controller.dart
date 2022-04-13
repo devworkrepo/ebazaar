@@ -64,11 +64,11 @@ class LoginController extends GetxController {
 
 
   navigateToForgotPassword() {
-    Get.toNamed(RouteName.forgotPasswordPage,
+    Get.toNamed(AppRoute.forgotPasswordPage,
         arguments: mobileController.text.toString());
   }
   navigateToSignup() {
-    Get.toNamed(RouteName.signupPage);
+    Get.toNamed(AppRoute.signupPage);
   }
 
   login() async {
@@ -96,7 +96,7 @@ class LoginController extends GetxController {
 
       if (login.code == 1 ) {
 
-       Get.toNamed(RouteName.loginOtpPage, parameters: {
+       Get.toNamed(AppRoute.loginOtpPage, parameters: {
           "mobileNumber": mobileController.text.toString(),
           "isLoginChecked" : isLoginCheck.value.toString(),
           "password" : passwordController.text.toString(),

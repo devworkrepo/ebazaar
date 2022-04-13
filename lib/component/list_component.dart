@@ -340,8 +340,9 @@ class BuildLeftListWidget extends StatelessWidget {
   final String title;
   final Color? color;
   final int? fontSize;
+  final FontWeight? fontWeight;
 
-  const BuildLeftListWidget(this.title, {Key? key,this.color,this.fontSize}) : super(key: key);
+  const BuildLeftListWidget(this.title, {Key? key,this.color,this.fontSize,this.fontWeight}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +352,7 @@ class BuildLeftListWidget extends StatelessWidget {
         title,
         style: Get.textTheme.subtitle1?.copyWith(
           fontSize: (fontSize ?? 14).toDouble(),
-            fontWeight: FontWeight.w400, color: color ?? Colors.black54,),
+            fontWeight: fontWeight ??  FontWeight.w400, color: color ?? Colors.black54,),
       ),
     );
   }
@@ -375,8 +376,9 @@ class BuildRightListWidget extends StatelessWidget {
   final String title;
   final Color? color;
   final int? fontSize;
+  final FontWeight? fontWeight;
 
-  const BuildRightListWidget(this.title, {Key? key,this.color, this. fontSize}) : super(key: key);
+  const BuildRightListWidget(this.title, {Key? key,this.color, this. fontSize,this.fontWeight}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -386,7 +388,7 @@ class BuildRightListWidget extends StatelessWidget {
         title,
         style: Get.textTheme.subtitle1?.copyWith(
           fontSize: (fontSize ?? 14).toDouble(),
-            fontWeight: FontWeight.w400,
+            fontWeight: fontWeight ?? FontWeight.w400,
             color: color ?? Get.theme.primaryColor),
       ),
     );
