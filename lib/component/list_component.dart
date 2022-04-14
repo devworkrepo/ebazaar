@@ -123,7 +123,10 @@ class AppExpandListWidget extends StatelessWidget {
                         )
                       : const SizedBox();
                 }),
-                (actionWidget == null) ? const SizedBox() : actionWidget!
+                if (actionWidget == null) const SizedBox() else Column(children: [
+                  const SizedBox(height: 16,),
+                  actionWidget!
+                ],)
               ],
             ),
           )

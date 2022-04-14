@@ -1,13 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/api_component.dart';
+import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 import 'package:spayindia/util/tags.dart';
 
+import '../../../component/common/report_action_button.dart';
 import '../../../model/report/aeps.dart';
+import '../receipt_print_mixin.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
 import 'aeps_matm_report_controller.dart';
@@ -117,6 +121,32 @@ class _BuildListItem extends StatelessWidget {
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
         expandList: _titleValueWidget(),
+        actionWidget: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (report.transactionStatus!.toLowerCase() == "inprogress" || kDebugMode)
+                ? ReportActionButton(
+              title: "Re-query",
+              icon: Icons.refresh,
+              onClick: () {
+                StatusDialog.failure(title: "Service is not available right now");
+              },
+            )
+                : const SizedBox(),
+            const SizedBox(width: 8,),
+            ReportActionButton(
+              title: "Print",
+              icon: Icons.print,
+              onClick: () {
+                 if(controller.tag == AppTag.aepsReportControllerTag){
+                   controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.aeps);
+                 }
+                 else{
+                   controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.matm);
+                 }
+              },
+            )
+          ],),
       ),
     );
   }

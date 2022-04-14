@@ -72,4 +72,5 @@ class AppRoute {
   static const ottOperatorPage = "/ott-operator-page";
   static const ottPlanPage = "/ott-plan-page";
   static const ottTransactionPage = "/ott-transaction-page";
+  static const notificationPage = "/notification-page";
 }

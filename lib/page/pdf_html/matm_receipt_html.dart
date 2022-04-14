@@ -1,9 +1,9 @@
 import '../../model/receipt/aeps.dart';
 
-class AepsReceiptHtmlData{
+class MatmReceiptHtmlData{
 
   final AepsReceiptResponse response;
-  AepsReceiptHtmlData(this.response);
+  MatmReceiptHtmlData(this.response);
   String printData() {
     return """
     
@@ -45,7 +45,7 @@ class AepsReceiptHtmlData{
                             <img src="https://spayindia.in/images/logo1.jpg" style="width: 150px;" />
                         </td>
                         <td colspan="2" align="center">
-                            <h4>Aadhaar Enabled Payment System</h4>
+                            <h4>Micro - ATM</h4>
                         </td>
                         <td align="right" valign="top">
                             <img src="https://spayindia.in/images/spaylogo.jpg" style="width: 100px" />

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
+import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/news.dart';
 import 'package:spayindia/model/recharge/provider.dart';
@@ -46,6 +47,18 @@ class HomeRepoImpl extends HomeRepo {
   Future<CommonResponse> changePin(data) async {
     var response = await client.post("/ChangeMPIN",data : data);
     return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<BannerResponse> fetchBanners() async {
+    var response = await client.post("/GetBanners");
+    return BannerResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<BannerResponse> fetchNotification() async {
+    var response = await client.post("/GetNotifications");
+    return BannerResponse.fromJson(response.data);
   }
 
 

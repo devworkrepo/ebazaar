@@ -10,7 +10,7 @@ import 'package:spayindia/page/refund/recharge_refund/recharge_refund_controller
 import 'package:spayindia/page/refund/refund_tab.dart';
 import 'package:spayindia/page/report/aeps_matm_report/aeps_matm_report_controller.dart';
 import 'package:spayindia/page/report/credit_card_report/credit_card_report_controller.dart';
-import 'package:spayindia/page/report/money_report/mone_report_controller.dart';
+import 'package:spayindia/page/report/money_report/money_report_controller.dart';
 import 'package:spayindia/page/report/recharge_report/recharge_report_controller.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/statement/account_statement/account_statement_controller.dart';

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/api_component.dart';
@@ -5,12 +6,14 @@ import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/etns/on_string.dart';
+import 'package:spayindia/util/tags.dart';
 
 import '../../../component/common/report_action_button.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
-import 'mone_report_controller.dart';
+import 'money_report_controller.dart';
 
 class MoneyReportPage extends GetView<MoneyReportController> {
   final String controllerTag;
@@ -125,15 +128,32 @@ class _BuildListItem extends StatelessWidget {
           ListTitleValue(
               title: "Message", value: report.transactionMessage.toString()),
         ],
-        actionWidget: (report.transactionStatus!.toLowerCase() == "inprogress")
-            ? ReportActionButton(
-                title: "Re-query",
-                icon: Icons.refresh,
-                onClick: () {
-                  controller.requeryTransaction(report);
-                },
-              )
-            : SizedBox(),
+        actionWidget: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          (report.transactionStatus!.toLowerCase() == "inprogress" || kDebugMode)
+              ? ReportActionButton(
+            title: "Re-query",
+            icon: Icons.refresh,
+            onClick: () {
+              controller.requeryTransaction(report);
+            },
+          )
+              : const SizedBox(),
+          const SizedBox(width: 8,),
+          ReportActionButton(
+            title: "Print",
+            icon: Icons.print,
+            onClick: () {
+              if(controller.tag == AppTag.moneyReportControllerTag){
+                controller.printReceipt((report.calcId ?? ""),ReceiptType.money);
+              }
+              else{
+                controller.printReceipt((report.calcId ?? ""),ReceiptType.payout);
+              }
+            },
+          )
+        ],),
       ),
     );
   }

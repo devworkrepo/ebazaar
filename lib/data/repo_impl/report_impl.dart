@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/receipt/aeps.dart';
+import 'package:spayindia/model/receipt/recharge.dart';
 import 'package:spayindia/model/refund/credit_card.dart';
 import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/service/network_client.dart';
 
+import '../../model/receipt/money.dart';
 import '../../model/refund/recharge.dart';
 import '../../model/report/credit_card.dart';
 import '../../model/report/recharge.dart';
@@ -158,6 +161,30 @@ class ReportRepoImpl extends ReportRepo{
   Future<CommonResponse> rechargeValues() async {
     var response = await  client.post("/GetRechValues");
     return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<MoneyReceiptResponse> moneyTransactionReceipt(data) async {
+    var response = await  client.post("/GetTransactionInfo",data: data);
+    return MoneyReceiptResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<MoneyReceiptResponse> payoutTransactionReceipt(data) async {
+    var response = await  client.post("/GetPayoutInfo",data: data);
+    return MoneyReceiptResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<RechargeReceiptResponse> rechargeTransactionReceipt(data)async {
+    var response = await  client.post("/GetRechagesInfo",data: data);
+    return RechargeReceiptResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<AepsReceiptResponse> aepsTransactionReceipt(data) async {
+    var response = await  client.post("/GetAEPSInfo",data: data);
+    return AepsReceiptResponse.fromJson(response.data);
   }
 
 

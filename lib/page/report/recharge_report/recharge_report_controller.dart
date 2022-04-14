@@ -4,10 +4,11 @@ import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/model/report/recharge.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
-class RechargeReportController extends GetxController {
+class RechargeReportController extends GetxController with ReceiptPrintMixin{
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
   String fromDate = "";

@@ -1,12 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/api_component.dart';
+import 'package:spayindia/component/common.dart';
+import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/component/list_component.dart';
 import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/model/report/recharge.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
+import '../../../component/common/report_action_button.dart';
+import '../receipt_print_mixin.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
 import 'recharge_report_controller.dart';
@@ -33,8 +38,8 @@ class RechargeReportPage extends GetView<RechargeReportController> {
             }, onFailure: (e) {
               return ExceptionPage(error: e);
             }, onInit: (data) {
-            return ApiProgress(data);
-          })),
+              return ApiProgress(data);
+            })),
         floatingActionButton: FloatingActionButton.extended(
             icon: const Icon(Icons.search),
             onPressed: () => _onSearch(),
@@ -49,7 +54,7 @@ class RechargeReportPage extends GetView<RechargeReportController> {
           toDate: controller.toDate,
           status: controller.searchStatus,
           inputFieldOneTile: "Request Number",
-          statusList: [
+          statusList: const [
             "Success",
             "InProgress",
             "Initiated",
@@ -57,7 +62,8 @@ class RechargeReportPage extends GetView<RechargeReportController> {
             "Refund Pending",
             "Refunded",
           ],
-          typeList: [ "Prepaid",
+          typeList: const [
+            "Prepaid",
             "DTH",
             "Mobile Postpaid",
             "Landline Postpaid",
@@ -91,7 +97,6 @@ class RechargeReportPage extends GetView<RechargeReportController> {
   }
 
   RefreshIndicator _buildListBody() {
-
     var list = controller.reportList;
     var count = list.length;
 
@@ -105,13 +110,12 @@ class RechargeReportPage extends GetView<RechargeReportController> {
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0,bottom: 100),
           itemBuilder: (context, index) {
-          return _BuildListItem(list[index],);
-        },itemCount: count,),
+            return _BuildListItem(list[index],);
+          },itemCount: count,),
       ),
     );
   }
 }
-
 
 
 class _BuildListItem extends GetView<RechargeReportController> {
@@ -132,17 +136,45 @@ class _BuildListItem extends GetView<RechargeReportController> {
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId:  ReportHelperWidget.getStatusId(report.transactionStatus),
-
-
         expandList: [
-          ListTitleValue(title: "Operator Name", value: report.operatorName.toString()),
+          ListTitleValue(
+              title: "Operator Name", value: report.operatorName.toString()),
           ListTitleValue(title: "Pay Id", value: report.payId.toString()),
-          ListTitleValue(title: "Ref Mobile No", value: report.refMobileNumber.toString()),
-          ListTitleValue(title: "Operator Ref", value: report.operatorRefNumber.toString()),
-          ListTitleValue(title: "Message", value: report.transactionResponse.toString()),
-
+          ListTitleValue(
+              title: "Ref Mobile No", value: report.refMobileNumber.toString()),
+          ListTitleValue(
+              title: "Operator Ref",
+              value: report.operatorRefNumber.toString()),
+          ListTitleValue(
+              title: "Message", value: report.transactionResponse.toString()),
         ],
-     ),
+        actionWidget: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (report.transactionStatus!.toLowerCase() == "inprogress" ||
+                    kDebugMode)
+                ? ReportActionButton(
+                    title: "Re-query",
+                    icon: Icons.refresh,
+                    onClick: () {
+                      StatusDialog.failure(title: "Service is not available right now");
+                    },
+                  )
+                : const SizedBox(),
+            const SizedBox(
+              width: 8,
+            ),
+            ReportActionButton(
+              title: "Print",
+              icon: Icons.print,
+              onClick: () {
+                controller.printReceipt(
+                    (report.transactionNumber ?? ""), ReceiptType.recharge);
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 

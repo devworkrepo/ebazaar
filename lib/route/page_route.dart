@@ -33,6 +33,7 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/test/test_image_picker.dart';
 
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
+import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
 import '../page/ott/ott_transaction/ott_transaction_page.dart';
 import '../page/report/fund_report/fund_report_page.dart';
@@ -196,6 +197,10 @@ final getAllPages = [
   GetPage(
     name: AppRoute.ottTransactionPage,
     page: () => const OttTransactionPage(),
+  ),
+  GetPage(
+    name: AppRoute.notificationPage,
+    page: () => const NotificationPage(),
   ),
 
 ];

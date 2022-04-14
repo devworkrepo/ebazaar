@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:open_file/open_file.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/tags.dart';
@@ -10,8 +12,7 @@ import 'package:spayindia/util/tags.dart';
 import '../../../component/dialog/status_dialog.dart';
 import '../report_helper.dart';
 
-class MoneyReportController extends GetxController {
-  ReportRepo repo = Get.find<ReportRepoImpl>();
+class MoneyReportController extends GetxController with ReceiptPrintMixin {
 
   final String tag;
   String fromDate = "";
@@ -76,6 +77,8 @@ class MoneyReportController extends GetxController {
       StatusDialog.failure(title: response.message ?? "Something went wrong");
     }
   }
+
+
 
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);

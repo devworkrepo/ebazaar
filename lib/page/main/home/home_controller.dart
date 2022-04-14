@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
+import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
@@ -15,7 +16,6 @@ import 'package:spayindia/service/loca_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_update_util.dart';
-import 'package:spayindia/util/app_util.dart';
 
 var isLocalAuthDone = false;
 class HomeController extends GetxController {
@@ -31,23 +31,37 @@ class HomeController extends GetxController {
 
   var appbarBackgroundOpacity = 0.0.obs;
   var appbarElevation = 0.0.obs;
+  var bannerList = <AppBanner>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    scrollController = ScrollController();
 
+    scrollController = ScrollController();
     appPreference.setIsTransactionApi(false);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       scrollController.addListener(_scrollListener);
     });
+
+    _fetchBanners();
+
     AppUpdateUtil.checkUpdate();
+  }
 
+  _fetchBanners() async {
+    try {
+      var response = await homeRepo.fetchBanners();
+      if (response.banners != null) {
 
+        var a = response.banners!;
+        a.add(AppBanner(rawPicName: "https://spayindia.in/images/spay_features.png"));
+        bannerList.value = a;
+      }
+    } catch (e) {}
+    ;
   }
 
   _scrollListener() {
-
     var mOffset = scrollController.offset;
 
     if (mOffset < 101) {
@@ -211,6 +225,10 @@ class HomeController extends GetxController {
 
   onAddFundClick() {
     Get.toNamed(AppRoute.fundRequestPage);
+  }
+
+  onNotificationClick() {
+    Get.toNamed(AppRoute.notificationPage);
   }
 }
 
