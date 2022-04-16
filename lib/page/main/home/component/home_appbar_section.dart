@@ -51,12 +51,7 @@ class HomeAppbarSection extends GetView<HomeController> {
               onPressed: ()=>controller.onNotificationClick(),
               icon: const Icon(Icons.notifications_active),
             ),
-            IconButton(
-              color: Get.theme.primaryColorDark,
-              iconSize: 32,
-              onPressed: () {},
-              icon: const Icon(Icons.info),
-            )
+
           ],
         ),
       ),

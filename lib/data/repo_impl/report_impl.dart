@@ -9,6 +9,7 @@ import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/service/network_client.dart';
 
+import '../../model/receipt/credit_card.dart';
 import '../../model/receipt/money.dart';
 import '../../model/refund/recharge.dart';
 import '../../model/report/credit_card.dart';
@@ -185,6 +186,12 @@ class ReportRepoImpl extends ReportRepo{
   Future<AepsReceiptResponse> aepsTransactionReceipt(data) async {
     var response = await  client.post("/GetAEPSInfo",data: data);
     return AepsReceiptResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CreditCardReceiptResponse> creditCardTransactionReceipt(data) async {
+    var response = await  client.post("/GetCreditCardInfo",data: data);
+    return CreditCardReceiptResponse.fromJson(response.data);
   }
 
 

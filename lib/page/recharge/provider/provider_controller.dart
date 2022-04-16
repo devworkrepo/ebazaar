@@ -65,7 +65,7 @@ class ProviderController extends GetxController {
     };
 
     if (providerType == ProviderType.prepaid ||
-        providerType == ProviderType.prepaid ||
+        providerType == ProviderType.postpaid ||
         providerType == ProviderType.dth) {
       Get.toNamed(AppRoute.rechargePage, arguments: arguments);
     } else {
@@ -131,7 +131,7 @@ ProviderInfo? getProviderInfo(ProviderType type) {
     case ProviderType.prepaid:
       return ProviderInfo("Prepaid", "prepaid", "mobile");
     case ProviderType.postpaid:
-      return ProviderInfo("Postpaid", "Mobile Postpaid", "mobile");
+      return ProviderInfo("Postpaid", "Postpaid", "mobile");
     case ProviderType.dth:
       return ProviderInfo("Dth", "dth", "dth");
     case ProviderType.electricity:

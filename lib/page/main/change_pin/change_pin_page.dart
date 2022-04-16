@@ -31,8 +31,8 @@ class ChangePinPage extends GetView<ChangePinController> {
          Obx(()=> AppButton(
              text: (controller.changePinActionTypeObs.value ==
                  ChangePinActionType.requestOtp)
-                 ? "Request M-Pin Otp"
-                 : "Verify M-Pin",
+                 ? "Request OTP"
+                 : "Verify OTP",
              onClick: () {
                if (controller.formKey.currentState!.validate()) {
                  if (controller.changePinActionTypeObs.value ==

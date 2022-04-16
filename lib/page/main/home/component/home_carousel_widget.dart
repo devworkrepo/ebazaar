@@ -98,7 +98,7 @@ class _BuildItem extends StatelessWidget {
                 size: 100,
               )),
               imageUrl: imageUrl,
-              fit: BoxFit.contain,
+              fit: BoxFit.fill,
             ),
           );
         },

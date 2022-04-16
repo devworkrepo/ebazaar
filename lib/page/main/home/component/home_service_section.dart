@@ -154,7 +154,7 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
     itemList.add(HomeServiceItem(
         "Money Transfer", "money", HomeServiceType.moneyTransfer));
   }
-  if ( user.isPayoutBond.orFalse()) {
+  if ( user.isPayout.orFalse()) {
     itemList.add(HomeServiceItem(
         "Payout Transfer", "money", HomeServiceType.payoutTransfer));
   }

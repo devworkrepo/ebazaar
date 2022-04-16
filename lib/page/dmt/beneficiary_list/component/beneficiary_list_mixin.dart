@@ -55,17 +55,17 @@ mixin BeneficiaryListMixin {
             height: 5,
           ),
           Text(
-            bankName ?? "N/A",
+            "Bank    : "+(bankName ?? "N/A"),
             style: Get.textTheme.subtitle2?.copyWith(
-                color: (isExpanded) ? Colors.white70 : Colors.black54),
+                color: (isExpanded) ? Colors.white70 : Colors.yellow[900]),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            accountNumber ?? "N/A",
+            "A.C No : "+(accountNumber ?? "N/A"),
             style: Get.textTheme.subtitle2?.copyWith(
-                color: (isExpanded) ? Colors.white70 : Colors.black54),
+                color: (isExpanded) ? Colors.white70 : Colors.blue[900]),
           ),
           const SizedBox(
             height: 5,

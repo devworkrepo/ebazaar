@@ -31,8 +31,8 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
           Obx(()=> AppButton(
               text: (controller.changePasswordActionTypeObs.value ==
                   ChangePasswordActionType.requestOtp)
-                  ? "Request M-Pin Otp"
-                  : "Verify M-Pin",
+                  ? "Request OTP"
+                  : "Verify OTP",
               onClick: () {
                 if (controller.formKey.currentState!.validate()) {
                   if (controller.changePasswordActionTypeObs.value ==

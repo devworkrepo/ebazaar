@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:spayindia/model/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/util/security/encription.dart';
 
 class AppPreference {
@@ -19,6 +19,7 @@ class AppPreference {
   final _isLoginBondAccepted = "is_login_bond_accepted";
   final _rdService = "rd_service";
   final _biometricServiceEnable = "biometric_service_enable";
+  final _appUpdateDelayTime = "app_update_delay_time";
 
   setPassword(String value) => _saveStringData(_password, value);
 
@@ -77,13 +78,19 @@ class AppPreference {
   bool get isLoginCheck => _retrieveBoolData(_isLoginCheck);
 
 
+  setAppUpdateDelayTime(int value) => _saveIntData(_appUpdateDelayTime, value);
+
+  int get appUpdateDelayTime => _retrieveIntData(_appUpdateDelayTime);
+
+
+
   setBiometricAuthentication(bool value) => _saveBoolData(_biometricServiceEnable, value);
 
   bool get isBiometricAuthentication => _retrieveBoolData(_biometricServiceEnable,defaultValue: true);
 
   _saveStringData(String key, String value){
-   var eData = Encryption.aesEncrypt(value);
-   return  _sharedPreferences.setString(key, eData);
+    var eData = Encryption.aesEncrypt((value.isEmpty) ? "na" : value);
+    return _sharedPreferences.setString(key, eData);
   }
 
   _retrieveStringData(String key) {
@@ -97,6 +104,13 @@ class AppPreference {
       _sharedPreferences.setBool(key, value);
 
   _retrieveBoolData(String key,{bool defaultValue= false}) => _sharedPreferences.getBool(key) ?? defaultValue;
+
+
+
+  _saveIntData(String key, int value) =>
+      _sharedPreferences.setInt(key, value);
+
+  _retrieveIntData(String key,{int defaultValue= 0}) => _sharedPreferences.getInt(key) ?? defaultValue;
 
   Future<bool> logout() async {
     await setIsTransactionApi(false);
@@ -118,19 +132,21 @@ class AppPreference {
       "isRecharge" : false,
       "isDth" : false,
       "isInsurance" : false,
-      "isInstantPay" : false,
-      "isBill" : false,
-      "isCreditCard" : false,
-      "isPaytmWallet" : false,
-      "isLic" : false,
-      "isOtt" : false,
-      "isBillPart" : false,
-      "isAeps" : false,
-      "isMatm" : false,
+      "isInstantPay": false,
+      "isBill": false,
+      "isCreditCard": false,
+      "isPaytmWallet": false,
+      "isLic": false,
+      "isOtt": false,
+      "isBillPart": false,
+      "isAeps": false,
+      "isMatm": false,
     }));
-    await setIsLoginCheck(false);
-    await setPassword("na");
-    await setMobileNumber("na");
+
+    if (!isLoginCheck) {
+      await setPassword("na");
+      await setMobileNumber("na");
+    }
     await setSessionKey("na");
     return true;
   }

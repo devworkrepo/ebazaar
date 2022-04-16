@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
@@ -96,7 +97,7 @@ class HomeController extends GetxController {
       if(response.code == 1){
         isBottomNavShowObs.value = true;
 
-        if(appPreference.isBiometricAuthentication){
+        if(appPreference.isBiometricAuthentication && kReleaseMode){
           if(!isLocalAuthDone){
             LocalAuthService.authenticate().then((value) {
               isLocalAuthDone = true;

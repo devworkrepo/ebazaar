@@ -11,6 +11,8 @@ import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
 
+import '../../model/notification.dart';
+
 class HomeRepoImpl extends HomeRepo {
   final NetworkClient client = Get.find();
   final AppPreference appPreference = Get.find();
@@ -56,9 +58,9 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<BannerResponse> fetchNotification() async {
+  Future<NotificationResponse> fetchNotification() async {
     var response = await client.post("/GetNotifications");
-    return BannerResponse.fromJson(response.data);
+    return NotificationResponse.fromJson(response.data);
   }
 
 

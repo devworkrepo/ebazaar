@@ -5,6 +5,7 @@ import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/model/report/wallet.dart';
+import '../../model/receipt/credit_card.dart';
 import '../../model/receipt/money.dart';
 import '../../model/refund/credit_card.dart';
 import '../../model/refund/recharge.dart';
@@ -47,6 +48,7 @@ abstract class ReportRepo{
   Future<MoneyReceiptResponse> payoutTransactionReceipt(data);
   Future<RechargeReceiptResponse> rechargeTransactionReceipt(data);
   Future<AepsReceiptResponse> aepsTransactionReceipt(data);
+  Future<CreditCardReceiptResponse> creditCardTransactionReceipt(data);
 
 
   //statement

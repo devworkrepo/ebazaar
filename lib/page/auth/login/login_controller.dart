@@ -53,7 +53,6 @@ class LoginController extends GetxController {
           await appPreference.setIsLoginBondAccepted(true);
         }, onReject: () async{
          await  appPreference.setIsLoginBondAccepted(false);
-          exit(0);
         }));
       }
     });
@@ -74,6 +73,22 @@ class LoginController extends GetxController {
   login() async {
     var isValidate = loginFormKey.currentState?.validate();
     if (!isValidate!) return;
+
+
+    if(!appPreference.isLoginBondAccepted){
+      Get.dialog(LoginTermAndConditionDialog(onAccept: () async{
+        await appPreference.setIsLoginBondAccepted(true);
+        login();
+      }, onReject: () async{
+        await  appPreference.setIsLoginBondAccepted(false);
+      }));
+      return;
+    }
+
+    if(mobileController.text != "7982607742"){
+      StatusDialog.failure(title: "Please wait, app service is available only selected users.");
+      return false;
+    }
 
     StatusDialog.progress(title: "Login");
 

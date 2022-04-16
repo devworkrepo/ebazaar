@@ -112,11 +112,19 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
                     _buildButton(
                         onClick: () {
                           if (_validateAmount()) {
-                            var amount =amountWithoutRupeeSymbol( _amountController);
+                            var amount =
+                                amountWithoutRupeeSymbol(_amountController);
 
-                            if(_validateImps(amount)){
-                              Get.back();
-                              widget.onClick(amount,DmtTransferType.imps);
+                            if (widget.dmtType == DmtType.payout) {
+                              if (_validatePayout(amount)) {
+                                Get.back();
+                                widget.onClick(amount, DmtTransferType.imps);
+                              }
+                            } else {
+                              if (_validateImps(amount)) {
+                                Get.back();
+                                widget.onClick(amount, DmtTransferType.imps);
+                              }
                             }
                           }
                         },
@@ -128,10 +136,19 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
                     _buildButton(
                         onClick: () {
                           if (_validateAmount()) {
-                            var amount =amountWithoutRupeeSymbol( _amountController);
-                            if (_validateNeft(amount)) {
-                              Get.back();
-                              widget.onClick(amount, DmtTransferType.neft);
+                            var amount =
+                                amountWithoutRupeeSymbol(_amountController);
+
+                            if (widget.dmtType == DmtType.payout) {
+                              if (_validatePayout(amount)) {
+                                Get.back();
+                                widget.onClick(amount, DmtTransferType.imps);
+                              }
+                            } else {
+                              if (_validateNeft(amount)) {
+                                Get.back();
+                                widget.onClick(amount, DmtTransferType.neft);
+                              }
                             }
                           }
                         },
@@ -291,21 +308,37 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
         else{
           return true;
         }
-      }
-      else{
-        if(enteredAmountInDouble > kycNonAllLimit){
-          showFailureSnackbar(title: "Available Limit Exceeded", message: "Your available limit is exceeded!");
+      } else {
+        if (enteredAmountInDouble > kycNonAllLimit) {
+          showFailureSnackbar(
+              title: "Available Limit Exceeded",
+              message: "Your available limit is exceeded!");
           return false;
-        }
-        else{
+        } else {
           return true;
         }
       }
     }
   }
 
-  _amountValidation(String? value){
-    if(value == null){
+  bool _validatePayout(String enteredAmount) {
+    var enteredAmountInDouble = double.parse(enteredAmount);
+    var sender = widget.senderInfo;
+    var payoutTotal = double.parse((sender.payoutTotal ?? "0"));
+
+    if (enteredAmountInDouble > payoutTotal) {
+      showFailureSnackbar(
+          title: "Available Limit!",
+          message:
+              "Your available limit is exceeded! ${sender.payoutTotal.toString()}");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  _amountValidation(String? value) {
+    if (value == null) {
       return "Enter valid amount";
     }
 

@@ -178,7 +178,7 @@ class _BuildHeaderSection extends StatelessWidget {
         Text(
           title,
           maxLines: 2,
-          style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.w500,fontSize: 15),
+          style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.w800,fontSize: 15),
           overflow: TextOverflow.ellipsis,
         ),
       ],

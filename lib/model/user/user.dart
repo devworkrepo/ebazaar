@@ -24,6 +24,7 @@ class UserDetail {
   bool? isLic;
   bool? isOtt;
   bool? isBillPart;
+  bool? isPayout;
   bool? isAeps;
   bool? isMatm;
 
@@ -40,6 +41,7 @@ class UserDetail {
     picName = json['picname'];
     agentCode = json['agentcode'];
     userType = json['usertype'];
+    isPayout = json['is_payout'];
     availableBalance = json['availbalance'].toString();
     openBalance = json['openbalance'].toString();
     creditBalance = json['creditbalance'].toString();

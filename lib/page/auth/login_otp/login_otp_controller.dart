@@ -70,9 +70,9 @@ class LoginOtpController extends GetxController  {
     await appPreference.setSessionKey(sessionKey);
 
     await appPreference.setIsLoginCheck(isLoginCheck);
-    await appPreference.setPassword((isLoginCheck) ? password : "");
+    await appPreference.setPassword((isLoginCheck) ? password : "na");
     await appPreference
-        .setMobileNumber((isLoginCheck) ? mobileNumber : "");
+        .setMobileNumber((isLoginCheck) ? mobileNumber : "na");
 
     Get.offAllNamed(AppRoute.mainPage);
   }

@@ -6,6 +6,7 @@ import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/background_image.dart';
 import 'package:spayindia/component/text_field.dart';
 import 'package:spayindia/page/auth/login/login_controller.dart';
+import 'package:spayindia/page/update_widget.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,9 +16,11 @@ class LoginPage extends GetView<LoginController> {
     Get.put(LoginController());
 
     return  const AppBackgroundImage(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: _LoginForm(),
+      child: AppUpdateWidget(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: _LoginForm(),
+        ),
       ),
     );
   }
@@ -31,6 +34,7 @@ class _LoginForm extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
+
       margin: const EdgeInsets.all(16),
       child: SingleChildScrollView(
         child: Card(
@@ -66,14 +70,6 @@ class _LoginForm extends GetView<LoginController> {
                             isRounded: true,
                             text: "Login",
                             onClick: () => controller.login()),
-                        const SizedBox(height: 16),
-                        TextButton(
-                            onPressed: () {
-                              showFailureSnackbar(
-                                  title: "Not available",
-                                  message: "work on progres");
-                            },
-                            child: const Text("Forgot Password ?"))
                       ],
                     ))
               ],

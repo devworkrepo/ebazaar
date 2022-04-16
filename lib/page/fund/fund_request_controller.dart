@@ -122,7 +122,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
     _confirmDialog();
   }
 
-  _makeFundRequest(bool isBondAccept) async {
+  _makeFundRequest() async {
     StatusDialog.progress();
     try {
       var formDataParam = await _moneyRequestParam();
@@ -160,16 +160,18 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
       if (response.code == 1) {
         Get.dialog(BondDialog(
           data: response.content!,
-          onAccept: () {_makeFundRequest(true,);},
-          onReject: () {_makeFundRequest(false);},
+          onAccept: () {_makeFundRequest();},
+          onReject: () {
+            StatusDialog.failure(title: "Just you reject the bond, without accept it you can't be money request!");
+          },
         ));
       } else {
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {
-      AppUtil.logger(e.toString());
+
       Get.back();
-     // Get.to(() => ExceptionPage(error: Exception(e)));
+      Get.to(() => ExceptionPage(error: Exception(e)));
     }
   }
 

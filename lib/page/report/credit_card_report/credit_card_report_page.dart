@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/api_component.dart';
@@ -6,7 +7,9 @@ import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/model/report/credit_card.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
+
 import '../../../component/common/report_action_button.dart';
+import '../receipt_print_mixin.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
 import 'credit_card_report_controller.dart';
@@ -61,7 +64,6 @@ class CreditCardReportPage extends GetView<CreditCardReportController> {
   }
 
   RefreshIndicator _buildListBody() {
-
     var list = controller.reportList;
     var count = list.length;
 
@@ -81,7 +83,6 @@ class CreditCardReportPage extends GetView<CreditCardReportController> {
     );
   }
 }
-
 
 
 class _BuildListItem extends GetView<CreditCardReportController> {
@@ -106,25 +107,46 @@ class _BuildListItem extends GetView<CreditCardReportController> {
 
         expandList: [
           ListTitleValue(title: "Name", value: report.cardHolderName.toString()),
-          ListTitleValue(title: "Mobile Number", value: report.mobileNumber.toString()),
+          ListTitleValue(
+              title: "Mobile Number", value: report.mobileNumber.toString()),
           ListTitleValue(title: "Card Type", value: report.cardType.toString()),
-          ListTitleValue(title: "Txn Number", value: report.transactionNumber.toString()),
-          ListTitleValue(title: "Utr Number", value: report.utrNumber.toString()),
+          ListTitleValue(
+              title: "Txn Number", value: report.transactionNumber.toString()),
+          ListTitleValue(
+              title: "Utr Number", value: report.utrNumber.toString()),
           ListTitleValue(title: "IFSC Code", value: report.ifscCode.toString()),
           ListTitleValue(title: "Charge", value: report.charge.toString()),
-          ListTitleValue(title: "Commission", value: report.commission.toString()),
-          ListTitleValue(title: "Message", value: report.transactionMessage.toString()),
-
+          ListTitleValue(
+              title: "Commission", value: report.commission.toString()),
+          ListTitleValue(
+              title: "Message", value: report.transactionMessage.toString()),
         ],
-        actionWidget: (report.transactionStatus!.toLowerCase() == "inprogress")
-            ? ReportActionButton(
-          title: "Re-query",
-          icon: Icons.refresh,
-          onClick: () {
-            controller.requeryTransaction(report);
-          },
-        )
-            : SizedBox(),
+        actionWidget: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (report.transactionStatus!.toLowerCase() == "inprogress" ||
+                    kDebugMode)
+                ? ReportActionButton(
+                    title: "Re-query",
+                    icon: Icons.refresh,
+                    onClick: () {
+                      controller.requeryTransaction(report);
+                    },
+                  )
+                : const SizedBox(),
+            const SizedBox(
+              width: 8,
+            ),
+            ReportActionButton(
+              title: "Print",
+              icon: Icons.print,
+              onClick: () {
+                controller.printReceipt(
+                    (report.transactionNumber ?? ""), ReceiptType.creditCard);
+              },
+            )
+          ],
+        ),
       ),
     );
   }

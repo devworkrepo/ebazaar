@@ -7,6 +7,7 @@ import 'package:spayindia/page/main/home/component/home_carousel_widget.dart';
 import 'package:spayindia/page/main/home/component/home_drawer.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/route_aware_widget.dart';
+import 'package:spayindia/page/update_widget.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -23,15 +24,17 @@ class HomePage extends GetView<HomeController> {
     Get.put(HomeController());
     return RouteAwareWidget(
       child: SafeArea(
-        child: Scaffold(
+        child: AppUpdateWidget(
+          child: Scaffold(
 
-          key: controller.scaffoldKey,
-          drawer: const HomeDrawerWidget(),
-          body: Obx(() => controller.userDetailObs.value.when(
-              onSuccess: (data) => _buildSingleChildScrollView(),
-              onFailure: (e) => ExceptionPage(error: e),
-              onInit: (data) => const AppProgressbar())),
+            key: controller.scaffoldKey,
+            drawer: const HomeDrawerWidget(),
+            body: Obx(() => controller.userDetailObs.value.when(
+                onSuccess: (data) => _buildSingleChildScrollView(),
+                onFailure: (e) => ExceptionPage(error: e),
+                onInit: (data) => const AppProgressbar())),
 
+          ),
         ),
       ),
       didPopNext: () {

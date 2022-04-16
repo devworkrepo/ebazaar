@@ -3,13 +3,14 @@ import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/credit_card.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
 import '../../../component/dialog/status_dialog.dart';
 import '../report_helper.dart';
 
-class CreditCardReportController extends GetxController {
+class CreditCardReportController extends GetxController with ReceiptPrintMixin {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
   String fromDate = "";
