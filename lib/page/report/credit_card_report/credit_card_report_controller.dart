@@ -25,7 +25,7 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
   }
@@ -52,7 +52,7 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";

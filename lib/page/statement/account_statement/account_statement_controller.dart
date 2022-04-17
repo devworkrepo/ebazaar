@@ -29,7 +29,7 @@ class AccountStatementController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
   }
@@ -57,7 +57,7 @@ class AccountStatementController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
   }

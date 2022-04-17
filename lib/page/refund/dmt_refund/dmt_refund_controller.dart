@@ -28,7 +28,7 @@ class DmtRefundController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
@@ -80,7 +80,7 @@ class DmtRefundController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchInput = "";
     fetchReport();

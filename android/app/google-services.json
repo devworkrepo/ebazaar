@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "518758514405",
-    "project_id": "spayindia-1c3de",
-    "storage_bucket": "spayindia-1c3de.appspot.com"
+    "project_number": "619753977169",
+    "project_id": "spaynewapp",
+    "storage_bucket": "spaynewapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:518758514405:android:77ceeb9baca12231b8de0c",
+        "mobilesdk_app_id": "1:619753977169:android:9db88d5e4a2536d059cf70",
         "android_client_info": {
           "package_name": "com.spayindia.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "518758514405-85q99l8ihq4o992f5ptsq6k9m9ptsgqc.apps.googleusercontent.com",
+          "client_id": "619753977169-tajm0f186v3eei8ura5den4en7as1vco.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAXS4g_zmzeL1deUxGtlelrg97Pkml2ojk"
+          "current_key": "AIzaSyBkDbC79ilNz4T0v2Au42gzNCJm-uJKXuw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "518758514405-85q99l8ihq4o992f5ptsq6k9m9ptsgqc.apps.googleusercontent.com",
+              "client_id": "619753977169-tajm0f186v3eei8ura5den4en7as1vco.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

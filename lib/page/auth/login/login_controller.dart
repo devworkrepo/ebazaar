@@ -10,12 +10,9 @@ import 'package:spayindia/data/repo/auth_repo.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
 import 'package:spayindia/model/user/login.dart';
 import 'package:spayindia/page/auth/login/login_tac_dialog.dart';
-import 'package:spayindia/page/auth/login_otp/verifying_device_dailog.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/app_update_util.dart';
 import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/security/app_config.dart';
 import 'package:spayindia/util/security/encription.dart';
 
@@ -56,8 +53,6 @@ class LoginController extends GetxController {
         }));
       }
     });
-
-    AppUpdateUtil.checkUpdate();
   }
 
 

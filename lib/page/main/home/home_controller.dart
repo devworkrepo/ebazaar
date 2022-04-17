@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,6 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/loca_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/app_update_util.dart';
 
 var isLocalAuthDone = false;
 class HomeController extends GetxController {
@@ -46,7 +44,6 @@ class HomeController extends GetxController {
 
     _fetchBanners();
 
-    AppUpdateUtil.checkUpdate();
   }
 
   _fetchBanners() async {
@@ -59,7 +56,6 @@ class HomeController extends GetxController {
         bannerList.value = a;
       }
     } catch (e) {}
-    ;
   }
 
   _scrollListener() {

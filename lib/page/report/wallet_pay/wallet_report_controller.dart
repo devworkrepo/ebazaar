@@ -27,7 +27,7 @@ class WalletPayReportController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
 
     _fetchReport();
@@ -51,7 +51,7 @@ class WalletPayReportController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 30);
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
     toDate = DateUtil.currentDateInYyyyMmDd();
     _fetchReport();
   }

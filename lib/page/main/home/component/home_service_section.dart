@@ -150,7 +150,7 @@ class HomeServiceItem {
 
 List<HomeServiceItem> _homeServiceList(UserDetail user) {
   List<HomeServiceItem> itemList = [];
-  if (/*user.isInstantPay.orFalse()*/ true) {
+  if (user.isInstantPay.orFalse()) {
     itemList.add(HomeServiceItem(
         "Money Transfer", "money", HomeServiceType.moneyTransfer));
   }

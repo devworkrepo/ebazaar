@@ -41,8 +41,12 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
 
        if(DateTime.now().isAfter(savedTime)){
          AppUtil.logger("AppUpdateTesting : on after saved time");
+
+         var playVersion = Upgrader().currentAppStoreVersion() ?? "N/A";
+         var currentVersion = Upgrader().currentInstalledVersion() ?? "N/A";
+
          Get.dialog(
-           const _ShowAppUpdateDialog(),
+            _ShowAppUpdateDialog(playVersion: playVersion, currentVersion: currentVersion,),
            barrierDismissible: false,
          );
        }
@@ -62,7 +66,11 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
 }
 
 class _ShowAppUpdateDialog extends StatelessWidget {
-  const _ShowAppUpdateDialog({Key? key}) : super(key: key);
+  final String currentVersion;
+  final String playVersion;
+   _ShowAppUpdateDialog({required this.currentVersion,required this.playVersion,Key? key}) : super(key: key);
+
+  AppPreference appPreference = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -104,13 +112,26 @@ class _ShowAppUpdateDialog extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: Colors.black12),
-                        child: const Padding(
+                        child:  Padding(
                           padding: EdgeInsets.symmetric(horizontal: 32),
-                          child: Text(
-                            "New version of app is available in app store please update it.",
-                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.center,
-                          ),
+                          child: Column(children: [
+                            Text(
+                              "New version of app is available in app store please update it.",
+                              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 16,),
+                            Text(
+                              "Current Version : $currentVersion",
+                              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              "Store Version     : $playVersion",
+                              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],)
                         ),
                       )
                     ],
@@ -121,7 +142,7 @@ class _ShowAppUpdateDialog extends StatelessWidget {
                 ],
               ),
             ),
-            (kDebugMode)? Positioned(
+            (kDebugMode || (appPreference.user.agentCode == "SPR01508" && appPreference.user.agentId == "1508"))? Positioned(
                 right: 12,
                 top: 12,
                 child: IconButton(
