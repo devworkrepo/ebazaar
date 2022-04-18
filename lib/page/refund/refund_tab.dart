@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:spayindia/data/app_pref.dart';
+import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_page.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
 import 'package:spayindia/page/refund/recharge_refund/recharge_refund_page.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/tags.dart';
 
 import 'dmt_refund/dmt_refund_page.dart';
 
 
 class RefundTabPage extends StatefulWidget {
-  const RefundTabPage({Key? key}) : super(key: key);
+
+  const RefundTabPage( {Key? key}) : super(key: key);
 
   @override
   State<RefundTabPage> createState() => _RefundTabPageState();
@@ -17,17 +22,16 @@ class RefundTabPage extends StatefulWidget {
 class _RefundTabPageState extends State<RefundTabPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  AppPreference appPreference = Get.find();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: _tabList().length, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Scaffold(
       body: NestedScrollView(
@@ -35,18 +39,13 @@ class _RefundTabPageState extends State<RefundTabPage>
           return <Widget>[
             SliverAppBar(
               centerTitle: true,
-              title: const Text('Refund'),
+              title: const Text('Refund Pending'),
               pinned: true,
               floating: true,
               forceElevated: innerBoxIsScrolled,
               bottom: TabBar(
                 isScrollable: true,
-                tabs: const <Tab>[
-                  Tab(text: 'Money'),
-                  Tab(text: 'Payout'),
-                  Tab(text: 'Recharge'),
-                  Tab(text: 'Credit Card'),
-                ],
+                tabs: _tabList(),
                 controller: _tabController,
               ),
             ),
@@ -54,15 +53,35 @@ class _RefundTabPageState extends State<RefundTabPage>
         },
         body: TabBarView(
           controller: _tabController,
-          children: const <Widget>[
-            DmtRefundPage(controllerTag: AppTag.moneyRefundControllerTag,),
-            DmtRefundPage(controllerTag: AppTag.payoutRefundControllerTag,),
-            RechargeRefundPage(),
-            CreditCardRefundPage()
-          ],
+          children: _tabWidgetList(),
         ),
       ),
     );
+  }
+
+  List<Widget> _tabWidgetList() {
+    var mList =   <Widget>[
+          const DmtRefundPage(controllerTag: AppTag.moneyRefundControllerTag,),
+          const RechargeRefundPage(),
+          const CreditCardRefundPage()
+        ];
+    if(appPreference.user.isPayout ?? false){
+      mList.add( const DmtRefundPage(controllerTag: AppTag.payoutRefundControllerTag,),);
+    }
+    return mList;
+  }
+
+  List<Tab> _tabList() {
+    var mList =  <Tab>[
+                const Tab(text: 'Money'),
+                const Tab(text: 'Recharge'),
+                const Tab(text: 'Credit Card'),
+              ];
+
+    if(appPreference.user.isPayout ?? false){
+      mList.add(const Tab(text: "Payout",));
+    }
+    return mList;
   }
 }
 

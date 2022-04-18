@@ -12,13 +12,11 @@ class NotificationPage extends GetView<NotificationController> {
   Widget build(BuildContext context) {
     Get.put(NotificationController());
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
 
         centerTitle: true,
         title: const Text(
           "Notifications",
-          style: TextStyle(fontSize: 24),
         ),
       ),
       body: ObsResourceWidget(
@@ -49,7 +47,6 @@ class _BuildListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Card(
-        color: Get.theme.primaryColor,
         clipBehavior: Clip.antiAlias,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -58,12 +55,13 @@ class _BuildListItem extends StatelessWidget {
             children: [
               Text(
                 notification.title ?? "",
-                style: Get.textTheme.headline5
-                    ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                style: Get.textTheme.headline6
+                    ?.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
               ),
+              SizedBox(height: 12,),
               Text(
                 notification.description ?? "",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.white70),
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.grey[700]),
               )
             ],
           ),

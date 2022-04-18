@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/hex_color.dart';
 
 import '../beneficiary_controller.dart';
@@ -47,7 +48,14 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
                   const SizedBox(
                     height: 8,
                   ),
-                  _buildChangeWidget()
+                  (controller.sender!.isKycVerified!)
+                      ? _buildIconTitleButton(
+                          onClick: () {
+                            controller.fetchKycInfo();
+                          },
+                          title: "View Kyc Limit",
+                          icon: Icons.remove_red_eye)
+                      : _buildChangeWidget()
                 ],
               ),
             ),
@@ -156,7 +164,9 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
   }
 
   GestureDetector _buildIconTitleButton(
-      {required VoidCallback onClick, required String title}) {
+      {required VoidCallback onClick,
+      required String title,
+      IconData icon = Icons.edit}) {
     return GestureDetector(
       onTap: onClick,
       child: Row(
@@ -166,8 +176,8 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
             "[ ",
             style: TextStyle(color: Colors.green),
           ),
-          const Icon(
-            Icons.edit,
+          Icon(
+            icon,
             color: Colors.green,
             size: 17,
           ),

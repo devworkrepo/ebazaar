@@ -350,14 +350,14 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
     var balance = appPreference.user.availableBalance;
     var balanceInDouble = double.parse(balance ?? "0");
 
+    if(enteredAmountInDouble > balanceInDouble){
+      return "Insufficient wallet amount!";
+    }
 
     if(enteredAmountInDouble <minAmount || enteredAmountInDouble> maxAmount){
       return "Enter amount $minAmount - $maxAmount";
     }
 
-    if(enteredAmountInDouble > balanceInDouble){
-      return "Insufficient wallet amount!";
-    }
     else {
       return null;
     }

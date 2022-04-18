@@ -27,7 +27,7 @@ class FundRequestReportController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     _fetchReport();
   }
@@ -52,7 +52,7 @@ class FundRequestReportController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";

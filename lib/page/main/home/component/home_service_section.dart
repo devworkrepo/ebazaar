@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/image.dart';
@@ -110,16 +109,22 @@ class HomeServiceSection extends GetView<HomeController> {
   int innerPadding(HomeServiceItem item) {
 
 
-    if(item.homeServiceType == HomeServiceType.walletPay) {
+    if (item.homeServiceType == HomeServiceType.walletPay) {
       return 12;
-    } else if(item.homeServiceType == HomeServiceType.paytmWallet) {
+    }
+    else  if (item.homeServiceType == HomeServiceType.lic) {
       return 16;
-    }  else if(item.homeServiceType == HomeServiceType.lic) {
-      return 16;
+    }
+    else  if (item.homeServiceType == HomeServiceType.paytmWallet) {
+      return 13;
+    }
+    else if (
+        item.homeServiceType == HomeServiceType.aadhaarPay ||
+        item.homeServiceType == HomeServiceType.aeps) {
+      return 10;
     } else {
       return 8;
     }
-
   }
 }
 
@@ -128,6 +133,7 @@ enum HomeServiceType {
   payoutTransfer,
   matm,
   aeps,
+  aadhaarPay,
   recharge,
   dth,
   billPayment,
@@ -150,11 +156,11 @@ class HomeServiceItem {
 
 List<HomeServiceItem> _homeServiceList(UserDetail user) {
   List<HomeServiceItem> itemList = [];
-  if (user.isInstantPay.orFalse()) {
+
     itemList.add(HomeServiceItem(
         "Money Transfer", "money", HomeServiceType.moneyTransfer));
-  }
-  if ( user.isPayout.orFalse()) {
+
+  if (user.isPayout.orFalse()) {
     itemList.add(HomeServiceItem(
         "Payout Transfer", "money", HomeServiceType.payoutTransfer));
   }
@@ -162,7 +168,11 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
     itemList.add(HomeServiceItem("Matm", "matm", HomeServiceType.matm));
   }
   if (user.isAeps.orFalse()) {
-    itemList.add(HomeServiceItem("Aeps\nAadhaar Pay", "aeps", HomeServiceType.aeps));
+    itemList.add(
+        HomeServiceItem("Aadhaar Pay", "aeps", HomeServiceType.aadhaarPay));
+  }
+  if (user.isAeps.orFalse()) {
+    itemList.add(HomeServiceItem("Aeps", "aeps", HomeServiceType.aeps));
   }
   if (user.isRecharge.orFalse()) {
     itemList.add(HomeServiceItem(

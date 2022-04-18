@@ -36,7 +36,9 @@ import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
 import '../page/ott/ott_transaction/ott_transaction_page.dart';
+import '../page/refund/refund_tab.dart';
 import '../page/report/fund_report/fund_report_page.dart';
+import '../page/statement/statement_tab.dart';
 
 final getAllPages = [
   GetPage(
@@ -164,6 +166,15 @@ final getAllPages = [
   GetPage(
     name: AppRoute.transactionReportPage,
     page: () => const TransactionTabPage(),
+  ),
+  GetPage(
+    name: AppRoute.refundReportPage,
+    page: () => const RefundTabPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.statementReportPage,
+    page: () => const StatementTabPage(),
   ),
   //kyc
 

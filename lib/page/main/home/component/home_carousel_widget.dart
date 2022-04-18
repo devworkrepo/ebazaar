@@ -29,7 +29,7 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
         ),
         Obx(() {
           return (controller.bannerList.isEmpty)
-              ? SizedBox()
+              ? const SizedBox()
               : CarouselSlider.builder(
                   itemCount: controller.bannerList.length,
                   itemBuilder: (context, index, realIndex) {

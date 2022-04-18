@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,10 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  if(kDebugMode){
+   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await appBinding();
   runApp(const MyApp());

@@ -24,7 +24,7 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchRechargeValue();
     fetchReport();
@@ -58,7 +58,7 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";

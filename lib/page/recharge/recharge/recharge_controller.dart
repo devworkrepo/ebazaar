@@ -99,6 +99,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
               : await repo.makeMobilePostpaidRecharge(_transactionParam(),cancelToken);
 
       Get.back();
+
       if (response.code == 1) {
         Get.to(RechargeTxnResponsePage(),
             arguments: {"response": response, "type": providerType});

@@ -93,7 +93,7 @@ class SessionExpireException extends _BaseException {
 }
 
 
-getDioException(error) {
+ getDioException(error) {
   if (error is Exception) {
     try {
       Exception e;

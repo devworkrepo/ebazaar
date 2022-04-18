@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +19,6 @@ import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/statement/account_statement/account_statement_controller.dart';
 import 'package:spayindia/page/statement/credit_debit/credit_debit_controller.dart';
 import 'package:spayindia/page/statement/statement_tab.dart';
-import 'package:spayindia/page/update_widget.dart';
 import 'package:spayindia/res/style.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_util.dart';
@@ -38,7 +35,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var title = "Service";
   var bottomNavStyle = TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
@@ -95,10 +91,6 @@ class _MainPageState extends State<MainPage> {
             color: Colors.white,
             shadowColor: Colors.blue,
             elevation: 20,
-           /* decoration: BoxDecoration(
-              color: Get.theme.primaryColor.withOpacity(.8),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(12), )
-            ),*/
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -136,40 +128,20 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
         ));
-
-    return ConvexAppBar(
-      key: bottomNavKey,
-      backgroundColor: Get.theme.primaryColorDark,
-
-      style: TabStyle.textIn,
-      elevation: 8,
-      items: [
-        TabItem(icon: Icons.keyboard_return, title: 'Refund'),
-        TabItem(icon: Icons.receipt_outlined, title: 'Settlement'),
-        TabItem(icon: Icons.home, title: 'Home'),
-        TabItem(icon: Icons.receipt_long_rounded, title: 'Report'),
-        TabItem(icon: Icons.people, title: 'Profile'),
-      ],
-      initialActiveIndex: 2,//optional, default as 0
-      onTap: (int i) => setState(() {
-        bottomNavSelectedIndex = i;
-      }),
-    );
   }
 
   void _onBottomNavItemClick(position) {
-    setState(() {
-      selectedItemColor = Get.theme.primaryColorDark;
-      bottomNavSelectedIndex = position;
-      if (position == 0) {
-        title = "Service";
-      } else if (position == 1) {
-        title = "Transaction";
-      }
-    });
+    if (position != bottomNavSelectedIndex) {
+      setState(() {
+        selectedItemColor = Get.theme.primaryColorDark;
+        bottomNavSelectedIndex = position;
+      });
+    }
   }
 
   _bottomNavPage() {
+    AppUtil.logger("test bottom bar tap click");
+
     switch (bottomNavSelectedIndex) {
       case 0:
         Get.delete<DmtRefundController>(tag: AppTag.payoutRefundControllerTag);
@@ -178,13 +150,16 @@ class _MainPageState extends State<MainPage> {
         Get.delete<CreditCardRefundController>();
         return const RefundTabPage();
       case 1:
-        Get.delete<AccountStatementController>(tag: AppTag.accountStatementControllerTag);
+        Get.delete<AccountStatementController>(
+            tag: AppTag.accountStatementControllerTag);
         Get.delete<AccountStatementController>(tag: AppTag.aepsStatementControllerTag);
         Get.delete<CreditDebitController>(tag: AppTag.creditStatementControllerTag);
         Get.delete<CreditDebitController>(tag: AppTag.debitStatementControllerTag);
         return const StatementTabPage();
       case 2:
-        return const HomePage();
+        return  HomePage(userInfo: (info){
+
+        },);
       case 3:
         Get.delete<MoneyReportController>(
             tag: AppTag.payoutReportControllerTag);

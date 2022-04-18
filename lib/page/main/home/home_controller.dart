@@ -1,6 +1,8 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
@@ -15,6 +17,7 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/loca_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
+import 'package:spayindia/util/app_util.dart';
 
 var isLocalAuthDone = false;
 class HomeController extends GetxController {
@@ -38,12 +41,11 @@ class HomeController extends GetxController {
 
     scrollController = ScrollController();
     appPreference.setIsTransactionApi(false);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       scrollController.addListener(_scrollListener);
     });
 
     _fetchBanners();
-
   }
 
   _fetchBanners() async {
@@ -51,9 +53,11 @@ class HomeController extends GetxController {
       var response = await homeRepo.fetchBanners();
       if (response.banners != null) {
 
-        var a = response.banners!;
-        a.add(AppBanner(rawPicName: "https://spayindia.in/images/spay_features.png"));
-        bannerList.value = a;
+        //todo add banner list from apis
+        var mList = <AppBanner>[]; //response.banners!;
+        mList.add(AppBanner(
+            rawPicName: "https://spayindia.in/images/spay_features.png"));
+        bannerList.value = mList;
       }
     } catch (e) {}
   }
@@ -77,7 +81,6 @@ class HomeController extends GetxController {
 
       appbarElevation.value = elevation;
     }
-
   }
 
   fetchUserDetails() async {
@@ -90,12 +93,15 @@ class HomeController extends GetxController {
       UserDetail response = await homeRepo.fetchAgentInfo();
       user = response;
       await appPreference.setUser(user);
-      if(response.code == 1){
+
+      await setupCrashID();
+
+      if (response.code == 1) {
         isBottomNavShowObs.value = true;
 
-        if(appPreference.isBiometricAuthentication && kReleaseMode){
-          if(!isLocalAuthDone){
-            LocalAuthService.authenticate().then((value) {
+        if (appPreference.isBiometricAuthentication && kReleaseMode) {
+          if (!isLocalAuthDone) {
+            LocalAuthService.authenticate().then((value) async {
               isLocalAuthDone = true;
             });
           }
@@ -117,7 +123,6 @@ class HomeController extends GetxController {
   }
 
 
-
   onTopUpButtonClick (){
     Get.toNamed(AppRoute.fundRequestOptionPage);
   }
@@ -134,15 +139,16 @@ class HomeController extends GetxController {
   onItemClick(HomeServiceItem item) {
     switch (item.homeServiceType) {
       case HomeServiceType.aeps:
-        Get.bottomSheet(AepsOptionDialog(
-          onAepsClick: () {
-            Get.toNamed(AppRoute.aepsPage, arguments: false);
-          },
-          onAadhaarPayClick:  () {
-            Get.toNamed(AppRoute.aepsPage, arguments: true);
-          },
-        ));
+        {
+          Get.toNamed(AppRoute.aepsPage, arguments: false);
+        }
+
         break;
+      case HomeServiceType.aadhaarPay:{
+        Get.toNamed(AppRoute.aepsPage, arguments: true);
+      }
+
+      break;
       case HomeServiceType.matm:
         Get.toNamed(AppRoute.mamtPage);
         break;
@@ -226,6 +232,13 @@ class HomeController extends GetxController {
 
   onNotificationClick() {
     Get.toNamed(AppRoute.notificationPage);
+  }
+
+  Future<void> setupCrashID() async {
+    var userId = appPreference.user.agentId.toString();
+    var agentCode = appPreference.user.agentCode.toString();
+    await FirebaseCrashlytics.instance.setCustomKey("user ID", userId);
+    await FirebaseCrashlytics.instance.setCustomKey("user Code", agentCode);
   }
 }
 

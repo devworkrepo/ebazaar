@@ -24,7 +24,7 @@ class RechargeRefundController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
@@ -70,7 +70,7 @@ class RechargeRefundController extends GetxController {
   }
 
   void swipeRefresh() {
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 2);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchInput = "";
     fetchReport();

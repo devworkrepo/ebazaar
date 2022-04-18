@@ -76,6 +76,7 @@ class UserDetail {
     data ['openbalance']=openBalance;
     data ['creditbalance']=creditBalance;
     data ['is_payout_bond']=isPayoutBond;
+    data ['is_payout']=isPayout;
     data ['is_walletpay']=isWalletPay;
     data ['is_instantpay']=isInstantPay;
     data ['is_recharge']=isRecharge;

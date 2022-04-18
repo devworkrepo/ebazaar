@@ -59,7 +59,23 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         count: 1,
                       ),
                       _NavSubTitle(
-                        title: "Fund Report",
+                        title: "Statement",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.statementReportPage);
+                        },
+                        count: 1,
+                      ),
+                      _NavSubTitle(
+                        title: "Refund Pending",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.refundReportPage);
+                        },
+                        count: 1,
+                      ),
+                      _NavSubTitle(
+                        title: "Fund Request",
                         onClick: (){
                           Get.back();
                           Get.toNamed(AppRoute.fundReportPage,arguments: "route");

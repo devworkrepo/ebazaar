@@ -53,6 +53,8 @@ class AppRoute {
 
   //report
   static const transactionReportPage = "/transaction-report-page";
+  static const refundReportPage = "/refund-report-page";
+  static const statementReportPage = "/statement-report-page";
   static const aepsAllReportPage = "/aeps-all-report-page";
   static const complainListPage = "/complain-list-page";
   static const complainPostPage = "/complain-post-page";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/component/exception.dart';
 import 'package:spayindia/component/progress.dart';
+import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/main/home/component/home_carousel_widget.dart';
 import 'package:spayindia/page/main/home/component/home_drawer.dart';
@@ -16,7 +17,8 @@ import 'component/home_header_section.dart';
 import 'component/home_service_section.dart';
 
 class HomePage extends GetView<HomeController> {
-  const HomePage({Key? key}) : super(key: key);
+  final Function(UserDetail) userInfo;
+  const HomePage({Key? key,required this.userInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,10 @@ class HomePage extends GetView<HomeController> {
             key: controller.scaffoldKey,
             drawer: const HomeDrawerWidget(),
             body: Obx(() => controller.userDetailObs.value.when(
-                onSuccess: (data) => _buildSingleChildScrollView(),
+                onSuccess: (data){
+                  userInfo(data);
+                 return  _buildSingleChildScrollView();
+                },
                 onFailure: (e) => ExceptionPage(error: e),
                 onInit: (data) => const AppProgressbar())),
 

@@ -23,26 +23,6 @@ class RechargeOptionDialog extends StatelessWidget {
   }
 }
 
-class AepsOptionDialog extends StatelessWidget {
-  final VoidCallback onAepsClick;
-  final VoidCallback onAadhaarPayClick;
-
-  const AepsOptionDialog(
-      {Key? key, required this.onAepsClick, required this.onAadhaarPayClick})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _BaseOptionDialogWidget(
-      title: "AEPS Type",
-      option: [
-        _BaseOption(title: "AEPS", onClick: onAepsClick,svgName: "aeps"),
-        _BaseOption(title: "Aadhaar Pay", onClick: onAadhaarPayClick,svgName: "aeps"),
-      ],
-    );
-  }
-}
-
 class _BaseOption {
   final VoidCallback onClick;
   final String title;

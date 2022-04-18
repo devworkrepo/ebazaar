@@ -1,11 +1,11 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spayindia/component/button.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/exception.dart';
-import 'package:get/get.dart';
-import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/lottie_constant.dart';
 
 class ExceptionPage extends StatefulWidget {
@@ -25,11 +25,16 @@ class _ExceptionPageState extends State<ExceptionPage> {
   bool shouldGoLoginPage = false;
 
   @override
+  void initState() {
+    super.initState();
+    recordException();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-
-        if(shouldGoLoginPage){
+        if (shouldGoLoginPage) {
           Get.offAllNamed(AppRoute.loginPage);
         }
         if (shouldGoMainPage) {
@@ -58,7 +63,7 @@ class _ExceptionPageState extends State<ExceptionPage> {
           lottieType: LottieType.noInternet,
           title: "No Internet",
           message:
-              "Internet connection not available! please check mobile data or wifi connection");
+          "Internet connection not available! please check mobile data or wifi connection");
     } else if (exception is SocketException) {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
@@ -107,7 +112,7 @@ class _ExceptionPageState extends State<ExceptionPage> {
     else if (exception is SessionExpireException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(
-        showLoginButton: true,
+          showLoginButton: true,
           lottieType: LottieType.alert,
           title: "Session Expired!",
           message: exception.message.toString());
@@ -115,17 +120,16 @@ class _ExceptionPageState extends State<ExceptionPage> {
     else {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
-          title: "Unknown Error",
+          title: "Error Occurred!!",
           message: exception.message.toString());
     }
   }
 
-  _buildLottieWidget(
-      {required String lottieType,
-      required String title,
-      required String message,
-        bool showLoginButton = false
-      }) {
+  _buildLottieWidget({required String lottieType,
+    required String title,
+    required String message,
+    bool showLoginButton = false
+  }) {
     var result = getTransactionExceptionMessage();
 
     if (!isNoInternetException && appPreference.isTransactionApi) {
@@ -141,10 +145,10 @@ class _ExceptionPageState extends State<ExceptionPage> {
         children: [
           SizedBox(
               child: LottieBuilder.asset(
-            lottieType,
-            height: 100,
-            fit: BoxFit.cover,
-          )),
+                lottieType,
+                height: 100,
+                fit: BoxFit.cover,
+              )),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -181,5 +185,21 @@ class _ExceptionPageState extends State<ExceptionPage> {
       "message":
           "Transaction is completed with unknown response due to network or server interruption. Please check report manually for complete status. Thank-you"
     };
+  }
+
+  @override
+  void dispose() {
+    appPreference.setIsTransactionApi(false);
+    super.dispose();
+  }
+
+  void recordException() async {
+    var error = getDioException(widget.error);
+    if (error is NoInternetException) {
+    } else {
+      await FirebaseCrashlytics.instance.recordError(
+          widget.error.toString(), null,
+          fatal: appPreference.isTransactionApi);
+    }
   }
 }
