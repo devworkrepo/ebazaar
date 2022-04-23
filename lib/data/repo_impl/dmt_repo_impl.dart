@@ -8,6 +8,7 @@ import 'package:spayindia/model/dmt/calculate_charge.dart';
 import 'package:spayindia/model/dmt/kyc_info.dart';
 import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
+import 'package:spayindia/model/dmt/sender_kyc.dart';
 import 'package:spayindia/model/dmt/verification_charge.dart';
 import 'package:spayindia/model/money_request/bank_dertail.dart';
 import 'package:spayindia/service/network_client.dart';
@@ -18,7 +19,7 @@ class DmtRepoImpl extends DmtRepo {
 
   @override
   Future<SenderInfo> searchSender(Map<String, String> data) async {
-   // var response = await AppUtil.parseJsonFromAssets("sender_info_response");
+
     var response = await client.post("SearchRemitter", data: data);
     return SenderInfo.fromJson(response.data);
   }
@@ -178,5 +179,35 @@ class DmtRepoImpl extends DmtRepo {
   Future<BondResponse> fetchPayoutBond()  async{
     var response = await client.post("/GetPayoutBond");
     return BondResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<SenderKycCaptcha> senderKycCaptcha(data) async {
+    var response = await client.post("/GetCaptcha",data: data);
+    return SenderKycCaptcha.fromJson(response.data);
+  }
+
+  @override
+  Future<SenderKycCaptcha> senderKycReCaptcha(data) async {
+    var response = await client.post("/GetReCaptcha",data: data);
+    return SenderKycCaptcha.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> senderKycSendOtp(data) async {
+    var response = await client.post("/SendEKycOTP",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> senderKycReSendOtp(data) async {
+    var response = await client.post("/ReSendEKycOTP",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> senderKycVerifyOtp(data) async {
+   var response = await client.post("/VerifyEKycOTP",data: data);
+    return CommonResponse.fromJson(response.data);
   }
 }

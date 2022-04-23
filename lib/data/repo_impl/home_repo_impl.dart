@@ -7,11 +7,13 @@ import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/news.dart';
 import 'package:spayindia/model/recharge/provider.dart';
+import 'package:spayindia/model/summary.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
 
 import '../../model/notification.dart';
+import '../../model/profile.dart';
 
 class HomeRepoImpl extends HomeRepo {
   final NetworkClient client = Get.find();
@@ -61,6 +63,19 @@ class HomeRepoImpl extends HomeRepo {
   Future<NotificationResponse> fetchNotification() async {
     var response = await client.post("/GetNotifications");
     return NotificationResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<UserProfile> fetchProfileInfo() async {
+    var response = await client.post("/GetAgentProfile");
+    return UserProfile.fromJson(response.data);
+  }
+
+
+  @override
+  Future<TransactionSummary> fetchSummary() async {
+    var response = await client.post("/GetTransSummary");
+    return TransactionSummary.fromJson(response.data);
   }
 
 

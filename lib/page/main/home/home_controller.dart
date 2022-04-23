@@ -14,7 +14,7 @@ import 'package:spayindia/page/main/home/component/bottom_sheet_option.dart';
 import 'package:spayindia/page/main/home/component/home_service_section.dart';
 import 'package:spayindia/page/main_page.dart';
 import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/service/loca_auth.dart';
+import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
@@ -232,6 +232,10 @@ class HomeController extends GetxController {
 
   onNotificationClick() {
     Get.toNamed(AppRoute.notificationPage);
+  }
+
+  onSummaryClick() {
+    Get.toNamed(AppRoute.summaryPage);
   }
 
   Future<void> setupCrashID() async {

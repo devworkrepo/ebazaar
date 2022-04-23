@@ -9,18 +9,21 @@ class ObsResponseHandler<T>{
 
   final Rx<Resource<T>> obs;
   final Future apiCall;
-  final Function(T) result;
+  final Function(T)? result;
 
 
-  ObsResponseHandler({required this.obs, required this.apiCall,required this.result}){
-   _call();
+  ObsResponseHandler(
+      {required this.obs, required this.apiCall, this.result}) {
+    _call();
   }
 
-    _call() async {
-     obs.value = const Resource.onInit();
-     try {
-       T response = await apiCall;
-       result(response);
+  _call() async {
+    obs.value = const Resource.onInit();
+    try {
+      T response = await apiCall;
+      if (result != null) {
+        result!(response);
+      }
        obs.value = Resource.onSuccess(response);
      } catch (e) {
        obs.value = Resource.onFailure(e);

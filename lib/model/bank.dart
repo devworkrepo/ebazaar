@@ -1,12 +1,14 @@
 class Bank{
   late String bankName;
-  late String ifscCode;
+  String? ifscCode;
+  String? bankId;
 
   Bank();
 
   Bank.fromJson(Map<String, dynamic> json) {
     bankName = json['bank_name'];
     ifscCode = json['ifsc_code'];
+    bankId = json['bank_id'];
 
 
   }

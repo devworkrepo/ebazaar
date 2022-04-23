@@ -53,8 +53,8 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
                           onClick: () {
                             controller.fetchKycInfo();
                           },
-                          title: "View Kyc Limit",
-                          icon: Icons.remove_red_eye)
+                          title: "View Kyc Detail",
+                          icon: Icons.fingerprint)
                       : _buildChangeWidget()
                 ],
               ),

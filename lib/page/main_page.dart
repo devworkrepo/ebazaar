@@ -6,7 +6,7 @@ import 'package:spayindia/component/button.dart';
 import 'package:spayindia/component/status_bar_color_widget.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/page/main/home/home_page.dart';
-import 'package:spayindia/page/profile/prifle_page.dart';
+import 'package:spayindia/page/profile/profile_page.dart';
 import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_controller.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
 import 'package:spayindia/page/refund/recharge_refund/recharge_refund_controller.dart';

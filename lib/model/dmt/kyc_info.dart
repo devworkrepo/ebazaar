@@ -9,6 +9,8 @@ class KycInfoResponse{
   String? address;
   String? aadhaarNumber;
 
+  KycInfoResponse();
+
   KycInfoResponse.fromJson(Map<String,dynamic> json){
     code = json["code"];
     message = json["message"];

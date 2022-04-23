@@ -1,4 +1,6 @@
 class AppRoute {
+
+  AppRoute._();
   static const mainPage = "/";
   static const testPage = "/test";
 
@@ -60,6 +62,9 @@ class AppRoute {
   static const complainPostPage = "/complain-post-page";
 
   static const aepsEkycPage = "/aeps-kyc-page";
+  static const senderKycPage = "/sender-kyc-page";
+  static const senderKycInfoPage = "/sender-kyc-info-page";
+  static const aepsSettlementPage = "/settlement-page";
 
   static const aepsOnboardingPage = "/aeps-onboarding-page";
 
@@ -75,4 +80,5 @@ class AppRoute {
   static const ottPlanPage = "/ott-plan-page";
   static const ottTransactionPage = "/ott-transaction-page";
   static const notificationPage = "/notification-page";
+  static const summaryPage = "/summary-page";
 }

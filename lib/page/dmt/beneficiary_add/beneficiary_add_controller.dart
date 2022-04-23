@@ -88,7 +88,7 @@ class BeneficiaryAddController extends GetxController {
   void onBankChange(String bankName) {
 
     Bank bank = bankList.firstWhere((element) => element.bankName == bankName);
-    ifscCodeController.text = bank.ifscCode;
+    ifscCodeController.text = bank.ifscCode ?? "";
     this.bankName = bankName;
   }
 

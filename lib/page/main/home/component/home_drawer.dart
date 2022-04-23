@@ -64,7 +64,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                           Get.back();
                           Get.toNamed(AppRoute.statementReportPage);
                         },
-                        count: 1,
+                        count: 2,
                       ),
                       _NavSubTitle(
                         title: "Refund Pending",
@@ -72,7 +72,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                           Get.back();
                           Get.toNamed(AppRoute.refundReportPage);
                         },
-                        count: 1,
+                        count: 3,
                       ),
                       _NavSubTitle(
                         title: "Fund Request",
@@ -80,12 +80,12 @@ class HomeDrawerWidget extends GetView<HomeController> {
                           Get.back();
                           Get.toNamed(AppRoute.fundReportPage,arguments: "route");
                         },
-                        count: 2,
+                        count: 4,
                       ),
                       _NavSubTitle(
                         title: "Wallet Pay",
                         onClick: ()=>Get.toNamed(AppRoute.walletReportPage),
-                        count: 2,
+                        count: 5,
                       ),
                     ],
                   ),
@@ -123,6 +123,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                   child: _NavTitle(
                     title: "Aeps Service",
                     icon: Icons.fingerprint,
+
                     children: [
                       _NavSubTitle(
                         title: "OnBoarding",
@@ -141,6 +142,15 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         underline: false,
                         count: 2,
+                      ),
+                      _NavSubTitle(
+                        title: "Settlement",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.aepsSettlementPage);
+                        },
+                        underline: false,
+                        count: 3,
                       )
                     ],
                   ),

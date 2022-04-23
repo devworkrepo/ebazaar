@@ -12,13 +12,6 @@ class NotificationPage extends GetView<NotificationController> {
   Widget build(BuildContext context) {
     Get.put(NotificationController());
     return Scaffold(
-      appBar: AppBar(
-
-        centerTitle: true,
-        title: const Text(
-          "Notifications",
-        ),
-      ),
       body: ObsResourceWidget(
           obs: controller.responseObs, childBuilder: (data) => _BuildBody()),
     );
@@ -31,9 +24,35 @@ class _BuildBody extends GetView<NotificationController> {
     return (controller.notifications.isEmpty)
         ? const NoItemFoundWidget()
         : ListView.builder(
-            itemCount: controller.notifications.length,
-            itemBuilder: (context, index) =>
-                _BuildListItem(controller.notifications[index]));
+            itemCount: controller.notifications.length+1,
+            itemBuilder: (context, index) {
+              if(index == 0){
+              return   _buildAppbarWidget();
+              }
+              else{
+                return _BuildListItem(controller.notifications[index-1]);
+              }
+            });
+  }
+
+  Padding _buildAppbarWidget() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () => Get.back(), icon: Icon(Icons.arrow_back_ios)),
+          RichText(
+              text: TextSpan(
+                  text: "Notification",
+                  style: Get.textTheme.headline3?.copyWith(
+                      color: Get.theme.primaryColorDark,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w500),
+                 )),
+        ],
+      ),
+    );
   }
 }
 

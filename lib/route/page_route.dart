@@ -10,6 +10,7 @@ import 'package:spayindia/page/dmt/beneficiary_add/beneficiary_add_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_page.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_page.dart';
 import 'package:spayindia/page/dmt/import_beneficiary/import_beneficiary_tab.dart';
+import 'package:spayindia/page/dmt/kyc_info/sender_kyc_info_page.dart';
 import 'package:spayindia/page/dmt/search_sender/search_sender_page.dart';
 import 'package:spayindia/page/dmt/sender_add/sender_add_page.dart';
 import 'package:spayindia/page/dmt/sender_change/change_mobile/sender_change_mobile_page.dart';
@@ -27,12 +28,15 @@ import 'package:spayindia/page/recharge/provider/provider_page.dart';
 import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/report/wallet_pay/wallet_report_page.dart';
+import 'package:spayindia/page/summary/summary_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_transfer/wallet_transfer_page.dart';
 import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/test/test_image_picker.dart';
+import 'package:spayindia/test/test_local_auth_page.dart';
 
+import '../page/dmt/sender_kcy/sender_kyc_page.dart';
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
+import '../page/main/settlement/aeps_settlement_page.dart';
 import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
 import '../page/ott/ott_transaction/ott_transaction_page.dart';
@@ -47,7 +51,7 @@ final getAllPages = [
   ),
   GetPage(
     name: AppRoute.testPage,
-    page: () => const TestImagePicker(),
+    page: () => const TestLocalAuthPage(),
   ),
 
   GetPage(
@@ -86,6 +90,22 @@ final getAllPages = [
     name: AppRoute.aepsEkycPage,
     page: () => const AepsEKycPage(),
   ),
+
+  GetPage(
+    name: AppRoute.senderKycPage,
+    page: () => const SenderKycPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.senderKycInfoPage,
+    page: () => const SenderKycInfoPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.aepsSettlementPage,
+    page: () => const AepsSettlementPage(),
+  ),
+
   GetPage(
     name: AppRoute.aepsOnboardingPage,
     page: () => const AepsOnboardingPage(),
@@ -212,6 +232,11 @@ final getAllPages = [
   GetPage(
     name: AppRoute.notificationPage,
     page: () => const NotificationPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.summaryPage,
+    page: () => const SummaryPage(),
   ),
 
 ];

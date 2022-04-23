@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
       GetMaterialApp(
           navigatorObservers: [routeObserver],
           theme: themeData,
-         // initialRoute: RouteName.deviceVerificationPage,
+        //  initialRoute: AppRoute.testPage,
           initialRoute: (appPreference.sessionKey.isEmpty || appPreference.sessionKey == "na") ? AppRoute.loginPage : AppRoute.mainPage,
           getPages: getAllPages),
     );

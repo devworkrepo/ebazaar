@@ -45,6 +45,14 @@ class HomeAppbarSection extends GetView<HomeController> {
               ),
             ),
             const Spacer(),
+
+
+            IconButton(
+              color: Get.theme.primaryColorDark,
+              iconSize: 32,
+              onPressed: ()=>controller.onSummaryClick(),
+              icon: const Icon(Icons.info),
+            ),
             IconButton(
               color: Get.theme.primaryColorDark,
               iconSize: 32,

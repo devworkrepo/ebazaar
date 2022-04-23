@@ -61,8 +61,8 @@ class LoginOtpController extends GetxController  {
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {
-      AppUtil.logger(e.toString());
       Get.back();
+      Get.to(()=>ExceptionPage(error: e));
     }
   }
 
@@ -107,7 +107,7 @@ class LoginOtpController extends GetxController  {
       }
     } catch (e) {
       Get.back();
-      handleException(e);
+      Get.to(()=>ExceptionPage(error: e));
     }
   }
 

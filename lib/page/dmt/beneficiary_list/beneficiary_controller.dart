@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common.dart';
 import 'package:spayindia/component/common/common_confirm_dialog.dart';
 import 'package:spayindia/component/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
@@ -11,7 +10,6 @@ import 'package:spayindia/model/dmt/beneficiary.dart';
 import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/beneficiary_imported_dialog.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_kyc_info_dialog.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/transfer_mode_dailog.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
@@ -200,46 +198,46 @@ class BeneficiaryListController extends GetxController {
   }
 
   void fetchKycInfo() async {
-    if(!sender!.isKycVerified!){
-      showFailureSnackbar(title: "Kyc info not found", message: "Make sure that you have completed your kyc in our portal");
-      return;
-    }
-
-    try {
-      StatusDialog.progress(title: "Fetching...");
-      var response = await repo.kycInfo({
-        "mobileno": sender!.senderNumber ?? "",
-      });
-      Get.back();
-      if (response.code == 1) {
-        Get.dialog(DmtKycInfoDialog(response));
-      } else {
-        StatusDialog.failure(title: response.message);
-      }
-    } catch (e) {
-      Get.back();
-      Get.to(() => ExceptionPage(error: e));
-    }
+    Get.toNamed(AppRoute.senderKycInfoPage, arguments: {
+      "dmt_type": dmtType,
+      "mobile_number": sender!.senderNumber!
+    });
   }
 
-  List<BeneficiaryListPopMenu> popupMenuList() => [
-        BeneficiaryListPopMenu(title: "Kyc Info", icon: Icons.qr_code_scanner),
-        BeneficiaryListPopMenu(
-            title: "Import Beneficiary", icon: Icons.import_export),
-      ];
+  List<BeneficiaryListPopMenu> popupMenuList() {
+    var mList = [
+      BeneficiaryListPopMenu(
+          title: "Import Beneficiary", icon: Icons.import_export),
+    ];
+    if ((sender?.isKycVerified ?? false)) {
+      mList.add(BeneficiaryListPopMenu(
+          title: "Kyc Info", icon: Icons.qr_code_scanner));
+    } else {
+      mList.add(
+          BeneficiaryListPopMenu(title: "Do Kyc", icon: Icons.qr_code_scanner));
+    }
+    return mList;
+  }
 
   onSelectPopupMenu(BeneficiaryListPopMenu i) {
     if (i.title == "Kyc Info") {
       fetchKycInfo();
+    }
+    if (i.title == "Do Kyc") {
+      Get.toNamed(AppRoute.senderKycPage, arguments: {
+        "dmt_type" : dmtType,
+        "mobile_number" : sender!.senderNumber!
+      });
     } else if (i.title == "Import Beneficiary") {
       Get.toNamed(AppRoute.dmtImportBeneficiaryPage, arguments: sender!)
           ?.then((value) {
         if (value != null) {
           if (value is List<ImportBeneficiaryMessage>) {
             if (value.isNotEmpty) {
-              Get.bottomSheet(BeneficiaryImportedDialog(value),isScrollControlled: true)
+              Get.bottomSheet(BeneficiaryImportedDialog(value),
+                      isScrollControlled: true)
                   .then((value) {
-                    _fetchBeneficiary();
+                _fetchBeneficiary();
               });
             }
           }
