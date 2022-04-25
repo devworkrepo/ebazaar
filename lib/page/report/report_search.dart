@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/drop_down.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/drop_down.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/util/date_util.dart';
 
 

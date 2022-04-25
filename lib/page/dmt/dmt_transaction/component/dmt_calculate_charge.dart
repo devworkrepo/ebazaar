@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
+import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/model/dmt/calculate_charge.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_controller.dart';
 

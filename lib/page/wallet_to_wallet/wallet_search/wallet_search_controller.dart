@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/wallet_repo.dart';
 import 'package:spayindia/data/repo_impl/wallet_repo_impl.dart';
 import 'package:spayindia/model/wallet/wallet_fav.dart';

@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/signup_repo.dart';
 import 'package:spayindia/data/repo/wallet_repo.dart';
 import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/user/signup/mobile_submit.dart';
 import 'package:spayindia/model/wallet/wallet_fav.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';

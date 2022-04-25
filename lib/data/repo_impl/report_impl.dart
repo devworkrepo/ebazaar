@@ -79,6 +79,12 @@ class ReportRepoImpl extends ReportRepo{
   }
 
   @override
+  Future<AepsReportResponse> fetchAadhaarTransactionList(data) async {
+    var response = await  client.post("/AadharPayTransactionList",data: data);
+    return AepsReportResponse.fromJson(response.data);
+  }
+
+  @override
   Future<AccountStatementResponse> fetchAccountStatement(data) async {
     var response = await  client.post("/GetAccountStatement",data: data);
     return AccountStatementResponse.fromJson(response.data);
@@ -185,6 +191,12 @@ class ReportRepoImpl extends ReportRepo{
   @override
   Future<AepsReceiptResponse> aepsTransactionReceipt(data) async {
     var response = await  client.post("/GetAEPSInfo",data: data);
+    return AepsReceiptResponse.fromJson(response.data);
+  }
+
+ @override
+  Future<AepsReceiptResponse> aadhaarPayTransactionReceipt(data) async {
+    var response = await  client.post("/GetAadharPayInfo",data: data);
     return AepsReceiptResponse.fromJson(response.data);
   }
 

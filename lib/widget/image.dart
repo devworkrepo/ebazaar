@@ -5,6 +5,45 @@ import 'package:get/get.dart';
 import 'package:spayindia/res/color.dart';
 import 'package:spayindia/util/hex_color.dart';
 
+class AppNetworkImage extends StatelessWidget {
+  final String imageUrl;
+  final int size;
+
+  const AppNetworkImage(this.imageUrl, {this.size = 80, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      placeholder: (context, url) {
+        return Stack(
+          children: [
+            Center(
+                child: Icon(
+              Icons.image_search,
+              size: (size - 8).toDouble(),
+              color: Colors.black45,
+            )),
+            const Center(
+                child: CircularProgressIndicator(
+              color: Colors.black45,
+            ))
+          ],
+        );
+      },
+      errorWidget: (context, url, error) {
+        return Icon(
+          Icons.image_not_supported_outlined,
+          size: (size - 8).toDouble(),
+        );
+      },
+      height: size.toDouble(),
+      width: size.toDouble(),
+    );
+  }
+}
+
 class AppCircleNetworkImage extends StatelessWidget {
   final String imageUrl;
   final int horizontalPadding;

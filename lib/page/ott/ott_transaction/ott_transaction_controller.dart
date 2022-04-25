@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
@@ -9,8 +9,8 @@ import 'package:spayindia/model/ott/ott_plan.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/response/recharge/recharge_txn_response_page.dart';
 
-import '../../../component/common.dart';
-import '../../../component/dialog/status_dialog.dart';
+import '../../../widget/common.dart';
+import '../../../widget/dialog/status_dialog.dart';
 import '../../exception_page.dart';
 
 class OttTransactionController extends GetxController {

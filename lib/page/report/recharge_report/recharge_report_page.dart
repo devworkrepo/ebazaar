@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/api_component.dart';
-import 'package:spayindia/component/common.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
-import 'package:spayindia/component/list_component.dart';
-import 'package:spayindia/component/no_data_found.dart';
+import 'package:spayindia/widget/api_component.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/list_component.dart';
+import 'package:spayindia/widget/no_data_found.dart';
 import 'package:spayindia/model/report/recharge.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
-import '../../../component/common/report_action_button.dart';
+import '../../../widget/common/report_action_button.dart';
 import '../receipt_print_mixin.dart';
 import '../report_helper.dart';
 import '../report_search.dart';

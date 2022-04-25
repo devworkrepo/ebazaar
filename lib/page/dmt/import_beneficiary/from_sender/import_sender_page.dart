@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../component/button.dart';
-import '../../../../component/text_field.dart';
+import '../../../../widget/button.dart';
+import '../../../../widget/text_field.dart';
 import '../common.dart';
 import 'import_sender_controller.dart';
 

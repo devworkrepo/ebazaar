@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
-import 'package:spayindia/component/image.dart';
-import 'package:spayindia/component/list_component.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/image.dart';
+import 'package:spayindia/widget/list_component.dart';
 
 class RechargeConfirmationDialog extends StatelessWidget {
   final String mobileNumber;

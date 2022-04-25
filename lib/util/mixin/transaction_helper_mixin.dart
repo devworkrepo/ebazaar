@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common.dart';
+import 'package:spayindia/widget/common.dart';
 import 'package:spayindia/service/location.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 

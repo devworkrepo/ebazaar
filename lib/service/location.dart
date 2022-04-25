@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/dialog/location.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/location.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 
 enum LocationError {

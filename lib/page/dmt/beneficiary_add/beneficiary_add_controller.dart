@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common/common_confirm_dialog.dart';
-import 'package:spayindia/component/common/confirm_amount_dialog.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/common/common_confirm_dialog.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/model/bank.dart';

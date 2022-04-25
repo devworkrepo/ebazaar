@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/component/button.dart';
+import 'package:spayindia/widget/button.dart';
 
-import '../../component/dialog/status_dialog.dart';
+import '../../widget/dialog/status_dialog.dart';
 
 enum TransactionReportType {
   ledger,

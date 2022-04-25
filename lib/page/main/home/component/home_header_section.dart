@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/image.dart';
+import 'package:spayindia/widget/image.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/hex_color.dart';

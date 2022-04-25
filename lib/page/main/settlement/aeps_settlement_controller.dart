@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common/confirm_amount_dialog.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/model/aeps/settlement/balance.dart';

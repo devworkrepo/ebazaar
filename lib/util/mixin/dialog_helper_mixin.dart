@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 mixin DialogHelperMixin {
   Widget buildBaseContainer({required Widget child,required String title}) {

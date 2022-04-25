@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/image.dart';
+import 'package:spayindia/widget/image.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/model/profile.dart';
 import 'package:spayindia/model/user/user.dart';
@@ -61,7 +61,7 @@ class _UserInfoSection extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(16),
               width: Get.width,
-              decoration: BoxDecoration(color: Get.theme.primaryColor),
+              decoration: BoxDecoration(color: Colors.green[900]),
               child: Column(
                 children: [
                   AppCircleNetworkImage(
@@ -99,9 +99,9 @@ class _UserInfoSection extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _buidTitleValue("Available Bal","₹  "+ user.availableBalance.toString()),
-                  _buidTitleValue("Opening Bal","₹  "+ user.openBalance.toString()),
-                  _buidTitleValue("Credit Bal","₹  "+ user.creditBalance.toString()),
+                  _BuildTitleValueWidget("Available Bal","₹  "+ user.availableBalance.toString()),
+                  _BuildTitleValueWidget("Opening Bal","₹  "+ user.openBalance.toString()),
+                  _BuildTitleValueWidget("Credit Bal","₹  "+ user.creditBalance.toString()),
                 ],
               ),
             ),
@@ -111,15 +111,34 @@ class _UserInfoSection extends StatelessWidget {
     );
   }
 
-  _buidTitleValue(String title, String? value) {
-    return BuildTitleValueWidget(
-      title: title,
-      value: value ?? "",
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
+
+}
+
+class _BuildTitleValueWidget extends StatelessWidget {
+  final String title;
+  final String? value;
+  const _BuildTitleValueWidget(this.title,this.value,{Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        children: [
+          BuildTitleValueWidget(
+            title: title,
+            value: value ?? "",
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+
+          Divider(indent: 0,color: Colors.grey[400],)
+        ],
+      ),
     );
   }
 }
+
 
 
 class _GeneralInfo extends StatelessWidget {
@@ -145,11 +164,11 @@ class _GeneralInfo extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _buidTitleValue("Outlet Name", profile.outlet_name),
-                  _buidTitleValue("Mobile Number", profile.outlet_mobile),
-                  _buidTitleValue("Email ID", profile.emailid),
-                  _buidTitleValue("Pan Number", profile.pan_no),
-                  _buidTitleValue("DOB", profile.dob),
+                  _BuildTitleValueWidget("Outlet Name", profile.outlet_name),
+                  _BuildTitleValueWidget("Mobile Number", profile.outlet_mobile),
+                  _BuildTitleValueWidget("Email ID", profile.emailid),
+                  _BuildTitleValueWidget("Pan Number", profile.pan_no),
+                  _BuildTitleValueWidget("DOB", profile.dob),
 
                 ],
               ),
@@ -160,14 +179,6 @@ class _GeneralInfo extends StatelessWidget {
     );
   }
 
-  _buidTitleValue(String title, String? value) {
-    return BuildTitleValueWidget(
-      title: title,
-      value: value ?? "",
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-    );
-  }
 }
 
 
@@ -194,9 +205,9 @@ class _AddressInfo extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _buidTitleValue("State Name", profile.state_name),
-                  _buidTitleValue("Address", profile.address),
-                  _buidTitleValue("Pin Code", profile.pincode)
+                  _BuildTitleValueWidget("State Name", profile.state_name),
+                  _BuildTitleValueWidget("Address", profile.address),
+                  _BuildTitleValueWidget("Pin Code", profile.pincode)
 
                 ],
               ),
@@ -207,14 +218,6 @@ class _AddressInfo extends StatelessWidget {
     );
   }
 
-  _buidTitleValue(String title, String? value) {
-    return BuildTitleValueWidget(
-      title: title,
-      value: value ?? "",
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-    );
-  }
 }
 
 class _ParentInfo extends StatelessWidget {
@@ -240,8 +243,8 @@ class _ParentInfo extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _buidTitleValue("Distributor Name", profile.distributor_name),
-                  _buidTitleValue("Distributor Mobile", profile.distributor_mobile),
+                  _BuildTitleValueWidget("Distributor Name", profile.distributor_name),
+                  _BuildTitleValueWidget("Distributor Mobile", profile.distributor_mobile),
 
                 ],
               ),
@@ -252,14 +255,6 @@ class _ParentInfo extends StatelessWidget {
     );
   }
 
-  _buidTitleValue(String title, String? value) {
-    return BuildTitleValueWidget(
-      title: title,
-      value: value ?? "",
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-    );
-  }
 }
 
 

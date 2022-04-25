@@ -111,5 +111,11 @@ class AepsRepoImpl extends AepsRepo{
     return TransactionInfoResponse.fromJson(response.data);
   }
 
+  @override
+  Future<AepsTransactionResponse> aadhaaPayTransaction(data) async {
+    var response = await client.post("/AadharPayTransaction",data: data);
+    return AepsTransactionResponse.fromJson(response.data);
+  }
+
 
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/api_component.dart';
+import 'package:spayindia/widget/api_component.dart';
 import 'package:spayindia/util/hex_color.dart';
 
 class AppExpandListWidget extends StatelessWidget {

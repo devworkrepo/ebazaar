@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
@@ -116,7 +116,11 @@ class DmtSearchSenderController extends GetxController {
           "mobile": mobile,
           "dmtType": dmtType,
         };
-        Get.toNamed(AppRoute.dmtSenderAddPage, arguments: args);
+        Get.toNamed(AppRoute.dmtSenderAddPage, arguments: args)?.then((value){
+          if(value != null){
+            _searchSender();
+          }
+        });
       } else {
         StatusDialog.failure(title: sender.message);
       }

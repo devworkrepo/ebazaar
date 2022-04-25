@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:spayindia/component/common.dart';
+import 'package:spayindia/widget/common.dart';
 import 'package:spayindia/service/location.dart';
 
 mixin LocationHelperMixin{

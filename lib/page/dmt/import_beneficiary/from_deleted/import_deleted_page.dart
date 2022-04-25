@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/util/obx_widget.dart';
 
-import '../../../../component/button.dart';
+import '../../../../widget/button.dart';
 import '../common.dart';
 import 'import_deleted_controller.dart';
 

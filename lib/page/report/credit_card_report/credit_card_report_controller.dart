@@ -7,7 +7,7 @@ import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
-import '../../../component/dialog/status_dialog.dart';
+import '../../../widget/dialog/status_dialog.dart';
 import '../report_helper.dart';
 
 class CreditCardReportController extends GetxController with ReceiptPrintMixin {

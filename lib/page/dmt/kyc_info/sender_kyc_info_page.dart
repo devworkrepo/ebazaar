@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/image.dart';
+import 'package:spayindia/widget/image.dart';
 import 'package:spayindia/page/dmt/kyc_info/sender_kyc_info_controller.dart';
 import 'package:spayindia/page/dmt/sender_kcy/sender_kyc_controller.dart';
 import 'package:spayindia/page/recharge/recharge/component/recharge_confirm_dialog.dart';
@@ -48,30 +48,30 @@ class SenderKycInfoPage extends GetView<SenderKycInfoController> {
                         width: Get.width,
                         child: Column(
                           children: [
-                            AppCircleNetworkImage(
+                            AppNetworkImage(
                               controller.kycInfoResponse.picName.toString(),
-                              size: 80,
+                              size: 120,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 32,
                             ),
-                            BuildTitleValueWidget(
+                            _BuildTitleValueWidget(
                                 title: "Name",
                                 value:  controller.kycInfoResponse.name.toString()),
-                            BuildTitleValueWidget(
+                            _BuildTitleValueWidget(
                                 title: "Date of Birth",
                                 value:  controller.kycInfoResponse.dob.toString()),
-                            BuildTitleValueWidget(
+                            _BuildTitleValueWidget(
                                 title: "Gender",
                                 value:
                                 ( controller.kycInfoResponse.gender.toString() == "M")
                                     ? "Male"
                                     : "Female"),
-                            BuildTitleValueWidget(
+                            _BuildTitleValueWidget(
                                 title: "Aadhaar Number",
                                 value:
                                 controller.kycInfoResponse.aadhaarNumber.toString()),
-                            BuildTitleValueWidget(
+                            _BuildTitleValueWidget(
                                 title: "Address",
                                 value:  controller.kycInfoResponse.address.toString()),
                           ],
@@ -82,6 +82,31 @@ class SenderKycInfoPage extends GetView<SenderKycInfoController> {
                 ],
               ),
             )),
+      ),
+    );
+  }
+}
+
+class _BuildTitleValueWidget extends StatelessWidget {
+  final String title;
+  final String? value;
+  const _BuildTitleValueWidget({required this.title,required this.value,Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        children: [
+          BuildTitleValueWidget(
+            title: title,
+            value: value ?? "",
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+
+          Divider(indent: 0,color: Colors.grey[400],)
+        ],
       ),
     );
   }

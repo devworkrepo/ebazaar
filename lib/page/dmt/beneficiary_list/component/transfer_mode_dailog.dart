@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/model/dmt/beneficiary.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';

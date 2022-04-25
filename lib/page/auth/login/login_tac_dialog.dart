@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../component/button.dart';
+import '../../../widget/button.dart';
 
 class LoginTermAndConditionDialog extends StatelessWidget {
   final VoidCallback onAccept;

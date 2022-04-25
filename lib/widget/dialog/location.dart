@@ -1,7 +1,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
+import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/service/location.dart';
 import 'package:share/share.dart';
 

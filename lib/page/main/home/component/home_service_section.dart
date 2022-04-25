@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/image.dart';
+import 'package:spayindia/widget/image.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/util/etns/on_bool.dart';

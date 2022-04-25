@@ -98,6 +98,8 @@ class HomeController extends GetxController {
 
       if (response.code == 1) {
         isBottomNavShowObs.value = true;
+        appbarBackgroundOpacity.value = 0;
+        appbarElevation.value = 0;
 
         if (appPreference.isBiometricAuthentication && kReleaseMode) {
           if (!isLocalAuthDone) {

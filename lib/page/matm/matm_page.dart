@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/radio.dart';
-import 'package:spayindia/component/status_bar_color_widget.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/radio.dart';
+import 'package:spayindia/widget/status_bar_color_widget.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/util/validator.dart';
 
 import 'matm_controller.dart';

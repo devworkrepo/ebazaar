@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
@@ -10,7 +10,7 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
-import '../../../component/common.dart';
+import '../../../widget/common.dart';
 import '../../../model/dmt/sender_kyc.dart';
 
 class SenderKycController extends GetxController with TransactionHelperMixin {

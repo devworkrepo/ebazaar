@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/api_component.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
-import 'package:spayindia/component/list_component.dart';
-import 'package:spayindia/component/no_data_found.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 import 'package:spayindia/util/tags.dart';
+import 'package:spayindia/widget/api_component.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/list_component.dart';
+import 'package:spayindia/widget/no_data_found.dart';
 
-import '../../../component/common/report_action_button.dart';
 import '../../../model/report/aeps.dart';
+import '../../../widget/common/report_action_button.dart';
 import '../receipt_print_mixin.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
@@ -110,7 +110,8 @@ class _BuildListItem extends StatelessWidget {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
         isExpanded: report.isExpanded,
-        title: (controller.tag == AppTag.aepsReportControllerTag)
+        title: (controller.tag == AppTag.aepsReportControllerTag ||
+                controller.tag == AppTag.aadhaarPayReportControllerTag)
             ? report.aadhaarNumber.orNA()
             : report.mobileNumber.orNA(),
         subTitle: report.transactionType.orNA().toUpperCase() == "CW"
@@ -140,6 +141,9 @@ class _BuildListItem extends StatelessWidget {
               onClick: () {
                  if(controller.tag == AppTag.aepsReportControllerTag){
                    controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.aeps);
+                 }
+                 else if(controller.tag == AppTag.aadhaarPayReportControllerTag){
+                   controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.aadhaarPay);
                  }
                  else{
                    controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.matm);

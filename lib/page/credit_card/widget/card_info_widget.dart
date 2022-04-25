@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common/amount_background.dart';
+import 'package:spayindia/widget/common/amount_background.dart';
 import 'package:spayindia/page/credit_card/credit_card_controller.dart';
 
-import '../../../component/text_field.dart';
+import '../../../widget/text_field.dart';
 import '../../../util/validator.dart';
 
 class CardInfoWidget extends GetView<CreditCardController> {

@@ -63,6 +63,7 @@ class _TransactionTabPageState extends State<TransactionTabPage>
       const Tab(text: 'Dmt'),
       const Tab(text: 'Matm'),
       const Tab(text: 'Aeps'),
+      const Tab(text: 'Aadhaar Pay'),
       const Tab(text: 'Recharge'),
       const Tab(text: 'Credit Card'),
     ];
@@ -82,6 +83,9 @@ class _TransactionTabPageState extends State<TransactionTabPage>
       ),
       const AepsMatmReportPage(
         controllerTag: AppTag.aepsReportControllerTag,
+      ),
+      const AepsMatmReportPage(
+        controllerTag: AppTag.aadhaarPayReportControllerTag,
       ),
       const RechargeReportPage(),
       const CreditCardReportPage(),

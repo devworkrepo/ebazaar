@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
@@ -67,7 +67,6 @@ class SenderAddController extends GetxController {
         showSuccessSnackbar(
             title: "Remitter Add Otp", message: response.message);
       } else {
-        Get.back();
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {
@@ -96,8 +95,10 @@ class SenderAddController extends GetxController {
       Get.back();
 
       if (response.code == 1) {
+        StatusDialog.success(title: response.message).then((value) => Get.back(result: {
+          "mobile_number" : mobileNumberController.text
+        }));
       } else {
-        Get.back();
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/dmt/sender_change/change_name/sender_change_name_controller.dart';
 import 'package:spayindia/util/validator.dart';
 

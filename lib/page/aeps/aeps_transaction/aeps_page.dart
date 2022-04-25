@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/drop_down.dart';
-import 'package:spayindia/component/radio.dart';
-import 'package:spayindia/component/status_bar_color_widget.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/drop_down.dart';
+import 'package:spayindia/widget/radio.dart';
+import 'package:spayindia/widget/status_bar_color_widget.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/util/input_validator.dart';
 import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
@@ -27,19 +27,7 @@ class AepsPage extends GetView<AepsController> {
         body: ObsResourceWidget(
           obs: controller.aepsBankListResponseObs,
           childBuilder: (data) => _buildBody(),
-        ) /*Obx(() =>
-            controller.aepsBankListResponseObs.value.when(onSuccess: (data) {
-
-                controller.bankList = data.banks;
-                return _buildBody();
-
-            }, onFailure: (e) {
-              return ExceptionPage(error: e);
-            }, onInit: (data) {
-              return AppProgressbar(
-                data: data,
-              );
-            }))*/
+        )
         ,
       ),
     );

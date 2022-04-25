@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../component/api_component.dart';
+import '../widget/api_component.dart';
 import '../page/exception_page.dart';
 import 'api/resource/resource.dart';
 

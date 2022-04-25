@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/exception.dart';
-import 'package:spayindia/component/progress.dart';
+import 'package:spayindia/widget/exception.dart';
+import 'package:spayindia/widget/progress.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/main/home/component/home_carousel_widget.dart';

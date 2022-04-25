@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/radio.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/radio.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/main/settlement/aeps_settlement_controller.dart';
 import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
 
-import '../../../component/drop_down.dart';
+import '../../../widget/drop_down.dart';
 
 class AepsSettlementPage extends GetView<AepsSettlementController> {
   const AepsSettlementPage({Key? key}) : super(key: key);
@@ -50,11 +50,7 @@ class AepsSettlementPage extends GetView<AepsSettlementController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Available Aeps Balance"),
-                Text(
-                  "₹ ${controller.aepsBalance!.balance.toString()}",
-                  style: Get.textTheme.headline3?.copyWith(color: Colors.green),
-                ),
+                _buildAmountWidget(),
                 AmountTextField(controller: controller.amountController),
                 AppTextField(
                   controller: controller.remarkController,
@@ -89,12 +85,7 @@ class AepsSettlementPage extends GetView<AepsSettlementController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Available Aeps Balance"),
-                      Text(
-                        "₹ ${controller.aepsBalance!.balance.toString()}",
-                        style: Get.textTheme.headline3
-                            ?.copyWith(color: Colors.green),
-                      ),
+                      _buildAmountWidget(),
                       AmountTextField(controller: controller.amountController),
                       AppDropDown(
                         list: List.from(
@@ -182,5 +173,18 @@ class AepsSettlementPage extends GetView<AepsSettlementController> {
         ),
       ),
     );
+  }
+
+  Widget _buildAmountWidget(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+       Text("Available Aeps Balance",style: Get.textTheme.bodyText1?.copyWith(color: Colors.grey),),
+      Text(
+        "₹ ${controller.aepsBalance!.balance.toString()}",
+        style: Get.textTheme.headline3
+            ?.copyWith(color: Colors.green),
+      )
+    ],);
   }
 }

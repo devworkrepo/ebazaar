@@ -2,11 +2,11 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:spayindia/component/button.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/lottie_constant.dart';
+import 'package:spayindia/widget/button.dart';
 
 class ExceptionPage extends StatefulWidget {
   final dynamic error;
@@ -23,10 +23,13 @@ class _ExceptionPageState extends State<ExceptionPage> {
   bool isNoInternetException = false;
   bool shouldGoMainPage = false;
   bool shouldGoLoginPage = false;
+  late bool isTransactionApi;
 
   @override
   void initState() {
     super.initState();
+    isTransactionApi = appPreference.isTransactionApi;
+    appPreference.setIsTransactionApi(false);
     recordException();
   }
 
@@ -132,7 +135,7 @@ class _ExceptionPageState extends State<ExceptionPage> {
   }) {
     var result = getTransactionExceptionMessage();
 
-    if (!isNoInternetException && appPreference.isTransactionApi) {
+    if (!isNoInternetException && isTransactionApi) {
       shouldGoMainPage = true;
       lottieType = LottieType.pending;
       title = result["title"];
@@ -195,11 +198,10 @@ class _ExceptionPageState extends State<ExceptionPage> {
 
   void recordException() async {
     var error = getDioException(widget.error);
-    if (error is NoInternetException) {
+    if (error is NoInternetException || error is SessionExpireException) {
     } else {
-      await FirebaseCrashlytics.instance.recordError(
-          widget.error.toString(), null,
-          fatal: appPreference.isTransactionApi);
+      await FirebaseCrashlytics.instance
+          .recordError(widget.error.toString(), null, fatal: isTransactionApi);
     }
   }
 }

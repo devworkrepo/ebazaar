@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/money_request_repo.dart';
-import 'package:spayindia/data/repo/signup_repo.dart';
 import 'package:spayindia/data/repo/wallet_repo.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/fund/request_report.dart';

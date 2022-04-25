@@ -45,7 +45,9 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin   {
       reportResponseObs.value = const Resource.onInit();
       final response = (tag == AppTag.aepsReportControllerTag)
           ? await repo.fetchAepsTransactionList(_param())
-          : await repo.fetchMatmTransactionList(_param());
+          : (tag == AppTag.aadhaarPayReportControllerTag)
+              ? await repo.fetchAadhaarTransactionList(_param())
+              : await repo.fetchMatmTransactionList(_param());
       if (response.code == 1) {
         reportList = response.reportList!;
       }

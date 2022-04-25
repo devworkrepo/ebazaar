@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/image.dart';
-import 'package:spayindia/component/progress.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/image.dart';
+import 'package:spayindia/widget/progress.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';

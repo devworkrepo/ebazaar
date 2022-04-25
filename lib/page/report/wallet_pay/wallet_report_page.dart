@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/api_component.dart';
-import 'package:spayindia/component/list_component.dart';
-import 'package:spayindia/component/no_data_found.dart';
+import 'package:spayindia/widget/api_component.dart';
+import 'package:spayindia/widget/list_component.dart';
+import 'package:spayindia/widget/no_data_found.dart';
 import 'package:spayindia/model/fund/request_report.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:spayindia/page/aeps/aeps_e_kyc/aeps_e_kyc_page.dart';
 import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
 import 'package:spayindia/page/app_setting/app_setting_page.dart';
-import 'package:spayindia/page/auth/fogot_password/fogot_password_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
 import 'package:spayindia/page/credit_card/credit_card_page.dart';
@@ -61,10 +60,6 @@ final getAllPages = [
   GetPage(
     name: AppRoute.loginOtpPage,
     page: () => const LoginOtpPage(),
-  ),
-  GetPage(
-    name: AppRoute.forgotPasswordPage,
-    page: () => const ForgotPasswordPage(),
   ),
   GetPage(
     name: AppRoute.providerPage,

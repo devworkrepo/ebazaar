@@ -2,8 +2,9 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/status_bar_color_widget.dart';
+import 'package:spayindia/service/local_auth.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/status_bar_color_widget.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/page/main/home/home_page.dart';
 import 'package:spayindia/page/profile/profile_page.dart';
@@ -63,7 +64,8 @@ class _MainPageState extends State<MainPage> {
       onWillPop: () async {
         if (bottomNavSelectedIndex == 2) {
 
-            showExitDialog();
+          var isBiometricAvailable =await LocalAuthService.isAvailable();
+            showExitDialog(isBiometricAvailable);
             return false;
 
         } else {
@@ -168,6 +170,8 @@ class _MainPageState extends State<MainPage> {
         Get.delete<AepsMatmReportController>(
             tag: AppTag.aepsReportControllerTag);
         Get.delete<AepsMatmReportController>(
+            tag: AppTag.aadhaarPayReportControllerTag);
+        Get.delete<AepsMatmReportController>(
             tag: AppTag.matmReportControllerTag);
         Get.delete<CreditCardReportController>();
         return const TransactionTabPage();
@@ -187,7 +191,7 @@ class _MainPageState extends State<MainPage> {
     await appPreference.setIsTransactionApi(false);
   }
 
-  void showExitDialog() async {
+  void showExitDialog(bool isBiometricAvailable) async {
     Get.bottomSheet(Container(
       decoration: AppStyle.bottomSheetDecoration(),
       child: Padding(
@@ -196,7 +200,7 @@ class _MainPageState extends State<MainPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Exit or Logout ? ",
+              (isBiometricAvailable) ? "Exit or Logout ? " : "Logout ? ",
               style: Get.textTheme.headline3
                   ?.copyWith(color: Get.theme.primaryColorDark),
             ),
@@ -223,16 +227,21 @@ class _MainPageState extends State<MainPage> {
                   },
                   background: Colors.red,
                 )),
-                const SizedBox(width: 16,),
-                Expanded(
-                    child: AppButton(
-                      text: "Exit",
-                      onClick: () {
-                        Get.back();
-                        SystemNavigator.pop();
-                      },
-                      background: Get.theme.primaryColorDark,
-                    ))
+                (isBiometricAvailable) ? Expanded(
+                  child: Row(children: [
+                    const SizedBox(width: 16,),
+                    Expanded(
+                      child: AppButton(
+                        text: "Exit",
+                        onClick: () {
+                          Get.back();
+                          SystemNavigator.pop();
+                        },
+                        background: Get.theme.primaryColorDark,
+                      ),
+                    )
+                  ],),
+                ) : SizedBox()
               ],
             )
           ],

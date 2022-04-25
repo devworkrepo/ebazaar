@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/auth_repo.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
@@ -55,15 +55,6 @@ class LoginController extends GetxController {
     });
   }
 
-
-
-  navigateToForgotPassword() {
-    Get.toNamed(AppRoute.forgotPasswordPage,
-        arguments: mobileController.text.toString());
-  }
-  navigateToSignup() {
-    Get.toNamed(AppRoute.signupPage);
-  }
 
   login() async {
     var isValidate = loginFormKey.currentState?.validate();

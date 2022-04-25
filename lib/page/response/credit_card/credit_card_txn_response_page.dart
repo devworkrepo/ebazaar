@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/transaction_page.dart';
+import 'package:spayindia/widget/transaction_page.dart';
 
 import 'credit_card_txn_response_controller.dart';
 

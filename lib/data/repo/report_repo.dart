@@ -24,6 +24,7 @@ abstract class ReportRepo{
   Future<RechargeReportResponse> fetchRechargeTransactionList(data);
   Future<AepsReportResponse> fetchAepsTransactionList(data);
   Future<AepsReportResponse> fetchMatmTransactionList(data);
+  Future<AepsReportResponse> fetchAadhaarTransactionList(data);
   Future<WalletPayReportResponse> fetchWalletPayReport(data);
   Future<CreditCardReportResponse> fetchCreditCardReport(data);
   Future<CommonResponse> rechargeValues();
@@ -48,6 +49,7 @@ abstract class ReportRepo{
   Future<MoneyReceiptResponse> payoutTransactionReceipt(data);
   Future<RechargeReceiptResponse> rechargeTransactionReceipt(data);
   Future<AepsReceiptResponse> aepsTransactionReceipt(data);
+  Future<AepsReceiptResponse> aadhaarPayTransactionReceipt(data);
   Future<CreditCardReceiptResponse> creditCardTransactionReceipt(data);
 
 

@@ -1,11 +1,11 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
-import 'package:spayindia/component/drop_down.dart';
-import 'package:spayindia/component/progress.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/drop_down.dart';
+import 'package:spayindia/widget/progress.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/obx_widget.dart';

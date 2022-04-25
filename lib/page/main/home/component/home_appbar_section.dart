@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common/animate_icon_widget.dart';
+import 'package:spayindia/widget/common/animate_icon_widget.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/res/color.dart';
 

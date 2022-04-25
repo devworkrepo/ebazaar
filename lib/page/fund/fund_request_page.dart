@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/drop_down.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/drop_down.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/fund/fund_request_controller.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/date_util.dart';

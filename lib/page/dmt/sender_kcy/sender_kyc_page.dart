@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/image.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/image.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/dmt/sender_kcy/sender_kyc_controller.dart';
 import 'package:spayindia/res/color.dart';
 import 'package:spayindia/util/obx_widget.dart';
 
-import '../../../component/common/counter_widget.dart';
+import '../../../widget/common/counter_widget.dart';
 import '../../../util/app_constant.dart';
 
 class SenderKycPage extends GetView<SenderKycController> {

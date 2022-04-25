@@ -4,7 +4,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/service/network_client.dart';

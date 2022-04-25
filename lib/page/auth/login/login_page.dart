@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/check_box.dart';
-import 'package:spayindia/component/common.dart';
-import 'package:spayindia/component/common/background_image.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/check_box.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/common/background_image.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/auth/login/login_controller.dart';
 import 'package:spayindia/page/update_widget.dart';
 

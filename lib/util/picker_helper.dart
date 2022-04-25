@@ -9,7 +9,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:spayindia/component/common/image_picker_dialog.dart';
+import 'package:spayindia/widget/common/image_picker_dialog.dart';
 import 'package:spayindia/util/app_util.dart';
 
 class ImagePickerHelper {

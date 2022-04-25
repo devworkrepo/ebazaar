@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/paytm_wallet/paytm_wallet_controller.dart';
 import 'package:spayindia/page/paytm_wallet/paytm_wallet_info_widget.dart';
 import 'package:spayindia/util/validator.dart';

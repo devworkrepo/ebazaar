@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
+import 'package:spayindia/widget/button.dart';
 
 import '../../import_beneficiary/common.dart';
 import '../../import_beneficiary/from_sender/import_sender_controller.dart';

@@ -4,7 +4,7 @@ import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/receipt/aeps.dart';
@@ -14,10 +14,9 @@ import 'package:spayindia/model/receipt/recharge.dart';
 import 'package:spayindia/page/pdf_html/aeps_receipt_html.dart';
 import 'package:spayindia/page/pdf_html/credit_card_receipt_html.dart';
 import 'package:spayindia/page/pdf_html/dmt_receipt_html.dart';
-import 'package:spayindia/page/pdf_html/matm_receipt_html.dart';
 import 'package:spayindia/page/pdf_html/recharge_receipt_html.dart';
 
-enum ReceiptType { money, payout, recharge, aeps, matm, creditCard }
+enum ReceiptType { money, payout, recharge, aeps,aadhaarPay, matm, creditCard }
 
 mixin ReceiptPrintMixin {
   ReportRepo repo = Get.find<ReportRepoImpl>();
@@ -40,6 +39,9 @@ mixin ReceiptPrintMixin {
         break;
       case ReceiptType.aeps:
         _fetchAepsReceiptData(_param, receiptType);
+        break;
+      case ReceiptType.aadhaarPay:
+        _fetchAadhaarPayReceiptData(_param, receiptType);
         break;
       case ReceiptType.matm:
         _fetchAepsReceiptData(_param, receiptType);
@@ -74,10 +76,16 @@ mixin ReceiptPrintMixin {
     if(response == null)return;
 
     if (receiptType == ReceiptType.matm) {
-      _printPdfData(MatmReceiptHtmlData(response).printData());
+      _printPdfData(AepsReceiptHtmlData(response,"Micro-ATM").printData());
     } else {
-      _printPdfData(AepsReceiptHtmlData(response).printData());
+      _printPdfData(AepsReceiptHtmlData(response,"AEPS").printData());
     }
+  }
+  _fetchAadhaarPayReceiptData(param,ReceiptType type) async {
+    var response = await _fetchHelper<AepsReceiptResponse>(repo.aadhaarPayTransactionReceipt(param));
+    if(response == null)return;
+      _printPdfData(AepsReceiptHtmlData(response,"Aadhaar Pay").printData());
+
   }
 
   _fetchCreditCardReceiptData(param, ReceiptType receiptType) async {

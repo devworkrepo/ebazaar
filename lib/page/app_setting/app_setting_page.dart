@@ -12,19 +12,21 @@ class AppSettingPage extends GetView<AppSettingController> {
       appBar: AppBar(
         title: const Text("App Setting"),
       ),
-      body: Card(
-        margin: const EdgeInsets.all(8),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                _BuildSettingItem(
-
-                )
-              ],
-            ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Obx(()=>_BuildSettingItem(
+                title: "Biometric Authentication",
+                hint: "Enable Biometric Authentication",
+                description:
+                (controller.biometricDescriptionText.value.isNotEmpty)
+                    ? controller.biometricDescriptionText.value
+                    : null,
+              )),
+            ],
           ),
         ),
       ),
@@ -33,36 +35,53 @@ class AppSettingPage extends GetView<AppSettingController> {
 }
 
 class _BuildSettingItem extends GetView<AppSettingController> {
-  const _BuildSettingItem({Key? key}) : super(key: key);
+  final String title;
+  final String hint;
+  final String? description;
+
+  const _BuildSettingItem(
+      {required this.title, required this.hint, this.description, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: Get.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Biometric Authentication",style: TextStyle(color:Colors.grey),)),
-          Row(
-            children: [
-              Expanded(
-                  child: Text(
-                "Enable Biometric Authentication",
-                style: Get.textTheme.subtitle1,
-              )),
-              Obx(() => Switch.adaptive(
-                  value: controller.isBiometricLoginEnable.value,
-                  onChanged: (newValue) {
-                    controller.setBiometricLogin(newValue);
-                  }))
-            ],
-          ),
-          Divider(
-            indent: 0,
-          )
-        ],
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  title,
+                  style: TextStyle(color: Colors.grey),
+                )),
+            Row(
+              children: [
+                Expanded(
+                    child: Text(
+                  hint,
+                  style: Get.textTheme.subtitle1,
+                )),
+                Obx(() => Switch.adaptive(
+                    value: controller.isBiometricLoginEnable.value,
+                    onChanged: (newValue) {
+                      controller.setBiometricLogin(newValue);
+                    }))
+              ],
+            ),
+            (description != null)
+                ? Text(
+                    description!,
+                    style: Get.textTheme.subtitle2,
+                  )
+                : const SizedBox(),
+            const Divider(
+              indent: 0,
+            )
+          ],
+        ),
       ),
     );
   }

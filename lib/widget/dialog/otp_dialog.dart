@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/common.dart';
-import 'package:spayindia/component/common/counter_widget.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/common/counter_widget.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/mixin/dialog_helper_mixin.dart';

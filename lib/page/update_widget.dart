@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
+import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:upgrader/upgrader.dart';

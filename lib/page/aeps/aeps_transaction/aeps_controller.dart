@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common/confirm_amount_dialog.dart';
-import 'package:spayindia/component/dialog/aeps_rd_service_dialog.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
-import 'package:spayindia/component/list_component.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/dialog/aeps_rd_service_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/list_component.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/aeps_repo.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
@@ -130,7 +131,12 @@ class AepsController extends GetxController
           ListTitleValue(title: "Bank Name", value: selectedAepsBank?.name ?? ""),
         ],
         onConfirm: () {
-          _aepsTransaction(data);
+          if(isAadhaarPay){
+            _aadhaarPayTransaction(data);
+          }
+          else{
+            _aepsTransaction(data);
+          }
         }));
   }
 
@@ -144,6 +150,47 @@ class AepsController extends GetxController
         "devicetype": appPreference.rdService,
         "amount": (isAadhaarPay ||
                 aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+            ? amountWithoutRupeeSymbol(amountController)
+            : "0",
+        "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
+        "mobileno": mobileController.text.toString(),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
+        "biometricData": data,
+        "bcid": bankListResponse.bcid ?? "",
+        "transaction_no": bankListResponse.transactionNumber ?? "",
+        "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
+      });
+      Get.back();
+      if (response.code == 1) {
+        Get.to(() => AepsTxnResponsePage(), arguments: {
+          "response": response,
+          "aeps_type": aepsTransactionType.value,
+          "isAadhaarPay": isAadhaarPay
+        });
+      } else {
+        StatusDialog.failure(title: response.message ?? "");
+      }
+    } catch (e) {
+      await appPreference.setIsTransactionApi(true);
+      Get.back();
+      Get.off(ExceptionPage(
+        error: e,
+      ));
+    }
+  }
+
+
+  _aadhaarPayTransaction(String data) async {
+    try {
+      StatusDialog.transaction();
+      var response = await repo.aadhaaPayTransaction(<String, String>{
+        "bankiin": selectedAepsBank?.id ?? "",
+        "bankName": selectedAepsBank?.name ?? "",
+        "txntype": _transactionTypeInCode(),
+        "devicetype": appPreference.rdService,
+        "amount": (isAadhaarPay ||
+            aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
             ? amountWithoutRupeeSymbol(amountController)
             : "0",
         "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),

@@ -6,7 +6,7 @@ import 'package:spayindia/res/color.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
 
-import '../../../../component/image.dart';
+import '../../../../widget/image.dart';
 import '../../logout_confirm_dialog.dart';
 
 class HomeDrawerWidget extends GetView<HomeController> {

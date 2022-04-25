@@ -14,6 +14,7 @@ abstract class AepsRepo {
   //aeps
   Future<AepsBankResponse> fetchAepsBankList();
   Future<AepsTransactionResponse> aepsTransaction(data);
+  Future<AepsTransactionResponse> aadhaaPayTransaction(data);
 
 
   //aeps settlement

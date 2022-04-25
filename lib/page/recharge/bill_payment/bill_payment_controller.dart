@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/common/confirm_amount_dialog.dart';
-import 'package:spayindia/component/dialog/status_dialog.dart';
-import 'package:spayindia/component/list_component.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/list_component.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
@@ -20,7 +20,7 @@ import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
 class BillPaymentController extends GetxController
-    with TransactionHelperMixin, LocationHelperMixin {
+    with TransactionHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
 
   Map<String, dynamic> argument = Get.arguments;
@@ -146,7 +146,6 @@ class BillPaymentController extends GetxController
     var validBalance = checkBalance(appPreference.user.availableBalance,
         amountWithoutRupeeSymbol(amountController));
     if (!validBalance) return;
-    if (!(await validateLocation())) return;
 
     StatusDialog.transaction();
     try {

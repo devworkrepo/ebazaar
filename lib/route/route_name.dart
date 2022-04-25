@@ -8,8 +8,6 @@ class AppRoute {
   static const loginPage = "/login";
   static const deviceVerificationPage = "/device-verification-page";
   static const loginOtpPage = "/login-otp";
-  static const forgotPasswordPage = "/forgot-password";
-  static const signupPage = "/signup";
 
   //recharge and bill payments
   static const providerPage = "/provider-page";

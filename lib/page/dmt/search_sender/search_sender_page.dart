@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/component/button.dart';
-import 'package:spayindia/component/radio.dart';
-import 'package:spayindia/component/text_field.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/radio.dart';
+import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/dmt/search_sender/search_sender_controller.dart';
 
