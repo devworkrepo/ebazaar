@@ -61,20 +61,20 @@ class _RefundTabPageState extends State<RefundTabPage>
 
   List<Widget> _tabWidgetList() {
     var mList =   <Widget>[
-          const DmtRefundPage(controllerTag: AppTag.moneyRefundControllerTag,),
-          const RechargeRefundPage(),
-          const CreditCardRefundPage()
+          const DmtRefundPage(controllerTag: AppTag.moneyRefundControllerTag,origin: "report",),
+          const RechargeRefundPage(origin: "report",),
+          const CreditCardRefundPage(origin: "report",)
         ];
     if(appPreference.user.isPayout ?? false){
-      mList.add( const DmtRefundPage(controllerTag: AppTag.payoutRefundControllerTag,),);
+      mList.add( const DmtRefundPage(controllerTag: AppTag.payoutRefundControllerTag,origin: "report",),);
     }
     return mList;
   }
 
   List<Tab> _tabList() {
     var mList =  <Tab>[
-                const Tab(text: 'Money'),
-                const Tab(text: 'Recharge'),
+                const Tab(text: 'Money Transfer'),
+                const Tab(text: 'Utility'),
                 const Tab(text: 'Credit Card'),
               ];
 

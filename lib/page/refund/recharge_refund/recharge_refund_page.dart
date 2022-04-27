@@ -16,13 +16,17 @@ import '../../report/report_search.dart';
 
 class RechargeRefundPage extends GetView<RechargeRefundController> {
 
-  const RechargeRefundPage({Key? key}) : super(key: key);
+  final String origin;
+  const RechargeRefundPage({required this.origin,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.put(RechargeRefundController());
 
     return Scaffold(
+        appBar: (origin == "summary") ? AppBar(
+          title: const Text("Utility Refund Pending"),
+        ): null,
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {

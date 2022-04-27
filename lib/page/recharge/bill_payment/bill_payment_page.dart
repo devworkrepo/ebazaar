@@ -1,11 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/common/amount_background.dart';
-import 'package:spayindia/widget/common/wallet_widget.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/model/recharge/extram_param.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/recharge/bill_payment/bill_payment_controller.dart';
@@ -13,6 +8,11 @@ import 'package:spayindia/page/recharge/provider/provider_controller.dart';
 import 'package:spayindia/res/color.dart';
 import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/common/amount_background.dart';
+import 'package:spayindia/widget/common/wallet_widget.dart';
+import 'package:spayindia/widget/image.dart';
+import 'package:spayindia/widget/text_field.dart';
 
 class BillPaymentPage extends GetView<BillPaymentController> {
   const BillPaymentPage({Key? key}) : super(key: key);
@@ -149,6 +149,10 @@ class BillPaymentPage extends GetView<BillPaymentController> {
                                       enable:
                                           controller.isAmountEnable() ?? true,
                                       focus: true,
+                                      validator: (value) =>
+                                          FormValidatorHelper.amount(value,
+                                              minAmount: 100,
+                                              maxAmount: 500000),
                                       controller: controller.amountController)),
                             ),
                             const SizedBox(

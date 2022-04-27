@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/model/dmt/beneficiary.dart';
 import 'package:spayindia/model/dmt/sender_info.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/text_field.dart';
 
 import '../../dmt.dart';
 
@@ -341,16 +341,21 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
     if (value == null) {
       return "Enter valid amount";
     }
-
+    AppPreference appPreference = Get.find();
     var minAmount = (widget.dmtType == DmtType.instantPay) ? 100 : 25001;
-    var maxAmount = (widget.dmtType == DmtType.instantPay) ? 25000 : 200000;
+
+    var maxAmount = (widget.dmtType == DmtType.instantPay)
+        ? (widget.senderInfo.isKycVerified ?? false)
+            ? 49750
+            : 25000
+        : 200000;
 
     var enteredAmountInDouble = double.parse(value);
-    AppPreference appPreference = Get.find();
+
     var balance = appPreference.user.availableBalance;
     var balanceInDouble = double.parse(balance ?? "0");
 
-    if(enteredAmountInDouble > balanceInDouble){
+    if (enteredAmountInDouble > balanceInDouble) {
       return "Insufficient wallet amount!";
     }
 

@@ -115,7 +115,7 @@ class _BuildListItem extends GetView<AccountStatementController> {
               Expanded(
                   child: Column(
                 children: [
-                  const Text("amount"),
+                  const Text("Amount"),
                   Text(
                     inAmount > 0.0 ? inAmount.toString() : outAmount.toString(),
                     style: TextStyle(
@@ -126,6 +126,28 @@ class _BuildListItem extends GetView<AccountStatementController> {
               )),
               Expanded(
                   child: Column(
+                    children: [
+                      Text("Charge", style: headerStyle),
+                      Text(inCharge > 0.0
+                          ? inCharge.toString()
+                          : outCharge.toString(),style: TextStyle(
+                          color: (inCharge > 0) ? Colors.green : Colors.red,fontWeight: FontWeight.w500))
+                    ],
+                  )),
+              Expanded(
+                  child: Column(
+                    children: [
+                      Text("Commission", style: headerStyle),
+                      Text(inCommission > 0.0
+                          ? inCommission.toString()
+                          : outCommission.toString(),style: TextStyle(
+                          color: (inCommission > 0) ? Colors.green : Colors.red,fontWeight: FontWeight.w500))
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  )),
+              Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     "Tds",
@@ -135,27 +157,8 @@ class _BuildListItem extends GetView<AccountStatementController> {
                       color: (inTds > 0) ? Colors.green : Colors.red,fontWeight: FontWeight.w500))
                 ],
               )),
-              Expanded(
-                  child: Column(
-                children: [
-                  Text("Charge", style: headerStyle),
-                  Text(inCharge > 0.0
-                      ? inCharge.toString()
-                      : outCharge.toString(),style: TextStyle(
-                      color: (inCharge > 0) ? Colors.green : Colors.red,fontWeight: FontWeight.w500))
-                ],
-              )),
-              Expanded(
-                  child: Column(
-                children: [
-                  Text("Commission", style: headerStyle),
-                  Text(inCommission > 0.0
-                      ? inCommission.toString()
-                      : outCommission.toString(),style: TextStyle(
-                      color: (inCommission > 0) ? Colors.green : Colors.red,fontWeight: FontWeight.w500))
-                ],
-                crossAxisAlignment: CrossAxisAlignment.end,
-              ))
+
+             
             ],
           ),
         ),

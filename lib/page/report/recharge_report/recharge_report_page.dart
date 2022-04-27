@@ -18,12 +18,18 @@ import 'recharge_report_controller.dart';
 
 class RechargeReportPage extends GetView<RechargeReportController> {
 
-  const RechargeReportPage({Key? key}) : super(key: key);
+  final String origin;
+
+  const RechargeReportPage({required this.origin,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(RechargeReportController());
+    Get.put(RechargeReportController(origin));
+
     return Scaffold(
+        appBar: (origin == "summary") ? AppBar(
+          title: const Text("Utility InProgress"),
+        ): null,
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
@@ -52,7 +58,7 @@ class RechargeReportPage extends GetView<RechargeReportController> {
         CommonReportSeasrchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
-          status: controller.searchStatus,
+          status: (origin != "summary") ? controller.searchStatus : null,
           inputFieldOneTile: "Request Number",
           statusList: const [
             "Success",
@@ -88,7 +94,9 @@ class RechargeReportPage extends GetView<RechargeReportController> {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
-            controller.searchStatus = status;
+            if(origin != "summary"){
+              controller.searchStatus = status;
+            }
             controller.rechargeType = rechargeType;
             controller.onSearch();
           },
@@ -151,19 +159,6 @@ class _BuildListItem extends GetView<RechargeReportController> {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (report.transactionStatus!.toLowerCase() == "inprogress" ||
-                    kDebugMode)
-                ? ReportActionButton(
-                    title: "Re-query",
-                    icon: Icons.refresh,
-                    onClick: () {
-                      StatusDialog.failure(title: "Service is not available right now");
-                    },
-                  )
-                : const SizedBox(),
-            const SizedBox(
-              width: 8,
-            ),
             ReportActionButton(
               title: "Print",
               icon: Icons.print,

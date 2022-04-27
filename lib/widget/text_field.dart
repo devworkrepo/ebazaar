@@ -122,7 +122,7 @@ class _AppTextFieldState extends State<AppTextField> {
       counterText: "",
       label: Text(label),
       labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-      errorStyle:  TextStyle(fontWeight: FontWeight.w400,color: Get.theme.primaryColorLight),
+      errorStyle:  TextStyle(fontWeight: FontWeight.w500,color: Colors.red[900]),
       hintStyle: TextStyle(
           fontSize: widget.fontSize?.toDouble(),
           fontWeight: FontWeight.w400,

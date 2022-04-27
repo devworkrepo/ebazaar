@@ -119,6 +119,9 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
                                 onChange: (value) {
                                   controller.searchTypeObs.value =
                                       value as DmtRemitterSearchType;
+                                  Get.focusScope?.unfocus();
+                                  controller.numberController.text = "";
+                                  controller.onMobileChange("");
                                 }),
                           ),
                           Expanded(
@@ -127,8 +130,11 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
                                 value: DmtRemitterSearchType.account,
                                 title: "Account",
                                 onChange: (value) {
+                                  Get.focusScope?.unfocus();
                                   controller.searchTypeObs.value =
                                       value as DmtRemitterSearchType;
+                                  controller.numberController.text = "";
+                                  controller.onMobileChange("");
                                 }),
                           ),
                         ],

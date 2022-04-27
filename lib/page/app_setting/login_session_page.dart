@@ -108,7 +108,7 @@ class _BuildListItem extends GetView<AppSettingController> {
                 Row(
                   children: [
                     const Text("Expiry Date : "),
-                    Text(session.login_date.toString()),
+                    Text(session.expiry_date.toString()),
                   ],
                 )
               ],

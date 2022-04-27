@@ -5,12 +5,12 @@ import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
 import 'package:spayindia/page/report/report_helper.dart';
-import 'package:spayindia/page/response/paytm_wallet/paytm_wallet_txn_response_page.dart';
 
 import '../../widget/common.dart';
 import '../../widget/dialog/status_dialog.dart';
 import '../../util/mixin/transaction_helper_mixin.dart';
 import '../exception_page.dart';
+import '../response/paytm_wallet/paytm_wallet_txn_response_page.dart';
 
 class PaytmWalletController extends GetxController with TransactionHelperMixin {
   var mobileController = TextEditingController();

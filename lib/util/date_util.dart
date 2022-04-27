@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DateUtil {
-  static final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  static final DateFormat formatter = DateFormat('dd-MM-yyyy');
 
   static showDatePickerDialog(Function(String) onPick) async {
     DateTime? dateTime = await showDatePicker(

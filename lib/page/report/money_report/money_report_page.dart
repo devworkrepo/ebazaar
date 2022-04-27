@@ -17,16 +17,21 @@ import 'money_report_controller.dart';
 
 class MoneyReportPage extends GetView<MoneyReportController> {
   final String controllerTag;
+  final String origin;
 
   @override
   String? get tag => controllerTag;
 
-  const MoneyReportPage({Key? key, required this.controllerTag}) : super(key: key);
+  const MoneyReportPage({Key? key, required this.controllerTag,required this.origin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MoneyReportController(controllerTag), tag: controllerTag);
+    Get.put(MoneyReportController(controllerTag,origin), tag: controllerTag);
+
     return Scaffold(
+      appBar: (origin == "summary") ? AppBar(
+        title: const Text("DMT InProgress"),
+      ): null,
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
@@ -55,13 +60,15 @@ class MoneyReportPage extends GetView<MoneyReportController> {
         CommonReportSeasrchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
-          status: controller.searchStatus,
+          status: (origin != "summary") ? controller.searchStatus : null,
           inputFieldOneTile: "Transaction Number",
           onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
-            controller.searchStatus = status;
+            if(origin != "summary"){
+              controller.searchStatus = status;
+            }
             controller.onSearch();
           },
         ),

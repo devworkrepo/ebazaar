@@ -16,12 +16,16 @@ import 'credit_card_report_controller.dart';
 
 class CreditCardReportPage extends GetView<CreditCardReportController> {
 
-  const CreditCardReportPage({Key? key}) : super(key: key);
+  final String origin;
+  const CreditCardReportPage({required this.origin,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(CreditCardReportController());
+    Get.put(CreditCardReportController(origin));
     return Scaffold(
+        appBar: (origin == "summary") ? AppBar(
+          title: const Text("Credit Card InProgress"),
+        ): null,
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
@@ -50,13 +54,15 @@ class CreditCardReportPage extends GetView<CreditCardReportController> {
         CommonReportSeasrchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
-          status: controller.searchStatus,
+          status: (origin != "summary") ? controller.searchStatus : null,
           inputFieldOneTile: "Request Number",
           onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
-            controller.searchStatus = status;
+            if(origin != "summary"){
+              controller.searchStatus = status;
+            }
             controller.onSearch();
           },
         ),

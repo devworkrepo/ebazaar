@@ -15,6 +15,7 @@ import '../report_helper.dart';
 class MoneyReportController extends GetxController with ReceiptPrintMixin {
 
   final String tag;
+  final String origin;
   String fromDate = "";
   String toDate = "";
   String searchStatus = "";
@@ -24,11 +25,14 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
   late List<MoneyReport> reportList;
   MoneyReport? previousReport;
 
-  MoneyReportController(this.tag);
+  MoneyReportController(this.tag,this.origin);
 
   @override
   void onInit() {
     super.onInit();
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
@@ -85,6 +89,9 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fetchReport();
   }
 

@@ -71,18 +71,21 @@ class _BuildButtomSectionWidget extends GetView<SummaryController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildOtherInProgressWidget(
+                  onClick: controller.onAepsInProgressClick,
                     text1: "Aeps InProgress Transaction",
                     text2: controller.summary.aepsInProgress.toString()),
                 SizedBox(
                   height: 16,
                 ),
                 _buildOtherInProgressWidget(
+                    onClick: controller.onAadhaarPayInProgressClick,
                     text1: "Aadhaar Pay InProgress Transaction",
                     text2: controller.summary.aadhaarPayInProgress.toString()),
                 SizedBox(
                   height: 16,
                 ),
                 _buildOtherInProgressWidget(
+                    onClick: controller.onPayoutInProgressClick,
                     text1: "Payout InProgress Transaction",
                     text2: controller.summary.payoutInProgress.toString()),
               ],
@@ -93,27 +96,30 @@ class _BuildButtomSectionWidget extends GetView<SummaryController> {
     );
   }
 
-  Container _buildOtherInProgressWidget(
-      {required String text1, required String text2}) {
-    return Container(
-      width: Get.width,
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          color: Colors.blue, borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        children: [
-          Text(
-            text1,
-            style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          Text(
-            text2,
-            style: Get.textTheme.headline3?.copyWith(color: Colors.white),
-          )
-        ],
+  Widget _buildOtherInProgressWidget(
+      {required String text1, required String text2,required VoidCallback onClick}) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+            color: Colors.blue, borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          children: [
+            Text(
+              text1,
+              style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              text2,
+              style: Get.textTheme.headline3?.copyWith(color: Colors.white),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -140,11 +146,13 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
                 children: [
                   Expanded(
                       child: _buildItemWidget(
+                        onClick: controller.onDmtInProgressClick,
                           backgroundColor: Colors.blue,
                           text1: "InProgress",
                           text2: controller.summary.dmtInProgress.toString())),
                   Expanded(
                       child: _buildItemWidget(
+                          onClick: controller.onDmtInRefundPendingClick,
                           backgroundColor: Colors.red,
                           text1: "Refund Pending",
                           text2:
@@ -162,12 +170,14 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
                 children: [
                   Expanded(
                       child: _buildItemWidget(
+                          onClick: controller.onUtilityInProgressClick,
                           backgroundColor: Colors.blue,
                           text1: "InProgress",
                           text2:
                               controller.summary.utilityInProgress.toString())),
                   Expanded(
                       child: _buildItemWidget(
+                          onClick: controller.onUtilityInRefundPendingClick,
                           backgroundColor: Colors.red,
                           text1: "Refund Pending",
                           text2: controller.summary.utilityRefundPending
@@ -185,12 +195,14 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
                 children: [
                   Expanded(
                       child: _buildItemWidget(
+                          onClick: controller.onCreditCardInProgressClick,
                           backgroundColor: Colors.blue,
                           text1: "InProgress",
                           text2:
                               controller.summary.creditInProgress.toString())),
                   Expanded(
                       child: _buildItemWidget(
+                          onClick: controller.onCreditCardInRefundPendingClick,
                           backgroundColor: Colors.red,
                           text1: "Refund Pending",
                           text2: controller.summary.creditRefundPending
@@ -207,27 +219,32 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
   Widget _buildItemWidget(
       {required Color backgroundColor,
       required String text1,
-      required String text2}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: backgroundColor),
-        child: Column(
-          children: [
-            Text(
-              text1,
-              style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              text2,
-              style: Get.textTheme.subtitle1?.copyWith(color: Colors.white70),
-            )
-          ],
+      required String text2,
+        required VoidCallback onClick
+      }) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12), color: backgroundColor),
+          child: Column(
+            children: [
+              Text(
+                text1,
+                style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                text2,
+                style: Get.textTheme.subtitle1?.copyWith(color: Colors.white70),
+              )
+            ],
+          ),
         ),
       ),
     );

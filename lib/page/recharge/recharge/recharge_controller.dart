@@ -128,7 +128,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
         providerType == ProviderType.postpaid) {
       return "Mobile Number";
     } else if (providerType == ProviderType.dth) {
-      return "Dth Number";
+      return "Customer Id";
     }
     return "";
   }
@@ -140,7 +140,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     if (providerType == ProviderType.postpaid) {
       return "Enter 10 digit postpaid mobile number";
     } else if (providerType == ProviderType.dth) {
-      return "Enter 6 - 14 digits DTH number";
+      return "Enter 6 - 14 digits Customer Id";
     }
     return "";
   }
@@ -160,7 +160,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
         return null;
       }
       else{
-        return "Enter valid 6 - 14 digits DTH number";
+        return "Enter valid 6 - 14 digits Customer Id";
       }
     }
     else {

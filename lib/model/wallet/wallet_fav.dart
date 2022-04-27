@@ -82,6 +82,10 @@ class WalletTransactionResponse{
   String? transactionNumber;
   String? transactionStatus;
   String? transactionResponse;
+  //additional
+  String? amount;
+  String? outletName;
+  String? agentName;
 
   WalletTransactionResponse();
 

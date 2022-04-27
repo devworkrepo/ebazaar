@@ -77,24 +77,29 @@ class _TransactionTabPageState extends State<TransactionTabPage>
     var mList = <Widget>[
       const MoneyReportPage(
         controllerTag: AppTag.moneyReportControllerTag,
+        origin: "report",
       ),
       const AepsMatmReportPage(
         controllerTag: AppTag.matmReportControllerTag,
+        origin: "report",
       ),
       const AepsMatmReportPage(
         controllerTag: AppTag.aepsReportControllerTag,
+        origin: "report",
       ),
       const AepsMatmReportPage(
         controllerTag: AppTag.aadhaarPayReportControllerTag,
+        origin: "report",
       ),
-      const RechargeReportPage(),
-      const CreditCardReportPage(),
+      const RechargeReportPage(origin: "report",),
+      const CreditCardReportPage(origin: "report",),
     ];
 
     if(appPreference.user.isPayout ?? false){
       mList.add(
         const MoneyReportPage(
           controllerTag: AppTag.payoutReportControllerTag,
+          origin: "report",
         ),
       );
     }

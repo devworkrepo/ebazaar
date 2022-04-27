@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/page/response/wallet_load/wallet_load_txn_response_page.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
@@ -44,7 +45,12 @@ class WalletTransferController extends GetxController with TransactionHelperMixi
       Get.back();
 
       if(response.code == 1){
-
+        response.amount = amountWithoutRupeeSymbol(amountController);
+        response.outletName = data.outletName;
+        response.agentName = data.agentName;
+        Get.to(()=>WalletLoadTxnResponsePage(),arguments: {
+          "response" : response
+        });
       }
       else {
         StatusDialog.failure(title:  response.message);

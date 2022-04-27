@@ -14,8 +14,9 @@ import '../../report/report_search.dart';
 
 class DmtRefundPage extends GetView<DmtRefundController> {
   final String controllerTag;
+  final String origin;
 
-  const DmtRefundPage({Key? key, required this.controllerTag})
+  const DmtRefundPage({Key? key, required this.controllerTag,required this.origin})
       : super(key: key);
 
   @override
@@ -23,9 +24,12 @@ class DmtRefundPage extends GetView<DmtRefundController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(DmtRefundController(controllerTag), tag: controllerTag);
+    Get.put(DmtRefundController(controllerTag,), tag: controllerTag);
 
     return Scaffold(
+        appBar: (origin == "summary") ? AppBar(
+          title: const Text("DMT Refund Pending"),
+        ): null,
         body: Obx(() =>
             controller.moneyReportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {

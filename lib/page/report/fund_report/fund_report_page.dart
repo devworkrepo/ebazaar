@@ -50,6 +50,13 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
       fromDate: controller.fromDate,
       toDate: controller.toDate,
       status: controller.searchStatus,
+      statusList: const [
+        "Initiated",
+        "Pending",
+        "Accepted",
+        "Approved",
+        "Declined"
+      ],
       inputFieldOneTile : "Request Number",
       onSubmit: (fromDate, toDate, searchInput,searchInputType, status,_) {
         controller.fromDate = fromDate;
@@ -103,14 +110,7 @@ class _BuildListItem extends GetView<FundRequestReportController> {
         statusId:  ReportHelperWidget.getStatusId(report.status),
 
 
-        expandList: [
-          ListTitleValue(title: "Deposit Date", value: report.depositeDate.toString()),
-          ListTitleValue(title: "Modified Date", value: report.modifiedDate.toString()),
-          ListTitleValue(title: "Ref Number", value: report.referenceNumber.toString()),
-          ListTitleValue(title: "Remark", value: report.remark.toString()),
-          ListTitleValue(title: "Modified Remark", value: report.modifiedRemark.toString()),
-
-        ],
+        expandList: getExpandList(),
         actionWidget: (report.status!.toLowerCase() == "pending") ? Container(
           padding: EdgeInsets.only(top: 12),
           child: OutlinedButton(
@@ -119,13 +119,28 @@ class _BuildListItem extends GetView<FundRequestReportController> {
             controller.onUpdateClick(report);
             }, child:Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: const [
               Icon(Icons.update),
               SizedBox(width: 12,),
               Text("Update")
             ],)),
         ) : SizedBox()),
     );
+  }
+
+  List<ListTitleValue> getExpandList() {
+    var mList = [
+        ListTitleValue(title: "Deposit Date", value: report.depositeDate.toString()),
+        ListTitleValue(title: "Ref Number", value: report.referenceNumber.toString()),
+        ListTitleValue(title: "Remark", value: report.remark.toString()),
+        ListTitleValue(title: "Request Number", value: report.requestNumber.toString()),
+        ListTitleValue(title: "Modified Remark", value: report.modifiedRemark.toString()),
+
+      ];
+    if(report.status != "Initiated"){
+      mList.add(ListTitleValue(title: "Modified Date", value: report.modifiedDate.toString()));
+    }
+    return mList;
   }
 
 

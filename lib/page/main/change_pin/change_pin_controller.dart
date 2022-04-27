@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/dialog/otp_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/util/security/encription.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
+import '../../../widget/common.dart';
 import '../../exception_page.dart';
 
 class ChangePinController extends GetxController {
@@ -19,11 +19,12 @@ class ChangePinController extends GetxController {
 
   var formKey = GlobalKey<FormState>();
 
-  requestOtp() async {
+  var resendButtonVisibilityObs = false.obs;
 
+  requestOtp() async {
     try {
       StatusDialog.progress(title: "Generating Otp");
-      var response = await repo.requestOtp({"otptype" : "mpin"});
+      var response = await repo.requestOtp({"otptype": "mpin"});
       Get.back();
       if (response.code == 1) {
         changePinActionTypeObs.value = ChangePinActionType.changePin;
@@ -46,13 +47,41 @@ class ChangePinController extends GetxController {
       Get.back();
       if (response.code == 1) {
         StatusDialog.success(title: response.message)
-            .then((value) => Get.back());
+            .then((value) {
+              if(Get.isSnackbarOpen){
+                Get.closeAllSnackbars();
+                Get.back();
+              }
+              else{
+                Get.back();
+              }
+        });
       } else {
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
+    }
+  }
+
+  resendOtp() async {
+    try {
+      StatusDialog.progress();
+
+      var response = await repo.requestOtp({"otptype": "mpin"});
+      Get.back();
+
+      if (response.code == 1) {
+
+        showSuccessSnackbar(title: "Resent Otp", message: response.message);
+        resendButtonVisibilityObs.value = false;
+      } else {
+        showFailureSnackbar(title: "Resent Otp", message: response.message);
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 }

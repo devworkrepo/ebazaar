@@ -12,6 +12,7 @@ import '../../../model/report/aeps.dart';
 class AepsMatmReportController extends GetxController with ReceiptPrintMixin   {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
+  final String origin;
   String fromDate = "";
   String toDate = "";
   String searchStatus = "";
@@ -23,11 +24,14 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin   {
 
   final String tag;
 
-  AepsMatmReportController(this.tag);
+  AepsMatmReportController(this.tag,this.origin);
 
   @override
   void onInit() {
     super.onInit();
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
@@ -63,6 +67,9 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin   {
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fetchReport();
   }
 

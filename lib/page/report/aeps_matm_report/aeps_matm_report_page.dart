@@ -18,17 +18,28 @@ import 'aeps_matm_report_controller.dart';
 
 class AepsMatmReportPage extends GetView<AepsMatmReportController> {
   final String controllerTag;
+  final String origin;
 
   @override
   String? get tag => controllerTag;
 
-  const AepsMatmReportPage({Key? key, required this.controllerTag})
+  const AepsMatmReportPage(
+      {required this.origin, Key? key, required this.controllerTag})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(AepsMatmReportController(controllerTag), tag: controllerTag);
+    Get.put(AepsMatmReportController(controllerTag, origin),
+        tag: controllerTag);
     return Scaffold(
+        appBar: (origin == "summary")
+            ? AppBar(
+                title: Text(
+                    (controllerTag == AppTag.aepsReportControllerTag)
+                        ? "Aeps InProgress"
+                        : "Aadhaar Pay InProgress"),
+              )
+            : null,
         body: Obx(
             () => controller.reportResponseObs.value.when(onSuccess: (data) {
                   if (data.code == 1) {
@@ -56,13 +67,16 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
         CommonReportSeasrchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
-          status: controller.searchStatus,
+          status: (origin != "summary") ? controller.searchStatus : null,
           inputFieldOneTile: "Transaction Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
+          onSubmit:
+              (fromDate, toDate, searchInput, searchInputType, status, _) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
-            controller.searchStatus = status;
+            if (origin != "summary") {
+              controller.searchStatus = status;
+            }
             controller.onSearch();
           },
         ),

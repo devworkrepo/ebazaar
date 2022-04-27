@@ -23,25 +23,25 @@ class TransactionSummary {
   TransactionSummary();
 
   TransactionSummary.fromJson(Map<String,dynamic> json){
-    aadhaarPayInProgress = json["aadharpay_inprogress"];
-    aadhaarPayTRF = json["aadharpay_trf"];
-    aepsInProgress = json["aeps_inprogress"];
-    aepsMatmTRF = json["aeps_matm_trf"];
+    aadhaarPayInProgress = json["aadharpay_inprogress"].toString();
+    aadhaarPayTRF = json["aadharpay_trf"].toString();
+    aepsInProgress = json["aeps_inprogress"].toString();
+    aepsMatmTRF = json["aeps_matm_trf"].toString();
     code = json["code"];
-    creditCardTRF = json["credit_card_trf"];
-    creditInProgress = json["credit_inprogress"];
-    creditRefundPending = json["credit_refundpending"];
-    dmtInProgress = json["dmt_inprogress"];
-    dmtRefundPending = json["dmt_refundpending"];
-    fundReceived = json["fund_received"];
-    message = json["message"];
-    moneyTransfer = json["money_transfer"];
-    payoutInProgress = json["payout_inprogress"];
-    payoutRefundPending = json["payout_refundpending"];
+    creditCardTRF = json["credit_card_trf"].toString();
+    creditInProgress = json["credit_inprogress"].toString();
+    creditRefundPending = json["credit_refundpending"].toString();
+    dmtInProgress = json["dmt_inprogress"].toString();
+    dmtRefundPending = json["dmt_refundpending"].toString();
+    fundReceived = json["fund_received"].toString();
+    message = json["message"].toString();
+    moneyTransfer = json["money_transfer"].toString();
+    payoutInProgress = json["payout_inprogress"].toString();
+    payoutRefundPending = json["payout_refundpending"].toString();
     status = json["status"];
-    utilityInProgress = json["utility_inprogress"];
-    utilityRefundPending = json["utility_refundpending"];
-    utilityTRF = json["utility_trf"];
+    utilityInProgress = json["utility_inprogress"].toString();
+    utilityRefundPending = json["utility_refundpending"].toString();
+    utilityTRF = json["utility_trf"].toString();
   }
 
 

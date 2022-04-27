@@ -71,10 +71,10 @@ class LoginController extends GetxController {
       return;
     }
 
-    if(mobileController.text != "7982607742"){
+   /* if(mobileController.text != "7982607742"){
       StatusDialog.failure(title: "Please wait, app service is available only selected users.");
       return false;
-    }
+    }*/
 
     StatusDialog.progress(title: "Login");
 

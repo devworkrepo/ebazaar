@@ -18,13 +18,17 @@ import 'credit_card_refund_controller.dart';
 
 class CreditCardRefundPage extends GetView<CreditCardRefundController> {
 
-  const CreditCardRefundPage({Key? key}) : super(key: key);
+  final String origin;
+  const CreditCardRefundPage({required this.origin,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.put(CreditCardRefundController());
 
     return Scaffold(
+        appBar: (origin == "summary") ? AppBar(
+          title: const Text("Credit Card Pending"),
+        ): null,
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {

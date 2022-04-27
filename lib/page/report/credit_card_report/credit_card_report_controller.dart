@@ -13,6 +13,7 @@ import '../report_helper.dart';
 class CreditCardReportController extends GetxController with ReceiptPrintMixin {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
+  final String origin;
   String fromDate = "";
   String toDate = "";
   String searchStatus = "";
@@ -22,9 +23,14 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
   late List<CreditCardReport> reportList;
   CreditCardReport? previousReport;
 
+  CreditCardReportController(this.origin);
+
   @override
   void onInit() {
     super.onInit();
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchReport();
@@ -56,6 +62,9 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fetchReport();
   }
 

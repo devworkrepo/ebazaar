@@ -11,6 +11,7 @@ import 'package:spayindia/util/date_util.dart';
 class RechargeReportController extends GetxController with ReceiptPrintMixin{
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
+  final String origin;
   String fromDate = "";
   String toDate = "";
   String searchStatus = "";
@@ -21,9 +22,14 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
   late List<RechargeReport> reportList;
   RechargeReport? previousReport;
 
+  RechargeReportController(this.origin);
+
   @override
   void onInit() {
     super.onInit();
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     fetchRechargeValue();
@@ -63,6 +69,9 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
     searchStatus = "";
     searchInput = "";
     rechargeType="";
+    if(origin ==  "summary"){
+      searchStatus = "InProgress";
+    }
     fetchReport();
   }
 

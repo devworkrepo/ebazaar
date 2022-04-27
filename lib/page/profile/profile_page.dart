@@ -76,19 +76,17 @@ class _UserInfoSection extends StatelessWidget {
                     style:
                     Get.textTheme.headline6?.copyWith(color: Colors.white),
                   ),
+                  Text(
+                   " (" + (user.userType ?? "") + ")",
+                    style:
+                    Get.textTheme.headline6?.copyWith(color: Colors.white),
+                  ),
+
                   SizedBox(
                     height: 4,
                   ),
                   Text(
-                    "Agent Id - " + (user.agentId ?? ""),
-                    style: Get.textTheme.bodyText1
-                        ?.copyWith(color: Colors.white70),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    "Agent Code - " + (user.agentCode ?? ""),
+                    "Code - " + (user.agentCode ?? ""),
                     style: Get.textTheme.bodyText1
                         ?.copyWith(color: Colors.white70),
                   ),

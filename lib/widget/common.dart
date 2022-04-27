@@ -16,6 +16,8 @@ showSuccessSnackbar({
   SnackPosition position = SnackPosition.TOP
 
 }) {
+
   Get.snackbar(title, message,
-      backgroundColor: Colors.green, colorText: Colors.white,snackPosition: position);
+      backgroundColor: Colors.green,
+      colorText: Colors.white,snackPosition: position);
 }
