@@ -2,6 +2,8 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/data/repo/home_repo.dart';
+import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/status_bar_color_widget.dart';
@@ -26,6 +28,8 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/tags.dart';
 import 'package:upgrader/upgrader.dart';
 
+import '../widget/dialog/status_dialog.dart';
+
 var isBottomNavShowObs = true.obs;
 
 class MainPage extends StatefulWidget {
@@ -47,6 +51,8 @@ class _MainPageState extends State<MainPage> {
 
   AppPreference appPreference = Get.find();
 
+  HomeRepo rep = Get.find<HomeRepoImpl>();
+
   @override
   void initState() {
     super.initState();
@@ -63,9 +69,7 @@ class _MainPageState extends State<MainPage> {
     return WillPopScope(
       onWillPop: () async {
         if (bottomNavSelectedIndex == 2) {
-
-          var isBiometricAvailable =await LocalAuthService.isAvailable();
-            showExitDialog(isBiometricAvailable);
+            showExitDialog();
             return false;
 
         } else {
@@ -191,7 +195,7 @@ class _MainPageState extends State<MainPage> {
     await appPreference.setIsTransactionApi(false);
   }
 
-  void showExitDialog(bool isBiometricAvailable) async {
+  void showExitDialog() async {
     Get.bottomSheet(Container(
       decoration: AppStyle.bottomSheetDecoration(),
       child: Padding(
@@ -200,7 +204,7 @@ class _MainPageState extends State<MainPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              (isBiometricAvailable) ? "Exit or Logout ? " : "Logout ? ",
+               "Exit or Logout ? " ,
               style: Get.textTheme.headline3
                   ?.copyWith(color: Get.theme.primaryColorDark),
             ),
@@ -221,33 +225,41 @@ class _MainPageState extends State<MainPage> {
                   text: "Logout",
                   onClick: () {
                     Get.back();
-                    appPreference.logout().then((value){
-                     Get.offAllNamed(AppRoute.loginPage);
-                    });
+                    logout();
                   },
                   background: Colors.red,
                 )),
-                (isBiometricAvailable) ? Expanded(
-                  child: Row(children: [
-                    const SizedBox(width: 16,),
-                    Expanded(
-                      child: AppButton(
-                        text: "Exit",
-                        onClick: () {
-                          Get.back();
-                          SystemNavigator.pop();
-                        },
-                        background: Get.theme.primaryColorDark,
-                      ),
-                    )
-                  ],),
-                ) : SizedBox()
+                const SizedBox(width: 16,),
+                Expanded(
+                  child: AppButton(
+                    text: "Exit",
+                    onClick: () {
+                      Get.back();
+                      SystemNavigator.pop();
+                    },
+                    background: Get.theme.primaryColorDark,
+                  ),
+                )
               ],
             )
           ],
         ),
       ),
     ));
+  }
+
+  void logout() async {
+    try {
+      StatusDialog.progress(title: "Log out...");
+      var response = await rep.logout();
+      Get.back();
+
+      await appPreference.logout();
+      Get.offAllNamed(AppRoute.loginPage);
+    } catch (e) {
+      await appPreference.logout();
+      Get.offAllNamed(AppRoute.loginPage);
+    }
   }
 }
 

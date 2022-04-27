@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common/common_confirm_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/model/dmt/account_search.dart';
@@ -15,9 +13,10 @@ import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
+import 'package:spayindia/widget/common/common_confirm_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 import '../import_beneficiary/common.dart';
-
 
 class BeneficiaryListController extends GetxController {
   final Map<String, dynamic> args = Get.arguments;
@@ -35,6 +34,7 @@ class BeneficiaryListController extends GetxController {
 
   SenderInfo? sender = Get.arguments["sender"];
   DmtType dmtType = Get.arguments["dmtType"];
+
 
   void onBeneficiaryClick(Beneficiary beneficiary) {
     if (previousBeneficiary == null) {
@@ -122,6 +122,7 @@ class BeneficiaryListController extends GetxController {
         "remitter_mobile": sender!.senderNumber ?? "",
         "accountno": beneficiary.accountNumber ?? "",
         "ifsc": beneficiary.ifscCode ?? "",
+        "beneid": beneficiary.id ?? "",
         "bankname": beneficiary.bankName ?? "",
       });
       Get.back();
@@ -170,9 +171,7 @@ class BeneficiaryListController extends GetxController {
     Get.toNamed(AppRoute.dmtChangeSenderNamePage,
         arguments: {"sender": sender})?.then((value) {
       if (value != null) {
-        var name = value as String;
-        sender?.senderName = name;
-        sender?.senderNameObs.value = name;
+        Get.back(result: {"mobile_number": sender!.senderNumber!});
       }
     });
   }
@@ -180,10 +179,9 @@ class BeneficiaryListController extends GetxController {
   onMobileChange() {
     Get.toNamed(AppRoute.dmtChangeSenderMobilePage,
         arguments: {"sender": sender})?.then((value){
-      if(value != null){
+      if(value != null) {
         var mobile = value as String;
-        sender?.senderNumber = mobile;
-        sender?.senderNumberObs.value = mobile;
+        Get.back(result: {"mobile_number": mobile});
       }
     });
   }

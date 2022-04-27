@@ -5,6 +5,7 @@ import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/login_session.dart';
 import 'package:spayindia/model/news.dart';
 import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/model/summary.dart';
@@ -76,6 +77,24 @@ class HomeRepoImpl extends HomeRepo {
   Future<TransactionSummary> fetchSummary() async {
     var response = await client.post("/GetTransSummary");
     return TransactionSummary.fromJson(response.data);
+  }
+
+  @override
+  Future<LoginSessionResponse> fetchLoginSession() async {
+    var response = await client.post("/GetActiveSessions");
+    return LoginSessionResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> killSession(data) async {
+    var response = await client.post("/KillSession",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> logout() async {
+    var response = await client.post("/Logout");
+    return CommonResponse.fromJson(response.data);
   }
 
 

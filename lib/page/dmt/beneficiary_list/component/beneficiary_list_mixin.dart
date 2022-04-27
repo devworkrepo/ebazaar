@@ -63,7 +63,7 @@ mixin BeneficiaryListMixin {
             height: 5,
           ),
           Text(
-            "A.C No : "+(accountNumber ?? "N/A"),
+            "A/C No. : "+(accountNumber ?? "N/A"),
             style: Get.textTheme.subtitle2?.copyWith(
                 color: (isExpanded) ? Colors.white70 : Colors.blue[900]),
           ),

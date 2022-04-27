@@ -33,7 +33,7 @@ class DmtTxnResponsePage extends GetView<DmtTxnResponseController>
                 title: "Name",
                 value: controller.dmtTransactionResponse.beneficiaryName!),
             buildTitleValueWidget(
-                title: "Ac NO. ",
+                title: "Account No. ",
                 value: controller.dmtTransactionResponse.accountNumber!),
             buildTitleValueWidget(
                 title: "Bank Name",

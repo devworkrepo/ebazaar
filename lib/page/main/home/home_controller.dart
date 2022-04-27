@@ -2,7 +2,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
@@ -17,7 +16,7 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 var isLocalAuthDone = false;
 class HomeController extends GetxController {
@@ -134,8 +133,17 @@ class HomeController extends GetxController {
   }
 
   void logout() async {
-    await appPreference.logout();
-    Get.offAllNamed(AppRoute.loginPage);
+    try {
+      StatusDialog.progress(title: "Log out...");
+      var response = await homeRepo.logout();
+      Get.back();
+
+      await appPreference.logout();
+      Get.offAllNamed(AppRoute.loginPage);
+    } catch (e) {
+      await appPreference.logout();
+      Get.offAllNamed(AppRoute.loginPage);
+    }
   }
 
   onItemClick(HomeServiceItem item) {

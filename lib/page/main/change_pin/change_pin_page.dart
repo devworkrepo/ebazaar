@@ -14,7 +14,7 @@ class ChangePinPage extends GetView<ChangePinController> {
     Get.put(ChangePinController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Change M-Pin"),
+        title: const Text("Change MPin"),
       ),
       body: Column(
         children: [
@@ -61,7 +61,7 @@ class _BuildFormWidget extends GetView<ChangePinController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "M-PIN",
+              "MPIN",
               style: Get.textTheme.subtitle1,
             ),
             Form(
@@ -73,19 +73,19 @@ class _BuildFormWidget extends GetView<ChangePinController> {
                   ),
                   AppTextField(
                     controller: controller.confirmMPinController,
-                    label: "Confirm M-Pin",
+                    label: "Confirm MPin",
                     inputType: TextInputType.number,
                     hint: "Required*",
                     passwordMode: true,
                     maxLength: 6,
                     validator: (value) {
                       if (value == null) {
-                        return "Confirm M-PIN didn't matched!";
+                        return "Confirm MPIN didn't matched!";
                       } else {
                         if (controller.newMPinController.text == value) {
                           return null;
                         } else {
-                          return "Confirm M-PIN didn't matched!";
+                          return "Confirm MPIN didn't matched!";
                         }
                       }
                     },

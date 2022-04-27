@@ -142,7 +142,7 @@ class _TransferModeDialogState extends State<TransferModeDialog> with Transactio
                             if (widget.dmtType == DmtType.payout) {
                               if (_validatePayout(amount)) {
                                 Get.back();
-                                widget.onClick(amount, DmtTransferType.imps);
+                                widget.onClick(amount, DmtTransferType.neft);
                               }
                             } else {
                               if (_validateNeft(amount)) {

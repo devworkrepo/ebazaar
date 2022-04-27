@@ -157,19 +157,23 @@ class HomeDrawerWidget extends GetView<HomeController> {
                 ),
 
                 Card(
-                  child: ListTile(
-                    onTap: (){
-                      Get.back();
-                     Get.toNamed(AppRoute.appSetting);
+                  child: _NavTitle(
+                    title: "Settings",
+                    icon: Icons.fingerprint,
 
-                    },
-                    title: Text(
-                      "App Setting",
-                      style: Get.textTheme.subtitle1?.copyWith(color:color,fontWeight: FontWeight.bold),
-                    ),
-                    leading:  Icon(Icons.settings,color: color,),
+                    children: [
+                      _NavSubTitle(
+                        title: "Login Sessions",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.manageLoginSession);
+                        },
+                        count: 1,
+                      ),
+                    ],
                   ),
                 ),
+
 
                 Card(
                   child: ListTile(

@@ -106,7 +106,7 @@ class FormValidatorHelper {
   }
 
   static String? mpin(String? value, {int length = 4}) {
-    var msg = "Enter $length digits M-PIN";
+    var msg = "Enter $length digits MPIN";
     if (value == null) {
       return msg;
     } else {

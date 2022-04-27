@@ -53,9 +53,8 @@ class _MyAppState extends State<MyApp> {
         (appPreference.sessionKey.isEmpty || appPreference.sessionKey == "na")
             ? AppRoute.loginPage
             : AppRoute.mainPage;
-
     if(!widget.isBiometricAvailable){
-      initialPage = AppRoute.loginPage;
+      initialPage = AppRoute.deviceLockPage;
     }
 
     if(kDebugMode){
@@ -85,7 +84,8 @@ class _MyAppState extends State<MyApp> {
         primaryColorLight: HexColor("1A3187"),
         textTheme: buildTextTheme());
     return AppLifecycleManager(
-      GetMaterialApp(
+      child: GetMaterialApp(
+          themeMode: ThemeMode.light,
           navigatorObservers: [routeObserver],
           theme: themeData,
           //  initialRoute: AppRoute.testPage,

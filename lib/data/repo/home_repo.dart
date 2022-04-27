@@ -1,5 +1,6 @@
 import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/login_session.dart';
 import 'package:spayindia/model/profile.dart';
 import 'package:spayindia/model/summary.dart';
 import 'package:spayindia/model/user/user.dart';
@@ -15,6 +16,10 @@ abstract class HomeRepo{
   Future<UserProfile> fetchProfileInfo();
 
   Future<TransactionSummary> fetchSummary();
+
+  Future<LoginSessionResponse> fetchLoginSession();
+  Future<CommonResponse> killSession(data);
+  Future<CommonResponse> logout();
 
   Future<NotificationResponse> fetchNotification();
 

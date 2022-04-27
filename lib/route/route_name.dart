@@ -6,6 +6,7 @@ class AppRoute {
 
   //auth
   static const loginPage = "/login";
+  static const deviceLockPage = "/device-lock-page";
   static const deviceVerificationPage = "/device-verification-page";
   static const loginOtpPage = "/login-otp";
 
@@ -73,7 +74,7 @@ class AppRoute {
 //paytm wallet load
   static const paytmWalletLoadPage = "/paytm_wallet_load_page";
 
-  static const appSetting = "/app-setting-page";
+  static const manageLoginSession = "/login-session-page";
   static const ottOperatorPage = "/ott-operator-page";
   static const ottPlanPage = "/ott-plan-page";
   static const ottTransactionPage = "/ott-transaction-page";

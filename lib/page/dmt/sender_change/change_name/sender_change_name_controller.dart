@@ -31,7 +31,7 @@ class SenderChangeNameController extends GetxController {
       Get.back();
       if (response.code == 1) {
         StatusDialog.success(title: response.message).then((value) =>
-            Get.back(result: firstName + " " + lastName));
+            Get.back(result:  firstName+" "+lastName));
       }
       else {
         StatusDialog.failure(title: response.message);

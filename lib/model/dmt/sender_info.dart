@@ -25,8 +25,6 @@ class SenderInfo{
         String? senderName;
         String? senderNumber;
         String? senderId;
-        RxString senderNameObs = "".obs;
-        RxString senderNumberObs = "".obs;
 
         SenderInfo.fromJson(Map<String,dynamic> json){
                 code = json["code"];
@@ -52,8 +50,6 @@ class SenderInfo{
                 senderName = json["remittername"];
                 senderNumber = json["mobileno"];
                 senderId = json["remitterid"];
-                senderNameObs.value = senderName ?? "";
-                senderNumberObs.value = senderNumber ?? "";
 
         }
 

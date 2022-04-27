@@ -3,8 +3,9 @@ import 'package:spayindia/util/app_util.dart';
 
 class AppLifecycleManager extends StatefulWidget {
   final Widget child;
+  final VoidCallback? onResume;
 
-  const AppLifecycleManager(this.child, {Key? key}) : super(key: key);
+  const AppLifecycleManager({required this.child,this.onResume,Key? key}) : super(key: key);
 
   @override
   _AppLifecycleManagerState createState() => _AppLifecycleManagerState();
@@ -36,7 +37,9 @@ class _AppLifecycleManagerState extends State<AppLifecycleManager>
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
-
+        if(widget.onResume!=null){
+          widget.onResume!();
+        }
         break;
       case AppLifecycleState.inactive:
 

@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:spayindia/page/aeps/aeps_e_kyc/aeps_e_kyc_page.dart';
 import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
-import 'package:spayindia/page/app_setting/app_setting_page.dart';
+import 'package:spayindia/page/app_setting/login_session_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
 import 'package:spayindia/page/credit_card/credit_card_page.dart';
+import 'package:spayindia/page/device_security_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_add/beneficiary_add_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_page.dart';
 import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_page.dart';
@@ -57,6 +58,12 @@ final getAllPages = [
     name: AppRoute.loginPage,
     page: () => const LoginPage(),
   ),
+
+  GetPage(
+    name: AppRoute.deviceLockPage,
+    page: () => const DeviceLockPage(),
+  ),
+
   GetPage(
     name: AppRoute.loginOtpPage,
     page: () => const LoginOtpPage(),
@@ -204,8 +211,8 @@ final getAllPages = [
     page: () => const WalletTransferPage(),
   ),
   GetPage(
-    name: AppRoute.appSetting,
-    page: () => const AppSettingPage(),
+    name: AppRoute.manageLoginSession,
+    page: () => const LoginSessionPage(),
   ),
   GetPage(
     name: AppRoute.paytmWalletLoadPage,

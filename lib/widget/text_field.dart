@@ -405,13 +405,13 @@ class MPinTextField extends StatelessWidget {
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
-      label: "Transaction M-Pin",
-      hint: "Enter 4 - 6 digits M-Pin",
+      label: "Transaction MPIN",
+      hint: "Enter 4 - 6 digits MPIN",
       passwordMode: true,
       inputType: TextInputType.number,
       validator: (value) => (value!.length > 3 && value.length < 7)
           ? null
-          : "Enter valid 4 - 6 digits M-Pin",
+          : "Enter valid 4 - 6 digits MPIN",
     );
   }
 }

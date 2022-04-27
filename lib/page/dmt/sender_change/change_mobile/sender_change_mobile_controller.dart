@@ -44,7 +44,8 @@ class SenderMobileChangeController extends GetxController {
 
       var response = await repo.changeSenderOtp({
         "name": senderInfo.senderName.toString(),
-        "mobileno": senderInfo.senderNumber.toString(),
+        "current_mobileno": senderInfo.senderNumber.toString(),
+        "new_mobileno": newMobileNumberController.text,
       });
 
       Get.back();
@@ -69,6 +70,7 @@ class SenderMobileChangeController extends GetxController {
     try {
       StatusDialog.progress();
       var response = await repo.changeSenderMobile({
+
         "remitterid": senderInfo.senderId.toString(),
         "new_mobileno":senderNumber,
         "otp": otpController.text.toString(),

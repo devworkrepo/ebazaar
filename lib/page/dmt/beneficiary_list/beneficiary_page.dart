@@ -50,43 +50,84 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
             return controller.popupMenuList().map((BeneficiaryListPopMenu choice) {
               return PopupMenuItem<BeneficiaryListPopMenu>(
                 value: choice,
-                child: Row(children: [
-                  Icon(choice.icon,size: 24,color: Colors.black,),
-                  const SizedBox(width: 8,),
-                  Text(choice.title)
-                ],),
+                child: Row(
+                  children: [
+                    Icon(
+                      choice.icon,
+                      size: 24,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(choice.title)
+                  ],
+                ),
               );
             }).toList();
           },
         ),
       ],
-      expandedHeight: 180,
+      expandedHeight: (controller.sender!.isKycVerified ?? false) ? 190 : 270,
       pinned: true,
       title: const Text("Beneficiary List"),
-      flexibleSpace: FlexibleSpaceBar(
-        background: BeneficiarySenderHeader(
-          mobileNumber: controller.sender?.senderNumber ?? "",
-          senderName: controller.sender?.senderNameObs.value ?? "",
-          limit: controller.sender?.impsNKycLimitView ?? "",
-          onClick: () {
-            Get.toNamed(AppRoute.dmtBeneficiaryAddPage, arguments: {
-              "mobile": controller.sender!.senderNumber!,
-              "dmtType": controller.dmtType
-            })?.then((value) {
-              if (value != null) {
-                if (value) {
-                  controller.fetchBeneficiary();
-                }
-              }
-            });
-          },
-        ),
-      ),
+      flexibleSpace: FlexibleSpaceBar(background: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BeneficiarySenderHeader(
+                mobileNumber: controller.sender?.senderNumber ?? "",
+                senderName: controller.sender?.senderName ?? "",
+                limit: controller.sender?.impsNKycLimitView ?? "",
+                onClick: () {
+                  Get.toNamed(AppRoute.dmtBeneficiaryAddPage, arguments: {
+                    "mobile": controller.sender!.senderNumber!,
+                    "dmtType": controller.dmtType
+                  })?.then((value) {
+                    if (value != null) {
+                      if (value) {
+                        controller.fetchBeneficiary();
+                      }
+                    }
+                  });
+                },
+              ),
+              (controller.sender!.isKycVerified ?? false)
+                  ? const SizedBox()
+                  : Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(color: Colors.blue),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "You can get monthly sender limit upto 2 Lac by doing EKYC of Customer.",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                Get.toNamed(AppRoute.senderKycPage,arguments: {
+                                  "dmt_type" : controller.dmtType,
+                                  "mobile_number" : controller.sender!.senderNumber!
+                                });
+                              }, child: Text("Do Kyc"))
+                        ],
+                      ),
+                    )
+            ],
+          );
+        },
+      )),
     );
   }
 
   SliverList _buildSilverList() {
-
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(

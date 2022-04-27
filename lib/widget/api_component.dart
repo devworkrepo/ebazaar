@@ -33,7 +33,7 @@ class ApiProgress extends StatelessWidget {
         )),
         child: Padding(
           padding: EdgeInsets.all(8),
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator.adaptive(),
         ),
       ),
     );

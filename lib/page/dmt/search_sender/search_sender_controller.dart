@@ -110,7 +110,14 @@ class DmtSearchSenderController extends GetxController {
 
       if (sender.code == 1) {
         final args = {"sender": sender, "dmtType": dmtType, "account" : accountSearch};
-        Get.toNamed(AppRoute.dmtBeneficiaryListPage, arguments: args);
+        Get.toNamed(AppRoute.dmtBeneficiaryListPage, arguments: args)?.then((value){
+          if(value!=null){
+            if(value is Map){
+              numberController.text = value["mobile_number"];
+            //  _searchSender();
+            }
+          }
+        });
       } else if (sender.code == 2) {
         final args = {
           "mobile": mobile,
