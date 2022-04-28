@@ -159,6 +159,16 @@ class _BuildListItem extends GetView<RechargeReportController> {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            (report.transactionStatus!.toLowerCase() == "inprogress" || kDebugMode)
+                ? ReportActionButton(
+              title: "Re-query",
+              icon: Icons.refresh,
+              onClick: () {
+                controller.requeryTransaction(report);
+              },
+            )
+                : const SizedBox(),
+            SizedBox(width: 8,),
             ReportActionButton(
               title: "Print",
               icon: Icons.print,

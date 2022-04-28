@@ -37,7 +37,7 @@ class AppDropDown extends StatelessWidget {
         mode: mode,
 
         dropdownSearchDecoration:  InputDecoration(
-          errorStyle: TextStyle(color: Get.theme.primaryColorLight,fontWeight: FontWeight.w400),
+          errorStyle: TextStyle(color: Colors.red[900],fontWeight: FontWeight.w500),
           prefixIcon: Icon(Icons.input),
           label: Text(label),
           labelStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 15),

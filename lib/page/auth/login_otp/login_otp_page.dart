@@ -70,32 +70,34 @@ class _LoginForm extends GetView<LoginOtpController> {
                           text: "Verify Otp",
                           onClick: () => controller.verifyOtp()),
 
-                      const SizedBox(height: 24),
-                      Obx((){
-                        return (controller.resendButtonVisibilityObs.value)
-                            ? SizedBox(
-                            width: 200,
-                            height: 48,
-                            child: OutlinedButton(
-                              onPressed: () {
-                                controller.resendOtp();
-                              },
-                              child: const Text("Resend Otp"),
-                              style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100.0),
-                                          side: BorderSide(color: Colors.red)
-                                      )
-                                  )
-                              ),
-                            ))
-                            : CounterWidget(
-                          onTimerComplete: () {
-                            controller.resendButtonVisibilityObs.value = true;
-                          },
-                        );
-                      })
+                      (!(controller.loginData.hideresend ?? false)) ?  Column(children: [
+                        const SizedBox(height: 24),
+                        Obx((){
+                          return (controller.resendButtonVisibilityObs.value)
+                              ? SizedBox(
+                              width: 200,
+                              height: 48,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  controller.resendOtp();
+                                },
+                                child: const Text("Resend Otp"),
+                                style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(100.0),
+                                            side: BorderSide(color: Colors.red)
+                                        )
+                                    )
+                                ),
+                              ))
+                              : CounterWidget(
+                            onTimerComplete: () {
+                              controller.resendButtonVisibilityObs.value = true;
+                            },
+                          );
+                        })
+                      ],) : SizedBox()
                     ],
                   ))
             ],

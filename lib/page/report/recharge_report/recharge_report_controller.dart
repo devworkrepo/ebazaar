@@ -8,6 +8,9 @@ import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
+import '../../../widget/dialog/status_dialog.dart';
+import '../report_helper.dart';
+
 class RechargeReportController extends GetxController with ReceiptPrintMixin{
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
@@ -73,6 +76,29 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
       searchStatus = "InProgress";
     }
     fetchReport();
+  }
+
+
+  void requeryTransaction(RechargeReport report) async {
+    try{
+      StatusDialog.progress();
+      var response =  await repo.requeryRechargeTransaction({
+        "transaction_no": report.transactionNumber ?? "",
+      });
+
+      Get.back();
+      if (response.code == 1) {
+        ReportHelperWidget.requeryStatus(response.trans_response ?? "InProgress",
+            response.trans_response ?? "Message not found", () {
+              fetchReport();
+            });
+      } else {
+        StatusDialog.failure(title: response.message ?? "Something went wrong");
+      }
+    }catch(e){
+      Get.back();
+      Get.to(()=>ExceptionPage(error: e));
+    }
   }
 
   void onItemClick(RechargeReport report) {

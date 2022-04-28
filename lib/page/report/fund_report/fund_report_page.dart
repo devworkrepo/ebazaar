@@ -116,7 +116,7 @@ class _BuildListItem extends GetView<FundRequestReportController> {
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(backgroundColor: Colors.white),
               onPressed: (){
-            controller.onUpdateClick(report);
+               controller.onUpdateClick(report);
             }, child:Row(
             mainAxisSize: MainAxisSize.min,
             children: const [

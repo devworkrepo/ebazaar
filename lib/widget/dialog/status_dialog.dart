@@ -93,11 +93,13 @@ class _StatusDialog extends StatelessWidget {
   final String title;
   final bool backPress;
   final StatusType type;
+  final String? buttonText;
 
   _StatusDialog(
       {required this.title,
       required this.type,
       required this.backPress,
+      this.buttonText,
       Key? key})
       : super(key: key);
 
@@ -137,7 +139,7 @@ class _StatusDialog extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              ElevatedButton(onPressed: (){Get.back();}, child: Text("       Done       "))
+              ElevatedButton(onPressed: (){Get.back();}, child: Text(buttonText ?? "       Done       "))
             ],
           ),
         ));
@@ -215,12 +217,13 @@ class StatusDialog {
     );
   }
 
-  static Future pending({required String title}) {
+  static Future pending({required String title,String? buttonText}) {
     return Get.dialog(
       _StatusDialog(
         title: title,
         backPress: true,
         type: StatusType.pending,
+        buttonText : buttonText
       ),
       barrierDismissible: false,
     );

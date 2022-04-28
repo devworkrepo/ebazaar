@@ -15,6 +15,7 @@ class AppTextField extends StatefulWidget {
   final int? maxLength;
   final bool focus;
   final int? fontSize;
+  final FontWeight? fontWeight;
   final TextInputAction textInputAction;
   final TextEditingController controller;
   final FormFieldValidator<String>? validator;
@@ -27,15 +28,16 @@ class AppTextField extends StatefulWidget {
   final Function? onChange;
   final bool passwordMode;
 
-  const AppTextField(
-      {this.hint,
-      this.fontSize,
-      this.width,
-      this.label,
-      this.maxLength,
-      this.validator,
-      this.focus = false,
-      this.rightButton,
+  const AppTextField({
+    this.hint,
+    this.fontSize,
+    this.fontWeight,
+    this.width,
+    this.label,
+    this.maxLength,
+    this.validator,
+    this.focus = false,
+    this.rightButton,
     this.allCaps = false,
     this.textInputAction = TextInputAction.next,
     this.enable = true,
@@ -78,7 +80,8 @@ class _AppTextFieldState extends State<AppTextField> {
 
     final decoration = buildInputDecoration(widget.passwordMode, hint, label);
     var textStyle = TextStyle(
-        fontSize: widget.fontSize?.toDouble(), fontWeight: FontWeight.w400);
+        fontSize: widget.fontSize?.toDouble(),
+        fontWeight: widget.fontWeight ?? FontWeight.w400);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),

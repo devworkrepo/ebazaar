@@ -62,23 +62,28 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
   }
 
   void requeryTransaction(MoneyReport report) async {
-    StatusDialog.progress();
-    var response = (tag == AppTag.moneyReportControllerTag)
-        ? await repo.requeryDmtTransaction({
-            "transaction_no": report.transactionNumber ?? "",
-          })
-        : await repo.requeryPayoutTransaction({
-            "transaction_no": report.transactionNumber ?? "",
-          });
-
-    Get.back();
-    if (response.code == 1) {
-      ReportHelperWidget.requeryStatus(response.trans_response ?? "InProgress",
-          response.trans_response ?? "Message not found", () {
-        fetchReport();
+    try{
+      StatusDialog.progress();
+      var response = (tag == AppTag.moneyReportControllerTag)
+          ? await repo.requeryDmtTransaction({
+        "transaction_no": report.transactionNumber ?? "",
+      })
+          : await repo.requeryPayoutTransaction({
+        "transaction_no": report.transactionNumber ?? "",
       });
-    } else {
-      StatusDialog.failure(title: response.message ?? "Something went wrong");
+
+      Get.back();
+      if (response.code == 1) {
+        ReportHelperWidget.requeryStatus(response.trans_response ?? "InProgress",
+            response.trans_response ?? "Message not found", () {
+              fetchReport();
+            });
+      } else {
+        StatusDialog.failure(title: response.message ?? "Something went wrong");
+      }
+    }catch(e){
+      Get.back();
+      Get.to(()=>ExceptionPage(error: e));
     }
   }
 

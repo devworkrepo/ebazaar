@@ -8,8 +8,10 @@ import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/tags.dart';
 
 import '../../../model/report/aeps.dart';
+import '../../../widget/dialog/status_dialog.dart';
+import '../report_helper.dart';
 
-class AepsMatmReportController extends GetxController with ReceiptPrintMixin   {
+class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
   final String origin;
@@ -84,6 +86,33 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin   {
       report.isExpanded.value = true;
       previousReport?.isExpanded.value = false;
       previousReport = report;
+    }
+  }
+
+  void requeryTransaction(AepsReport report) async {
+    try {
+      StatusDialog.progress();
+      var response = (tag == AppTag.aadhaarPayReportControllerTag)
+          ? await repo.requeryAadhaarPayTransaction({
+              "transaction_no": report.transactionNumber ?? "",
+            })
+          : await repo.requeryAepsTransaction({
+              "transaction_no": report.transactionNumber ?? "",
+            });
+
+      Get.back();
+      if (response.code == 1) {
+        ReportHelperWidget.requeryStatus(
+            response.trans_response ?? "InProgress",
+            response.trans_response ?? "Message not found", () {
+          fetchReport();
+        });
+      } else {
+        StatusDialog.failure(title: response.message ?? "Something went wrong");
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 

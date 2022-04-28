@@ -1,17 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common/common_confirm_dialog.dart';
-import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/model/bank.dart';
-import 'package:spayindia/model/dmt/bank.dart';
-import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
+import 'package:spayindia/widget/common/common_confirm_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 class BeneficiaryAddController extends GetxController {
   DmtRepo repo = Get.find<DmtRepoImpl>();
@@ -116,6 +112,7 @@ class BeneficiaryAddController extends GetxController {
       "remitter_mobile": mobileNumberController.text.toString(),
       "accountno": accountNumberController.text.toString(),
       "bankname": bankName,
+      "beneid": "0",
       "ifsc": ifscCodeController.text.toString(),
     };
 

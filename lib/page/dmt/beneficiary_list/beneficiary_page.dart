@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_controller.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_beneficiary_list_item.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/sender_header.dart';
+import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:spayindia/util/api/exception.dart';
+import 'package:spayindia/widget/api_component.dart';
 
 class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   const BeneficiaryListPage({Key? key}) : super(key: key);
@@ -19,9 +21,19 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
         onPressed: () => controller.addBeneficiary(),
         child: const Icon(Icons.add),
       ),
-      body: ObsResourceWidget(
-          obs: controller.beneficiaryResponseObs,
-          childBuilder: (data)=>_buildBody())
+      body: Obx(
+          () => controller.beneficiaryResponseObs.value.when(onSuccess: (data) {
+                if (data.code == 1) {
+                  return _buildBody();
+                } else {
+                  return ExceptionPage(
+                      error: UnknownException(message: data.message));
+                }
+              }, onFailure: (e) {
+                return ExceptionPage(error: e);
+              }, onInit: (data) {
+                return ApiProgress(data);
+              }))
       /*Obx(() => controller.beneficiaryResponseObs.value.when(
           onSuccess: (data) => _buildBody(),
           onFailure: (e) => ExceptionPage(error: e),
@@ -128,22 +140,39 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   }
 
   SliverList _buildSilverList() {
+    var mList = controller.beneficiaries;
+    var isListEmpty = mList.isEmpty;
+    var mCount = mList.length;
+    if (isListEmpty) {
+      mCount = 1;
+    }
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, int index) {
+          if (isListEmpty) {
+            return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Text(
+              "No beneficiary found!",
+              style: Get.textTheme.headline3,
+            ),
+                ));
+          } else {
+            var bottomPadding = 1.0;
+            if (index == controller.beneficiaries.length - 1) {
+              bottomPadding = 120.0;
+            }
 
-          var bottomPadding = 1.0;
-          if(index == controller.beneficiaries.length -1){
-            bottomPadding = 120.0;
+            return Padding(
+              padding: EdgeInsets.only(
+                  left: 7, right: 7, bottom: bottomPadding, top: 1),
+              child: DmtBeneficiaryListItem(index),
+            );
           }
-
-          return Padding(
-            padding:  EdgeInsets.only(left: 7,right: 7,bottom: bottomPadding,top: 1),
-            child: DmtBeneficiaryListItem(index),
-          );
         },
-        childCount: controller.beneficiaries.length,
+        childCount: mCount,
       ),
     );
   }

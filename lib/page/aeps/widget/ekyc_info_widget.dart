@@ -6,9 +6,11 @@ import 'package:spayindia/res/style.dart';
 class EkycInfoWidget extends StatelessWidget {
   final VoidCallback onClick;
   final VoidCallback onCancel;
+  final String title;
+  final String message;
 
   const EkycInfoWidget(
-      {required this.onClick, required this.onCancel, Key? key})
+      {required this.title, required this.message,required this.onClick, required this.onCancel, Key? key})
       : super(key: key);
 
   @override
@@ -26,15 +28,15 @@ class EkycInfoWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "E-Kyc is Pending",
-                style: Get.textTheme.headline4,
+                title,
+                style: Get.textTheme.headline4,textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16,),
                Text(
-                  "E-Kyc is required for AEPS, Aadhaar Pay and Micro Atm transaction. Without doing it you will not granted for further transaction",
-              style: Get.textTheme.bodyText1,),
+                 message,
+              style: Get.textTheme.bodyText1,textAlign: TextAlign.center,),
               const SizedBox(height: 32,),
-              AppButton(text: "Do E-Kyc", onClick: onClick),
+              AppButton(text: "Proceed", onClick: onClick),
               const SizedBox(height: 16,),
               AppButton(text: "Cancel", onClick: onCancel,background: Colors.red,),
             ],

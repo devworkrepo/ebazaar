@@ -2,11 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
-import 'package:spayindia/widget/dialog/aeps_rd_service_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/widget/list_component.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/aeps_repo.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
@@ -18,8 +13,11 @@ import 'package:spayindia/page/response/aeps/aeps_txn_response_page.dart';
 import 'package:spayindia/service/native_call.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/dialog/aeps_rd_service_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/list_component.dart';
 
 import '../../../route/route_name.dart';
 import '../../../util/mixin/location_helper_mixin.dart';
@@ -51,32 +49,57 @@ class AepsController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    validateLocation(progress: false);
     _fetchBankList();
   }
 
   void _fetchBankList() async {
-    obsResponseHandler<AepsBankResponse>(
-        obs: aepsBankListResponseObs,
-        apiCall: repo.fetchAepsBankList(),
-        onResponse: (data) {
-          if (data.code == 1) {
-            bankListResponse = data;
-            bankList = data.aepsBankList!;
-            if (data.isEKcy!) {
-              Get.bottomSheet(
-                  EkycInfoWidget(onClick: () {
-                    Get.back();
-                    Get.offAndToNamed(AppRoute.aepsEkycPage);
-                  }, onCancel: () {
-                    Get.back();
-                    Get.back();
-                  }),
-                  isDismissible: false,
-                  persistent: false,
-                  enableDrag: false);
-            }
-          }
-        });
+    try {
+      aepsBankListResponseObs.value = const Resource.onInit();
+      var response = await repo.fetchAepsBankList();
+      if (response.code == 1) {
+        bankListResponse = response;
+        bankList = response.aepsBankList!;
+        aepsBankListResponseObs.value = Resource.onSuccess(response);
+        if (!(response.isEKcy ?? false)) {
+          showEkcyDialog("E-Kyc is Pending",
+              "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",AppRoute.aepsEkycPage);
+        }
+      } else if (response.code == 2) {
+        showEkcyDialog(
+            "OnBoarding Required",
+            response.message ??
+                "To do aeps, aadhaar pay and matm transaction"
+                    " OnBoarding is required!",
+          AppRoute.aepsOnboardingPage,
+        );
+      } else if (response.code == 3) {
+        StatusDialog.pending(
+                title: response.message ?? "Pending",
+                buttonText: "Bank to Home")
+            .then((value) => Get.back());
+      }
+    } catch (e) {
+      aepsBankListResponseObs.value = Resource.onFailure(e);
+    }
+  }
+
+  void showEkcyDialog(String title, String message,String route) {
+    Get.bottomSheet(
+        EkycInfoWidget(
+            title: title,
+            message: message,
+            onClick: () {
+              Get.back();
+              Get.offAndToNamed(route);
+            },
+            onCancel: () {
+              Get.back();
+              Get.back();
+            }),
+        isDismissible: false,
+        persistent: false,
+        enableDrag: false);
   }
 
   void onProceed() async {
@@ -85,10 +108,9 @@ class AepsController extends GetxController
     try {
       await validateLocation(progress: true);
       AppUtil.logger("Position : " + position.toString());
-    } catch(e){
+    } catch (e) {
       return;
     }
-
 
     Get.dialog(AepsRdServiceDialog(
       onClick: (rdServicePackageUrl) async {

@@ -14,6 +14,6 @@ class WalletLoadTxnResponseController extends GetxController {
     AppUtil.captureAndShare(
         screenshotController: screenshotController,
         amount: response.amount.toString(),
-        type: "Paytm Wallet");
+        type: "Wallet Pay ");
   }
 }

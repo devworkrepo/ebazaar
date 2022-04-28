@@ -76,7 +76,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
   void setupUpdateDetailData() {
      if (updateDetail != null) {
       remarkController.text = updateDetail!.remark!;
-      amountController.text = "₹ ${updateDetail!.amount!}";
+      amountController.text = updateDetail!.amount!;
       uploadSlipController.text = updateDetail!.picName!;
       paymentDateController.text = updateDetail!.depositDate!;
 
@@ -134,7 +134,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
 
       if (response.code == 1) {
         StatusDialog.success(title: response.message)
-            .then((value) => Get.back());
+            .then((value) => Get.back(result: true));
       } else {
         StatusDialog.failure(title: response.message);
       }
@@ -190,7 +190,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
       "bankaccount": paymentAccountObs.value,
       "date": paymentDateController.text,
       "remark": remarkController.text,
-      "amount": amountWithoutRupeeSymbol(amountController),
+      "amount": amountController.text,
       "images ": fileData,
     };
 
@@ -212,8 +212,4 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
         }));
   }
 
-  void onUpdateDetail (MoneyRequestUpdateResponse value) {
-    updateDetail = value;
-    setupUpdateDetailData();
-  }
 }

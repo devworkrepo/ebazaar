@@ -206,6 +206,24 @@ class ReportRepoImpl extends ReportRepo{
     return CreditCardReceiptResponse.fromJson(response.data);
   }
 
+  @override
+  Future<TransactionInfoResponse> requeryRechargeTransaction(data) async {
+    var response = await  client.post("/RequeryUtility",data: data);
+    return TransactionInfoResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<TransactionInfoResponse> requeryAadhaarPayTransaction(data) async {
+    var response = await  client.post("/RequeryAadharPay",data: data);
+    return TransactionInfoResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<TransactionInfoResponse> requeryAepsTransaction(data) async {
+    var response = await  client.post("/RequeryAEPS",data: data);
+    return TransactionInfoResponse.fromJson(response.data);
+  }
+
 
 
 }

@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/money_request_repo.dart';
 import 'package:spayindia/data/repo_impl/money_request_impl.dart';
 import 'package:spayindia/model/fund/request_report.dart';
@@ -8,11 +6,10 @@ import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 class FundRequestReportController extends GetxController {
   MoneyRequestRepo repo = Get.find<MoneyRequestImpl>();
-
-  String origin = Get.arguments;
 
   String fromDate = "";
   String toDate = "";
@@ -87,13 +84,13 @@ class FundRequestReportController extends GetxController {
       Get.back();
 
       if(response.code == 1){
-
-        if(origin == "route"){
-          Get.toNamed(AppRoute.fundRequestPage,arguments: response);
-        }
-        else{
-          Get.back(result: response);
-        }
+        Get.toNamed(AppRoute.fundRequestPage,arguments: response)?.then((value) {
+          if(value!=null){
+            if(value){
+              _fetchReport();
+            }
+          }
+        });
       }
       else{
         StatusDialog.failure(title: response.message);

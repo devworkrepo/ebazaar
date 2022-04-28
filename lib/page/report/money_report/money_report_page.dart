@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/api_component.dart';
-import 'package:spayindia/widget/list_component.dart';
-import 'package:spayindia/widget/no_data_found.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 import 'package:spayindia/util/tags.dart';
+import 'package:spayindia/widget/api_component.dart';
+import 'package:spayindia/widget/list_component.dart';
+import 'package:spayindia/widget/no_data_found.dart';
 
 import '../../../widget/common/report_action_button.dart';
 import '../report_helper.dart';
@@ -30,8 +30,10 @@ class MoneyReportPage extends GetView<MoneyReportController> {
 
     return Scaffold(
       appBar: (origin == "summary") ? AppBar(
-        title: const Text("DMT InProgress"),
-      ): null,
+        title: Text((controllerTag == AppTag.moneyReportControllerTag
+                    ? "DMT InProgress"
+                    : "Payout InProgress")),
+              ): null,
         body: Obx(() =>
             controller.reportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {

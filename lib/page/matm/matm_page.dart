@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/util/obx_widget.dart';
+import 'package:spayindia/util/validator.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/radio.dart';
 import 'package:spayindia/widget/status_bar_color_widget.dart';
 import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/util/validator.dart';
 
 import 'matm_controller.dart';
 
@@ -21,7 +22,9 @@ class MatmPage extends GetView<MatmController> {
         appBar: AppBar(
           title: const Text("Matm"),
         ),
-        body: _buildBody(),
+        body: ObsResourceWidget(
+            obs: controller.aepsBankListResponseObs,
+            childBuilder: (data) => _buildBody()),
       ),
     );
   }

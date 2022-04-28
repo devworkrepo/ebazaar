@@ -40,9 +40,12 @@ abstract class ReportRepo{
   Future<CommonResponse> takeCreditCardRefund(data);
 
   //re-query
+  Future<TransactionInfoResponse> requeryRechargeTransaction(data);
   Future<TransactionInfoResponse> requeryDmtTransaction(data);
   Future<TransactionInfoResponse> requeryPayoutTransaction(data);
   Future<TransactionInfoResponse> requeryCreditCardTransaction(data);
+  Future<TransactionInfoResponse> requeryAepsTransaction(data);
+  Future<TransactionInfoResponse> requeryAadhaarPayTransaction(data);
 
   //print receipt
   Future<MoneyReceiptResponse> moneyTransactionReceipt(data);

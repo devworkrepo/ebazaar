@@ -144,7 +144,7 @@ class _BuildListItem extends StatelessWidget {
               title: "Re-query",
               icon: Icons.refresh,
               onClick: () {
-                StatusDialog.failure(title: "Service is not available right now");
+               controller.requeryTransaction(report);
               },
             )
                 : const SizedBox(),

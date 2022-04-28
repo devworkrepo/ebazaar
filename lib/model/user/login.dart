@@ -6,6 +6,7 @@ class LoginResponse {
   String? otpKey;
   String? agentId;
   String? sessionKey;
+  bool? hideresend;
 
   LoginResponse();
   LoginResponse.fromJson(Map<String, dynamic> json) {
@@ -14,6 +15,7 @@ class LoginResponse {
     message = json['message'];
     otpKey = json["otpkey"];
     agentId = json["agentid"];
+    hideresend = json["hideresend"];
     sessionKey = json["sessionkey"];
   }
 
@@ -23,6 +25,7 @@ class LoginResponse {
     data['status'] = status;
     data["code"] = code;
     data["otpkey"] = otpKey;
+    data["hideresend"] = hideresend;
     data["agentid"] = agentId;
     data["sessionkey"] = sessionKey;
     return data;

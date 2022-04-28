@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/drop_down.dart';
@@ -8,6 +9,7 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/validator.dart';
 
+import '../../util/input_validator.dart';
 import '../../util/obx_widget.dart';
 
 class FundRequestPage extends GetView<FundRequestController> {
@@ -51,24 +53,6 @@ class FundRequestPage extends GetView<FundRequestController> {
   AppBar _buildAppbar() {
     return AppBar(
       title:  Text("Fund Request ${(controller.updateDetail != null) ? "Update" : ""}"),
-      actions: [
-        PopupMenuButton<String>(
-          onSelected: (i) {
-            Get.toNamed(AppRoute.fundReportPage, arguments: "fund_request")
-                ?.then((value) {
-              controller.onUpdateDetail(value);
-            });
-          },
-          itemBuilder: (BuildContext context) {
-            return {'Report'}.map((String choice) {
-              return PopupMenuItem<String>(
-                value: choice,
-                child: Text(choice),
-              );
-            }).toList();
-          },
-        ),
-      ],
     );
   }
 }
@@ -143,13 +127,23 @@ class FundRequestFormField extends GetView<FundRequestController> {
                       return FormValidatorHelper.empty(value);
                     },
                   ),
-                  AppTextField(controller: controller.remarkController,label: "Remark", hint: "Optional",),
-                  AmountTextField(
-                    controller: controller.amountController,
-                    validator: (value) => FormValidatorHelper.amount(value,
-                        minAmount: 1, maxAmount: 10000000),
-                  ),
-                ],
+                AppTextField(controller: controller.remarkController,
+                  label: "Remark",
+                  hint: "Optional",),
+
+                AppTextField(controller: controller.amountController,
+                  label: "Amount",
+                  hint: "Enter Amount",
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  inputType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  validator: (value) =>
+                      FormValidatorHelper.amount(value,
+                          minAmount: 1, maxAmount: 10000000),
+
+                ),
+              ],
             ),
           ),
         )
