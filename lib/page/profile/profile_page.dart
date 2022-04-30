@@ -72,14 +72,14 @@ class _UserInfoSection extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
-                    (user.fullName ?? "") + "  (" + (user.userType ?? "") + ")",
+                    (profile.outlet_name ?? ""),
                     style:
                     Get.textTheme.headline6?.copyWith(color: Colors.white),
                   ),
                   Text(
-                   " (" + (user.userType ?? "") + ")",
+                    (user.fullName ?? ""),
                     style:
-                    Get.textTheme.headline6?.copyWith(color: Colors.white),
+                    Get.textTheme.headline6?.copyWith(color: Colors.white70),
                   ),
 
                   SizedBox(
@@ -162,7 +162,6 @@ class _GeneralInfo extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _BuildTitleValueWidget("Outlet Name", profile.outlet_name),
                   _BuildTitleValueWidget("Mobile Number", profile.outlet_mobile),
                   _BuildTitleValueWidget("Email ID", profile.emailid),
                   _BuildTitleValueWidget("Pan Number", profile.pan_no),
@@ -218,6 +217,7 @@ class _AddressInfo extends StatelessWidget {
 
 }
 
+// ignore: must_be_immutable
 class _ParentInfo extends StatelessWidget {
 
   final UserProfile profile;
@@ -238,7 +238,7 @@ class _ParentInfo extends StatelessWidget {
           children: [
 
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   _BuildTitleValueWidget("Distributor Name", profile.distributor_name),

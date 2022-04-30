@@ -5,6 +5,16 @@ import 'app_config.dart';
 
 class Encryption {
 
+  Encryption._();
+
+  static String encryptMPIN(String text){
+return text;
+    if(text.isEmpty || text == "na"){
+      return text;
+    }
+    return aesEncrypt(text);
+  }
+
   static Future<String> getEncValue(String mobileNumber) async{
     final String deviceId = await AppUtil.getDeviceID();
     return aesEncrypt(deviceId+"_"+ deviceId+"_"+mobileNumber);

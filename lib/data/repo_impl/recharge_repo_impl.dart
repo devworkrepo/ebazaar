@@ -54,6 +54,7 @@ class RechargeRepoImpl extends RechargeRepo {
   @override
   Future<BillInfoResponse> fetchBillInfo(data) async {
     var response = await client.post("FetchBill", data: data);
+    //var response = await AppUtil.parseJsonFromAssets("bill_fetch_response");
     return BillInfoResponse.fromJson(response.data);
   }
 
@@ -67,7 +68,7 @@ class RechargeRepoImpl extends RechargeRepo {
   @override
   Future<BillPaymentResponse> makePartBillPayment(data,cancelToken) async {
     var response = await client.post("/BillPaymentPart", data: data,cancelToken: cancelToken);
-   // var response = await AppUtil.parseJsonFromAssets("bill_payment_response");
+    //var response = await AppUtil.parseJsonFromAssets("bill_payment_response");
     return BillPaymentResponse.fromJson(response.data);
   }
 

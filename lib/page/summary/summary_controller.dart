@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
+import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_controller.dart';
 import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_page.dart';
+import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_page.dart';
 import 'package:spayindia/page/refund/recharge_refund/recharge_refund_controller.dart';
 import 'package:spayindia/page/refund/recharge_refund/recharge_refund_page.dart';
+import 'package:spayindia/page/refund/refund_tab.dart';
 import 'package:spayindia/page/report/aeps_matm_report/aeps_matm_report_controller.dart';
 import 'package:spayindia/page/report/aeps_matm_report/aeps_matm_report_page.dart';
 import 'package:spayindia/page/report/credit_card_report/credit_card_report_controller.dart';
@@ -26,13 +29,10 @@ class SummaryController extends GetxController {
   var responseObs = Resource.onInit(data: TransactionSummary()).obs;
   late TransactionSummary summary;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _fetchSummary();
-  }
+  AppPreference appPreference = Get.find();
 
-  _fetchSummary() async {
+
+  fetchSummary() async {
     ObsResponseHandler<TransactionSummary>(
         obs: responseObs,
         apiCall: repo.fetchSummary(),
@@ -48,9 +48,9 @@ class SummaryController extends GetxController {
   }
 
   onDmtInRefundPendingClick() {
-    Get.delete<MoneyReportController>(tag: AppTag.moneyReportControllerTag);
+    Get.delete<DmtRefundController>(tag: AppTag.moneyRefundControllerTag);
     Get.to(() => const DmtRefundPage(
-        controllerTag: AppTag.moneyReportControllerTag, origin: "summary"));
+        controllerTag: AppTag.moneyRefundControllerTag, origin: "summary"));
   }
 
   onUtilityInProgressClick() {

@@ -6,6 +6,11 @@ class Provider {
   late String operatorCode;
 
   Provider();
+  Provider.fromJson2(Map<String, dynamic> json) {
+    name = json['name'].toString();
+    id = json['id'].toString();
+    operatorCode = json['opcode'].toString();
+  }
 
   Provider.fromJson(Map<String, dynamic> json) {
     name = json['name'].toString();

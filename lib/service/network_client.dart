@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:encrypt/encrypt.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:spayindia/data/app_pref.dart';
@@ -7,6 +8,7 @@ import 'package:spayindia/main.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/security/encription.dart';
 
 class NetworkClient {
   late var dio = Dio();
@@ -80,7 +82,7 @@ class NetworkClient {
               DioError(requestOptions: options, error: NoInternetException()));
         }
         _options.headers = {
-          "Authorization": "Bearer " + appPreference.sessionKey,
+          "Authorization": "Bearer " + Encryption.encryptMPIN(appPreference.sessionKey),
           "Accept": "application/json"
         };
         return handler.next(options);
@@ -99,7 +101,7 @@ class NetworkClient {
   }) async {
     var additionalData = {
       "dvckey": await AppUtil.getDeviceID(),
-      "sessionkey": appPreference.sessionKey,
+      "sessionkey": Encryption.encryptMPIN(appPreference.sessionKey),
     };
 
     if (data == null) {
@@ -133,7 +135,7 @@ class NetworkClient {
   }
 
   _getOptionWithToken(Options? options) {
-    var token = appPreference.sessionKey;
+    var token = Encryption.encryptMPIN(appPreference.sessionKey);
     if (options != null) {
       options.headers?.addAll({"Authorization": "Bearer $token"});
     } else {

@@ -10,12 +10,16 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
 import 'package:spayindia/service/local_auth.dart';
+import 'package:spayindia/service/native_call.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
+import 'package:spayindia/util/security/app_config.dart';
 
 import 'data/app_pref.dart';
 
 
 const isTestMode = false;
+var isDeviceRooted = false;
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -28,6 +32,8 @@ void main() async {
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await appBinding();
+  isDeviceRooted =await NativeCall.isDeviceRooted();
+
   runApp(MyApp(isBiometricAvailable));
 }
 
@@ -57,9 +63,13 @@ class _MyAppState extends State<MyApp> {
       initialPage = AppRoute.deviceLockPage;
     }
 
-    if(kDebugMode){
-      initialPage = AppRoute.mainPage;
+    if(isDeviceRooted){
+      initialPage = AppRoute.rootPage;
     }
+
+   /* if(kDebugMode){
+      initialPage = AppRoute.mainPage;
+    }*/
 
     ThemeData themeData = ThemeData(
         scaffoldBackgroundColor: (isTestMode && kReleaseMode)
@@ -121,5 +131,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    AppConfig.init();
+    AppUtil.logger("isDeviceRooted : $isDeviceRooted");
   }
 }

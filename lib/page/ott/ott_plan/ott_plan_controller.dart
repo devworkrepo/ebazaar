@@ -6,6 +6,7 @@ import 'package:spayindia/model/ott/ott_plan.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/future_util.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 class OttPlanController extends GetxController {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
@@ -23,16 +24,23 @@ class OttPlanController extends GetxController {
 
   _fetchPlan() async {
 
-    _onResponse(OttPlanResponse response){
-      if(response.code == 1){
+    try{
+      planResponseObs.value = const Resource.onInit();
+      var response = await repo.fetchOttPlan({"ope_code" : operator.operatorCode ?? ""});
+      if (response.code == 1) {
+        planResponseObs.value = Resource.onSuccess(response);
         planList = response.ottPlanList!;
+      } else {
+        StatusDialog.failure(
+            title: response.message ?? "Something went wrong!!")
+            .then((value) => Get.back());
       }
-    }
 
-    obsResponseHandler<OttPlanResponse>(
-        obs: planResponseObs,
-        apiCall: repo.fetchOttPlan({"ope_code" : operator.operatorCode ?? ""}),
-        onResponse: _onResponse);
+    }catch(e){
+      StatusDialog.failure(
+          title: "Something went wrong!!")
+          .then((value) => Get.back());
+    }
 
   }
 

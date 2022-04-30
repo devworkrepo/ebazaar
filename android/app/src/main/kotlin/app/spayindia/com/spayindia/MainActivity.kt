@@ -6,9 +6,11 @@ import androidx.annotation.NonNull
 import app.spayindia.com.AppConstant
 import app.spayindia.com.AppConstant.AEPS_SERVICE_METHOD_NAME
 import app.spayindia.com.AppConstant.MATM_SERVICE_METHOD_NAME
+import app.spayindia.com.AppConstant.ROOT_CHECKER_METHOD_NAME
 import app.spayindia.com.AppConstant.METHOD_CHANNEL
 import app.spayindia.com.AppConstant.RD_SERVICE_SERIAL_NUMBER
 import app.spayindia.com.XmPidParser
+import app.spayindia.com.RootChecker
 import com.fingpay.microatmsdk.MicroAtmLoginScreen
 import com.fingpay.microatmsdk.utils.Constants
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -41,17 +43,25 @@ class MainActivity : FlutterFragmentActivity() {
                 call.method.equals(MATM_SERVICE_METHOD_NAME) -> {
                     launchMatm(call)
                 }
+                call.method.equals(ROOT_CHECKER_METHOD_NAME) -> {
+                    rootCheck(call)
+                }
                 call.method.equals(RD_SERVICE_SERIAL_NUMBER) -> {
 
-                        val mData =
+                    val mData =
                             XmPidParser.getDeviceSerialNumber(
-                                call.argument<String>("pidData") ?: ""
+                                    call.argument<String>("pidData") ?: ""
                             )
-                        result!!.success(mData)
+                    result!!.success(mData)
 
                 }
             }
         }
+    }
+
+    private fun rootCheck(call: MethodCall) {
+        val isRooted = RootChecker.isDeviceRooted
+        result?.success(isRooted)
     }
 
     private fun launchMatm(call: MethodCall) {
@@ -89,11 +99,6 @@ class MainActivity : FlutterFragmentActivity() {
             }
             startActivityForResult(intent, AppConstant.MATM_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
-            /*result?.error(
-                "99",
-                "Enable to launch Micro-Atm Activity, please contact with admin",
-                "exception"
-            )*/
         }
     }
 

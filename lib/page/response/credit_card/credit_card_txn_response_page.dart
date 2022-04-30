@@ -33,6 +33,9 @@ class CreditCardTxnResponsePage extends GetView<CreditCardTxnResponseController>
               imagePath: "assets/image/card.png"),
           dividerListContainer(children: [
             buildTitleValueWidget(
+                title: "Transaction No.",
+                value: controller.response.transactionNumber ?? ""),
+            buildTitleValueWidget(
                 title: "Holder Name",
                 value: controller.response.cardHolderName ?? ""),
             buildTitleValueWidget(

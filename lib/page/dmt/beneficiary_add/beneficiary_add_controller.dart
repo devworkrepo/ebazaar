@@ -131,7 +131,7 @@ class BeneficiaryAddController extends GetxController {
     } catch (e) {
       isAccountVerify = false;
       isVerifying.value = false;
-      Get.to(()=>ExceptionPage(error: e));
+      StatusDialog.failure(title: "unable to verify, please try after sometime");
     }
   }
 }

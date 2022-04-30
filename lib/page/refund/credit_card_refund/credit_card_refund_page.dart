@@ -113,10 +113,10 @@ class _BuildListItem extends GetView<CreditCardRefundController> {
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
         expandList: [
+          ListTitleValue(title: "Transaction No.", value: report.transactionNumber.toString()),
           ListTitleValue(title: "Name", value: report.cardHolderName.toString()),
           ListTitleValue(title: "Mobile Number", value: report.mobileNumber.toString()),
           ListTitleValue(title: "Card Type", value: report.cardType.toString()),
-          ListTitleValue(title: "Txn Number", value: report.transactionNumber.toString()),
           ListTitleValue(title: "Utr Number", value: report.utrNumber.toString()),
           ListTitleValue(title: "IFSC Code", value: report.ifsc.toString()),
           ListTitleValue(title: "Charge", value: report.charge.toString()),

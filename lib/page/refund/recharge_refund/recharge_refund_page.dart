@@ -112,6 +112,8 @@ class _BuildListItem extends GetView<RechargeRefundController> {
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
         expandList: [
           ListTitleValue(
+              title: "Transaction No.", value: report.transactionNumber.toString()),
+          ListTitleValue(
               title: "Operator Name", value: report.operatorName.toString()),
           ListTitleValue(
               title: "Operator Ref No", value: report.operatorRefNumber.toString()),

@@ -14,6 +14,8 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
+import '../../../util/security/encription.dart';
+
 class LicOnlineController extends GetxController
     with TransactionHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
@@ -76,7 +78,7 @@ class LicOnlineController extends GetxController
         "amount": amountWithoutRupeeSymbol(amountController),
         "policyno": policyNumberController.text,
         "emailid": emailController.text,
-        "mpin": mpinController.text,
+        "mpin":Encryption.encryptMPIN(mpinController.text),
       };
 
   _makeBillPayment() async {

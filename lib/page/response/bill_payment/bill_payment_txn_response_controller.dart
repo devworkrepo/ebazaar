@@ -4,12 +4,14 @@ import 'package:spayindia/model/dmt/response.dart';
 import 'package:spayindia/model/recharge/bill_payment.dart';
 import 'package:spayindia/model/recharge/recharge.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
+import 'package:spayindia/page/recharge/provider/provider_controller.dart';
 import 'package:spayindia/util/app_util.dart';
 
 class BillPaymentTxnResponseController extends GetxController {
   var screenshotController = ScreenshotController();
   BillPaymentResponse response = Get.arguments["response"];
   ProviderType? provider = Get.arguments["type"];
+  bool isPartBill = Get.arguments["isPartBill"] ?? false;
 
   String getSvgImage(){
     if(provider == ProviderType.electricity){
@@ -38,6 +40,6 @@ class BillPaymentTxnResponseController extends GetxController {
     AppUtil.captureAndShare(
         screenshotController: screenshotController,
         amount: response.amount.toString(),
-        type: (response.billerName?.toLowerCase() ?? "") + "Payment");
+        type: (provider == null) ? "Payment " : getProviderInfo (provider!)?.name ?? "Payment ");
   }
 }

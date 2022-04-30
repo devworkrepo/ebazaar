@@ -6,6 +6,7 @@ import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
 import 'package:spayindia/page/report/report_helper.dart';
 
+import '../../util/security/encription.dart';
 import '../../widget/common.dart';
 import '../../widget/dialog/status_dialog.dart';
 import '../../util/mixin/transaction_helper_mixin.dart';
@@ -111,7 +112,7 @@ class PaytmWalletController extends GetxController with TransactionHelperMixin {
 
       StatusDialog.transaction();
       var response = await repo.paymtWalletLoadTransaction({
-        "mpin": mpinController.text,
+        "mpin": Encryption.encryptMPIN(mpinController.text),
         "transaction_no": transactionNumber,
         "mobileno": mobileController.text,
         "amount": amountWithoutRupeeSymbol(amountController)

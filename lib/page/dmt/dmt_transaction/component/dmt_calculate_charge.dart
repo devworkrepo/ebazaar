@@ -83,12 +83,12 @@ class DmtCalculateChargeWidget extends GetView<DmtTransactionController> {
             Text(calculateCharge.srno.toString() +".  ",style: Get.textTheme.headline6,),
             Expanded(
                 child: _chargeCommonText(
-                    (calculateCharge.amount ?? "") + " Rs. ")),
+                  "Rs "+  (calculateCharge.amount ?? "") )),
             Expanded(
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: _chargeCommonText(
-                        (calculateCharge.charge ?? "") + " Rs. ",
+                        "Rs "+(calculateCharge.charge ?? "") ,
                         color: Colors.red))),
           ],
         ),

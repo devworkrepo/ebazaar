@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
@@ -61,7 +62,7 @@ class CreditDebitController extends GetxController {
 
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd();
-    toDate = DateUtil.currentDateInYyyyMmDd();
+    toDate = DateUtil.currentDateInYyyyMmDd(dayBefore: (kDebugMode) ? 30 : null);
     searchInput = "";
     fetchReport();
   }

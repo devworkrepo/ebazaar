@@ -6,12 +6,14 @@ import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/model/banner.dart';
+import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/main/home/component/bottom_sheet_option.dart';
 import 'package:spayindia/page/main/home/component/home_service_section.dart';
 import 'package:spayindia/page/main_page.dart';
+import 'package:spayindia/page/recharge/provider/provider_controller.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
@@ -51,9 +53,15 @@ class HomeController extends GetxController {
     try {
       var response = await homeRepo.fetchBanners();
       if (response.banners != null) {
-
-        //todo add banner list from apis
         var mList = <AppBanner>[]; //response.banners!;
+        /*response.banners!.forEach((element) {
+          mList.add(element);
+        });
+        if(mList.isNotEmpty){
+          mList.add(AppBanner(
+              rawPicName: "https://spayindia.in/images/spay_features.png"));
+        }*/
+
         mList.add(AppBanner(
             rawPicName: "https://spayindia.in/images/spay_features.png"));
         bannerList.value = mList;
@@ -199,10 +207,29 @@ class HomeController extends GetxController {
               arguments: ProviderType.electricity);
         }
         break;
+      case HomeServiceType.partBillPayment:
+        {
+          var provider = Provider.fromJson2(
+            {
+              "id": "93",
+              "name": "Tata Power - Delhi / North Delhi Power Limited(NDPL)",
+              "opcode": "TR79"
+            },
+          );
+
+          Get.toNamed(AppRoute.billPaymentPage, arguments: {
+            "is_part_bill": true,
+            "provider": provider,
+            "provider_name": getProviderInfo(ProviderType.electricity)?.name,
+            "provider_image":
+                getProviderInfo(ProviderType.electricity)?.imageName.toString(),
+            "provider_type": ProviderType.electricity
+          });
+        }
+        break;
       case HomeServiceType.insurance:
         {
-          Get.toNamed(AppRoute.providerPage,
-              arguments: ProviderType.insurance);
+          Get.toNamed(AppRoute.providerPage, arguments: ProviderType.insurance);
         }
         break;
       case HomeServiceType.walletPay:

@@ -74,58 +74,62 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         count: 3,
                       ),
-                      _NavSubTitle(
-                        title: "Fund Request",
-                        onClick: (){
-                          Get.back();
-                          Get.toNamed(AppRoute.fundReportPage,arguments: "route");
-                        },
-                        count: 4,
-                      ),
+
                       _NavSubTitle(
                         title: "Wallet Pay",
                         onClick: ()=>Get.toNamed(AppRoute.walletReportPage),
-                        count: 5,
+                        count: 4,
                       ),
                     ],
                   ),
                 ),
-
-
 
                 Card(
                   child: _NavTitle(
-                    title: "User Auth",
-                    icon: Icons.password,
+                    title: "Fund Request",
+                    icon: Icons.money,
                     children: [
                       _NavSubTitle(
-                        title: "Change Password",
-                        onClick: (){
+                        title: "New Request",
+                        onClick: () {
                           Get.back();
-                          Get.toNamed(AppRoute.changePassword);
+                          Get.toNamed(AppRoute.fundRequestPage);
                         },
                         count: 1,
                       ),
-
                       _NavSubTitle(
-                        title: "Change Pin",
+                        title: "Pending Request",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(AppRoute.changePin);
+                          Get.toNamed(AppRoute.fundReportPage,arguments: {
+                            "is_pending" : true
+                          });
                         },
-                        underline: false,
                         count: 2,
-                      )
+                      ),
+                      _NavSubTitle(
+                        title: "All Request",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.fundReportPage,
+                              arguments: {
+                                "is_pending" : false
+                              });
+                        },
+                        count: 3,
+                      ),
                     ],
                   ),
                 ),
+
+
                 Card(
                   child: _NavTitle(
                     title: "Aeps Service",
                     icon: Icons.fingerprint,
 
                     children: [
-                      _NavSubTitle(
+                     /* _NavSubTitle(
                         title: "OnBoarding",
                         onClick: () {
                           Get.back();
@@ -142,15 +146,15 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         underline: false,
                         count: 2,
-                      ),
+                      ),*/
                       _NavSubTitle(
-                        title: "Settlement",
+                        title: "Balance Settlement",
                         onClick: () {
                           Get.back();
                           Get.toNamed(AppRoute.aepsSettlementPage);
                         },
                         underline: false,
-                        count: 3,
+                        count: 1,
                       )
                     ],
                   ),
@@ -170,6 +174,24 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         count: 1,
                       ),
+                      _NavSubTitle(
+                        title: "Change Password",
+                        onClick: (){
+                          Get.back();
+                          Get.toNamed(AppRoute.changePassword);
+                        },
+                        count: 2,
+                      ),
+
+                      _NavSubTitle(
+                        title: "Change Pin",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.changePin);
+                        },
+                        underline: false,
+                        count: 3,
+                      )
                     ],
                   ),
                 ),

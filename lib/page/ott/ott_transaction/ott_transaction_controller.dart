@@ -9,6 +9,7 @@ import 'package:spayindia/model/ott/ott_plan.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/response/recharge/recharge_txn_response_page.dart';
 
+import '../../../util/security/encription.dart';
 import '../../../widget/common.dart';
 import '../../../widget/dialog/status_dialog.dart';
 import '../../exception_page.dart';
@@ -72,7 +73,7 @@ class OttTransactionController extends GetxController {
 
       StatusDialog.transaction();
       var response = await repo.ottTransaction({
-        "mpin": mpinController.text,
+        "mpin": Encryption.encryptMPIN(mpinController.text),
         "transaction_no": transactionNumber,
         "mobileno": mobileController.text,
         "emailid": emailController.text,

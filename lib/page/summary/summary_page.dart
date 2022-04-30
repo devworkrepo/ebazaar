@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:spayindia/page/summary/summary_controller.dart';
 import 'package:spayindia/util/obx_widget.dart';
 
+import '../route_aware_widget.dart';
+
 class SummaryPage extends GetView<SummaryController> {
   const SummaryPage({Key? key}) : super(key: key);
 
@@ -10,19 +12,23 @@ class SummaryPage extends GetView<SummaryController> {
   Widget build(BuildContext context) {
     Get.put(SummaryController());
     return SafeArea(
-      child: Scaffold(
-        body: ObsResourceWidget(
-            obs: controller.responseObs,
-            childBuilder: (data) => SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _buildAppbarWidget(),
-                      const _BuildTopSectionWidget(),
-                      const _BuildMiddleSectionWidget(),
-                      const _BuildButtomSectionWidget(),
-                    ],
-                  ),
-                )),
+      child: RouteAwareWidget(
+        didPush: (){controller.fetchSummary();},
+        didPopNext: (){controller.fetchSummary();},
+        child: Scaffold(
+          body: ObsResourceWidget(
+              obs: controller.responseObs,
+              childBuilder: (data) => SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        _buildAppbarWidget(),
+                        const _BuildTopSectionWidget(),
+                        const _BuildMiddleSectionWidget(),
+                        const _BuildButtomSectionWidget(),
+                      ],
+                    ),
+                  )),
+        ),
       ),
     );
   }
@@ -33,7 +39,7 @@ class SummaryPage extends GetView<SummaryController> {
       child: Row(
         children: [
           IconButton(
-              onPressed: () => Get.back(), icon: Icon(Icons.arrow_back_ios)),
+              onPressed: () => Get.back(), icon: const Icon(Icons.arrow_back_ios)),
           RichText(
               text: TextSpan(
                   text: "Summary",
@@ -81,10 +87,10 @@ class _BuildButtomSectionWidget extends GetView<SummaryController> {
                     onClick: controller.onAadhaarPayInProgressClick,
                     text1: "Aadhaar Pay InProgress Transaction",
                     text2: controller.summary.aadhaarPayInProgress.toString()),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                _buildOtherInProgressWidget(
+                if(controller.appPreference.user.isPayout ?? false) _buildOtherInProgressWidget(
                     onClick: controller.onPayoutInProgressClick,
                     text1: "Payout InProgress Transaction",
                     text2: controller.summary.payoutInProgress.toString()),

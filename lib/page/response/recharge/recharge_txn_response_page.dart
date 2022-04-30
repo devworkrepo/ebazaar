@@ -45,10 +45,10 @@ class RechargeTxnResponsePage extends GetView<RechargeTxnResponseController>
                 title: "Operator Name",
                 value: controller.response.operatorName ?? ""),
             buildTitleValueWidget(
-                title: "Operator Ref No",
+                title: "Operator Ref No.",
                 value: controller.response.operatorRefNumber ?? ""),
             buildTitleValueWidget(
-                title: "Transaction No",
+                title: "Transaction No.",
                 value: controller.response.transactionNumber ?? ""),
           ], topBottom: true),
 

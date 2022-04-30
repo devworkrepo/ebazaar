@@ -8,6 +8,7 @@ class NativeCall {
   static const _aepsServiceMethodName = "launch_aeps_service";
   static const _matmServiceMethodName = "launch_matm_service";
   static const _rdServiceSerialNumber = "rd_service_serial_number";
+  static const _rootCheckerService = "root_checker_service";
 
   static Future<String> launchAepsService(Map<String, dynamic> data) async {
     final String result =
@@ -27,6 +28,11 @@ class NativeCall {
     _methodChannel.invokeListMethod("dummy_channel");
     return resultData;
 
+  }
+
+  static Future<bool> isDeviceRooted() async {
+    var resultData = await _methodChannel.invokeMethod(_rootCheckerService);
+    return resultData ?? false;
   }
 
 

@@ -40,7 +40,6 @@ class MatmController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    validateLocation(progress: false);
     _fetchBankList();
   }
 
@@ -52,7 +51,7 @@ class MatmController extends GetxController
 
         aepsBankListResponseObs.value = Resource.onSuccess(response);
         if (!(response.isEKcy ?? false)) {
-          showEkcyDialog("E-Kyc is Pending",
+          showEkcyDialog("E-Kyc is Required.",
               "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",AppRoute.aepsEkycPage);
         }
       } else if (response.code == 2) {
@@ -68,6 +67,9 @@ class MatmController extends GetxController
             title: response.message ?? "Pending",
             buttonText: "Bank to Home")
             .then((value) => Get.back());
+      }
+      else{
+        validateLocation(progress: false);
       }
     } catch (e) {
       aepsBankListResponseObs.value = Resource.onFailure(e);

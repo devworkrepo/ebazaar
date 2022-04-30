@@ -42,6 +42,7 @@ import '../page/ott/ott_plan/ott_plan_page.dart';
 import '../page/ott/ott_transaction/ott_transaction_page.dart';
 import '../page/refund/refund_tab.dart';
 import '../page/report/fund_report/fund_report_page.dart';
+import '../page/root_page.dart';
 import '../page/statement/statement_tab.dart';
 
 final getAllPages = [
@@ -49,6 +50,12 @@ final getAllPages = [
     name: AppRoute.mainPage,
     page: () => const MainPage(),
   ),
+
+  GetPage(
+    name: AppRoute.rootPage,
+    page: () => const RootPage(),
+  ),
+
   GetPage(
     name: AppRoute.testPage,
     page: () => const TestLocalAuthPage(),

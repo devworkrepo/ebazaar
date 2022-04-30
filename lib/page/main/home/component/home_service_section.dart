@@ -137,6 +137,7 @@ enum HomeServiceType {
   recharge,
   dth,
   billPayment,
+  partBillPayment,
   walletPay,
   insurance,
   creditCard,
@@ -184,6 +185,10 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
   if (user.isBill.orFalse()) {
     itemList.add(HomeServiceItem(
         "Bill\nPayment", "electricity", HomeServiceType.billPayment));
+  }
+  if (user.isBillPart.orFalse()) {
+    itemList.add(HomeServiceItem(
+        "Part Bill\nPayment", "electricity", HomeServiceType.partBillPayment));
   }
   if (user.isWalletPay.orFalse()) {
     itemList.add(

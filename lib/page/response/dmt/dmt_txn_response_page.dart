@@ -65,7 +65,7 @@ class _BuildDetailsInfoWidget extends GetView<DmtTxnResponseController> with Tra
         Row(
           children: [
             _buildHeadingsWidget(
-                title: "Txn Id", alignment: Alignment.centerLeft),
+                title: "Txn No.", alignment: Alignment.centerLeft),
             _buildHeadingsWidget(title: "Amount"),
             _buildHeadingsWidget(title: "Charge"),
             _buildHeadingsWidget(
@@ -84,7 +84,7 @@ class _BuildDetailsInfoWidget extends GetView<DmtTxnResponseController> with Tra
               Row(
                 children: [
                   _buildDetailsWidget(
-                      title: e.bankTransactionId ?? "",
+                      title: e.transactionNumber ?? "",
                       widgetAlignment: Alignment.centerLeft),
                   _buildDetailsWidget(title: "₹ " + (e.amount ?? "")),
                   _buildDetailsWidget(title: "₹ " + (e.charge ?? "")),

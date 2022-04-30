@@ -97,8 +97,11 @@ class DmtSearchSenderController extends GetxController {
     }
   }
 
-  _searchSender({AccountSearch? accountSearch}) async {
+  _searchSender({AccountSearch? accountSearch,int delay = 0}) async {
+
+
     StatusDialog.progress(title: "Searching");
+    await Future.delayed(Duration(seconds: delay));
     try {
       final mobile = accountSearch != null
           ? accountSearch.senderNumber!
@@ -114,7 +117,7 @@ class DmtSearchSenderController extends GetxController {
           if(value!=null){
             if(value is Map){
               numberController.text = value["mobile_number"];
-            //  _searchSender();
+              _searchSender(delay: 3);
             }
           }
         });

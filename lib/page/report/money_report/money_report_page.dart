@@ -126,12 +126,16 @@ class _BuildListItem extends StatelessWidget {
               title: "Beneficiary Name",
               value: report.beneficiaryName.toString()),
           ListTitleValue(
+              title: "IFSC Code", value: report.ifscCode.toString()),
+          ListTitleValue(
               title: "Account Number", value: report.accountNumber.toString()),
           ListTitleValue(
               title: "Transaction Type",
               value: report.transactionType.toString()),
           ListTitleValue(
               title: "Commission", value: report.commission.toString()),
+          ListTitleValue(
+              title: "Charge", value: report.charge.toString()),
           ListTitleValue(
               title: "UTR Number", value: report.utrNumber.toString()),
           ListTitleValue(

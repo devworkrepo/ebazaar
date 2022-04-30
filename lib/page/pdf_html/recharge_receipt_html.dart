@@ -116,10 +116,10 @@ class RechargeReceiptHtmlData{
                     
                             <tr>
                                 <td>
-                                    ${response.operatorRefNumber}
+                                    ${response.transactionNumber}
                                 </td>
                                 <td>
-                                   
+                                   ${response.operatorRefNumber}
                                 </td>
                                 <td>
                                     ${response.transactionStatus}

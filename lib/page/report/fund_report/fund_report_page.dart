@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/widget/api_component.dart';
@@ -19,7 +20,7 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
     Get.put(FundRequestReportController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Fund Request Report"),
+        title:  Text((controller.isPendingRequest) ? "Fund Pending Report" : "Fund All Report"),
       ),
       body: Obx(() =>
           controller.fundRequestReportResponseObs.value.when(onSuccess: (data) {
@@ -49,8 +50,8 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
     Get.bottomSheet(CommonReportSeasrchDialog(
       fromDate: controller.fromDate,
       toDate: controller.toDate,
-      status: controller.searchStatus,
-      statusList: const [
+      status:(controller.isPendingRequest) ? null :  controller.searchStatus,
+      statusList:(controller.isPendingRequest) ? null :  const [
         "Initiated",
         "Pending",
         "Accepted",
@@ -62,7 +63,9 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
         controller.fromDate = fromDate;
         controller.toDate = toDate;
         controller.searchInput = searchInput;
-        controller.searchStatus = status;
+       if(!controller.isPendingRequest){
+         controller.searchStatus = status;
+       }
         controller.onSearch();
       },
     ),isScrollControlled: true);
@@ -111,20 +114,45 @@ class _BuildListItem extends GetView<FundRequestReportController> {
 
 
         expandList: getExpandList(),
-        actionWidget: (report.status!.toLowerCase() == "pending") ? Container(
-          padding: EdgeInsets.only(top: 12),
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(backgroundColor: Colors.white),
-              onPressed: (){
-               controller.onUpdateClick(report);
-            }, child:Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              Icon(Icons.update),
-              SizedBox(width: 12,),
-              Text("Update")
-            ],)),
-        ) : SizedBox()),
+        actionWidget: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          ((report.picName ?? "").isNotEmpty) ?
+          Container(
+            padding: EdgeInsets.only(top: 12),
+            child: OutlinedButton(
+                style: OutlinedButton.styleFrom(backgroundColor: Colors.white),
+                onPressed: (){
+                  controller.onViewReceipt(report);
+                }, child:Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.remove_red_eye),
+                SizedBox(width: 5,),
+                Text("View Receipt")
+              ],)),
+          ) : SizedBox(),
+
+          SizedBox(width: 8,),
+
+          (report.status!.toLowerCase() == "pending" || kDebugMode) ?
+          Container(
+            padding: EdgeInsets.only(top: 12),
+            child: OutlinedButton(
+                style: OutlinedButton.styleFrom(backgroundColor: Colors.white),
+                onPressed: (){
+                  controller.onUpdateClick(report);
+                }, child:Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.update),
+                SizedBox(width: 5,),
+                Text("Update")
+              ],)),
+          ) : SizedBox()
+        ],)),
+
+
     );
   }
 

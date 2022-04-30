@@ -20,6 +20,7 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
+import '../../../util/security/encription.dart';
 import '../../fund/component/bond_dialog.dart';
 
 class DmtTransactionController extends GetxController
@@ -154,7 +155,7 @@ class DmtTransactionController extends GetxController
   _transactionParam() => {
         "beneid": beneficiary.id ?? "",
         "transfer_amt": amount,
-        "mpin": mpinController.text,
+        "mpin": Encryption.encryptMPIN(mpinController.text),
         "remark": remarkController.text,
         "calcid": calculateChargeResponse.calcId.toString(),
         "trans_type": (transferType == DmtTransferType.imps) ? "IMPS" : "NEFT"

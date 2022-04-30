@@ -20,6 +20,8 @@ class ChangePasswordController extends GetxController {
 
   var formKey = GlobalKey<FormState>();
 
+  var resendButtonVisibilityObs = false.obs;
+
   var changePasswordActionTypeObs = ChangePasswordActionType.requestOtp.obs;
   AppPreference appPreference = Get.find();
 
@@ -34,6 +36,27 @@ class ChangePasswordController extends GetxController {
             ChangePasswordActionType.changePassword;
       } else {
         StatusDialog.failure(title: response.message);
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
+    }
+  }
+
+
+  resendOtp() async {
+    try {
+      StatusDialog.progress();
+
+      var response = await repo.requestOtp({"otptype": "password"});
+      Get.back();
+
+      if (response.code == 1) {
+
+        showSuccessSnackbar(title: "Resent Otp", message: response.message);
+        resendButtonVisibilityObs.value = false;
+      } else {
+        showFailureSnackbar(title: "Resent Otp", message: response.message);
       }
     } catch (e) {
       Get.back();

@@ -162,6 +162,23 @@ class _BuildListItem extends GetView<AccountStatementController> {
             ],
           ),
         ),
+       Padding(
+         padding: const EdgeInsets.all(8.0),
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           children: [
+             Text(
+               "Narration : "+ report.narration.toString(),
+               style: TextStyle(color: Colors.grey),
+             ),
+             SizedBox(height: 5,),
+             Text(
+               "Remark    : "+ report.remark.toString(),
+               style: TextStyle(color: Colors.grey),
+             ),
+           ],
+         ),
+       ),
         const Divider(
           indent: 0,
         )
@@ -174,15 +191,13 @@ class _BuildListItem extends GetView<AccountStatementController> {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(report.date.toString()),
-              Text(
-                report.remark.orNA(),
-                style: TextStyle(color: Colors.grey),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(report.date.toString()),
+              ],
+            ),
           ),
           Expanded(
               child: Column(

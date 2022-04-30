@@ -15,6 +15,7 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
+import '../../util/security/encription.dart';
 import '../response/credit_card/credit_card_txn_response_page.dart';
 
 class CreditCardController extends GetxController with TransactionHelperMixin {
@@ -124,7 +125,7 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
       StatusDialog.transaction();
       var param = {
         "transaction_no" : transactionNumber,
-        "mpin" : mpinController.text,
+        "mpin" : Encryption.encryptMPIN(mpinController.text),
         "amount" : amountWithoutRupeeSymbol(amountController),
         "mobileno" : mobileController.text,
         "cardno" : aadhaarWithoutSymbol(numberController),

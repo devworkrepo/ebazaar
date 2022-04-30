@@ -15,6 +15,7 @@ import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
+import '../../../util/security/encription.dart';
 import '../../response/recharge/recharge_txn_response_page.dart';
 
 class RechargeController extends GetxController with TransactionHelperMixin {
@@ -113,7 +114,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
   }
 
   _transactionParam() => {
-        "mpin": mpinController.text,
+        "mpin": Encryption.encryptMPIN(mpinController.text),
         "transaction_no": transactionNumber,
         "operatorid": provider.id.toString(),
         "operatorname": provider.name.toString(),

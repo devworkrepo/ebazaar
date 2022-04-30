@@ -150,27 +150,30 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, int index) {
-          if (isListEmpty) {
-            return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Text(
-              "No beneficiary found!",
-              style: Get.textTheme.headline3,
-            ),
-                ));
-          } else {
-            var bottomPadding = 1.0;
-            if (index == controller.beneficiaries.length - 1) {
-              bottomPadding = 120.0;
-            }
+          return Obx((){
+            controller.beneficiaries.value;
+            if (isListEmpty) {
+              return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Text(
+                      "No beneficiary found!",
+                      style: Get.textTheme.headline3,
+                    ),
+                  ));
+            } else {
+              var bottomPadding = 1.0;
+              if (index == controller.beneficiaries.length - 1) {
+                bottomPadding = 120.0;
+              }
 
-            return Padding(
-              padding: EdgeInsets.only(
-                  left: 7, right: 7, bottom: bottomPadding, top: 1),
-              child: DmtBeneficiaryListItem(index),
-            );
-          }
+              return Padding(
+                padding: EdgeInsets.only(
+                    left: 7, right: 7, bottom: bottomPadding, top: 1),
+                child: DmtBeneficiaryListItem(index),
+              );
+            }
+          });
         },
         childCount: mCount,
       ),

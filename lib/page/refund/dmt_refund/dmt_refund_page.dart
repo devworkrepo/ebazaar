@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/api_component.dart';
-import 'package:spayindia/widget/list_component.dart';
-import 'package:spayindia/widget/no_data_found.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
-import 'package:spayindia/widget/common/report_action_button.dart';
 import 'package:spayindia/util/etns/on_string.dart';
+import 'package:spayindia/util/tags.dart';
+import 'package:spayindia/widget/api_component.dart';
+import 'package:spayindia/widget/common/report_action_button.dart';
+import 'package:spayindia/widget/list_component.dart';
+import 'package:spayindia/widget/no_data_found.dart';
 
 import '../../../model/refund/dmt_refund.dart';
 import '../../report/report_helper.dart';
@@ -16,7 +17,8 @@ class DmtRefundPage extends GetView<DmtRefundController> {
   final String controllerTag;
   final String origin;
 
-  const DmtRefundPage({Key? key, required this.controllerTag,required this.origin})
+  const DmtRefundPage(
+      {Key? key, required this.controllerTag, required this.origin})
       : super(key: key);
 
   @override
@@ -28,8 +30,11 @@ class DmtRefundPage extends GetView<DmtRefundController> {
 
     return Scaffold(
         appBar: (origin == "summary") ? AppBar(
-          title: const Text("DMT Refund Pending"),
-        ): null,
+          title:  Text(
+                    controllerTag == AppTag.payoutRefundControllerTag
+                        ? "Payout Refund Pending"
+                        : "DMT Refund Pending"),
+              ): null,
         body: Obx(() =>
             controller.moneyReportResponseObs.value.when(onSuccess: (data) {
               if (data.code == 1) {
@@ -119,7 +124,8 @@ class _BuildListItem extends StatelessWidget {
           ListTitleValue(
               title: "Remitter Number", value: report.senderNumber.toString()),
           ListTitleValue(
-              title: "Txn Number", value: report.transactionNumber.toString()),
+              title: "Transaction No.",
+              value: report.transactionNumber.toString()),
           ListTitleValue(
               title: "Beneficary Name",
               value: report.beneficiaryName.toString()),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/response/wallet_load/wallet_load_txn_response_page.dart';
+import 'package:spayindia/util/security/encription.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
@@ -38,7 +39,7 @@ class WalletTransferController extends GetxController with TransactionHelperMixi
         "agentid" : data.agentId!,
         "amount" : amountWithoutRupeeSymbol(amountController),
         "remark" : remarkController.text,
-        "mpin" : mpinController.text,
+        "mpin" : Encryption.encryptMPIN(mpinController.text),
         "isfav" : isFavouriteChecked.value.toString(),
       });
 

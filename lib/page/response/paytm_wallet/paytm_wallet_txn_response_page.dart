@@ -42,7 +42,7 @@ class PaytmWalletTxnResponsePage extends GetView<PaytmWalletTxnResponseControlle
                 title: "Operator Ref No",
                 value: controller.response.operatorRefNumber ?? ""),
             buildTitleValueWidget(
-                title: "Txn Number",
+                title: "Transaction No.",
                 value: controller.response.transactionNumber ?? ""),
           ], topBottom: true),
           appLogo(),

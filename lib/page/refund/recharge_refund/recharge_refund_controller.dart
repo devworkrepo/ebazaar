@@ -8,6 +8,8 @@ import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
+import '../../../util/security/encription.dart';
+
 class RechargeRefundController extends GetxController {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
@@ -36,7 +38,7 @@ class RechargeRefundController extends GetxController {
     StatusDialog.progress();
     var response = await repo.takeRechargeRefund({
       "transaction_no": report.transactionNumber ?? "",
-      "mpin": mPin,
+      "mpin": Encryption.encryptMPIN(mPin),
     });
 
     Get.back();

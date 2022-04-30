@@ -9,6 +9,8 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/tags.dart';
 
+import '../../../util/security/encription.dart';
+
 class DmtRefundController extends GetxController {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
@@ -42,10 +44,10 @@ class DmtRefundController extends GetxController {
     var response = (tag == AppTag.moneyRefundControllerTag) ?
     await repo.takeDmtRefund({
       "transaction_no": report.transactionNumber ?? "",
-      "mpin": mPin,
+      "mpin": Encryption.encryptMPIN(mPin),
     }) : await repo.takePayoutRefund({
       "transaction_no": report.transactionNumber ?? "",
-      "mpin": mPin,
+      "mpin": Encryption.encryptMPIN(mPin),
     });
 
     Get.back();

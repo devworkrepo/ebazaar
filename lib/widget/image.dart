@@ -7,7 +7,7 @@ import 'package:spayindia/util/hex_color.dart';
 
 class AppNetworkImage extends StatelessWidget {
   final String imageUrl;
-  final int size;
+  final double size;
 
   const AppNetworkImage(this.imageUrl, {this.size = 80, Key? key})
       : super(key: key);

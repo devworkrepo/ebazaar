@@ -4,6 +4,7 @@ import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/util/validator.dart';
 
+import '../../../widget/common/counter_widget.dart';
 import 'change_password_controller.dart';
 
 class ChangePasswordPage extends GetView<ChangePasswordController> {
@@ -106,7 +107,43 @@ class _BuildFormWidget extends GetView<ChangePasswordController> {
                     controller: controller.otpController,
                     maxLength: 6,
                   )
-                      : const SizedBox())
+                      : const SizedBox()),
+
+                  Obx(() => (controller.changePasswordActionTypeObs.value ==
+                      ChangePasswordActionType.changePassword)
+                      ? Column(
+                    children: [
+                      SizedBox(
+                        height: 24,
+                      ),
+                      (controller.resendButtonVisibilityObs.value)
+                          ? SizedBox(
+                          width: 200,
+                          height: 48,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              controller.resendOtp();
+                            },
+                            child: const Text("Resend Otp"),
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            100.0),
+                                        side: const BorderSide(
+                                            color: Colors.red)))),
+                          ))
+                          : CounterWidget(
+                        onTimerComplete: () {
+                          controller.resendButtonVisibilityObs
+                              .value = true;
+                        },
+                      )
+                    ],
+                  )
+                      : SizedBox())
                 ],
               ),
             ),

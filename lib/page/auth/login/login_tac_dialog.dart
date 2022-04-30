@@ -34,12 +34,12 @@ class LoginTermAndConditionDialog extends StatelessWidget {
                       Expanded(
                         child: SingleChildScrollView(
                           child: Text("User data will be store in strong encryption form. "
-                              "Login session will be for 8 hours, once you login into app you will be get direct "
-                              "access to homepage for 8 hours. After 8 hours again need to login and verify "
+                              "Login session will be for 15 days, once you login into app you will be get direct "
+                              "access to homepage for 15 days. After 15 days again need to login and verify "
                               "with otp. App access is secure with biometric authentication you can enable "
                               "and disable into spay app settings. If your device doesn't  support biometric "
                               "authentication you will get direct access to homepage without any login information "
-                              "for 8 hours. So if you wish login first to access your spay retailer account just "
+                              "for 15 days. So if you wish login first to access your spay retailer account just "
                               "logout instead of direct closing the app.",style: Get.textTheme.bodyText1?.copyWith(
                             fontWeight: FontWeight.w500,
                             color: Colors.green[900],

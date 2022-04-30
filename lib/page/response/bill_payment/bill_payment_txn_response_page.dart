@@ -27,8 +27,13 @@ class BillPaymentTxnResponsePage extends GetView<BillPaymentTxnResponseControlle
               (controller.response.message ?? "")),
           buildTransactionTime(controller.response.transactionDate ?? ""),
           buildProviderAndAmount(
-              title: (controller.response.rechargeType ?? "").toUpperCase(),
-              subTitle: controller.response.billerName ?? (controller.response.name ?? "Payment"),
+              title: (controller.response.rechargeType ??
+                      ((controller.isPartBill)
+                          ? "Part Bill Payment"
+                          : "Bill Payment"))
+                  .toUpperCase(),
+              subTitle: controller.response.billerName ??
+                  (controller.response.name ?? "Payment"),
               amount: controller.response.amount,
               imagePath: (controller.provider == null)
                   ? controller.getPngImage()

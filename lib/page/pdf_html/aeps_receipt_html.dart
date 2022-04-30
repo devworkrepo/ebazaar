@@ -98,7 +98,7 @@ class AepsReceiptHtmlData {
                                     <h4>Trans Type :</h4>
                                 </td>
                                 <td>
-                                    ${(response.transactionType == "CW") ? "Cash Withdrawal" : (response.transactionNumber == "BE") ? "Balance Enquiry" : "Mini Statement"}
+                                    ${(response.transactionType == "CW") ? "Cash Withdrawal" : (response.transactionType == "BE") ? "Balance Enquiry" : "Mini Statement"}
                                     
                                 </td>
                             </tr>

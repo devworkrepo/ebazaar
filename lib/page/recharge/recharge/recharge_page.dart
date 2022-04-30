@@ -113,7 +113,7 @@ class RechargePage extends GetView<RechargeController> {
             inputFormatters: AppTextField.numberOnly,
             controller: controller.numberController,
           ),
-          MPinTextField(controller: controller.mpinController),
+
           const SizedBox(
             height: 12,
           ),
@@ -121,6 +121,7 @@ class RechargePage extends GetView<RechargeController> {
               child: AmountTextField(
                   validator: (value) => FormValidatorHelper.amount(value),
                   controller: controller.amountController)),
+          MPinTextField(controller: controller.mpinController),
           const SizedBox(
             height: 16,
           ),

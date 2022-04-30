@@ -30,11 +30,10 @@ class BeneficiaryListController extends GetxController {
   var beneficiaryResponseObs =
       Resource.onInit(data: DmtBeneficiaryResponse()).obs;
 
-  late List<Beneficiary> beneficiaries;
+  var beneficiaries = <Beneficiary>[].obs;
 
   SenderInfo? sender = Get.arguments["sender"];
   DmtType dmtType = Get.arguments["dmtType"];
-
 
   void onBeneficiaryClick(Beneficiary beneficiary) {
     if (previousBeneficiary == null) {
@@ -68,11 +67,11 @@ class BeneficiaryListController extends GetxController {
 
       if (accountSearch != null) {
         var data = response.beneficiaries!.firstWhere(
-                (element) => element.accountNumber == accountSearch!.accountNumber);
-        beneficiaries = [data];
+            (element) => element.accountNumber == accountSearch!.accountNumber);
+        beneficiaries.value = [data];
       }
       else{
-        beneficiaries = response.beneficiaries!;
+        beneficiaries.value = response.beneficiaries!;
       }
       beneficiaryResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -99,8 +98,14 @@ class BeneficiaryListController extends GetxController {
     Get.back();
 
     if (response.code == 1) {
-      StatusDialog.success(title: response.message)
-          .then((value) => fetchBeneficiary());
+      StatusDialog.success(title: response.message).then((value) {
+        if (accountSearch == null) {
+          fetchBeneficiary();
+        } else {
+          beneficiaries.removeAt(0);
+          accountSearch = null;
+        }
+      });
     } else {
       StatusDialog.failure(title: response.message);
     }
@@ -137,7 +142,7 @@ class BeneficiaryListController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      StatusDialog.failure(title: "unable to verify, please try after sometime");
     }
   }
 
@@ -190,6 +195,7 @@ class BeneficiaryListController extends GetxController {
     Get.toNamed(AppRoute.dmtBeneficiaryAddPage,
         arguments: {"dmtType": dmtType, "mobile": sender!.senderNumber!})?.then((value) {
       if (value) {
+        accountSearch = null;
         _fetchBeneficiary();
       }
     });

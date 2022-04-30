@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/model/recharge/extram_param.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
@@ -22,7 +23,9 @@ class BillPaymentPage extends GetView<BillPaymentController> {
     Get.put(BillPaymentController());
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.providerName + " Bill Pay"),
+        title: Text((controller.isPartBillPayment)
+            ? "Part Bill Pay"
+            : controller.providerName + " Bill Pay"),
       ),
       body: ObsResourceWidget(
         obs: controller.extraParamResponseObs,
@@ -145,9 +148,14 @@ class BillPaymentPage extends GetView<BillPaymentController> {
                             Padding(
                               padding: const EdgeInsets.only(top: 16.0),
                               child: AmountBackgroundWidget(
-                                  child: AmountTextField(
-                                      enable:
-                                          controller.isAmountEnable() ?? true,
+                                  child: AppTextField(
+                                    label: "Amount",
+                                     hint:  "Enter amount",
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 32,
+                                      enable: controller.isAmountEnable(),
+                                      inputType: TextInputType.number,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                       focus: true,
                                       validator: (value) =>
                                           FormValidatorHelper.amount(value,

@@ -3,6 +3,7 @@ import 'package:spayindia/data/repo/money_request_repo.dart';
 import 'package:spayindia/data/repo_impl/money_request_impl.dart';
 import 'package:spayindia/model/fund/request_report.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/report/fund_report/view_receipt.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
@@ -16,6 +17,8 @@ class FundRequestReportController extends GetxController {
   String searchStatus = "";
   String searchInput = "";
 
+  bool isPendingRequest = Get.arguments["is_pending"] ?? false;
+
   var fundRequestReportResponseObs =
       Resource.onInit(data: FundRequestReportResponse()).obs;
   late List<FundRequestReport> fundReportList;
@@ -24,6 +27,10 @@ class FundRequestReportController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    if(isPendingRequest){
+      searchStatus = "Pending";
+    }
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     _fetchReport();
@@ -51,8 +58,13 @@ class FundRequestReportController extends GetxController {
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
-    searchStatus = "";
     searchInput = "";
+   if(isPendingRequest){
+     searchStatus = "Pending";
+   }
+   else{
+     searchStatus = "";
+   }
     _fetchReport();
   }
 
@@ -99,5 +111,9 @@ class FundRequestReportController extends GetxController {
       Get.back();
       Get.to(() => ExceptionPage(error: e));
     }
+  }
+
+  void onViewReceipt(FundRequestReport report) async {
+    Get.dialog(ViewFundReceiptDialog(report: report));
   }
 }

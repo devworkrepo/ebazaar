@@ -2,6 +2,7 @@ class AppRoute {
 
   AppRoute._();
   static const mainPage = "/";
+  static const rootPage = "/root-page";
   static const testPage = "/test";
 
   //auth

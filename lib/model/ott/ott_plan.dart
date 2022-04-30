@@ -10,8 +10,10 @@ class OttPlanResponse {
     code = json["code"];
     message = json["message"];
     status = json["status"];
-    ottPlanList =
-        List.from(json["planslist"]).map((e) => OttPlan.fromJson(e)).toList();
+    if(json["planslist"] !=null){
+      ottPlanList =
+          List.from(json["planslist"]).map((e) => OttPlan.fromJson(e)).toList();
+    }
   }
 }
 

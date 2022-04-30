@@ -147,7 +147,9 @@ class _BuildListItem extends GetView<RechargeReportController> {
         expandList: [
           ListTitleValue(
               title: "Operator Name", value: report.operatorName.toString()),
-          ListTitleValue(title: "Pay Id", value: report.payId.toString()),
+          ListTitleValue(
+              title: "Transaction No.", value: report.transactionNumber.toString()),
+          ListTitleValue(title: "Ref/UTR", value: report.payId.toString()),
           ListTitleValue(
               title: "Ref Mobile No", value: report.refMobileNumber.toString()),
           ListTitleValue(

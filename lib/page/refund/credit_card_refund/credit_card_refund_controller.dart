@@ -9,6 +9,8 @@ import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
+import '../../../util/security/encription.dart';
+
 class CreditCardRefundController extends GetxController {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
@@ -38,7 +40,7 @@ class CreditCardRefundController extends GetxController {
      StatusDialog.progress();
      var response = await repo.takeCreditCardRefund({
        "transaction_no": report.transactionNumber ?? "",
-       "mpin": mPin,
+       "mpin":Encryption.encryptMPIN(mPin),
      });
 
      Get.back();

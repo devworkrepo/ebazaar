@@ -70,7 +70,7 @@ class PaytmWalletPage extends GetView<PaytmWalletController> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Note: Rs 1 will be duducted for Paytm Wallet Verification.",
-                        style: Get.textTheme.subtitle2,
+                        style: Get.textTheme.subtitle2?.copyWith(color: Colors.grey[700]),
                       ),
                     )
                   : const SizedBox()),

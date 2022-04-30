@@ -148,9 +148,10 @@ class _BuildMpinAndRemarkWidget extends GetView<DmtTransactionController> {
                 key: controller.formKey,
                 child: Column(
                   children: [
-                    MPinTextField(controller: controller.mpinController,),
+
                     AppTextField(controller: controller.remarkController,label: "Remark",
-                    validator: FormValidatorHelper.normalValidation,)
+                    validator: FormValidatorHelper.normalValidation,),
+                    MPinTextField(controller: controller.mpinController,),
                   ],
                 ),
               )

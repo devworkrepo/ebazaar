@@ -10,7 +10,7 @@ class MoneyReceiptHtmlData {
     response.moneyReceiptDetail?.forEach((element) {
       mData += """
       <tr>
-           <td>${element.bankTxnId} / ${element.transactionNumber} / ${response.transactionType}</td>
+           <td>  ${element.transactionNumber} / ${response.transactionType} /${element.bankTxnId}</td>
            <td>${element.amount}</td>
            <td>${element.transactionStatus}</td>
       </tr>

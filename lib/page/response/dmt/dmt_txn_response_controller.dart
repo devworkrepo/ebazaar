@@ -19,7 +19,7 @@ class DmtTxnResponseController extends GetxController {
     AppUtil.captureAndShare(
         screenshotController: screenshotController,
         amount: totalAmount,
-        type: "money transfer");
+        type: getSubTitle());
   }
 
   getSubTitle() {
@@ -28,6 +28,7 @@ class DmtTxnResponseController extends GetxController {
         return "Money Transfer";
       case DmtType.payout :
         return "Payout Transfer";
+      default : return  "Transaction ";
     }
   }
 }
