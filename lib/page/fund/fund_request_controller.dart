@@ -189,7 +189,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
       "paymenttype": paymentTypeObs.value,
       "bankaccount": paymentAccountObs.value,
       "date": paymentDateController.text,
-      "remark": remarkController.text,
+      "remark": (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
       "amount": amountController.text,
       "images ": fileData,
     };

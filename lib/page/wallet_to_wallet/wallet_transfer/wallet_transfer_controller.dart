@@ -38,7 +38,7 @@ class WalletTransferController extends GetxController with TransactionHelperMixi
         "transaction_no" : data.transactionNumber!,
         "agentid" : data.agentId!,
         "amount" : amountWithoutRupeeSymbol(amountController),
-        "remark" : remarkController.text,
+        "remark" : (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
         "mpin" : Encryption.encryptMPIN(mpinController.text),
         "isfav" : isFavouriteChecked.value.toString(),
       });

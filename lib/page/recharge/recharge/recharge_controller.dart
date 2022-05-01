@@ -92,7 +92,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     StatusDialog.transaction();
     try {
       cancelToken = CancelToken();
-      await appPreference.setIsTransactionApi(true);
+
       RechargeResponse response = (providerType == ProviderType.dth)
           ? await repo.makeDthRecharge(_transactionParam(),cancelToken)
           : (providerType == ProviderType.prepaid)
@@ -108,6 +108,7 @@ class RechargeController extends GetxController with TransactionHelperMixin {
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {
+      await appPreference.setIsTransactionApi(true);
       Get.back();
       Get.to(() => ExceptionPage(error: e));
     }

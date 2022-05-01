@@ -153,7 +153,7 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
     StatusDialog.transaction();
     try {
       cancelToken = CancelToken();
-      await appPreference.setIsTransactionApi(true);
+
       var response = (isPartBillPayment)
           ? await repo.makePartBillPayment(_paymentParam(), cancelToken)
           : await repo.makeOfflineBillPayment(_paymentParam(), cancelToken);
@@ -168,7 +168,7 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
         StatusDialog.failure(title: response.message ?? "message not found");
       }
     } catch (e) {
-      AppUtil.logger('Transaction Exception : ${e.toString()}');
+      await appPreference.setIsTransactionApi(true);
       Get.back();
       Get.to(() => ExceptionPage(error: e));
     }

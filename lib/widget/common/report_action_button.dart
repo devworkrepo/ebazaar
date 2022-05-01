@@ -62,27 +62,32 @@ class _RefundBottomSheetDialogState extends State<RefundBottomSheetDialog> {
 class ReportActionButton extends StatelessWidget {
   final String title ;
   final IconData icon;
+  final Color? color;
+  final Color? background;
   final VoidCallback onClick;
 
-  const ReportActionButton({required this.title, required this.icon,required this.onClick, Key? key}) : super(key: key);
+  const ReportActionButton({required this.title,
+    required this.icon,required this.onClick,
+    this.color,this.background,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: onClick,
         style: ElevatedButton.styleFrom(
-          primary: Colors.white,
+          primary: background ?? Colors.white,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children:  [
             Icon(
               icon,
-              color: Colors.black,
+              color: color ?? Colors.black,
             ),
             Text(
               title,
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: color ?? Colors.black),
             )
           ],
         ));

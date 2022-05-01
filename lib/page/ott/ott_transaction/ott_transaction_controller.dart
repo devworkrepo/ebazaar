@@ -64,7 +64,7 @@ class OttTransactionController extends GetxController {
 
   _ottTransaction() async {
     try {
-      await appPreference.setIsTransactionApi(true);
+
       String? transactionNumber = await fetchTransactionNumber();
       if (transactionNumber == null) {
         StatusDialog.failure(title: "Transaction Number is Required");
@@ -90,6 +90,7 @@ class OttTransactionController extends GetxController {
         StatusDialog.failure(title: response.message );
       }
     } catch (e) {
+      await appPreference.setIsTransactionApi(true);
       Get.back();
       Get.to(() => ExceptionPage(error: e));
     }

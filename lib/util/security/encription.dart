@@ -8,7 +8,7 @@ class Encryption {
   Encryption._();
 
   static String encryptMPIN(String text){
-return text;
+    return text;
     if(text.isEmpty || text == "na"){
       return text;
     }

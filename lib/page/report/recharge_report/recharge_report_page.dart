@@ -144,6 +144,10 @@ class _BuildListItem extends GetView<RechargeReportController> {
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId:  ReportHelperWidget.getStatusId(report.transactionStatus),
+        actionWidget2:
+        (controller.origin == "summary") ? _requeryButton(
+            Get.theme.primaryColorDark,Colors.white
+        ) : null,
         expandList: [
           ListTitleValue(
               title: "Operator Name", value: report.operatorName.toString()),
@@ -161,15 +165,7 @@ class _BuildListItem extends GetView<RechargeReportController> {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (report.transactionStatus!.toLowerCase() == "inprogress" || kDebugMode)
-                ? ReportActionButton(
-              title: "Re-query",
-              icon: Icons.refresh,
-              onClick: () {
-                controller.requeryTransaction(report);
-              },
-            )
-                : const SizedBox(),
+            _requeryButton(Colors.white, Colors.black),
             SizedBox(width: 8,),
             ReportActionButton(
               title: "Print",
@@ -183,6 +179,21 @@ class _BuildListItem extends GetView<RechargeReportController> {
         ),
       ),
     );
+  }
+
+  Widget _requeryButton(Color background, Color color) {
+    return (report.transactionStatus!.toLowerCase() == "inprogress" ||
+        kDebugMode)
+        ? ReportActionButton(
+      title: "Re-query",
+      icon: Icons.refresh,
+      onClick: () {
+        controller.requeryTransaction(report);
+      },
+      color: color,
+      background: background,
+    )
+        : const SizedBox();
   }
 
 

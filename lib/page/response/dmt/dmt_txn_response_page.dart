@@ -18,9 +18,9 @@ class DmtTxnResponsePage extends GetView<DmtTxnResponseController>
       child: screenshotHelperWidget(
         screenshotController: controller.screenshotController,
         children: [
-          buildStatusIcon(getStatusIdFromString(controller.dmtTransactionResponse.status)),
-          buildStatusTitle(getStatusIdFromString(controller.dmtTransactionResponse.status),
-              statusDescription: controller.dmtTransactionResponse.status),
+          buildStatusIcon(getStatusIdFromString(controller.getGlobalStatus())),
+          buildStatusTitle(getStatusIdFromString(controller.getGlobalStatus()),
+              statusDescription: controller.getGlobalStatus()),
           buildMessage(controller.dmtTransactionResponse.message),
           buildTransactionTime(""),
           buildProviderAndAmount(
@@ -49,7 +49,7 @@ class DmtTxnResponsePage extends GetView<DmtTxnResponseController>
           appLogo(),
         ],
       ),
-      status: getStatusIdFromString(controller.dmtTransactionResponse.status),
+      status: getStatusIdFromString(controller.getGlobalStatus()),
       onShareClick: () => controller.captureAndShare(),
     );
   }

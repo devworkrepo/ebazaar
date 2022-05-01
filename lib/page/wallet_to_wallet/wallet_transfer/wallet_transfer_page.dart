@@ -60,8 +60,7 @@ class _BuildForm extends GetView<WalletTransferController> {
                 AppTextField(
                   controller: controller.remarkController,
                   label: "Remark",
-                  hint: "Enter you remark!",
-                  validator: FormValidatorHelper.normalValidation,
+                  hint: "Optional",
                 ),
                 MPinTextField(
                   controller: controller.mpinController,

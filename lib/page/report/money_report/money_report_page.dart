@@ -117,6 +117,10 @@ class _BuildListItem extends StatelessWidget {
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
+        actionWidget2:
+            (controller.origin == "summary") ? _requeryButton(
+              Get.theme.primaryColorDark,Colors.white
+            ) : null,
         expandList: [
           ListTitleValue(
               title: "Remitter Number", value: report.senderNubber.toString()),
@@ -125,8 +129,7 @@ class _BuildListItem extends StatelessWidget {
           ListTitleValue(
               title: "Beneficiary Name",
               value: report.beneficiaryName.toString()),
-          ListTitleValue(
-              title: "IFSC Code", value: report.ifscCode.toString()),
+          ListTitleValue(title: "IFSC Code", value: report.ifscCode.toString()),
           ListTitleValue(
               title: "Account Number", value: report.accountNumber.toString()),
           ListTitleValue(
@@ -134,8 +137,7 @@ class _BuildListItem extends StatelessWidget {
               value: report.transactionType.toString()),
           ListTitleValue(
               title: "Commission", value: report.commission.toString()),
-          ListTitleValue(
-              title: "Charge", value: report.charge.toString()),
+          ListTitleValue(title: "Charge", value: report.charge.toString()),
           ListTitleValue(
               title: "UTR Number", value: report.utrNumber.toString()),
           ListTitleValue(
@@ -144,32 +146,41 @@ class _BuildListItem extends StatelessWidget {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          (report.transactionStatus!.toLowerCase() == "inprogress" || kDebugMode)
-              ? ReportActionButton(
+            _requeryButton(Colors.white,Colors.black),
+            const SizedBox(
+              width: 8,
+            ),
+            ReportActionButton(
+              title: "Print",
+              icon: Icons.print,
+              onClick: () {
+                if (controller.tag == AppTag.moneyReportControllerTag) {
+                  controller.printReceipt(
+                      (report.calcId ?? ""), ReceiptType.money);
+                } else {
+                  controller.printReceipt(
+                      (report.calcId ?? ""), ReceiptType.payout);
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _requeryButton(Color background, Color color) {
+    return (report.transactionStatus!.toLowerCase() == "inprogress" ||
+            kDebugMode)
+        ? ReportActionButton(
             title: "Re-query",
             icon: Icons.refresh,
             onClick: () {
               controller.requeryTransaction(report);
             },
+            color: color,
+            background: background,
           )
-              : const SizedBox(),
-          const SizedBox(width: 8,),
-          ReportActionButton(
-            title: "Print",
-            icon: Icons.print,
-            onClick: () {
-              if(controller.tag == AppTag.moneyReportControllerTag){
-                controller.printReceipt((report.calcId ?? ""),ReceiptType.money);
-              }
-              else{
-                controller.printReceipt((report.calcId ?? ""),ReceiptType.payout);
-              }
-            },
-          )
-        ],),
-      ),
-    );
+        : const SizedBox();
   }
-
-
 }

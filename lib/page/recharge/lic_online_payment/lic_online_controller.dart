@@ -90,7 +90,7 @@ class LicOnlineController extends GetxController
     StatusDialog.transaction();
     try {
       cancelToken = CancelToken();
-      await appPreference.setIsTransactionApi(true);
+
       var response =
           await repo.makeLicOnlineBillPayment(_paymentParam(), cancelToken);
       Get.back();
@@ -102,7 +102,7 @@ class LicOnlineController extends GetxController
         StatusDialog.failure(title: response.message ?? "message not found");
       }
     } catch (e) {
-      AppUtil.logger('Transaction Exception : ${e.toString()}');
+      await appPreference.setIsTransactionApi(true);
       Get.back();
       Get.to(() => ExceptionPage(error: e));
     }

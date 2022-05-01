@@ -86,7 +86,7 @@ class CreditCardRefundPage extends GetView<CreditCardRefundController> {
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0),
           itemBuilder: (context, index) {
-            return _BuildListItem(list[index]);
+            return _BuildListItem(list[index],origin);
           },
           itemCount: count,
         ),
@@ -97,7 +97,8 @@ class CreditCardRefundPage extends GetView<CreditCardRefundController> {
 
 class _BuildListItem extends GetView<CreditCardRefundController> {
   final CreditCardRefund report;
-  const _BuildListItem(this.report, {Key? key})
+  final String origin;
+  const _BuildListItem(this.report,this.origin,{Key? key})
       : super(key: key);
 
   @override
@@ -112,6 +113,9 @@ class _BuildListItem extends GetView<CreditCardRefundController> {
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
+        actionWidget2:(origin == "summary") ? _refundButton(
+            Get.theme.primaryColorDark,Colors.white
+        ) : null,
         expandList: [
           ListTitleValue(title: "Transaction No.", value: report.transactionNumber.toString()),
           ListTitleValue(title: "Name", value: report.cardHolderName.toString()),
@@ -123,17 +127,23 @@ class _BuildListItem extends GetView<CreditCardRefundController> {
           ListTitleValue(title: "Commission", value: report.commission.toString()),
           ListTitleValue(title: "Message", value: report.transactionMessage.toString()),
         ],
-        actionWidget: ReportActionButton(
-          title: "Take Refund",
-          icon: Icons.keyboard_return,
-          onClick: (){
-          Get.bottomSheet(RefundBottomSheetDialog(
-            onProceed: (value){
-              controller.takeRefund(value,report);
-            },
-          ),isScrollControlled: true);
-        },),
+        actionWidget: _refundButton(Colors.white,Colors.black),
       ),
     );
+  }
+
+  _refundButton(Color background, Color color){
+    return ReportActionButton(
+      title: "Take Refund",
+      icon: Icons.keyboard_return,
+      background: background,
+      color: color,
+      onClick: (){
+        Get.bottomSheet(RefundBottomSheetDialog(
+          onProceed: (value){
+            controller.takeRefund(value,report);
+          },
+        ),isScrollControlled: true);
+      },);
   }
 }

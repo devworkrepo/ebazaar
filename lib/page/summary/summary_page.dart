@@ -148,22 +148,26 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
                 "DMT Transactions",
                 style: Get.textTheme.subtitle1,
               ),
-              Row(
-                children: [
-                  Expanded(
-                      child: _buildItemWidget(
-                        onClick: controller.onDmtInProgressClick,
-                          backgroundColor: Colors.blue,
-                          text1: "InProgress",
-                          text2: controller.summary.dmtInProgress.toString())),
-                  Expanded(
-                      child: _buildItemWidget(
-                          onClick: controller.onDmtInRefundPendingClick,
-                          backgroundColor: Colors.red,
-                          text1: "Refund Pending",
-                          text2:
-                              controller.summary.dmtRefundPending.toString())),
-                ],
+              IntrinsicHeight(
+                child: Center(
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: _buildItemWidget(
+                            onClick: controller.onDmtInProgressClick,
+                              backgroundColor: Colors.blue,
+                              text1: "InProgress",
+                              text2: controller.summary.dmtInProgress.toString())),
+                      Expanded(
+                          child: _buildItemWidget(
+                              onClick: controller.onDmtInRefundPendingClick,
+                              backgroundColor: Colors.red,
+                              text1: "Refund Pending",
+                              text2:
+                                  controller.summary.dmtRefundPending.toString())),
+                    ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: 16,
@@ -172,23 +176,27 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
                 "Utility Transactions",
                 style: Get.textTheme.subtitle1,
               ),
-              Row(
-                children: [
-                  Expanded(
-                      child: _buildItemWidget(
-                          onClick: controller.onUtilityInProgressClick,
-                          backgroundColor: Colors.blue,
-                          text1: "InProgress",
-                          text2:
-                              controller.summary.utilityInProgress.toString())),
-                  Expanded(
-                      child: _buildItemWidget(
-                          onClick: controller.onUtilityInRefundPendingClick,
-                          backgroundColor: Colors.red,
-                          text1: "Refund Pending",
-                          text2: controller.summary.utilityRefundPending
-                              .toString())),
-                ],
+              IntrinsicHeight(
+                child: Center(
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: _buildItemWidget(
+                              onClick: controller.onUtilityInProgressClick,
+                              backgroundColor: Colors.blue,
+                              text1: "InProgress",
+                              text2:
+                                  controller.summary.utilityInProgress.toString())),
+                      Expanded(
+                          child: _buildItemWidget(
+                              onClick: controller.onUtilityInRefundPendingClick,
+                              backgroundColor: Colors.red,
+                              text1: "Refund Pending",
+                              text2: controller.summary.utilityRefundPending
+                                  .toString())),
+                    ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: 16,
@@ -197,23 +205,27 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
                 "Credit Transactions",
                 style: Get.textTheme.subtitle1,
               ),
-              Row(
-                children: [
-                  Expanded(
-                      child: _buildItemWidget(
-                          onClick: controller.onCreditCardInProgressClick,
-                          backgroundColor: Colors.blue,
-                          text1: "InProgress",
-                          text2:
-                              controller.summary.creditInProgress.toString())),
-                  Expanded(
-                      child: _buildItemWidget(
-                          onClick: controller.onCreditCardInRefundPendingClick,
-                          backgroundColor: Colors.red,
-                          text1: "Refund Pending",
-                          text2: controller.summary.creditRefundPending
-                              .toString())),
-                ],
+              IntrinsicHeight(
+                child: Center(
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: _buildItemWidget(
+                              onClick: controller.onCreditCardInProgressClick,
+                              backgroundColor: Colors.blue,
+                              text1: "InProgress",
+                              text2:
+                                  controller.summary.creditInProgress.toString())),
+                      Expanded(
+                          child: _buildItemWidget(
+                              onClick: controller.onCreditCardInRefundPendingClick,
+                              backgroundColor: Colors.red,
+                              text1: "Refund Pending",
+                              text2: controller.summary.creditRefundPending
+                                  .toString())),
+                    ],
+                  ),
+                ),
               )
             ],
           ),
@@ -240,7 +252,8 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
             children: [
               Text(
                 text1,
-                style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
+                  style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
+                  textAlign : TextAlign.center
               ),
               const SizedBox(
                 height: 8,
@@ -248,6 +261,7 @@ class _BuildMiddleSectionWidget extends GetView<SummaryController> {
               Text(
                 text2,
                 style: Get.textTheme.subtitle1?.copyWith(color: Colors.white70),
+                textAlign: TextAlign.center,
               )
             ],
           ),

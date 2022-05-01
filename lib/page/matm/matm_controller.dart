@@ -54,7 +54,8 @@ class MatmController extends GetxController
           showEkcyDialog("E-Kyc is Required.",
               "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",AppRoute.aepsEkycPage);
         }
-      } else if (response.code == 2) {
+      }
+      else if (response.code == 2) {
         showEkcyDialog(
           "OnBoarding Required",
           response.message ??
@@ -62,7 +63,8 @@ class MatmController extends GetxController
                   " OnBoarding is required!",
           AppRoute.aepsOnboardingPage,
         );
-      } else if (response.code == 3) {
+      }
+      else if (response.code == 3) {
         StatusDialog.pending(
             title: response.message ?? "Pending",
             buttonText: "Bank to Home")

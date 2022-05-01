@@ -1,6 +1,7 @@
 class AppConstant{
  //static const baseUrl = "http://apiv2app.spayindia.in/AppSpayService.svc/";
- static const baseUrl = "https://api.spayindia.in/AppSpayService.svc/";
+ //static const baseUrl = "https://api.spayindia.in/AppSpayService.svc/";
+ static const baseUrl = "https://apiv2app.spayindia.in/AppSpayService.svc/";
  static const profileBaseUrl = "https://spayindia.in/commonimg/user/";
  static const fundRequestBaseUrl = "https://spayindia.in/commonimg/request/";
  static const bannerBaseUrl = "https://spayindia.in/commonimg/banner/";

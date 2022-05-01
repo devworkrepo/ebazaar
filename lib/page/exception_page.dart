@@ -38,9 +38,12 @@ class _ExceptionPageState extends State<ExceptionPage> {
     return WillPopScope(
       onWillPop: () async {
         if (shouldGoLoginPage) {
+          appPreference.setIsTransactionApi(false);
           Get.offAllNamed(AppRoute.loginPage);
+          return false;
         }
         if (shouldGoMainPage) {
+          appPreference.setIsTransactionApi(false);
           Get.offAllNamed(AppRoute.mainPage);
           return false;
         } else {

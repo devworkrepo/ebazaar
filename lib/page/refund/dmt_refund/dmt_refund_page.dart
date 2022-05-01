@@ -92,7 +92,7 @@ class DmtRefundPage extends GetView<DmtRefundController> {
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0),
           itemBuilder: (context, index) {
-            return _BuildListItem(list[index], controller);
+            return _BuildListItem(list[index], controller,origin);
           },
           itemCount: count,
         ),
@@ -104,8 +104,9 @@ class DmtRefundPage extends GetView<DmtRefundController> {
 class _BuildListItem extends StatelessWidget {
   final DmtRefund report;
   final DmtRefundController controller;
+  final String origin;
 
-  const _BuildListItem(this.report, this.controller, {Key? key})
+  const _BuildListItem(this.report, this.controller,this.origin, {Key? key})
       : super(key: key);
 
   @override
@@ -120,6 +121,9 @@ class _BuildListItem extends StatelessWidget {
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
+        actionWidget2:(origin == "summary") ? _refundButton(
+            Get.theme.primaryColorDark,Colors.white
+        ) : null,
         expandList: [
           ListTitleValue(
               title: "Remitter Number", value: report.senderNumber.toString()),
@@ -141,17 +145,23 @@ class _BuildListItem extends StatelessWidget {
           ListTitleValue(
               title: "Message", value: report.transactionMessage.toString()),
         ],
-        actionWidget: ReportActionButton(
-          title: "Take Refund",
-          icon: Icons.keyboard_return,
-          onClick: (){
-          Get.bottomSheet(RefundBottomSheetDialog(
-            onProceed: (value){
-              controller.takeDmtRefund(value,report);
-            },
-          ),isScrollControlled: true);
-        },),
+        actionWidget: _refundButton(Colors.white, Colors.black),
       ),
     );
+  }
+
+  ReportActionButton _refundButton(Color background, Color color) {
+    return ReportActionButton(
+      title: "Take Refund",
+      icon: Icons.keyboard_return,
+      background: background,
+      color: color,
+      onClick: (){
+        Get.bottomSheet(RefundBottomSheetDialog(
+          onProceed: (value){
+            controller.takeDmtRefund(value,report);
+          },
+        ),isScrollControlled: true);
+      },);
   }
 }

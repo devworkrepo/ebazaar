@@ -19,7 +19,7 @@ class LoginSessionPage extends GetView<AppSettingController> {
       ),
       body: ObsResourceWidget(
         obs: controller.responseObs,
-        childBuilder: (data) => (controller.getLoginSessionList().isEmpty)
+        childBuilder: (data) => (controller.sessions.isEmpty)
             ? const NoItemFoundWidget(
           icon: Icons.phone_android,
           message: "No active device found",
@@ -27,10 +27,10 @@ class LoginSessionPage extends GetView<AppSettingController> {
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
-                    itemCount: controller.getLoginSessionList().length,
+                    itemCount: controller.sessions.length,
                     itemBuilder: (context, index) {
                       return _BuildListItem(
-                          controller.getLoginSessionList()[index]);
+                          controller.sessions[index]);
                     }),
               ),
       ),

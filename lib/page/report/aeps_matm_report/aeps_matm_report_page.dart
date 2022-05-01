@@ -139,7 +139,7 @@ class _BuildListItem extends StatelessWidget {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (report.transactionStatus!.toLowerCase() == "inprogress" || kDebugMode)
+            (report.transactionStatus!.toLowerCase() == "inprogress" || report.transactionStatus!.toLowerCase() == "pending" || kDebugMode)
                 ? ReportActionButton(
               title: "Re-query",
               icon: Icons.refresh,

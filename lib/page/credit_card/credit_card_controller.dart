@@ -120,7 +120,7 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
   
   _makePayment(String transactionNumber) async {
     try{
-      await appPreference.setIsTransactionApi(true);
+
       cancelToken = CancelToken();
       StatusDialog.transaction();
       var param = {
@@ -146,6 +146,7 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
         StatusDialog.failure(title: response.message ?? "Something went wrong!!");
       }
     }catch(e){
+      await appPreference.setIsTransactionApi(true);
       Get.back();
       Get.to(()=>ExceptionPage(error: e));
     }

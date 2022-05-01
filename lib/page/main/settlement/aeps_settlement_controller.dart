@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/page/report/report_helper.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
@@ -82,7 +83,7 @@ class AepsSettlementController extends GetxController
         _transfer({
           "transaction_no": aepsBalance!.transaction_no.toString(),
           "amount": amountWithoutRupeeSymbol(amountController),
-          "remark": remarkController.text,
+          "remark": (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
         });
       },
       amount: amountController.text,
@@ -90,7 +91,7 @@ class AepsSettlementController extends GetxController
   }
 
   _transfer(Map<String, String> param) async {
-    await appPreference.setIsTransactionApi(true);
+
     try {
       StatusDialog.transaction();
 
@@ -99,13 +100,29 @@ class AepsSettlementController extends GetxController
           : await repo.bankAccountSettlement(param);
       Get.back();
       if (response.code == 1) {
-        StatusDialog.success(title: response.message ?? "Success")
-            .then((value) => Get.back());
+
+        var mCode = ReportHelperWidget.getStatusId(response.trans_status);
+        if(mCode == 1){
+          StatusDialog.success(title: response.trans_response ?? "Success")
+              .then((value) => Get.back());
+        }
+        else if(mCode == 2){
+          StatusDialog.failure(title: response.trans_response ?? "Failure")
+              .then((value) => Get.back());
+        }
+        else {
+          StatusDialog.pending(title: response.trans_response ?? "Pending")
+              .then((value) => Get.back());
+        }
+
+
+
       } else {
         StatusDialog.failure(
             title: response.message ?? "Something went wrong!!");
       }
     } catch (e) {
+      await appPreference.setIsTransactionApi(true);
       Get.back();
       Get.to(() => ExceptionPage(error: e));
     }
@@ -118,7 +135,7 @@ class AepsSettlementController extends GetxController
         _transfer({
           "transaction_no": aepsBalance!.transaction_no.toString(),
           "amount": amountWithoutRupeeSymbol(amountController),
-          "remark": remarkController.text,
+          "remark": (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
           "bankid": selectedBank?.bankId ?? "",
         });
       },

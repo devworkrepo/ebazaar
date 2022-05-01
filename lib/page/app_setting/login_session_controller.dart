@@ -3,6 +3,7 @@ import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/model/login_session.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/widget/common/common_confirm_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
@@ -16,10 +17,8 @@ class AppSettingController extends GetxController {
   AppPreference appPreference = Get.find();
   var responseObs = Resource.onInit(data: LoginSessionResponse()).obs;
 
-  late List<LoginSession> _sessions;
-  List<LoginSession> getLoginSessionList() {
-   return  _sessions.where((element) => element.active_id != appPreference.sessionKey).toList();
-  }
+  late List<LoginSession> sessions;
+
 
   @override
   void onInit() {
@@ -30,7 +29,7 @@ class AppSettingController extends GetxController {
   _fetchLoginSessions() async {
     ObsResponseHandler<LoginSessionResponse>(
         obs: responseObs, apiCall: repo.fetchLoginSession(), result: (data) {
-      _sessions = data.sessions!;
+      sessions = data.sessions!;
         });
   }
 
@@ -52,7 +51,15 @@ class AppSettingController extends GetxController {
       });
       Get.back();
       if(response.code == 1){
-        StatusDialog.success(title: response.message).then((value) => _fetchLoginSessions());
+        StatusDialog.success(title: response.message).then((value) {
+          if(session.active_id == appPreference.sessionKey){
+            appPreference.logout();
+            Get.offAllNamed(AppRoute.loginPage);
+          }
+          else{
+            _fetchLoginSessions();
+          }
+        });
       }
       else{
         StatusDialog.failure(title: response.message);

@@ -54,8 +54,8 @@ class AepsSettlementPage extends GetView<AepsSettlementController> {
                 AmountTextField(controller: controller.amountController),
                 AppTextField(
                   controller: controller.remarkController,
+                  hint: "Optional",
                   label: "Remark",
-                  validator: FormValidatorHelper.normalValidation,
                 ),
                 const SizedBox(
                   height: 16,
@@ -117,7 +117,7 @@ class AepsSettlementPage extends GetView<AepsSettlementController> {
                       AppTextField(
                         controller: controller.remarkController,
                         label: "Remark",
-                        validator: FormValidatorHelper.normalValidation,
+                        hint: "Optional",
                       ),
                       const SizedBox(
                         height: 16,

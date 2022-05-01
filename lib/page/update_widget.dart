@@ -54,7 +54,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
        }
       } else {
         AppUtil.logger("AppUpdateTesting : Initial timestamp is zero");
-        var a = DateTime.now().add(const Duration(hours: 24));
+        var a = DateTime.now().add(const Duration(hours: 8));
         appPreference.setAppUpdateDelayTime(a.millisecondsSinceEpoch);
       }
     }

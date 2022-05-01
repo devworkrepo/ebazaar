@@ -110,7 +110,10 @@ class _BuildListItem extends GetView<CreditCardReportController> {
         status: report.transactionStatus.toString(),
         statusId:  ReportHelperWidget.getStatusId(report.transactionStatus),
 
-
+        actionWidget2:
+        (controller.origin == "summary") ? _requeryButton(
+            Get.theme.primaryColorDark,Colors.white
+        ) : null,
         expandList: [
           ListTitleValue(title: "Name", value: report.cardHolderName.toString()),
           ListTitleValue(
@@ -130,16 +133,7 @@ class _BuildListItem extends GetView<CreditCardReportController> {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (report.transactionStatus!.toLowerCase() == "inprogress" ||
-                    kDebugMode)
-                ? ReportActionButton(
-                    title: "Re-query",
-                    icon: Icons.refresh,
-                    onClick: () {
-                      controller.requeryTransaction(report);
-                    },
-                  )
-                : const SizedBox(),
+            _requeryButton(Colors.white, Colors.black),
             const SizedBox(
               width: 8,
             ),
@@ -156,6 +150,21 @@ class _BuildListItem extends GetView<CreditCardReportController> {
       ),
     );
   }
+
+  Widget _requeryButton(Color background, Color color) {
+    return (report.transactionStatus!.toLowerCase() == "inprogress" ||
+        kDebugMode)
+        ? ReportActionButton(
+      title: "Re-query",
+      icon: Icons.refresh,
+      onClick: () {
+        controller.requeryTransaction(report);
+      },
+      color: color,
+      background: background,
+    ) : const SizedBox();
+  }
+
 
 
 }

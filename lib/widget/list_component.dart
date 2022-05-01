@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/api_component.dart';
 import 'package:spayindia/util/hex_color.dart';
+import 'package:spayindia/widget/api_component.dart';
 
 class AppExpandListWidget extends StatelessWidget {
   final key1 = UniqueKey();
@@ -20,6 +20,7 @@ class AppExpandListWidget extends StatelessWidget {
   final String? closingBalance;
   final List<ListTitleValue> expandList;
   final Widget? actionWidget;
+  final Widget? actionWidget2;
 
   AppExpandListWidget(
       {this.imageName,
@@ -34,6 +35,7 @@ class AppExpandListWidget extends StatelessWidget {
       this.closingBalance,
       required this.isExpanded,
       required this.expandList,
+      this.actionWidget2,
       Key? key,
       this.actionWidget})
       : super(key: key);
@@ -92,9 +94,15 @@ class AppExpandListWidget extends StatelessWidget {
           ],
         ),
         (isExpanded.isFalse)
-                  ? const Divider(
-                      indent: 0,
-                      color: Colors.grey,
+                  ? Column(
+                      children: [
+                        if(actionWidget2!=null)
+                          actionWidget2!,
+                        const Divider(
+                          indent: 0,
+                          color: Colors.grey,
+                        )
+                      ],
                     )
                   : const SizedBox()
             ],),

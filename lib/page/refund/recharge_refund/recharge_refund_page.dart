@@ -84,7 +84,7 @@ class RechargeRefundPage extends GetView<RechargeRefundController> {
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0),
           itemBuilder: (context, index) {
-            return _BuildListItem(list[index]);
+            return _BuildListItem(list[index],origin);
           },
           itemCount: count,
         ),
@@ -95,7 +95,8 @@ class RechargeRefundPage extends GetView<RechargeRefundController> {
 
 class _BuildListItem extends GetView<RechargeRefundController> {
   final RechargeRefund report;
-  const _BuildListItem(this.report, {Key? key})
+  final String origin;
+  const _BuildListItem(this.report, this.origin,{Key? key})
       : super(key: key);
 
   @override
@@ -110,6 +111,9 @@ class _BuildListItem extends GetView<RechargeRefundController> {
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
+        actionWidget2: (origin == "summary") ? _refundButton(
+            Get.theme.primaryColorDark,Colors.white
+        ) : null,
         expandList: [
           ListTitleValue(
               title: "Transaction No.", value: report.transactionNumber.toString()),
@@ -126,17 +130,23 @@ class _BuildListItem extends GetView<RechargeRefundController> {
           ListTitleValue(
               title: "Message", value: report.transactionResponse.toString()),
         ],
-        actionWidget: ReportActionButton(
-          title: "Take Refund",
-          icon: Icons.keyboard_return,
-          onClick: (){
-          Get.bottomSheet(RefundBottomSheetDialog(
-            onProceed: (value){
-              controller.takeRechargeRefund(value,report);
-            },
-          ),isScrollControlled: true);
-        },),
+        actionWidget: _refundButton(Colors.white, Colors.black),
       ),
     );
+  }
+
+  ReportActionButton _refundButton(Color background, Color color) {
+    return ReportActionButton(
+        title: "Take Refund",
+        icon: Icons.keyboard_return,
+        background: background,
+        color: color,
+        onClick: (){
+        Get.bottomSheet(RefundBottomSheetDialog(
+          onProceed: (value){
+            controller.takeRechargeRefund(value,report);
+          },
+        ),isScrollControlled: true);
+      },);
   }
 }

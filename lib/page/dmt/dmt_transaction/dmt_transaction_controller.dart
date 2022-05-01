@@ -1,10 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/widget/list_component.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
@@ -17,8 +13,11 @@ import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/response/dmt/dmt_txn_response_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:spayindia/widget/common.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/widget/list_component.dart';
 
 import '../../../util/security/encription.dart';
 import '../../fund/component/bond_dialog.dart';
@@ -113,7 +112,6 @@ class DmtTransactionController extends GetxController
   _dmtTransfer() async {
     var value = checkBalance(appPreference.user.availableBalance, amount);
     if (!value) return;
-    await appPreference.setIsTransactionApi(true);
 
     try {
       cancelToken =CancelToken();
@@ -147,16 +145,22 @@ class DmtTransactionController extends GetxController
       }
 
     } catch (e) {
+      await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.off(() => ExceptionPage(error: e,));
+      Get.off(() => ExceptionPage(
+            error: e,
+          ));
     }
   }
 
-  _transactionParam() => {
+  _transactionParam() =>
+      {
         "beneid": beneficiary.id ?? "",
         "transfer_amt": amount,
         "mpin": Encryption.encryptMPIN(mpinController.text),
-        "remark": remarkController.text,
+        "remark": (remarkController.text.isEmpty)
+            ? "Transaction"
+            : remarkController.text,
         "calcid": calculateChargeResponse.calcId.toString(),
         "trans_type": (transferType == DmtTransferType.imps) ? "IMPS" : "NEFT"
       };
@@ -187,7 +191,14 @@ class DmtTransactionController extends GetxController
       }
 
       calculateChargeResponse = response;
-      calculateChargeResponseObs.value = Resource.onSuccess(response);
+
+      if(response.code == 1){
+        calculateChargeResponseObs.value = Resource.onSuccess(response);
+      }
+      else{
+        StatusDialog.failure(title: response.message).then((value) => Get.back());
+      }
+
     } catch (e) {
       calculateChargeResponseObs.value = Resource.onFailure(e);
       Get.to(() => () => ExceptionPage(error: e));
