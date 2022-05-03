@@ -55,7 +55,7 @@ android {
         applicationId "com.spayindia.app"
        // applicationId "app.spayindia.com"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -92,5 +92,7 @@ dependencies {
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.56'
     implementation 'com.google.code.ksoap2-android:ksoap2-android:3.6.2'
     implementation files('../libs/matm.aar')
+   /* implementation files('../libs/morefun_mpos_sdk.jar')
+    implementation files('../libs/mosambeelib.aar')*/
 
 }

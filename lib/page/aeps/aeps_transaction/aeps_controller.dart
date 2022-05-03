@@ -165,26 +165,29 @@ class AepsController extends GetxController
   }
 
   _aepsTransaction(String data) async {
+
+    var _param = <String, String>{
+      "bankiin": selectedAepsBank?.id ?? "",
+      "bankName": selectedAepsBank?.name ?? "",
+      "txntype": _transactionTypeInCode(),
+      "devicetype": appPreference.rdService,
+      "amount": (isAadhaarPay ||
+          aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+          ? amountWithoutRupeeSymbol(amountController)
+          : "0",
+      "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
+      "mobileno": mobileController.text.toString(),
+      "latitude": position!.latitude.toString(),
+      "longitude": position!.longitude.toString(),
+      "biometricData": data,
+      "bcid": bankListResponse.bcid ?? "",
+      "transaction_no": bankListResponse.transactionNumber ?? "",
+      "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
+    };
+
     try {
       StatusDialog.transaction();
-      var response = await repo.aepsTransaction(<String, String>{
-        "bankiin": selectedAepsBank?.id ?? "",
-        "bankName": selectedAepsBank?.name ?? "",
-        "txntype": _transactionTypeInCode(),
-        "devicetype": appPreference.rdService,
-        "amount": (isAadhaarPay ||
-                aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
-            ? amountWithoutRupeeSymbol(amountController)
-            : "0",
-        "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
-        "mobileno": mobileController.text.toString(),
-        "latitude": position!.latitude.toString(),
-        "longitude": position!.longitude.toString(),
-        "biometricData": data,
-        "bcid": bankListResponse.bcid ?? "",
-        "transaction_no": bankListResponse.transactionNumber ?? "",
-        "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
-      });
+      var response = await repo.aepsTransaction(_param);
       Get.back();
       if (response.code == 1) {
         Get.to(() => AepsTxnResponsePage(), arguments: {
@@ -200,32 +203,38 @@ class AepsController extends GetxController
       Get.back();
       Get.off(ExceptionPage(
         error: e,
+        data: {
+          "param": _param,
+          "transaction_type": "Aeps Transaction"
+        },
       ));
     }
   }
 
 
   _aadhaarPayTransaction(String data) async {
+
+    var _param = <String, String>{
+      "bankiin": selectedAepsBank?.id ?? "",
+      "bankName": selectedAepsBank?.name ?? "",
+      "txntype": _transactionTypeInCode(),
+      "devicetype": appPreference.rdService,
+      "amount": (isAadhaarPay ||
+          aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+          ? amountWithoutRupeeSymbol(amountController)
+          : "0",
+      "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
+      "mobileno": mobileController.text.toString(),
+      "latitude": position!.latitude.toString(),
+      "longitude": position!.longitude.toString(),
+      "biometricData": data,
+      "bcid": bankListResponse.bcid ?? "",
+      "transaction_no": bankListResponse.transactionNumber ?? "",
+      "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
+    };
     try {
       StatusDialog.transaction();
-      var response = await repo.aadhaaPayTransaction(<String, String>{
-        "bankiin": selectedAepsBank?.id ?? "",
-        "bankName": selectedAepsBank?.name ?? "",
-        "txntype": _transactionTypeInCode(),
-        "devicetype": appPreference.rdService,
-        "amount": (isAadhaarPay ||
-            aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
-            ? amountWithoutRupeeSymbol(amountController)
-            : "0",
-        "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
-        "mobileno": mobileController.text.toString(),
-        "latitude": position!.latitude.toString(),
-        "longitude": position!.longitude.toString(),
-        "biometricData": data,
-        "bcid": bankListResponse.bcid ?? "",
-        "transaction_no": bankListResponse.transactionNumber ?? "",
-        "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
-      });
+      var response = await repo.aadhaaPayTransaction(_param);
       Get.back();
       if (response.code == 1) {
         Get.to(() => AepsTxnResponsePage(), arguments: {
@@ -241,6 +250,10 @@ class AepsController extends GetxController
       Get.back();
       Get.off(ExceptionPage(
         error: e,
+          data: {
+            "param": _param,
+            "transaction_type": "Aeps Transaction"
+          }
       ));
     }
   }

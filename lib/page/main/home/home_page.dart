@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/page/main/home/component/home_update_widget.dart';
 import 'package:spayindia/widget/exception.dart';
 import 'package:spayindia/widget/progress.dart';
 import 'package:spayindia/model/user/user.dart';
@@ -27,6 +28,9 @@ class HomePage extends GetView<HomeController> {
     return RouteAwareWidget(
       child: SafeArea(
         child: AppUpdateWidget(
+          onAvailable: (){
+            controller.isUpdateObs.value = true;
+          },
           child: Scaffold(
 
             key: controller.scaffoldKey,
@@ -69,10 +73,11 @@ class HomePage extends GetView<HomeController> {
                 controller: controller.scrollController,
                 child: Column(
                 children: [
-                  HomeHeaderSection(),
-                  HomeCarouselWidget(),
+                  const HomeHeaderSection(),
+                  const HomeAppUpdateWidget(),
+                  const HomeCarouselWidget(),
                   HomeServiceSection(onClick:(item)=> controller.onItemClick(item),),
-                  SizedBox(height: 8,),
+                  const SizedBox(height: 8,),
                 ],
               ),))
            ],),

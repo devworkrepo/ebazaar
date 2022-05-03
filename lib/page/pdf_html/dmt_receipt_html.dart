@@ -75,7 +75,7 @@ class MoneyReceiptHtmlData {
                                 </td>
                                 <td>
                                     <h4>Mobile No :</h4>
-                                    7982607742
+                                    ${response.outletMobile}
                                 </td>
                             </tr>
                             <tr>

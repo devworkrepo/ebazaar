@@ -110,7 +110,10 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e,data: {
+        "param": _transactionParam(),
+        "transaction_type": "Recharge : ${provider.name.toString()}"
+      },),);
     }
   }
 

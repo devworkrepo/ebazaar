@@ -11,9 +11,7 @@ class NativeCall {
   static const _rootCheckerService = "root_checker_service";
 
   static Future<String> launchAepsService(Map<String, dynamic> data) async {
-    final String result =
-        await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
-    _methodChannel.invokeListMethod("dummy_channel");
+    final String result = await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
     return result;
   }
 
@@ -25,7 +23,6 @@ class NativeCall {
     var resultData = await _methodChannel.invokeMethod(_rdServiceSerialNumber, {
       "pidData" : data
     });
-    _methodChannel.invokeListMethod("dummy_channel");
     return resultData;
 
   }
@@ -34,6 +31,7 @@ class NativeCall {
     var resultData = await _methodChannel.invokeMethod(_rootCheckerService);
     return resultData ?? false;
   }
+
 
 
 }

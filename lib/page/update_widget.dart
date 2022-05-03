@@ -1,17 +1,18 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/res/style.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/in_app_update.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/common/amount_background.dart';
 import 'package:upgrader/upgrader.dart';
 
 class AppUpdateWidget extends StatefulWidget {
   final Widget child;
+  final VoidCallback? onAvailable;
 
-  const AppUpdateWidget({Key? key, required this.child}) : super(key: key);
+  const AppUpdateWidget({Key? key, required this.child,this.onAvailable}) : super(key: key);
 
   @override
   _AppUpdateWidgetState createState() => _AppUpdateWidgetState();
@@ -24,6 +25,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
   void initState() {
     super.initState();
     updateCheck();
+    AppUpdateUtil.checkUpdate();
   }
 
   var isUpdateAvailable = false;
@@ -36,6 +38,9 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
       AppUtil.logger("AppUpdateTesting : Update is not available");
       appPreference.setAppUpdateDelayTime(0);
     } else {
+      if(widget.onAvailable !=null){
+        widget.onAvailable!();
+      }
       AppUtil.logger("AppUpdateTesting : Update is available");
       if (appPreference.appUpdateDelayTime > 0) {
         AppUtil.logger("AppUpdateTesting : timestamp is greater than zero");
@@ -49,7 +54,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
 
          Get.dialog(
             _ShowAppUpdateDialog(playVersion: playVersion, currentVersion: currentVersion,),
-           barrierDismissible: false,
+           barrierDismissible: appPreference.mobileNumber == "7982607742",
          );
        }
       } else {
@@ -78,113 +83,93 @@ class _ShowAppUpdateDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return false;
+        return appPreference.mobileNumber == "7982607742";
       },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              color: Colors.white,
-              width: Get.width,
-              height: Get.height,
+      child:Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Center(
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                      child: Center(
-                          child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.system_update,
-                        size: 80,
-                        color: Get.theme.primaryColorDark,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          "App Update Available",
-                          style: Get.textTheme.headline5
-                              ?.copyWith(color: Colors.black),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 8),
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.black12),
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 32),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "New version of app is available in app store please update it.",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                Text(
-                                  "Current Version : $currentVersion",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  "Store Version     : $playVersion",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            )),
-                      ),
-                      OutlinedButton(
-                          onPressed: () {
-                            Get.bottomSheet(const _UpdateHelpWidget(),isScrollControlled: true);
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(Icons.help),
-                              SizedBox(
-                                width: 12,
-                              ),
-                              Text("Need Help")
-                            ],
-                          ))
-                    ],
-                  ))),
+                  Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.system_update,
+                            size: 70,
+                            color: Get.theme.primaryColorDark,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              "App Update Available",
+                              style: Get.textTheme.headline6
+                                  ?.copyWith(fontSize: 24),
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 32),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text(
+                                    "New version of app is available in app store please update it.",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text(
+                                    "Current Version : $currentVersion",
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "Store Version     : $playVersion",
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )),
+                        ],
+                      )),
+                  const SizedBox(height: 24,),
                   AppButton(
                       text: "Update",
                       onClick: () {
                         Upgrader().initialize().then((value) =>
                             Upgrader().onUserUpdated(context, false));
-                      })
+                      }),
+                  const SizedBox(height: 16,),
+                  TextButton(
+                      onPressed: () {
+                        Get.bottomSheet(const _UpdateHelpWidget(),isScrollControlled: true);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Icon(Icons.help),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Text("Need Help")
+                        ],
+                      ))
                 ],
               ),
             ),
-            (kDebugMode ||
-                    (appPreference.user.agentCode == "SPR01508" &&
-                        appPreference.user.agentId == "1508"))
-                ? Positioned(
-                    right: 12,
-                    top: 12,
-                    child: IconButton(
-                        onPressed: () => Get.back(),
-                        icon: Icon(
-                          Icons.cancel,
-                          size: 40,
-                          color: Colors.grey,
-                        )))
-                : const SizedBox()
-          ],
+          ),
         ),
       ),
     );
@@ -233,11 +218,11 @@ class _UpdateHelpWidget extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    const Text(
                       "If you don't see update available for spay India. Use method 2",
                       style: TextStyle(color: Colors.red),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     Text(
@@ -247,7 +232,7 @@ class _UpdateHelpWidget extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    const Text(
                       "If you don't see update available for spay India. Use method 3",
                       style: TextStyle(color: Colors.red),
                     ),

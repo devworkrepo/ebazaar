@@ -109,9 +109,16 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
       if (image == null) {
         uploadSlipController.text = "";
       } else {
-        uploadSlipController.text = path.basename(selectedImageFile!.path);
+        var fileName = path.basename(selectedImageFile!.path);
+        if(fileName.contains("..")){
+          fileName = fileName.replaceAll("..", ".");
+        }
+        uploadSlipController.text =fileName ;
       }
-    });
+    },(){
+       selectedImageFile = null;
+       uploadSlipController.text = "Uploading please wait...";
+     });
   }
 
 

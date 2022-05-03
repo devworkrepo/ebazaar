@@ -60,7 +60,7 @@ class _TestImagePickerState extends State<TestImagePicker> {
       setState(() {
         pickedImageFile = image;
       });
-    });
+    },(){});
   }
 
   _uploadImage() async {

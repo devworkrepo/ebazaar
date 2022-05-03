@@ -163,7 +163,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                 Card(
                   child: _NavTitle(
                     title: "Settings",
-                    icon: Icons.fingerprint,
+                    icon: Icons.settings_rounded,
 
                     children: [
                       _NavSubTitle(

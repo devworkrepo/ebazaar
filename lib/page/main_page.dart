@@ -28,6 +28,7 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/tags.dart';
 import 'package:upgrader/upgrader.dart';
 
+import '../service/native_call.dart';
 import '../widget/dialog/status_dialog.dart';
 
 var isBottomNavShowObs = true.obs;

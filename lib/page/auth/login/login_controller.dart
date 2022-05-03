@@ -16,6 +16,8 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/security/app_config.dart';
 import 'package:spayindia/util/security/encription.dart';
 
+import '../../../service/native_call.dart';
+
 class LoginController extends GetxController {
   AuthRepo authRepo = Get.find<AuthRepoImpl>();
   AppPreference appPreference = Get.find();
@@ -37,21 +39,23 @@ class LoginController extends GetxController {
       mobileController.text = appPreference.mobileNumber;
       passwordController.text = appPreference.password;
     }
-
-    if(kDebugMode){
+   /* if(kDebugMode){
       mobileController.text = "7982607742";
       passwordController.text = "Akash@123";
-    }
+    }*/
+
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
 
-      if(!appPreference.isLoginBondAccepted){
-        Get.dialog(LoginTermAndConditionDialog(onAccept: () async{
-          await appPreference.setIsLoginBondAccepted(true);
-        }, onReject: () async{
-         await  appPreference.setIsLoginBondAccepted(false);
-        }));
-      }
+
+       if(!appPreference.isLoginBondAccepted){
+         Get.dialog(LoginTermAndConditionDialog(onAccept: () async{
+           await appPreference.setIsLoginBondAccepted(true);
+         }, onReject: () async{
+           await  appPreference.setIsLoginBondAccepted(false);
+         }));
+
+     }
     });
   }
 
@@ -71,16 +75,12 @@ class LoginController extends GetxController {
       return;
     }
 
-   /* if(mobileController.text != "7982607742"){
-      StatusDialog.failure(title: "Please wait, app service is available only selected users.");
-      return false;
-    }*/
 
     StatusDialog.progress(title: "Login");
 
     final mobileNumber = mobileController.text.toString();
     final password = Encryption.aesEncrypt(passwordController.text.toString());
-    //final dvcKey = await Encryption.getDvcKey(mobileNumber);
+
     try {
       final loginData = {
         "mobileno": mobileNumber,

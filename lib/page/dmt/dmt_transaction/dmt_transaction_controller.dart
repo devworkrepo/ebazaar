@@ -149,6 +149,10 @@ class DmtTransactionController extends GetxController
       Get.back();
       Get.off(() => ExceptionPage(
             error: e,
+            data: {
+              "param": _transactionParam(),
+              "transaction_type": "DMT : ${dmtType.name.toString()}"
+            },
           ));
     }
   }

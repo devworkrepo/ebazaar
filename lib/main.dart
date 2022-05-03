@@ -4,14 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:safe_device/safe_device.dart';
 import 'package:spayindia/res/color.dart';
 import 'package:spayindia/route/page_route.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
 import 'package:spayindia/service/local_auth.dart';
-import 'package:spayindia/service/native_call.dart';
-import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:spayindia/util/security/app_config.dart';
 
@@ -32,7 +31,10 @@ void main() async {
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await appBinding();
-  isDeviceRooted =await NativeCall.isDeviceRooted();
+  isDeviceRooted = await SafeDevice.isRealDevice;
+  if(kDebugMode){
+    isDeviceRooted = false;
+  }
 
   runApp(MyApp(isBiometricAvailable));
 }
@@ -46,7 +48,6 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-//1a3656
 
 class _MyAppState extends State<MyApp> {
 
@@ -63,10 +64,10 @@ class _MyAppState extends State<MyApp> {
       initialPage = AppRoute.deviceLockPage;
     }
 
-    if(isDeviceRooted){
+    /*if(isDeviceRooted){
       initialPage = AppRoute.rootPage;
     }
-
+*/
    /* if(kDebugMode){
       initialPage = AppRoute.mainPage;
     }*/
@@ -132,6 +133,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     AppConfig.init();
-    AppUtil.logger("isDeviceRooted : $isDeviceRooted");
+  }
+
+  @override
+  void dispose() {
+
+    super.dispose();
   }
 }

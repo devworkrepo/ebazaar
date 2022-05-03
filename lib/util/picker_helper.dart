@@ -11,13 +11,15 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:spayindia/widget/common/image_picker_dialog.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 class ImagePickerHelper {
   static final ImagePicker _imagePicker = ImagePicker();
 
-  static pickImageWithCrop(Function(File?) onPick) {
+  static pickImageWithCrop(Function(File?) onPick,Function? onPickClick) {
     Get.bottomSheet(ImagePickerSourceWidget(
       onSelect: (ImageSource source) async {
+       if( onPickClick!=null)  onPickClick();
         File? file = await _pickAndCrop(source);
         onPick(file);
       },
@@ -25,7 +27,10 @@ class ImagePickerHelper {
   }
 
   static Future<File?> _pickAndCrop(ImageSource source) async {
+
+
     XFile? image = await _imagePicker.pickImage(source: source);
+
 
     if (image == null) {
       var sourceInString = (source == ImageSource.gallery)
@@ -34,6 +39,7 @@ class ImagePickerHelper {
 
       Get.snackbar("Please try again", sourceInString,
           backgroundColor: Colors.red, colorText: Colors.white);
+
       return null;
     } else {
       print("File Size after capture : " +

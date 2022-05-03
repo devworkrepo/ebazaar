@@ -10,8 +10,10 @@ import 'package:spayindia/widget/button.dart';
 
 class ExceptionPage extends StatefulWidget {
   final dynamic error;
+  final Map<String, dynamic>? data;
 
-  const ExceptionPage({required this.error, Key? key}) : super(key: key);
+  const ExceptionPage({required this.error, this.data, Key? key})
+      : super(key: key);
 
   @override
   State<ExceptionPage> createState() => _ExceptionPageState();
@@ -201,10 +203,31 @@ class _ExceptionPageState extends State<ExceptionPage> {
 
   void recordException() async {
     var error = getDioException(widget.error);
-    if (error is NoInternetException || error is SessionExpireException) {
+
+    if (error is NoInternetException ||
+        error is SessionExpireException ||
+        error is SocketException ||
+        error is TimeoutException ||
+        error is InternalServerException ||
+        error is UnauthorizedException) {
     } else {
-      await FirebaseCrashlytics.instance
-          .recordError(widget.error.toString(), null, fatal: isTransactionApi);
+      var exceptionType = "Other Exception";
+      if (error is UnableToProcessResponseException) {
+        exceptionType = "UnableToProcessResponseException";
+      } else if (error is FormatException) {
+        exceptionType = "FormatException";
+      } else if (error is FormatException) {
+        exceptionType = "BadRequestException";
+      }
+
+      await FirebaseCrashlytics.instance.recordError(
+          exceptionType +
+              "\n\n\n" +
+              widget.error.toString() +
+              "\n\n\n" +
+              ((widget.data != null) ? widget.data.toString() : ""),
+          null,
+          fatal: isTransactionApi);
     }
   }
 }

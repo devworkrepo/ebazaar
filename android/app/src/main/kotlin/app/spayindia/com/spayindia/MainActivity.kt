@@ -44,7 +44,7 @@ class MainActivity : FlutterFragmentActivity() {
                     launchMatm(call)
                 }
                 call.method.equals(ROOT_CHECKER_METHOD_NAME) -> {
-                    rootCheck(call)
+                    rootCheck()
                 }
                 call.method.equals(RD_SERVICE_SERIAL_NUMBER) -> {
 
@@ -59,7 +59,7 @@ class MainActivity : FlutterFragmentActivity() {
         }
     }
 
-    private fun rootCheck(call: MethodCall) {
+    private fun rootCheck() {
         val isRooted = RootChecker.isDeviceRooted
         result?.success(isRooted)
     }

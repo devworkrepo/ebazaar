@@ -18,10 +18,16 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
+import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/in_app_update.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:upgrader/upgrader.dart';
 
 var isLocalAuthDone = false;
 class HomeController extends GetxController {
+
+  var isUpdateObs = false.obs;
+
   HomeRepo homeRepo = Get.find<HomeRepoImpl>();
   AppPreference appPreference = Get.find();
 
@@ -44,6 +50,7 @@ class HomeController extends GetxController {
     appPreference.setIsTransactionApi(false);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       scrollController.addListener(_scrollListener);
+
     });
 
     _fetchBanners();
@@ -108,11 +115,10 @@ class HomeController extends GetxController {
         appbarBackgroundOpacity.value = 0;
         appbarElevation.value = 0;
 
-        if (appPreference.isBiometricAuthentication && kReleaseMode) {
+        if (appPreference.isBiometricAuthentication ) {
           if (!isLocalAuthDone) {
-            LocalAuthService.authenticate().then((value) async {
-              isLocalAuthDone = true;
-            });
+           LocalAuthService.authenticate();
+           isLocalAuthDone = true;
           }
         }
       }
@@ -160,7 +166,6 @@ class HomeController extends GetxController {
         {
           Get.toNamed(AppRoute.aepsPage, arguments: false);
         }
-
         break;
       case HomeServiceType.aadhaarPay:{
         Get.toNamed(AppRoute.aepsPage, arguments: true);

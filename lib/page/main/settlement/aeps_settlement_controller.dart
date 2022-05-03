@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/report/report_helper.dart';
-import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/model/aeps/settlement/balance.dart';
 import 'package:spayindia/model/bank.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/report/report_helper.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 import '../../../data/repo/aeps_repo.dart';
 
@@ -40,14 +40,21 @@ class AepsSettlementController extends GetxController
   }
 
   _fetchBalance() async {
-    ObsResponseHandler<AepsBalance>(
-        obs: balanceResponseObs,
-        apiCall: repo.fetchAepsBalance(),
-        result: (data) {
-          if (data.code == 1) {
-            aepsBalance = data;
-          }
-        });
+    try {
+      balanceResponseObs.value = Resource.onInit();
+      var response = await repo.fetchAepsBalance();
+      if (response.code == 1) {
+        aepsBalance = response;
+        balanceResponseObs.value = Resource.onSuccess(response);
+      } else {
+        StatusDialog.failure(title: response.message ?? "Something went wrong")
+            .then((value) => Get.back());
+      }
+    } catch (e) {
+      StatusDialog.failure(title: "Something went wrong")
+          .then((value) => Get.back());
+    }
+
   }
 
   _fetchBank() async {

@@ -170,7 +170,10 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e,data: {
+        "param": _paymentParam(),
+        "transaction_type": "Bill Payment : ${provider.name.toString()}"
+      },));
     }
   }
 
