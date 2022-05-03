@@ -3,6 +3,7 @@ package app.spayindia.com.spayindia
 import android.os.Handler
 import android.os.Looper
 import io.flutter.plugin.common.MethodChannel
+import java.lang.Exception
 
 
 class MethodResultWrapper (private val methodResult : MethodChannel.Result): MethodChannel.Result {
@@ -13,18 +14,49 @@ class MethodResultWrapper (private val methodResult : MethodChannel.Result): Met
         handler = Handler(Looper.getMainLooper())
     }
 
-
-
-
     override fun success(result: Any?) {
-        handler?.post { methodResult.success(result) }
+        try{
+            handler?.post {
+
+                try{
+                    methodResult.success(result)
+                }catch (e : Exception){
+
+                }
+
+            }
+        }catch (e : Exception){
+
+        }
     }
 
     override fun error(errorCode: String?, errorMessage: String?, errorDetails: Any?) {
-        handler?.post { methodResult.error(errorCode, errorMessage, errorDetails) }
+        try{
+            handler?.post {
+                try {
+                    methodResult.error(errorCode, errorMessage, errorDetails)
+                }catch (e : Exception){
+                    android.util.Log.d("NativeAndroidException", "nativeError1: ${e.message.toString()}")
+                }
+            }
+        }catch (e : Exception){
+            android.util.Log.d("NativeAndroidException", "nativeError2: ${   e.message.toString()}")
+        }
+
     }
 
     override fun notImplemented() {
-        handler?.post { methodResult.notImplemented() }
+        try{
+            handler?.post {
+                try{
+                     methodResult.notImplemented()
+                }catch (e : Exception){
+
+                }
+            }
+        }catch (e : Exception){
+
+        }
+
     }
 }

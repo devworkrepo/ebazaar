@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class ImagePickerHelper {
     Get.bottomSheet(ImagePickerSourceWidget(
       onSelect: (ImageSource source) async {
        if( onPickClick!=null)  onPickClick();
-        File? file = await _pickAndCrop(source);
+       File? file  = await _pickAndCrop(source);
         onPick(file);
       },
     ));
@@ -30,8 +31,6 @@ class ImagePickerHelper {
 
 
     XFile? image = await _imagePicker.pickImage(source: source);
-
-
     if (image == null) {
       var sourceInString = (source == ImageSource.gallery)
           ? "Failed to pick image from Gallery"
@@ -42,15 +41,14 @@ class ImagePickerHelper {
 
       return null;
     } else {
-      print("File Size after capture : " +
-          (await getFileSizeInKb(image.path)).toString());
+      StatusDialog.progress();
 
-      File? file = await compressImage(image.path);
-
-     // var fileImageFile = await _cropImage(file?.path);
-
-      var fixRotationFile = await fixRotation(file!.path);
-
+      File? file = await compute(compressImage,image.path);
+      //var fileImageFile = await _cropImage(file?.path);
+      var fixRotationFile = await  compute(fixRotation,file!.path);
+      if(Get.isDialogOpen ?? false){
+        Get.back();
+      }
       return fixRotationFile;
     }
   }

@@ -96,24 +96,15 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
   }
 
   showImagePickerBottomSheetDialog() async {
-    /*File? imageFile = await NativeCall.captureImage();
-    selectedImageFile = imageFile;
-    if (imageFile == null) {
-      uploadSlipController.text = "";
-    } else {
-      uploadSlipController.text = path.basename(selectedImageFile!.path);
-    }*/
 
      ImagePickerHelper.pickImageWithCrop((File? image) {
       selectedImageFile = image;
       if (image == null) {
         uploadSlipController.text = "";
       } else {
-        var fileName = path.basename(selectedImageFile!.path);
-        if(fileName.contains("..")){
-          fileName = fileName.replaceAll("..", ".");
-        }
-        uploadSlipController.text =fileName ;
+       var fileName =  selectedImageFile!.path.split("/").last;
+       var fileExtension = path.extension(fileName);
+        uploadSlipController.text ="spay_receipt_${DateTime.now().millisecondsSinceEpoch}"+fileExtension;
       }
     },(){
        selectedImageFile = null;
