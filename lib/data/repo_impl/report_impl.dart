@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/model/common.dart';
@@ -8,6 +9,7 @@ import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/service/network_client.dart';
+import 'package:spayindia/util/app_util.dart';
 
 import '../../model/receipt/credit_card.dart';
 import '../../model/receipt/money.dart';
@@ -20,7 +22,6 @@ import '../../model/statement/account_statement.dart';
 import '../../model/statement/credit_debit_statement.dart';
 
 class ReportRepoImpl extends ReportRepo{
-  
   NetworkClient client = Get.find();
 
   @override
@@ -42,7 +43,7 @@ class ReportRepoImpl extends ReportRepo{
   }
 
 
- @override
+  @override
   Future<DmtRefundListResponse> payoutRefundList(data) async {
     var response = await  client.post("/GetRefundPayoutList",data: data);
     return DmtRefundListResponse.fromJson(response.data);
@@ -124,7 +125,6 @@ class ReportRepoImpl extends ReportRepo{
   Future<CommonResponse> takeRechargeRefund(data) async {
     var response = await  client.post("/ClaimRechargeRefund",data: data);
     return CommonResponse.fromJson(response.data);
-
   }
 
   @override
@@ -194,7 +194,7 @@ class ReportRepoImpl extends ReportRepo{
     return AepsReceiptResponse.fromJson(response.data);
   }
 
- @override
+  @override
   Future<AepsReceiptResponse> aadhaarPayTransactionReceipt(data) async {
     var response = await  client.post("/GetAadharPayInfo",data: data);
     return AepsReceiptResponse.fromJson(response.data);
@@ -219,11 +219,8 @@ class ReportRepoImpl extends ReportRepo{
   }
 
   @override
-  Future<TransactionInfoResponse> requeryAepsTransaction(data) async {
-    var response = await  client.post("/RequeryAEPS",data: data);
+  Future<TransactionInfoResponse> requeryAepsTransaction(data, {CancelToken? cancelToken, int? type}) async {
+    var response = await  client.post("/RequeryAEPS",data: data,cancelToken: cancelToken);
     return TransactionInfoResponse.fromJson(response.data);
   }
-
-
-
 }

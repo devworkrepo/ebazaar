@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
@@ -7,14 +8,9 @@ import '../widget/common.dart';
 import 'app_util.dart';
 
 class AppUpdateUtil {
+
   static checkUpdate() async {
-    AppPreference appPreference = Get.find();
-    var savedTime =
-        DateTime.fromMillisecondsSinceEpoch(appPreference.appUpdateDelayTime);
-    if (!DateTime.now().isAfter(savedTime) ||
-        savedTime.isBefore(DateTime(2021))) {
-      _checkForUpdate();
-    }
+    _checkForUpdate();
   }
 
   static Future<void> _checkForUpdate() async {
@@ -25,11 +21,7 @@ class AppUpdateUtil {
       AppUtil.logger("InAppUpdate : package name : ${info.packageName}");
 
       if (isUpdateAvailable) {
-        if (true) {
-          _performImmediateUpdate();
-        } else {
-          _performFlexibleUpdate();
-        }
+        _performImmediateUpdate();
       } else {
         AppUtil.logger("InAppUpdate : app update not available");
       }
@@ -47,7 +39,9 @@ class AppUpdateUtil {
     InAppUpdate.performImmediateUpdate().catchError((e) {
       AppUtil.logger(
           "InAppUpdateError _performImmediateUpdate: " + e.toString());
-      showFailureSnackbar(title: "Update Failed", message: e.toString());
+      if(kReleaseMode){
+        _checkForUpdate();
+      }
     });
   }
 
@@ -57,4 +51,6 @@ class AppUpdateUtil {
             showSuccessSnackbar(
                 title: "Update Completed", message: "App is update to date")));
   }
+
+
 }

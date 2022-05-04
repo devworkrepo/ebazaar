@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/res/color.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../../../widget/image.dart';
 import '../../logout_confirm_dialog.dart';
@@ -191,7 +191,8 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         underline: false,
                         count: 3,
-                      )
+                      ),
+                     
                     ],
                   ),
                 ),
@@ -213,6 +214,14 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     leading:  Icon(Icons.power_settings_new,color: color,),
                   ),
                 ),
+                
+                Align(
+                 alignment: Alignment.center,
+                 child: Padding(
+                   padding: const EdgeInsets.all(12.0),
+                   child: Text("App Version : ${Upgrader().currentInstalledVersion()}",style: Get.textTheme.subtitle2,),
+                 ),
+               )
               ],
             ),
           ),

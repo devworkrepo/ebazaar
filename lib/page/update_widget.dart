@@ -34,11 +34,26 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     await Upgrader().initialize();
     var value = Upgrader().isUpdateAvailable();
 
+    var currentV = Upgrader().currentAppStoreVersion();
+    var storeV = Upgrader().currentInstalledVersion();
+
+    AppUtil.logger("AppUpdateTesting : isUpdateAvailable : $value");
+    AppUtil.logger("AppUpdateTesting : currentVersion : $currentV");
+    AppUtil.logger("AppUpdateTesting : storeVersion : $storeV");
+
+    if(currentV == null || storeV == null){
+      return;
+    }
+    if(currentV.isEmpty || storeV.isEmpty){
+      return;
+    }
     if (!value) {
       AppUtil.logger("AppUpdateTesting : Update is not available");
-      appPreference.setAppUpdateDelayTime(0);
+      if(currentV == storeV){
+        appPreference.setAppUpdateDelayTime(0);
+      }
     } else {
-      if(widget.onAvailable !=null){
+      if (widget.onAvailable != null) {
         widget.onAvailable!();
       }
       AppUtil.logger("AppUpdateTesting : Update is available");
@@ -59,7 +74,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
        }
       } else {
         AppUtil.logger("AppUpdateTesting : Initial timestamp is zero");
-        var a = DateTime.now().add(const Duration(hours: 8));
+        var a = DateTime.now().add(const Duration(hours: 4));
         appPreference.setAppUpdateDelayTime(a.millisecondsSinceEpoch);
       }
     }
@@ -150,6 +165,9 @@ class _ShowAppUpdateDialog extends StatelessWidget {
                       onClick: () {
                         Upgrader().initialize().then((value) =>
                             Upgrader().onUserUpdated(context, false));
+                        if(currentVersion == playVersion){
+                          Get.back();
+                        }
                       }),
                   const SizedBox(height: 16,),
                   TextButton(

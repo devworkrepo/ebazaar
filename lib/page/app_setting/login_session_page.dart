@@ -58,10 +58,19 @@ class _BuildListItem extends GetView<AppSettingController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        session.device_name.toString(),
-                        style: Get.textTheme.headline6?.copyWith(
-                            color: Get.theme.primaryColorDark, fontSize: 18),
+                      Row(
+                        children: [
+                          if (controller.appPreference.sessionKey ==
+                              session.active_id)
+                            Icon(Icons.verified),
+                          Expanded(
+                              child: Text(
+                            session.device_name.toString(),
+                            style: Get.textTheme.headline6?.copyWith(
+                                color: Get.theme.primaryColorDark,
+                                fontSize: 18),
+                          ))
+                        ],
                       ),
                       SizedBox(
                         height: 8,

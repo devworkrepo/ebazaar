@@ -12,14 +12,6 @@ class MatmTxnResponseController extends GetxController {
   MatmTransactionType type = Get.arguments["txnType"];
 
 
-  String getStatus(){
-    if(response.status){
-      return "Success";
-    }
-    else {
-      return "Failed";
-    }
-  }
 
   String getTxnType(){
     if(type == MatmTransactionType.cashWithdrawal){

@@ -48,6 +48,7 @@ class LoginOtpController extends GetxController  {
     try {
       final data = {
         "dvckey": await AppUtil.getDeviceID(),
+        "dvc_name": await AppUtil.modelName(),
         "retailerid": loginData.agentId.toString(),
         "otp": otpController.text.toString(),
       };
@@ -83,7 +84,7 @@ class LoginOtpController extends GetxController  {
 
       var response = await authRepo.checkDevice({
         "enc_value": await Encryption.getEncValue(mobileNumber),
-        "dvc_name": await AppUtil.getDeviceID(),
+        "dvc_name": await AppUtil.modelName(),
         "sessionkey": sessionKey,
         "ipaddress": await Ipify.ipv4(),
         "seckey": AppConfig.secretKey,
@@ -143,7 +144,8 @@ class LoginOtpController extends GetxController  {
       var response = await authRepo.registerNewDevice({
         "enc_value":
         await Encryption.getEncValue(mobileNumber),
-        "dvc_name": await AppUtil.getDeviceID(),
+        "dvckey": await AppUtil.getDeviceID(),
+        "dvc_name": await AppUtil.modelName(),
         "sessionkey": sessionKey,
         "ipaddress": await Ipify.ipv4(),
         "seckey": AppConfig.secretKey,

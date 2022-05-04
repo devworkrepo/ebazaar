@@ -100,7 +100,7 @@ class FundRequestFormField extends GetView<FundRequestController> {
                     hint: "Required*",
                     onFieldTab: () {
                       DateUtil.showDatePickerDialog((dateTime) {
-                        controller.selectedDate = dateTime;
+                        controller.paymentDateController.text = dateTime;
                       });
                     },
                   ),

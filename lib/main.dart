@@ -65,6 +65,8 @@ class _MyAppState extends State<MyApp> {
       initialPage = AppRoute.deviceLockPage;
     }
 
+   // initialPage = AppRoute.testPage;
+
     /*if(isDeviceRooted){
       initialPage = AppRoute.rootPage;
     }

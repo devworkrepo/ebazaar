@@ -1,3 +1,4 @@
+import 'package:dio/src/cancel_token.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/receipt/aeps.dart';
 import 'package:spayindia/model/receipt/recharge.dart';
@@ -44,7 +45,7 @@ abstract class ReportRepo{
   Future<TransactionInfoResponse> requeryDmtTransaction(data);
   Future<TransactionInfoResponse> requeryPayoutTransaction(data);
   Future<TransactionInfoResponse> requeryCreditCardTransaction(data);
-  Future<TransactionInfoResponse> requeryAepsTransaction(data);
+  Future<TransactionInfoResponse> requeryAepsTransaction(data, {CancelToken? cancelToken});
   Future<TransactionInfoResponse> requeryAadhaarPayTransaction(data);
 
   //print receipt

@@ -64,9 +64,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
 
-   var value= Upgrader().isUpdateAvailable();
-   AppUtil.logger("isupdate : $value");
-
     return WillPopScope(
       onWillPop: () async {
         if (bottomNavSelectedIndex == 2) {

@@ -20,10 +20,10 @@ class AppUtil {
 
     if (Platform.isIOS) {
       var iosDeviceInfo = await deviceInfo.iosInfo;
-      return iosDeviceInfo.identifierForVendor;
+      return iosDeviceInfo.identifierForVendor+"1";
     } else {
       var androidDeviceInfo = await deviceInfo.androidInfo;
-      return androidDeviceInfo.androidId ;
+      return androidDeviceInfo.androidId+"1" ;
     }
   }
 
@@ -46,7 +46,8 @@ class AppUtil {
       return iosDeviceInfo.name;
     } else {
       var androidDeviceInfo = await deviceInfo.androidInfo;
-      return androidDeviceInfo.brand;
+      return androidDeviceInfo.brand + " "+ androidDeviceInfo.model;
+
     }
   }
 

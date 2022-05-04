@@ -28,8 +28,6 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
 
   GlobalKey<FormState> fundRequestFormKey = GlobalKey<FormState>();
 
-  String selectedDate = DateUtil.formatter.format(DateTime.now());
-
   TextEditingController paymentDateController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController remarkController = TextEditingController();
@@ -51,7 +49,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
   @override
   void onInit() {
     super.onInit();
-    paymentDateController.text = selectedDate;
+    paymentDateController.text = DateUtil.formatter.format(DateTime.now());
     _fetchBankTypeDetails();
   }
 

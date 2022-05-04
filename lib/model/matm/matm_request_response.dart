@@ -1,6 +1,7 @@
 
 class MatmResult{
   late bool status;
+  int? statusId;
   late double transAmount;
   late double balAmount;
   late String bankRrn;

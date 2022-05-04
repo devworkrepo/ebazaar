@@ -37,6 +37,7 @@ import 'package:spayindia/test/test_local_auth_page.dart';
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 import '../page/main/settlement/aeps_settlement_page.dart';
+import '../page/matm/process/matm_process_page.dart';
 import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
 import '../page/ott/ott_transaction/ott_transaction_page.dart';
@@ -58,7 +59,7 @@ final getAllPages = [
 
   GetPage(
     name: AppRoute.testPage,
-    page: () => const TestLocalAuthPage(),
+    page: () => const MatmInProcessPage(),
   ),
 
   GetPage(

@@ -6,6 +6,7 @@ import 'package:spayindia/data/repo/aeps_repo.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/model/matm/matm_request_response.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/page/matm/process/matm_process_page.dart';
 import 'package:spayindia/service/location.dart';
 import 'package:spayindia/service/native_call.dart';
 import 'package:spayindia/util/app_util.dart';
@@ -203,7 +204,7 @@ class MatmController extends GetxController
     StatusDialog.progress(title: "Updating to Server");
     try {
       await repo.updateMatmDataToServer({
-        "status": "3" /*(result.status) ? "1" : "2"*/,
+        "status":(transactionType.value == MatmTransactionType.cashWithdrawal) ?  "3" :  (result.status) ? "1" : "2",
         "clientId": requestResponse!.clientId ?? "",
         "balanceamt": result.balAmount.toString(),
         "bankName": result.bankName,
@@ -215,10 +216,18 @@ class MatmController extends GetxController
       Get.back();
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
     } finally {
-      Get.to(() => MatmTxnResponsePage(),
-          arguments: {"response": result, "txnType": transactionType.value});
+
+      if(transactionType.value == MatmTransactionType.balanceEnquiry || !result.status){
+        result.statusId = (result.status) ? 1 : 2;
+        Get.offAll(() => MatmTxnResponsePage(),
+            arguments: {"response": result, "txnType": transactionType.value});
+      }
+      else{
+        result.statusId = 3;
+        Get.offAll(() => const MatmInProcessPage(),
+            arguments: {"result": result,"transaction_number" : transactionNumber!});
+      }
     }
   }
 

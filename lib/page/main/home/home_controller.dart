@@ -115,12 +115,11 @@ class HomeController extends GetxController {
         appbarBackgroundOpacity.value = 0;
         appbarElevation.value = 0;
 
-        if (appPreference.isBiometricAuthentication ) {
-          if (!isLocalAuthDone) {
+          if (!isLocalAuthDone && kReleaseMode) {
            LocalAuthService.authenticate();
            isLocalAuthDone = true;
           }
-        }
+
       }
       userDetailObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -285,6 +284,7 @@ class HomeController extends GetxController {
     var agentCode = appPreference.user.agentCode.toString();
     await FirebaseCrashlytics.instance.setCustomKey("user ID", userId);
     await FirebaseCrashlytics.instance.setCustomKey("user Code", agentCode);
+    await FirebaseCrashlytics.instance.setCustomKey("Mobile", appPreference.mobileNumber);
   }
 }
 

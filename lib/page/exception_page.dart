@@ -219,15 +219,15 @@ class _ExceptionPageState extends State<ExceptionPage> {
       } else if (error is FormatException) {
         exceptionType = "BadRequestException";
       }
-
-      await FirebaseCrashlytics.instance.recordError(
+      
+      await FirebaseCrashlytics.instance.log(
           exceptionType +
               "\n\n\n" +
               widget.error.toString() +
               "\n\n\n" +
-              ((widget.data != null) ? widget.data.toString() : ""),
-          null,
-          fatal: isTransactionApi);
+              ((widget.data != null) ? widget.data.toString() : "")
+      );
+
     }
   }
 }
