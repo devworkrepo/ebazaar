@@ -1,11 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/route/route_name.dart';
-
-import '../app_util.dart';
 
 class _BaseException implements Exception {
   _BaseException({this.msg = "Error occurred"});
@@ -31,6 +26,14 @@ class NoInternetException extends _BaseException {
   NoInternetException(
       {this.message =
           "No connection available, please check network connection"})
+      : super(msg: message);
+  String message;
+}
+
+class TestingServerError extends _BaseException {
+  TestingServerError(
+      {this.message =
+          "We are working for new app update please use our spay web portal for a movement."})
       : super(msg: message);
   String message;
 }
@@ -148,7 +151,11 @@ class SessionExpireException extends _BaseException {
         }
       } else if (error is SocketException) {
         e = SocketException();
-      } else {
+      }
+      else if(error is TestingServerError){
+        e = TestingServerError();
+      }
+      else {
         e = UnknownException(message: error.toString());
       }
       return e;

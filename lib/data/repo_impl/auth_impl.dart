@@ -10,51 +10,51 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<LoginResponse> agentLogin(Map<String, String> data) async {
-    var response = await client.dio.post("AgentLogin", data: data);
+    var response = await client.post("AgentLogin", data: data,isAdditionalData: false);
     return LoginResponse.fromJson(response.data);
   }
 
   @override
   Future<LoginResponse> loginOtp(Map<String, String> data) async {
-    var response = await client.dio.post("LoginOTPVerify", data: data);
+    var response = await client.post("LoginOTPVerify", data: data,isAdditionalData: false);
     return LoginResponse.fromJson(response.data);
   }
 
 
   @override
   Future<CommonResponse> resendLoginOtp(Map<String, String> data) async {
-    var response = await client.dio.post("LoginOTP", data: data);
+    var response = await client.post("LoginOTP", data: data,isAdditionalData: false);
     return CommonResponse.fromJson(response.data);
   }
 
   @override
   Future<ForgotPasswordResponse> forgotPasswordRequestOtp(Map<String, String> data) async {
-    var response = await client.dio.post("forget-password", data: data);
+    var response = await client.post("forget-password", data: data,isAdditionalData: false);
     return ForgotPasswordResponse.fromJson(response.data);
   }
 
   @override
   Future<CommonResponse> forgotPasswordVerifyOtp(Map<String, String> data) async {
-    var response = await client.dio.post("set-forget-password", data: data);
+    var response = await client.post("set-forget-password", data: data,isAdditionalData: false);
     return CommonResponse.fromJson(response.data);
   }
 
   @override
   Future<ForgotPasswordResponse> forgotPasswordResendOtp(Map<String, String> data) async {
-    var response = await client.dio.post("resend-forgot-password-otp", data: data);
+    var response = await client.post("resend-forgot-password-otp", data: data,isAdditionalData: false);
     return ForgotPasswordResponse.fromJson(response.data);
   }
 
   @override
   Future<CommonResponse> checkDevice(data) async{
-    var response = await client.dio.post("CheckDvc",data: data);
+    var response = await client.post("CheckDvc",data: data,isAdditionalData: false);
     return CommonResponse.fromJson(response.data);
   }
 
   @override
   Future<CommonResponse> registerNewDevice(data) async
   {
-    var response = await client.dio.post("RegisterDvc",data: data);
+    var response = await client.post("RegisterDvc",data: data,isAdditionalData: false);
     return CommonResponse.fromJson(response.data);
   }
 

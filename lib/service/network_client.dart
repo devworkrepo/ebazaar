@@ -1,10 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:encrypt/encrypt.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/main.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/app_util.dart';
@@ -17,9 +15,7 @@ class NetworkClient {
   static const timeoutInSecond = 0;
 
   final _options = BaseOptions(
-      baseUrl:
-          (isTestMode) ? "http://192.168.1.132:8081/" : AppConstant.baseUrl,
-      // baseUrl: 'http://192.168.1.237:8081/',
+      baseUrl: AppConstant.baseUrl,
       connectTimeout: timeoutInSecond,
       receiveTimeout: timeoutInSecond,
       maxRedirects: 0,
@@ -90,25 +86,29 @@ class NetworkClient {
     ));
   }
 
-  Future<Response<T>> post<T>(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-    CancelToken? cancelToken,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
+  Future<Response<T>> post<T>(String path,
+      {dynamic data,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken,
+      ProgressCallback? onSendProgress,
+      ProgressCallback? onReceiveProgress,
+      bool isAdditionalData = true}) async {
+    if (kReleaseMode &&
+        AppConstant.baseUrl == AppConstant.uatBaseUrl &&
+        appPreference.mobileNumber != "7982607742") {
+      throw TestingServerError();
+    }
+
     var additionalData = {
       "dvckey": await AppUtil.getDeviceID(),
       "sessionkey": Encryption.encryptMPIN(appPreference.sessionKey),
     };
-
     if (data == null) {
       data = additionalData;
     } else {
       if (data is Map) {
-        data.addAll(additionalData);
+        if(isAdditionalData) data.addAll(additionalData);
       }
     }
 

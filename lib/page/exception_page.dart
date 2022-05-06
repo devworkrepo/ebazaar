@@ -125,6 +125,13 @@ class _ExceptionPageState extends State<ExceptionPage> {
           title: "Session Expired!",
           message: exception.message.toString());
     }
+    else if (exception is TestingServerError) {
+      shouldGoLoginPage = true;
+      return _buildLottieWidget(
+          lottieType: LottieType.appUpdate,
+          title: "App Update Work on Progress",
+          message: exception.message.toString());
+    }
     else {
       return _buildLottieWidget(
           lottieType: LottieType.alert,

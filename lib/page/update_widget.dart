@@ -67,7 +67,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     bool isUpdate = info.isUpdate ?? true;
     bool isForce = info.isForce ?? true;
 
-    if (widget.onAvailable != null && isUpdate) widget.onAvailable!(isUpdate);
+    if (widget.onAvailable != null) widget.onAvailable!(isUpdate);
 
     var ifForceUpdate = isForce ||
         !minVersionSupport(
@@ -81,7 +81,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
       AppUtil.logger("AppUpdateTesting : delay timestamp is greater than zero");
       var savedTime = DateTime.fromMillisecondsSinceEpoch(
               appPreference.appUpdateTimeWaiting)
-          .add(Duration(hours: _getDelayHourInMilliSecond(info.delayHour)));
+          .add(_getDelayHourInMilliSecond(info.delayHour));
 
       if (DateTime.now().isAfter(savedTime)) {
         AppUtil.logger("AppUpdate : on after saved time");
@@ -119,14 +119,34 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     }
   }
 
-  int _getDelayHourInMilliSecond(String? delayHour) {
-    var value = 2;
-    try {
-      value = int.parse((delayHour ?? "2"));
-    } catch (e) {
-      value = 2;
+  Duration _getDelayHourInMilliSecond(String? delayHour) {
+
+    if(delayHour == null) {
+      AppUtil.logger("delayHourTesting : delayHour is null : return 2 hour delay");
     }
-    return value;
+    if (delayHour == null) return const Duration(hours: 2);
+
+
+
+    if (delayHour.startsWith("0") && delayHour.contains(".")) {
+      AppUtil.logger("delayHourTesting : delayHour contain 0. : parsing for minutes");
+      var newDelayHour = delayHour.substring(2);
+      try {
+        AppUtil.logger("delayHourTesting : delayHour parsing minute on try block :value $newDelayHour");
+        return Duration(minutes: int.parse(newDelayHour));
+      } catch (e) {
+        AppUtil.logger("delayHourTesting : delayHour parsing minute on catch block : returning 30 minutes");
+        return const Duration(minutes: 30);
+      }
+    } else {
+      try {
+        AppUtil.logger("delayHourTesting : delayHour parsing hours on try block : returning $delayHour");
+        return Duration(hours: int.parse((delayHour)));
+      } catch (e) {
+        AppUtil.logger("delayHourTesting : delayHour parsing hours on catch block : returning 2 hours");
+        return const Duration(hours: 2);
+      }
+    }
   }
 
   @override

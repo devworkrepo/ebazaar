@@ -11,15 +11,11 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
 import 'package:spayindia/service/local_auth.dart';
-import 'package:spayindia/service/native_call.dart';
+import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:spayindia/util/security/app_config.dart';
 
 import 'data/app_pref.dart';
-
-
-const isTestMode = false;
-var isDeviceRooted = false;
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -32,18 +28,19 @@ void main() async {
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await appBinding();
-  isDeviceRooted = await SafeDevice.isRealDevice;
-  if(kDebugMode){
-    isDeviceRooted = false;
+  var isRealDevice = await SafeDevice.isRealDevice;
+  if (kDebugMode) {
+    isRealDevice = true;
   }
 
-  runApp(MyApp(isBiometricAvailable));
+  runApp(MyApp(isBiometricAvailable,isRealDevice));
 }
 
 class MyApp extends StatefulWidget {
   final bool isBiometricAvailable;
+  final bool isRealDevice;
 
-  const MyApp(this.isBiometricAvailable, {Key? key}) : super(key: key);
+  const MyApp(this.isBiometricAvailable,this.isRealDevice, {Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -61,25 +58,21 @@ class _MyAppState extends State<MyApp> {
         (appPreference.sessionKey.isEmpty || appPreference.sessionKey == "na")
             ? AppRoute.loginPage
             : AppRoute.mainPage;
-    if(!widget.isBiometricAvailable){
+    if (!widget.isBiometricAvailable) {
       initialPage = AppRoute.deviceLockPage;
     }
 
-   // initialPage = AppRoute.testPage;
-
-    /*if(isDeviceRooted){
+    if (!widget.isRealDevice) {
       initialPage = AppRoute.rootPage;
     }
-*/
-   /* if(kDebugMode){
-      initialPage = AppRoute.mainPage;
-    }*/
+
+    var backgroundColor =
+        (AppConstant.baseUrl == AppConstant.uatBaseUrl)
+            ? Colors.black
+            : AppColor.backgroundColor;
 
     ThemeData themeData = ThemeData(
-        scaffoldBackgroundColor: (isTestMode && kReleaseMode)
-            ? Colors.red
-            : AppColor.backgroundColor,
-        // scaffoldBackgroundColor: AppColor.backgroundColor,
+        scaffoldBackgroundColor: backgroundColor,
         dividerColor: Colors.grey,
         dividerTheme:
             const DividerThemeData(space: 12, thickness: 1, indent: 10),
