@@ -50,11 +50,10 @@ class HomeController extends GetxController {
     appPreference.setIsTransactionApi(false);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       scrollController.addListener(_scrollListener);
-
     });
-
     _fetchBanners();
   }
+
 
   _fetchBanners() async {
     try {

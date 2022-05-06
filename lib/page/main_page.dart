@@ -2,12 +2,9 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/service/local_auth.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/status_bar_color_widget.dart';
-import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/page/main/home/home_page.dart';
 import 'package:spayindia/page/profile/profile_page.dart';
 import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_controller.dart';
@@ -24,12 +21,16 @@ import 'package:spayindia/page/statement/credit_debit/credit_debit_controller.da
 import 'package:spayindia/page/statement/statement_tab.dart';
 import 'package:spayindia/res/style.dart';
 import 'package:spayindia/route/route_name.dart';
+import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/tags.dart';
+import 'package:spayindia/widget/button.dart';
+import 'package:spayindia/widget/status_bar_color_widget.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../service/native_call.dart';
 import '../widget/dialog/status_dialog.dart';
+
 
 var isBottomNavShowObs = true.obs;
 
@@ -61,15 +62,15 @@ class _MainPageState extends State<MainPage> {
 
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         if (bottomNavSelectedIndex == 2) {
-            showExitDialog();
-            return false;
-
+          showExitDialog();
+          return false;
         } else {
           setState(() {
             var nav = bottomNavKey.currentWidget as BottomNavigationBar?;

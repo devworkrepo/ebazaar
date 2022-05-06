@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
+import 'package:spayindia/model/app_update.dart';
 import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/login_session.dart';
@@ -95,6 +96,12 @@ class HomeRepoImpl extends HomeRepo {
   Future<CommonResponse> logout() async {
     var response = await client.post("/Logout");
     return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<AppUpdateInfo> updateInfo() async {
+    var response = await client.get("/CheckAppUpdates");
+    return AppUpdateInfo.fromJson(response.data);
   }
 
 

@@ -20,6 +20,8 @@ class AppPreference {
   final _rdService = "rd_service";
   final _biometricServiceEnable = "biometric_service_enable";
   final _appUpdateDelayTime = "app_update_delay_time";
+  final _appUpdateDelayHour = "app_update_delay_hour";
+
 
   setPassword(String value) => _saveStringData(_password, value);
 
@@ -78,9 +80,11 @@ class AppPreference {
   bool get isLoginCheck => _retrieveBoolData(_isLoginCheck);
 
 
-  setAppUpdateDelayTime(int value) => _saveIntData(_appUpdateDelayTime, value);
+  setAppUpdateTimeWaiting(int value) => _saveIntData(_appUpdateDelayTime, value);
+  setOptionalUpdateDelayHour(int value) => _saveIntData(_appUpdateDelayHour, value);
 
-  int get appUpdateDelayTime => _retrieveIntData(_appUpdateDelayTime);
+  int get appUpdateTimeWaiting => _retrieveIntData(_appUpdateDelayTime);
+  int get optionalUpdateDelayHour => _retrieveIntData(_appUpdateDelayHour);
 
 
 

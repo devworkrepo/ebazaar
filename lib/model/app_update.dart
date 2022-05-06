@@ -1,24 +1,25 @@
-import 'package:flutter/material.dart';
+class AppUpdateInfo {
+  int? code;
+  String? delayHour;
+  bool? isForce;
+  bool? isUpdate;
+  String? message;
+  String? minVersion;
+  String? status;
+  String? description;
+  String? heading;
 
-class InAppUpdateData {
-  InAppUpdateData();
-  bool shouldUpdate = true;
-  bool forceUpdate = true;
+  AppUpdateInfo();
 
-  InAppUpdateData.fromJson(Map<String, dynamic>? json ){
-    shouldUpdate = json?['should_update'];
-    forceUpdate = json?['force_update'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['should_update'] = shouldUpdate;
-    _data['force_update'] = forceUpdate;
-    return _data;
-  }
-
-  @override
-  String toString() {
-    return 'InAppUpdateData{shouldUpdate: $shouldUpdate, forceUpdate: $forceUpdate}';
+  AppUpdateInfo.fromJson(Map<String, dynamic> json) {
+    code = json["code"];
+    delayHour = json["delay_hrs"];
+    isForce = json["isforce"];
+    isUpdate = json["isupdate"];
+    message = json["message"];
+    minVersion = json["min_version"];
+    status = json["status"];
+    description = json["update_desc"];
+    heading = json["update_heading"];
   }
 }

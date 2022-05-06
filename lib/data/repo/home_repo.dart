@@ -5,6 +5,7 @@ import 'package:spayindia/model/profile.dart';
 import 'package:spayindia/model/summary.dart';
 import 'package:spayindia/model/user/user.dart';
 
+import '../../model/app_update.dart';
 import '../../model/notification.dart';
 
 abstract class HomeRepo{
@@ -30,4 +31,5 @@ abstract class HomeRepo{
   Future<CommonResponse> changePassword(data);
 
   Future<CommonResponse> changePin(data);
+  Future<AppUpdateInfo> updateInfo();
 }

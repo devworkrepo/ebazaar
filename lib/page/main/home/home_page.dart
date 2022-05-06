@@ -28,8 +28,8 @@ class HomePage extends GetView<HomeController> {
     return RouteAwareWidget(
       child: SafeArea(
         child: AppUpdateWidget(
-          onAvailable: (){
-            controller.isUpdateObs.value = true;
+          onAvailable: (isUpdate){
+            controller.isUpdateObs.value = isUpdate;
           },
           child: Scaffold(
 

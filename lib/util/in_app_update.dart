@@ -1,19 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
-import 'package:spayindia/data/app_pref.dart';
 
 import '../widget/common.dart';
 import 'app_util.dart';
 
 class AppUpdateUtil {
 
-  static checkUpdate() async {
-    _checkForUpdate();
-  }
+  AppUpdateUtil._();
 
-  static Future<void> _checkForUpdate() async {
+  static Future<void> checkUpdate(bool isUpdate, bool isForceUpdate) async {
+
+    if(!isUpdate) return;
+
     InAppUpdate.checkForUpdate().then((info) {
       var isUpdateAvailable =
           info.updateAvailability == UpdateAvailability.updateAvailable;
@@ -21,7 +20,7 @@ class AppUpdateUtil {
       AppUtil.logger("InAppUpdate : package name : ${info.packageName}");
 
       if (isUpdateAvailable) {
-        _performImmediateUpdate();
+        _performImmediateUpdate(isUpdate,isForceUpdate);
       } else {
         AppUtil.logger("InAppUpdate : app update not available");
       }
@@ -35,12 +34,12 @@ class AppUpdateUtil {
     });
   }
 
-  static _performImmediateUpdate() {
+  static _performImmediateUpdate(bool isUpdate, bool isForceUpdate) {
     InAppUpdate.performImmediateUpdate().catchError((e) {
       AppUtil.logger(
           "InAppUpdateError _performImmediateUpdate: " + e.toString());
-      if(kReleaseMode){
-        _checkForUpdate();
+      if(isForceUpdate){
+        checkUpdate(isUpdate,isForceUpdate);
       }
     });
   }
