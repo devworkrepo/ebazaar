@@ -23,6 +23,8 @@ import 'package:spayindia/util/in_app_update.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:upgrader/upgrader.dart';
 
+import '../../../util/app_constant.dart';
+
 var isLocalAuthDone = false;
 class HomeController extends GetxController {
 
@@ -97,12 +99,28 @@ class HomeController extends GetxController {
   }
 
   fetchUserDetails() async {
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      isBottomNavShowObs.value = false;
+      _fetchUserDetails();
+    });
+
+  }
+
+  _fetchUserDetails() async {
+
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
     });
-
     userDetailObs.value = const Resource.onInit();
     try {
+      if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {
+        await Future.delayed(const Duration(seconds: 2));
+        if (appPreference.mobileNumber != "7982607742") {
+          throw TestingServerError();
+        }
+      }
+
       UserDetail response = await homeRepo.fetchAgentInfo();
       user = response;
       await appPreference.setUser(user);
@@ -114,10 +132,10 @@ class HomeController extends GetxController {
         appbarBackgroundOpacity.value = 0;
         appbarElevation.value = 0;
 
-          if (!isLocalAuthDone && kReleaseMode) {
-           LocalAuthService.authenticate();
-           isLocalAuthDone = true;
-          }
+        if (!isLocalAuthDone && kReleaseMode) {
+          LocalAuthService.authenticate();
+          isLocalAuthDone = true;
+        }
 
       }
       userDetailObs.value = Resource.onSuccess(response);

@@ -94,11 +94,7 @@ class NetworkClient {
       ProgressCallback? onSendProgress,
       ProgressCallback? onReceiveProgress,
       bool isAdditionalData = true}) async {
-    if (kReleaseMode &&
-        AppConstant.baseUrl == AppConstant.uatBaseUrl &&
-        appPreference.mobileNumber != "7982607742") {
-      throw TestingServerError();
-    }
+
 
     var additionalData = {
       "dvckey": await AppUtil.getDeviceID(),

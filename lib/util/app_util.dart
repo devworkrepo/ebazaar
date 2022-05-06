@@ -76,4 +76,5 @@ class AppUtil {
     await Share.shareFiles([imageFile.path], text: text);
 
   }
+
 }

@@ -123,7 +123,13 @@ class MatmPage extends GetView<MatmController> {
                                 controller: controller.amountController,
                                 validator: (value) =>
                                     FormValidatorHelper.amount(value,
-                                        minAmount: (kDebugMode) ? 1 : 100, maxAmount: 10000),
+                                        minAmount: (kDebugMode ||
+                                                controller.appPreference
+                                                        .mobileNumber ==
+                                                    "7982607742")
+                                            ? 1
+                                            : 100,
+                                        maxAmount: 10000),
                               )
                             ],
                           ),

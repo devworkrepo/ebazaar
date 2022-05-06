@@ -67,7 +67,10 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     bool isUpdate = info.isUpdate ?? true;
     bool isForce = info.isForce ?? true;
 
-    if (widget.onAvailable != null) widget.onAvailable!(isUpdate);
+
+    if(mounted){
+      if (widget.onAvailable != null) widget.onAvailable!(isUpdate);
+    }
 
     var ifForceUpdate = isForce ||
         !minVersionSupport(

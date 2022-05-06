@@ -29,6 +29,7 @@ class HomePage extends GetView<HomeController> {
       child: SafeArea(
         child: AppUpdateWidget(
           onAvailable: (isUpdate){
+
             controller.isUpdateObs.value = isUpdate;
           },
           child: Scaffold(

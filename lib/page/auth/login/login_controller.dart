@@ -17,6 +17,8 @@ import 'package:spayindia/util/security/app_config.dart';
 import 'package:spayindia/util/security/encription.dart';
 
 import '../../../service/native_call.dart';
+import '../../../util/api/exception.dart';
+import '../../../util/app_constant.dart';
 
 class LoginController extends GetxController {
   AuthRepo authRepo = Get.find<AuthRepoImpl>();
@@ -89,6 +91,13 @@ class LoginController extends GetxController {
         "appid": AppConfig.apiCode,
         "accesskey": AppConfig.apiKey
       };
+
+      if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {
+        if (mobileController.text != "7982607742") {
+          throw TestingServerError();
+        }
+      }
+
 
       AppUtil.logger(loginData.toString());
 
