@@ -8,6 +8,9 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
 import 'dart:developer';
 
+import 'api/exception.dart';
+import 'app_constant.dart';
+
 class AppUtil {
   static logger(value) {
     if (!kReleaseMode) {
@@ -75,6 +78,21 @@ class AppUtil {
     imageFile.writeAsBytesSync(image);
     await Share.shareFiles([imageFile.path], text: text);
 
+  }
+
+
+  static void throwUatExceptionOnDeployment(String mobileNumber){
+
+    var whiteListNumbers = ["79826077421","9785172173"];
+
+    if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {
+
+      for (var element in whiteListNumbers) {
+        if (mobileNumber != element) {
+          throw UatUpdateException();
+        }
+      }
+    }
   }
 
 }

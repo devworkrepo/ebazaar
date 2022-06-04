@@ -17,6 +17,7 @@ class UserDetail {
   bool? isWalletPay;
   bool? isRecharge;
   bool? isDth;
+  bool? isVirtualAccount;
   bool? isInsurance;
   bool? isBill;
   bool? isCreditCard;
@@ -53,6 +54,7 @@ class UserDetail {
     isInsurance = json['is_insurance'];
     isInstantPay = json['is_instantpay'];
     isBill = json['is_bill'];
+    isVirtualAccount = json['is_virtualacc'];
     isCreditCard = json['is_creditcard'];
     isPaytmWallet = json['is_paytmwallet'];
     isLic = json['is_lic'];
@@ -89,6 +91,7 @@ class UserDetail {
     data ['is_paytmwalle']=isPaytmWallet;
     data ['is_lic']=isLic;
     data ['is_ott']=isOtt;
+    data ['is_virtualacc']=isVirtualAccount;
     data ['is_billpart']=isBillPart;
     data ['is_aeps']=isAeps;
     data ['is_matm']=isMatm;

@@ -12,4 +12,6 @@ class AppTag {
   static const String aepsStatementControllerTag = "AEPS_STATEMENT_CONTROLLER_TAG";
   static const String creditStatementControllerTag = "CREDIT_STATEMENT_CONTROLLER_TAG";
   static const String debitStatementControllerTag = "DEBIT_STATEMENT_CONTROLLER_TAG";
+  static const String virtualAccountPendingTag = "VIRTUAL_ACCOUNT_PENDING_CONTROLLER_TAG";
+  static const String virtualAccountAllTag = "VIRTUAL_ACCOUNT_ALL_CONTROLLER_TAG";
 }

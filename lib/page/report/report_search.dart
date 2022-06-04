@@ -15,6 +15,7 @@ class CommonReportSeasrchDialog extends StatefulWidget {
   final String? inputFieldOneTile;
   final List<String>? statusList;
   final List<String>? typeList;
+  final bool isDateSearch;
 
   final Function(String fromDate, String toDate, String searchInput,
       String searchInputType, String status, String rechargeType) onSubmit;
@@ -27,7 +28,8 @@ class CommonReportSeasrchDialog extends StatefulWidget {
       this.status,
       this.inputFieldOneTile,
       this.statusList,
-      this.typeList})
+      this.typeList,
+      this.isDateSearch = true})
       : super(key: key);
 
   @override
@@ -68,7 +70,7 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
             child: Column(
               children: [
                 filterTitleAndIcon(),
-                AppTextField(
+                if(widget.isDateSearch)AppTextField(
                   controller: fromDateController,
                   label: "From Date",
                   onFieldTab: () {
@@ -77,7 +79,7 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                     });
                   },
                 ),
-                AppTextField(
+                if(widget.isDateSearch)AppTextField(
                   controller: toDateController,
                   label: "To Date",
                   onFieldTab: () {

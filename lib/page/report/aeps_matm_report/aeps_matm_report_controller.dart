@@ -100,10 +100,12 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
               "transaction_no": report.transactionNumber ?? "",
             });
 
+
+
       Get.back();
       if (response.code == 1) {
         ReportHelperWidget.requeryStatus(
-            response.trans_response ?? "InProgress",
+            response.trans_status ?? "InProgress",
             response.trans_response ?? "Message not found", () {
           fetchReport();
         });

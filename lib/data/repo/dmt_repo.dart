@@ -25,6 +25,7 @@ abstract class DmtRepo {
   Future<DmtBeneficiaryResponse> fetchBeneficiary(Map<String, String> data);
 
   Future<CommonResponse> addBeneficiary(Map<String, String> data);
+  Future<CommonResponse> syncBeneficiary(Map<String, String> data);
 
   Future<CommonResponse> senderRegistration(Map<String, String> data);
 

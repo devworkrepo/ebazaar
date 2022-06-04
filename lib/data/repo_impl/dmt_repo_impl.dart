@@ -210,4 +210,10 @@ class DmtRepoImpl extends DmtRepo {
    var response = await client.post("/VerifyEKycOTP",data: data);
     return CommonResponse.fromJson(response.data);
   }
+
+  @override
+  Future<CommonResponse> syncBeneficiary(Map<String, String> data) async {
+    var response = await client.post("/SyncBeneficiary",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
 }

@@ -8,19 +8,27 @@ import 'api/resource/resource.dart';
 class ObsResourceWidget<T> extends StatelessWidget {
   final Rx<Resource<T>> obs;
   final Widget Function(T data) childBuilder;
+  final bool handleCode;
 
 
-  const ObsResourceWidget({Key? key, required this.obs,required this.childBuilder,})
+  const ObsResourceWidget({Key? key, required this.obs,required this.childBuilder,this.handleCode = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => obs.value.when(onSuccess: (data) {
           dynamic response = data;
-          if (response.code == 1) {
+          if (response.code == 1 || handleCode) {
                return childBuilder(data);
           } else {
-            return ExceptionPage(error: Exception(response.message));
+            return Center(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Text(response.message),
+                ),
+              ),
+            );
           }
         }, onFailure: (e) {
           return ExceptionPage(

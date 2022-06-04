@@ -52,3 +52,18 @@ class MatmRequestResponse{
   }
 
 }
+
+
+class MatmCheckTransactionInitiated{
+  late int status;
+  late String message;
+  bool?  isInitiated;
+
+  MatmCheckTransactionInitiated.fromJson(Map<String,dynamic> json){
+
+    message=json["message"];
+    status=json["status"];
+    isInitiated=json["is_initiated"];
+  }
+
+}

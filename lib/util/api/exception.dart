@@ -30,10 +30,10 @@ class NoInternetException extends _BaseException {
   String message;
 }
 
-class TestingServerError extends _BaseException {
-  TestingServerError(
+class UatUpdateException extends _BaseException {
+  UatUpdateException(
       {this.message =
-          "We are working for new app update please use our spay web portal for a movement."})
+          "You will receive new app update with in a hour, we are working on it. Meanwhile please use our spay web portal."})
       : super(msg: message);
   String message;
 }
@@ -61,7 +61,7 @@ class FormatException extends _BaseException {
 
 class InternalServerException extends _BaseException {
   InternalServerException(
-      {this.message = "Internal server error, Please contant with admin"})
+      {this.message = "Internal server error, Please contact with admin"})
       : super(msg: message);
   String message;
 }
@@ -78,9 +78,11 @@ class UnknownException extends _BaseException {
   String message;
 }
 
-
 class UnauthorizedException extends _BaseException {
-  UnauthorizedException({this.message = "Unauthorized Access! Session has expired please login again."}) : super(msg: message);
+  UnauthorizedException(
+      {this.message =
+          "Unauthorized Access! Session has expired please login again."})
+      : super(msg: message);
   String message;
 }
 
@@ -89,24 +91,23 @@ class BadRequestException extends _BaseException {
   String message;
 }
 
-
 class SessionExpireException extends _BaseException {
-  SessionExpireException({this.message = "Session Key Expired, Please Login Again !."}) : super(msg: message);
+  SessionExpireException(
+      {this.message = "Session Key Expired, Please Login Again !."})
+      : super(msg: message);
   String message;
 }
 
-
- getDioException(error) {
+getDioException(error) {
   if (error is Exception) {
     try {
       Exception e;
       if (error is DioError) {
-
-        if((error.response?.statusCode ?? 0) == 401){
+        if ((error.response?.statusCode ?? 0) == 401) {
           return UnauthorizedException();
         }
 
-        if((error.response?.statusCode ?? 0) == 400){
+        if ((error.response?.statusCode ?? 0) == 400) {
           return BadRequestException();
         }
 
@@ -120,11 +121,9 @@ class SessionExpireException extends _BaseException {
           case DioErrorType.other:
             if (error.error is NoInternetException) {
               e = NoInternetException();
-            }
-            else if(error.error is SessionExpireException){
+            } else if (error.error is SessionExpireException) {
               e = SessionExpireException(message: error.message);
-            }
-            else {
+            } else {
               e = SocketException();
             }
             break;
@@ -134,14 +133,14 @@ class SessionExpireException extends _BaseException {
           case DioErrorType.response:
             if (error.response == null) {
               e = ResponseException(code: 500, message: "Internal sever error");
-            }
-            else if (error.response!.statusCode == 500) {
+            } else if (error.response!.statusCode == 500) {
               e = InternalServerException();
-            }
-            else {
+            } else {
               e = ResponseException(
                   code: error.response!.statusCode,
-                  message: error.response!.statusMessage.toString() +"\n"+error.message);
+                  message: error.response!.statusMessage.toString() +
+                      "\n" +
+                      error.message);
             }
 
             break;
@@ -151,11 +150,9 @@ class SessionExpireException extends _BaseException {
         }
       } else if (error is SocketException) {
         e = SocketException();
-      }
-      else if(error is TestingServerError){
-        e = TestingServerError();
-      }
-      else {
+      } else if (error is UatUpdateException) {
+        e = UatUpdateException();
+      } else {
         e = UnknownException(message: error.toString());
       }
       return e;
@@ -173,6 +170,6 @@ class SessionExpireException extends _BaseException {
   }
 }
 
-handleException(e){
-   Get.to(()=>ExceptionPage(error: e));
+handleException(e) {
+  Get.to(() => ExceptionPage(error: e));
 }

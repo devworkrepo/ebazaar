@@ -100,7 +100,7 @@ class BeneficiaryAddPage extends GetView<BeneficiaryAddController> {
                     rightButton: (controller.isVerifying.value)
                         ? const CircularProgressIndicator()
                         : AppButton(
-                            width: 100,
+                            width: 76,
                             text: "Verify",
                             onClick: controller.verifyAccountNumber),
                   ),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppStyle {
-  static BoxDecoration bottomSheetDecoration() => const BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.vertical(top: Radius.circular(12)));
+  static BoxDecoration bottomSheetDecoration({Color? color, int? borderRadius}) =>  BoxDecoration(
+      color: color ?? Colors.white,
+      borderRadius: BorderRadius.vertical(top: Radius.circular((borderRadius ?? 12).toDouble())));
+
+  static BoxDecoration searchDecoration({Color? color, int? borderRadius}) =>  BoxDecoration(
+      color: color ?? Colors.white,
+      borderRadius: BorderRadius.circular(12));
 }

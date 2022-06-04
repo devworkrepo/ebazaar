@@ -1,11 +1,13 @@
 import 'package:dio/src/cancel_token.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/money_request/bank_dertail.dart';
 import 'package:spayindia/model/receipt/aeps.dart';
 import 'package:spayindia/model/receipt/recharge.dart';
 import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/model/report/wallet.dart';
+import 'package:spayindia/model/virtual_account/virtual_report.dart';
 import '../../model/receipt/credit_card.dart';
 import '../../model/receipt/money.dart';
 import '../../model/refund/credit_card.dart';
@@ -29,6 +31,12 @@ abstract class ReportRepo{
   Future<WalletPayReportResponse> fetchWalletPayReport(data);
   Future<CreditCardReportResponse> fetchCreditCardReport(data);
   Future<CommonResponse> rechargeValues();
+
+  //virtual transaction
+  Future<VirtualTransactionReportResponse> fetchVirtualPendingReport(data);
+  Future<VirtualTransactionReportResponse> fetchVirtualAllReport(data);
+  Future<BondResponse> fetchVirtualBond(data);
+  Future<CommonResponse> acceptVirtualPayment(data);
 
   //refund
   Future<DmtRefundListResponse> dmtRefundList(data);

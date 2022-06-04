@@ -181,7 +181,11 @@ class _StatusDialog extends StatelessWidget {
 }
 
 class StatusDialog {
+
+
   static progress({String title = "Loading...", bool backPress = false}) {
+
+
     backPress = (kDebugMode) ? true : false;
 
     return Get.dialog(

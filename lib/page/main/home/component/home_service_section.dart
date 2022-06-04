@@ -35,6 +35,7 @@ class HomeServiceSection extends GetView<HomeController> {
         (homeServiceType == HomeServiceType.creditCard ||
                 homeServiceType == HomeServiceType.lic ||
                 homeServiceType == HomeServiceType.ott ||
+                homeServiceType == HomeServiceType.virtualAccount ||
                 homeServiceType == HomeServiceType.paytmWallet)
             ? _pngPicture(iconName, innerPadding)
             : _svgPicture(iconName, innerPadding),
@@ -98,8 +99,7 @@ class HomeServiceSection extends GetView<HomeController> {
         child: Center(
           child: (item.homeServiceType != HomeServiceType.none)
               ? _buildItem(item.iconName, item.title, item.homeServiceType,
-                  innerPadding:
-                      innerPadding(item))
+                  innerPadding: innerPadding(item))
               : const SizedBox(),
         ),
       ),
@@ -107,19 +107,14 @@ class HomeServiceSection extends GetView<HomeController> {
   }
 
   int innerPadding(HomeServiceItem item) {
-
-
-    if (item.homeServiceType == HomeServiceType.walletPay) {
+    if (item.homeServiceType == HomeServiceType.walletPay ||
+        item.homeServiceType == HomeServiceType.virtualAccount) {
       return 12;
-    }
-    else  if (item.homeServiceType == HomeServiceType.lic) {
+    } else if (item.homeServiceType == HomeServiceType.lic) {
       return 16;
-    }
-    else  if (item.homeServiceType == HomeServiceType.paytmWallet) {
+    } else if (item.homeServiceType == HomeServiceType.paytmWallet) {
       return 13;
-    }
-    else if (
-        item.homeServiceType == HomeServiceType.aadhaarPay ||
+    } else if (item.homeServiceType == HomeServiceType.aadhaarPay ||
         item.homeServiceType == HomeServiceType.aeps) {
       return 10;
     } else {
@@ -144,6 +139,7 @@ enum HomeServiceType {
   lic,
   paytmWallet,
   ott,
+  virtualAccount,
   none
 }
 
@@ -158,8 +154,8 @@ class HomeServiceItem {
 List<HomeServiceItem> _homeServiceList(UserDetail user) {
   List<HomeServiceItem> itemList = [];
 
-    itemList.add(HomeServiceItem(
-        "Money Transfer", "money", HomeServiceType.moneyTransfer));
+  itemList.add(HomeServiceItem(
+      "Money Transfer", "money", HomeServiceType.moneyTransfer));
 
   if (user.isPayout.orFalse()) {
     itemList.add(HomeServiceItem(
@@ -211,9 +207,15 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
         "Load Paytm\nWallet", "paytm", HomeServiceType.paytmWallet));
   }
   if (user.isOtt.orFalse()) {
-    itemList.add(HomeServiceItem(
-        "OTT\nSubscription", "ott", HomeServiceType.ott));
+    itemList
+        .add(HomeServiceItem("OTT\nSubscription", "ott", HomeServiceType.ott));
   }
+
+  if(user.isVirtualAccount ?? false){
+    itemList.add(HomeServiceItem(
+        "Virtual\nAccount", "virtual_account", HomeServiceType.virtualAccount));
+  }
+
 
   var length = itemList.length;
 

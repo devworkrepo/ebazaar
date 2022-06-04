@@ -24,6 +24,11 @@ class AppRoute {
   //credit card
   static const creditCardPage = "/credit_card_page";
 
+
+  //virtual account
+  static const virtualAccountPage = "/virtual-account-page";
+  static const virtualAccountTransactionTabPage = "/virtual-account-transaction-tab-page";
+
   //dmt
   static const dmtSearchSenderPage = "/dmt-search-sender-page";
   static const dmtBeneficiaryListPage = "/dmt-beneficiary_list-page";
@@ -65,6 +70,8 @@ class AppRoute {
   static const senderKycPage = "/sender-kyc-page";
   static const senderKycInfoPage = "/sender-kyc-info-page";
   static const aepsSettlementPage = "/settlement-page";
+  static const aepsSettlemenBankListtPage = "/settlement-bank-list-page";
+  static const addSettlementBank = "/settlement-add-bank-page";
 
   static const aepsOnboardingPage = "/aeps-onboarding-page";
 

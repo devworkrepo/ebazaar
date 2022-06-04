@@ -47,6 +47,7 @@ class ReportHelperWidget{
         status.toLowerCase() == "failed" ||
         status.toLowerCase() == "failure" ||
         status.toLowerCase() == "cancel" ||
+        status.toLowerCase() == "declined" ||
         status.toLowerCase() == "reject"
     ) {
       return 2;
@@ -63,7 +64,10 @@ class ReportHelperWidget{
         status.toLowerCase() == "inprogress"
     ) {
       return 4;
-    } else {
+    } else if(status.toLowerCase() == "pending") {
+      return 3;
+    }
+    else {
       return 3;
     }
   }

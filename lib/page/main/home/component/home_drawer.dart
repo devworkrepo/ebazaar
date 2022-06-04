@@ -80,6 +80,11 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         onClick: ()=>Get.toNamed(AppRoute.walletReportPage),
                         count: 4,
                       ),
+                      if(controller.appPreference.user.isVirtualAccount ?? false) _NavSubTitle(
+                        title: "Virtual Account",
+                        onClick: ()=>Get.toNamed(AppRoute.virtualAccountTransactionTabPage),
+                        count: 5,
+                      ),
                     ],
                   ),
                 ),
@@ -155,6 +160,16 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         underline: false,
                         count: 1,
+                      ),
+
+                      _NavSubTitle(
+                        title: "Settlement Banks",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.aepsSettlemenBankListtPage);
+                        },
+                        underline: false,
+                        count: 2,
                       )
                     ],
                   ),

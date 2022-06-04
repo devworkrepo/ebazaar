@@ -7,7 +7,7 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/lottie_constant.dart';
 import 'package:spayindia/widget/button.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class ExceptionPage extends StatefulWidget {
   final dynamic error;
   final Map<String, dynamic>? data;
@@ -49,7 +49,7 @@ class _ExceptionPageState extends State<ExceptionPage> {
           Get.offAllNamed(AppRoute.mainPage);
           return false;
         } else {
-          return  true;
+          return true;
         }
       },
       child: Scaffold(
@@ -71,7 +71,7 @@ class _ExceptionPageState extends State<ExceptionPage> {
           lottieType: LottieType.noInternet,
           title: "No Internet",
           message:
-          "Internet connection not available! please check mobile data or wifi connection");
+              "Internet connection not available! please check mobile data or wifi connection");
     } else if (exception is SocketException) {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
@@ -97,42 +97,37 @@ class _ExceptionPageState extends State<ExceptionPage> {
           lottieType: LottieType.alert,
           title: "Response Exception",
           message: exception.message.toString());
-    }
-    else if (exception is InternalServerException) {
+    } else if (exception is InternalServerException) {
       return _buildLottieWidget(
           lottieType: LottieType.server,
           title: "Internal Server Exception",
           message: exception.message.toString());
-    }
-    else if (exception is UnauthorizedException) {
+    } else if (exception is UnauthorizedException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(
           lottieType: LottieType.server,
           title: "Unauthorized Access!",
           message: exception.message.toString());
-    }
-    else if (exception is BadRequestException) {
+    } else if (exception is BadRequestException) {
       return _buildLottieWidget(
           lottieType: LottieType.server,
           title: "Bad Request",
           message: exception.message.toString());
-    }
-    else if (exception is SessionExpireException) {
+    } else if (exception is SessionExpireException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(
           showLoginButton: true,
           lottieType: LottieType.alert,
           title: "Session Expired!",
           message: exception.message.toString());
-    }
-    else if (exception is TestingServerError) {
+    } else if (exception is UatUpdateException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(
           lottieType: LottieType.appUpdate,
           title: "App Update Work on Progress",
-          message: exception.message.toString());
-    }
-    else {
+          message: exception.message.toString(),
+          redirectSpayWebPortal: true);
+    } else {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
           title: "Error Occurred!!",
@@ -140,10 +135,12 @@ class _ExceptionPageState extends State<ExceptionPage> {
     }
   }
 
-  _buildLottieWidget({required String lottieType,
+  _buildLottieWidget({
+    required String lottieType,
     required String title,
     required String message,
-    bool showLoginButton = false
+    bool showLoginButton = false,
+    bool redirectSpayWebPortal = false,
   }) {
     var result = getTransactionExceptionMessage();
 
@@ -160,10 +157,10 @@ class _ExceptionPageState extends State<ExceptionPage> {
         children: [
           SizedBox(
               child: LottieBuilder.asset(
-                lottieType,
-                height: 100,
-                fit: BoxFit.cover,
-              )),
+            lottieType,
+            height: 100,
+            fit: BoxFit.cover,
+          )),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -181,17 +178,47 @@ class _ExceptionPageState extends State<ExceptionPage> {
               textAlign: TextAlign.center,
             ),
           ),
-          (showLoginButton) ? Column(
-            children: [
-              const SizedBox(height: 24,),
-              AppButton(text: "Login Now", onClick: (){
-                Get.offAllNamed(AppRoute.loginPage);
-              },width: 250,)
-            ],
-          ) : const SizedBox()
+          (showLoginButton)
+              ? Column(
+                  children: [
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    AppButton(
+                      text: "Login Now",
+                      onClick: () {
+                        Get.offAllNamed(AppRoute.loginPage);
+                      },
+                      width: 250,
+                    )
+                  ],
+                )
+              : const SizedBox(),
+          (redirectSpayWebPortal)
+              ? Column(
+                  children: [
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    AppButton(
+                      text: "Open Web Portal",
+                      onClick: () async {
+                        _launchUrl();
+                        Get.offAllNamed(AppRoute.loginPage);
+                      },
+                      width: 250,
+                    )
+                  ],
+                )
+              : const SizedBox(),
         ],
       ),
     );
+  }
+
+  void _launchUrl() async {
+    final Uri _url = Uri.parse('https://spayindia.in/');
+    launchUrl(_url,mode: LaunchMode.externalApplication);
   }
 
   getTransactionExceptionMessage() {
@@ -226,15 +253,12 @@ class _ExceptionPageState extends State<ExceptionPage> {
       } else if (error is FormatException) {
         exceptionType = "BadRequestException";
       }
-      
-      await FirebaseCrashlytics.instance.log(
-          exceptionType +
-              "\n\n\n" +
-              widget.error.toString() +
-              "\n\n\n" +
-              ((widget.data != null) ? widget.data.toString() : "")
-      );
 
+      await FirebaseCrashlytics.instance.log(exceptionType +
+          "\n\n\n" +
+          widget.error.toString() +
+          "\n\n\n" +
+          ((widget.data != null) ? widget.data.toString() : ""));
     }
   }
 }

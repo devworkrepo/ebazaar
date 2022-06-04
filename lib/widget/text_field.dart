@@ -497,8 +497,9 @@ class DobTextField extends StatelessWidget {
 class AppSearchField extends StatelessWidget {
   final TextEditingController? controller;
   final Function(String)? onChange;
+  final bool focus;
 
-  const AppSearchField({Key? key, this.controller, this.onChange})
+  const AppSearchField({Key? key, this.controller, this.onChange,this.focus = false})
       : super(key: key);
 
   @override
@@ -510,8 +511,9 @@ class AppSearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextField(
+        enableInteractiveSelection : false,
         onChanged: onChange,
-        autofocus: false,
+        autofocus: focus,
         decoration: const InputDecoration(
             border: InputBorder.none,
             hintText: 'Search',

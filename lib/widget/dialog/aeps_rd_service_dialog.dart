@@ -17,6 +17,7 @@ class AepsRdServiceDialog extends StatelessWidget with DialogHelperMixin {
   var mantraPackage = "com.mantra.rdservice";
   var morphoPackage = "com.scl.rdservice";
   var startekPackage = "com.acpl.registersdk";
+  var secuGenPackage = "com.secugen.rdservice";
 
   AepsRdServiceDialog({required this.onClick, Key? key}) : super(key: key);
 
@@ -44,10 +45,11 @@ class AepsRdServiceDialog extends StatelessWidget with DialogHelperMixin {
                 Expanded(
                   child: AppDropDown(
                     hideLabel: true,
-                    list: const ["MORPHO", "MANTRA", "STARTEK"],
+                    list: const ["MORPHO", "MANTRA", "STARTEK","SecuGen"],
                     onChange: (v) {
                       selectRdService = v;
                     },
+                    label: "RD Service",
                     hint: "Select RD Service",
                     selectedItem: selectRdService,
                   ),
@@ -67,6 +69,9 @@ class AepsRdServiceDialog extends StatelessWidget with DialogHelperMixin {
              }
              else if (selectRdService == "MANTRA"){
                rdServicePackageUrl = mantraPackage;
+             }
+             else if (selectRdService == "SecuGen"){
+               rdServicePackageUrl = secuGenPackage;
              }
              else {
                rdServicePackageUrl = startekPackage;

@@ -23,6 +23,8 @@ import '../aeps/widget/ekyc_info_widget.dart';
 import '../response/matm/matm_txn_response_page.dart';
 import 'matm_page.dart';
 
+const bool _redirectForReQueryPage = false;
+
 class MatmController extends GetxController
     with TransactionHelperMixin, LocationHelperMixin {
   AepsRepo repo = Get.find<AepsRepoImpl>();
@@ -49,14 +51,14 @@ class MatmController extends GetxController
       aepsBankListResponseObs.value = const Resource.onInit();
       var response = await repo.fetchAepsBankList();
       if (response.code == 1) {
-
         aepsBankListResponseObs.value = Resource.onSuccess(response);
         if (!(response.isEKcy ?? false)) {
-          showEkcyDialog("E-Kyc is Required.",
-              "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",AppRoute.aepsEkycPage);
+          showEkcyDialog(
+              "E-Kyc is Required.",
+              "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",
+              AppRoute.aepsEkycPage);
         }
-      }
-      else if (response.code == 2) {
+      } else if (response.code == 2) {
         showEkcyDialog(
           "OnBoarding Required",
           response.message ??
@@ -64,14 +66,12 @@ class MatmController extends GetxController
                   " OnBoarding is required!",
           AppRoute.aepsOnboardingPage,
         );
-      }
-      else if (response.code == 3) {
+      } else if (response.code == 3) {
         StatusDialog.pending(
-            title: response.message ?? "Pending",
-            buttonText: "Bank to Home")
+                title: response.message ?? "Pending",
+                buttonText: "Bank to Home")
             .then((value) => Get.back());
-      }
-      else{
+      } else {
         validateLocation(progress: false);
       }
     } catch (e) {
@@ -79,20 +79,23 @@ class MatmController extends GetxController
     }
   }
 
-  void showEkcyDialog(String title, String message,String route) {
+  void showEkcyDialog(String title, String message, String route) {
     Get.bottomSheet(
-        EkycInfoWidget(title : title, message : message,onClick: () {
-          Get.back();
-          Get.offAndToNamed(route);
-        }, onCancel: () {
-          Get.back();
-          Get.back();
-        }),
+        EkycInfoWidget(
+            title: title,
+            message: message,
+            onClick: () {
+              Get.back();
+              Get.offAndToNamed(route);
+            },
+            onCancel: () {
+              Get.back();
+              Get.back();
+            }),
         isDismissible: false,
         persistent: false,
         enableDrag: false);
   }
-
 
   void onProceed() async {
     var isValidate = matmFormKey.currentState!.validate();
@@ -188,45 +191,114 @@ class MatmController extends GetxController
         _updateToServer(data);
       }
     } on PlatformException catch (e) {
-      AppUtil.logger("matmlog1 : ${e.toString()}");
-      StatusDialog.pending(
-              title: "Transaction in Pending, please check transaction status")
-          .then((value) => Get.back());
+      _updateUnknownResponseToServer();
     } catch (e) {
-      AppUtil.logger("matmlog2 : ${e.toString()}");
-      StatusDialog.pending(
-              title: "Transaction in Pending, please check transaction status")
-          .then((value) => Get.back());
+      _updateUnknownResponseToServer();
     }
+  }
+
+  _updateUnknownResponseToServer() {
+    if (transactionType.value == MatmTransactionType.balanceEnquiry) {
+      if (!updateToServerCalled) {
+        updateToServerCalled = true;
+        _updateToServer(MatmResult.fromJson({
+          "status": false,
+          "transAmount": 0.0,
+          "balAmount": 0.0,
+          "bankRrn": "not available",
+          "time": "not available",
+          "message": "not available",
+          "cardNumber": "not available",
+          "bankName": "not available",
+        }));
+      }
+    } else {
+      _checkIsTransactionIsInitiated();
+
+    }
+  }
+
+   _checkIsTransactionIsInitiated() async {
+   try{
+     var response = await repo.isMatmInitiated({
+       "clientId":transactionNumber ?? "",
+       "merchantPassword" : requestResponse?.loginPin ?? ""
+     });
+
+     if(response.status == 1 && !(response.isInitiated ?? true)){
+       _updateToServer(MatmResult.fromJson({
+         "status": false,
+         "transAmount": 0.0,
+         "balAmount": 0.0,
+         "bankRrn": "not available",
+         "time": "not available",
+         "message": response.message,
+         "cardNumber": "not available",
+         "bankName": "not available",
+       }));
+     }
+     else {
+      _showPendingDialog();
+     }
+   }catch(e){
+    _showPendingDialog();
+   }
+  }
+
+  _showPendingDialog(){
+    StatusDialog.pending(
+        title: "Transaction in Pending, please check transaction status")
+        .then((value) => Get.offAllNamed(AppRoute.mainPage));
   }
 
   _updateToServer(MatmResult result) async {
     StatusDialog.progress(title: "Updating to Server");
     try {
+      String status;
+      String message;
+      if (_redirectForReQueryPage) {
+        status = (transactionType.value == MatmTransactionType.cashWithdrawal)
+            ? "3"
+            : (result.status)
+                ? "1"
+                : "2";
+       message ="Transaction in pending";
+      } else {
+        status = (result.status) ? "1" : "2";
+        message =  result.message;
+      }
+
       await repo.updateMatmDataToServer({
-        "status":(transactionType.value == MatmTransactionType.cashWithdrawal) ?  "3" :  (result.status) ? "1" : "2",
+        "status": status,
         "clientId": requestResponse!.clientId ?? "",
         "balanceamt": result.balAmount.toString(),
         "bankName": result.bankName,
         "cardNumber": result.cardNumber,
         "bankRRN": result.bankRrn,
-        "message":"Transaction in pending", //result.message,
+        "message": message,
         "providerTxnId": requestResponse!.txnId ?? "",
       });
       Get.back();
     } catch (e) {
       Get.back();
     } finally {
+      result.statusId = (result.status) ? 1 : 2;
 
-      if(transactionType.value == MatmTransactionType.balanceEnquiry || !result.status){
-        result.statusId = (result.status) ? 1 : 2;
-        Get.offAll(() => MatmTxnResponsePage(),
-            arguments: {"response": result, "txnType": transactionType.value});
+      if(_redirectForReQueryPage){
+        if(transactionType.value == MatmTransactionType.balanceEnquiry || !result.status){
+          result.statusId = (result.status) ? 1 : 2;
+          Get.offAll(() => MatmTxnResponsePage(),
+              arguments: {"response": result, "txnType": transactionType.value});
+        }
+        else{
+          result.statusId = 3;
+          Get.offAll(() => const MatmInProcessPage(),
+              arguments: {"result": result,"transaction_number" : transactionNumber!});
+        }
       }
       else{
-        result.statusId = 3;
-        Get.offAll(() => const MatmInProcessPage(),
-            arguments: {"result": result,"transaction_number" : transactionNumber!});
+        Get.offAll(() => MatmTxnResponsePage(),
+            arguments: {"response": result, "txnType": transactionType.value});
       }
     }
   }

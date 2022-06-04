@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
@@ -16,6 +19,7 @@ import 'package:spayindia/util/app_util.dart';
 
 import '../../model/notification.dart';
 import '../../model/profile.dart';
+import '../../widget/dialog/status_dialog.dart';
 
 class HomeRepoImpl extends HomeRepo {
   final NetworkClient client = Get.find();
@@ -27,31 +31,28 @@ class HomeRepoImpl extends HomeRepo {
     return UserBalance.fromJson(response.data);
   }
 
-
   @override
   Future<UserDetail> fetchAgentInfo() async {
-   var response = await client.post("GetAgentInfo");
-   // var response = await AppUtil.parseJsonFromAssets("agent_info_response");
+    var response = await client.post("GetAgentInfo");
+    // var response = await AppUtil.parseJsonFromAssets("agent_info_response");
     return UserDetail.fromJson(response.data);
   }
 
-
-
   @override
   Future<CommonResponse> requestOtp(data) async {
-    var response = await client.post("/ChangeOTP",data : data);
+    var response = await client.post("/ChangeOTP", data: data);
     return CommonResponse.fromJson(response.data);
   }
 
   @override
   Future<CommonResponse> changePassword(data) async {
-    var response = await client.post("/ChangePassword",data : data);
+    var response = await client.post("/ChangePassword", data: data);
     return CommonResponse.fromJson(response.data);
   }
 
   @override
   Future<CommonResponse> changePin(data) async {
-    var response = await client.post("/ChangeMPIN",data : data);
+    var response = await client.post("/ChangeMPIN", data: data);
     return CommonResponse.fromJson(response.data);
   }
 
@@ -73,7 +74,6 @@ class HomeRepoImpl extends HomeRepo {
     return UserProfile.fromJson(response.data);
   }
 
-
   @override
   Future<TransactionSummary> fetchSummary() async {
     var response = await client.post("/GetTransSummary");
@@ -88,7 +88,7 @@ class HomeRepoImpl extends HomeRepo {
 
   @override
   Future<CommonResponse> killSession(data) async {
-    var response = await client.post("/KillSession",data: data);
+    var response = await client.post("/KillSession", data: data);
     return CommonResponse.fromJson(response.data);
   }
 
@@ -104,6 +104,33 @@ class HomeRepoImpl extends HomeRepo {
     return AppUpdateInfo.fromJson(response.data);
   }
 
+  @override
+  Future<void> downloadFileAndSaveToGallery(
+      String baseUrl, String extension) async {
+    try {
+      Dio dio = Dio();
+      var dir = await getApplicationDocumentsDirectory();
+      var imageDownloadPath = '${dir.path}/$extension';
 
+      StatusDialog.progress(title: "Downloading...");
+      await dio.download(baseUrl + extension, imageDownloadPath,
+          onReceiveProgress: (received, total) {
+        var progress = (received / total) * 100;
+
+        if (progress == 100.0) {
+          if (Get.isDialogOpen!) {
+            Get.back();
+            StatusDialog.success(
+                    title: "File Downloaded and\n saved to Gallery")
+                .then((value) =>
+                    OpenFile.open(imageDownloadPath, type: "image/*"));
+          }
+        }
+      });
+      ImageGallerySaver.saveFile(imageDownloadPath);
+    } catch (e) {
+      Get.back();
+      StatusDialog.failure(title: "Failed to download file");
+    }
+  }
 }
-

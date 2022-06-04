@@ -3,6 +3,33 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/res/color.dart';
 
+class VirtualAccountOptionDialog extends StatelessWidget {
+  final VoidCallback onAccountView;
+  final VoidCallback onTransactionView;
+
+  const VirtualAccountOptionDialog(
+      {Key? key, required this.onAccountView, required this.onTransactionView})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _BaseOptionDialogWidget(
+      title: "Virtual Account",
+      option: [
+        _BaseOption(
+            title: "Virtual\nAccount View",
+            onClick: onAccountView,
+            svgName: "virtual_account"),
+        _BaseOption(
+            title: "Virtual\nTransaction View",
+            onClick: onTransactionView,
+            svgName: "virtual_account"),
+      ],
+      isSvg : false
+    );
+  }
+}
+
 class RechargeOptionDialog extends StatelessWidget {
   final VoidCallback onPrepaidClick;
   final VoidCallback onPostpaidClick;
@@ -16,8 +43,14 @@ class RechargeOptionDialog extends StatelessWidget {
     return _BaseOptionDialogWidget(
       title: "Recharge Type",
       option: [
-        _BaseOption(title: "Mobile Prepaid", onClick: onPrepaidClick,svgName: "mobile"),
-        _BaseOption(title: "Mobile Postpaid", onClick: onPostpaidClick,svgName: "mobile"),
+        _BaseOption(
+            title: "Mobile Prepaid",
+            onClick: onPrepaidClick,
+            svgName: "mobile"),
+        _BaseOption(
+            title: "Mobile Postpaid",
+            onClick: onPostpaidClick,
+            svgName: "mobile"),
       ],
     );
   }
@@ -28,23 +61,24 @@ class _BaseOption {
   final String title;
   final String svgName;
 
-  _BaseOption({required this.title, required this.onClick,required this.svgName});
+  _BaseOption(
+      {required this.title, required this.onClick, required this.svgName});
 }
 
 class _BaseOptionDialogWidget extends StatelessWidget {
   final String title;
   final List<_BaseOption> option;
+  final bool isSvg;
 
   const _BaseOptionDialogWidget(
-      {Key? key, required this.title, required this.option})
+      {Key? key, required this.title, required this.option, this.isSvg = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
       padding: const EdgeInsets.all(16),
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
           color: AppColor.backgroundColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
       child: Column(
@@ -58,10 +92,12 @@ class _BaseOptionDialogWidget extends StatelessWidget {
             ),
           ),
           Row(
-            children: [...option.map((e) => _BuildItem(e.title,e.svgName,(){
-              Get.back();
-              e.onClick();
-            }))],
+            children: [
+              ...option.map((e) => _BuildItem(e.title, e.svgName, () {
+                    Get.back();
+                    e.onClick();
+                  },isSvg: isSvg,))
+            ],
           ),
         ],
       ),
@@ -73,8 +109,11 @@ class _BuildItem extends StatelessWidget {
   final String title;
   final String svgName;
   final VoidCallback onClick;
+  final bool isSvg;
 
-  const _BuildItem(this.title,this.svgName, this.onClick, {Key? key}) : super(key: key);
+  const _BuildItem(this.title, this.svgName, this.onClick,
+      {Key? key, this.isSvg = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,11 +127,21 @@ class _BuildItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  width: 60,
-                    child: SvgPicture.asset("assets/svg/$svgName.svg",)),
+                    width: 60,
+                    child: (isSvg)
+                        ? SvgPicture.asset(
+                            "assets/svg/$svgName.svg",
+                          )
+                        : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                              "assets/image/virtual_account.png",
+                            ),
+                        )),
                 Text(
                   title,
                   style: Get.textTheme.bodyText1,
+                  textAlign: TextAlign.center,
                 )
               ],
             ),

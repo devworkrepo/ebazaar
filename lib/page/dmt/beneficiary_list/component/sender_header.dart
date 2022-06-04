@@ -4,6 +4,7 @@ import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/hex_color.dart';
 
+import '../../../../widget/text_field.dart';
 import '../beneficiary_controller.dart';
 
 class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
@@ -50,11 +51,11 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
                   ),
                   (controller.sender!.isKycVerified!)
                       ? _buildIconTitleButton(
-                          onClick: () {
-                            controller.fetchKycInfo();
-                          },
-                          title: "View Kyc Detail",
-                          icon: Icons.fingerprint)
+                      onClick: () {
+                        controller.fetchKycInfo();
+                      },
+                      title: "View Kyc Detail",
+                      icon: Icons.fingerprint)
                       : _buildChangeWidget()
                 ],
               ),
@@ -65,9 +66,9 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
                 _buildLimitTitleWidget(),
                 (controller.dmtType == DmtType.instantPay)
                     ? Obx(() =>
-                        controller.showAvailableTransferLimitObs.value == true
-                            ? _buildLimitBalanceWidget()
-                            : _buildViewLimitContainer())
+                controller.showAvailableTransferLimitObs.value == true
+                    ? _buildLimitBalanceWidget()
+                    : _buildViewLimitContainer())
                     : _buildLimitBalanceWidget(),
                 _buildNonKycWidget()
               ],

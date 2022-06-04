@@ -13,6 +13,7 @@ import 'package:spayindia/page/dmt/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/common/common_confirm_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
@@ -30,7 +31,8 @@ class BeneficiaryListController extends GetxController {
   var beneficiaryResponseObs =
       Resource.onInit(data: DmtBeneficiaryResponse()).obs;
 
-  var beneficiaries = <Beneficiary>[].obs;
+  var beneficiaryList = <Beneficiary>[];
+  RxList<Beneficiary> beneficiaryListObs = <Beneficiary>[].obs;
 
   SenderInfo? sender = Get.arguments["sender"];
   DmtType dmtType = Get.arguments["dmtType"];
@@ -68,10 +70,11 @@ class BeneficiaryListController extends GetxController {
       if (accountSearch != null) {
         var data = response.beneficiaries!.firstWhere(
             (element) => element.accountNumber == accountSearch!.accountNumber);
-        beneficiaries.value = [data];
-      }
-      else{
-        beneficiaries.value = response.beneficiaries!;
+        beneficiaryList = [data];
+        beneficiaryListObs.value = beneficiaryList;
+      } else {
+        beneficiaryList = response.beneficiaries!;
+        beneficiaryListObs.value = beneficiaryList;
       }
       beneficiaryResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -102,7 +105,8 @@ class BeneficiaryListController extends GetxController {
         if (accountSearch == null) {
           fetchBeneficiary();
         } else {
-          beneficiaries.removeAt(0);
+          beneficiaryList.removeAt(0);
+          beneficiaryListObs.removeAt(0);
           accountSearch = null;
         }
       });
@@ -142,7 +146,8 @@ class BeneficiaryListController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      StatusDialog.failure(title: "unable to verify, please try after sometime");
+      StatusDialog.failure(
+          title: "unable to verify, please try after sometime");
     }
   }
 
@@ -153,8 +158,9 @@ class BeneficiaryListController extends GetxController {
   }
 
   onSendButtonClick(Beneficiary beneficiary) {
-    Get.bottomSheet(TransferModeDialog(
-      isLimitView: showAvailableTransferLimitObs.value,
+    Get.bottomSheet(
+        TransferModeDialog(
+          isLimitView: showAvailableTransferLimitObs.value,
           senderInfo: sender!,
           beneficiary: beneficiary,
           dmtType: dmtType,
@@ -169,12 +175,13 @@ class BeneficiaryListController extends GetxController {
                   (showAvailableTransferLimitObs.value == true) ? "1" : "0",
             });
           },
-        ),isScrollControlled: true);
+        ),
+        isScrollControlled: true);
   }
 
   onNameChange() {
-    Get.toNamed(AppRoute.dmtChangeSenderNamePage,
-        arguments: {"sender": sender})?.then((value) {
+    Get.toNamed(AppRoute.dmtChangeSenderNamePage, arguments: {"sender": sender})
+        ?.then((value) {
       if (value != null) {
         Get.back(result: {"mobile_number": sender!.senderNumber!});
       }
@@ -183,17 +190,20 @@ class BeneficiaryListController extends GetxController {
 
   onMobileChange() {
     Get.toNamed(AppRoute.dmtChangeSenderMobilePage,
-        arguments: {"sender": sender})?.then((value){
-      if(value != null) {
+        arguments: {"sender": sender})?.then((value) {
+      if (value != null) {
         var mobile = value as String;
         Get.back(result: {"mobile_number": mobile});
       }
     });
   }
 
+  syncBeneficiary() async {}
+
   addBeneficiary() {
     Get.toNamed(AppRoute.dmtBeneficiaryAddPage,
-        arguments: {"dmtType": dmtType, "mobile": sender!.senderNumber!})?.then((value) {
+            arguments: {"dmtType": dmtType, "mobile": sender!.senderNumber!})
+        ?.then((value) {
       if (value) {
         accountSearch = null;
         _fetchBeneficiary();
@@ -212,6 +222,7 @@ class BeneficiaryListController extends GetxController {
     var mList = [
       BeneficiaryListPopMenu(
           title: "Import Beneficiary", icon: Icons.import_export),
+      BeneficiaryListPopMenu(title: "Sync Beneficiary", icon: Icons.sync),
     ];
     if ((sender?.isKycVerified ?? false)) {
       mList.add(BeneficiaryListPopMenu(
@@ -229,9 +240,11 @@ class BeneficiaryListController extends GetxController {
     }
     if (i.title == "Do Kyc") {
       Get.toNamed(AppRoute.senderKycPage, arguments: {
-        "dmt_type" : dmtType,
-        "mobile_number" : sender!.senderNumber!
+        "dmt_type": dmtType,
+        "mobile_number": sender!.senderNumber!
       });
+    } else if (i.title == "Sync Beneficiary") {
+      _syncBeneficiary();
     } else if (i.title == "Import Beneficiary") {
       Get.toNamed(AppRoute.dmtImportBeneficiaryPage, arguments: sender!)
           ?.then((value) {
@@ -248,6 +261,47 @@ class BeneficiaryListController extends GetxController {
         }
       });
     }
+  }
+
+  _syncBeneficiary() async {
+    try {
+      StatusDialog.progress(title: "Synchronizing Beneficiaries");
+
+      var response = await repo.syncBeneficiary({
+        "remitterid": sender?.senderId ?? "",
+        "mobileno": sender?.senderNumber ?? "",
+      });
+
+      Get.back();
+
+      if (response.code == 1) {
+        StatusDialog.success(title: response.message)
+            .then((value) => _fetchBeneficiary());
+      } else {
+        StatusDialog.failure(title: response.message);
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
+    }
+  }
+
+  onSearchChange(String value) {
+    List<Beneficiary> results = beneficiaryList;
+    if (value.isEmpty) {
+      results = beneficiaryList;
+    } else {
+      results = beneficiaryList
+          .where((item) =>
+              item.name!.toLowerCase().contains(value.toLowerCase()) ||
+              item.accountNumber!.toLowerCase().contains(value.toLowerCase())||
+              item.bankName!.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+
+      AppUtil.logger("value : $value");
+      AppUtil.logger(results);
+    }
+    beneficiaryListObs.value = results;
   }
 }
 

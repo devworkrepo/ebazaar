@@ -29,14 +29,19 @@ import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/report/wallet_pay/wallet_report_page.dart';
 import 'package:spayindia/page/summary/summary_page.dart';
+import 'package:spayindia/page/virtual_account/account/virtual_account_page.dart';
+import 'package:spayindia/page/virtual_account/report/transaction_tab.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_page.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_transfer/wallet_transfer_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/test/test_local_auth_page.dart';
+import 'package:spayindia/test/test_pg.dart';
 
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 import '../page/main/settlement/aeps_settlement_page.dart';
+import '../page/main/settlement_bank/add_settlement_bank/settlement_bank_add_page.dart';
+import '../page/main/settlement_bank/settlement_bank_list/settlement_bank_list_page.dart';
 import '../page/matm/process/matm_process_page.dart';
 import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
@@ -59,7 +64,7 @@ final getAllPages = [
 
   GetPage(
     name: AppRoute.testPage,
-    page: () => const MatmInProcessPage(),
+    page: () => const TestPgWebView(),
   ),
 
   GetPage(
@@ -117,6 +122,15 @@ final getAllPages = [
   ),
 
   GetPage(
+    name: AppRoute.aepsSettlemenBankListtPage,
+    page: () => const SettlementBankListPage(),
+  ),
+  GetPage(
+    name: AppRoute.addSettlementBank,
+    page: () => const SettlementBankAddPage(),
+  ),
+
+  GetPage(
     name: AppRoute.aepsOnboardingPage,
     page: () => const AepsOnboardingPage(),
   ),
@@ -127,6 +141,14 @@ final getAllPages = [
   GetPage(
     name: AppRoute.creditCardPage,
     page: () => const CreditCardPage(),
+  ),
+  GetPage(
+    name: AppRoute.virtualAccountPage,
+    page: () => const VirtualAccountPage(),
+  ),
+  GetPage(
+    name: AppRoute.virtualAccountTransactionTabPage,
+    page: () => const VirtualTransactionTabPage(),
   ),
   GetPage(
     name: AppRoute.dmtSearchSenderPage,

@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_controller.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_beneficiary_list_item.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/sender_header.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/res/style.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/widget/api_component.dart';
+
+import '../../../widget/text_field.dart';
 
 class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   const BeneficiaryListPage({Key? key}) : super(key: key);
@@ -17,10 +19,6 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
     Get.put(BeneficiaryListController());
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => controller.addBeneficiary(),
-        child: const Icon(Icons.add),
-      ),
       body: Obx(
           () => controller.beneficiaryResponseObs.value.when(onSuccess: (data) {
                 if (data.code == 1) {
@@ -44,22 +42,74 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
     );
   }
 
-  CustomScrollView _buildBody() {
-    return CustomScrollView(
-              slivers: [
-                _buildSilverAppbar(),
-                _buildSilverList(),
-              ],
-            );
+  Widget _buildBody() {
+    return Stack(
+      children: [
+        CustomScrollView(
+          slivers: [
+            _buildSilverAppbar(),
+            _buildSilverList(),
+          ],
+        ),
+        Positioned(
+            bottom: 8,
+            left: 8,
+            right: 8,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+              width: Get.width,
+              decoration: AppStyle.searchDecoration(color:Get.theme.primaryColor,borderRadius: 5),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: AppSearchField(
+
+                      onChange: controller.onSearchChange,
+                    ),
+                  ),
+                  FloatingActionButton(
+                    mini: false,
+                    onPressed: () {
+                      controller.addBeneficiary();
+                    },
+                    child: const Icon(Icons.add),
+                  )
+                ],
+              ),
+            ))
+        /* Container(
+          color: Colors.black12,
+          margin: const EdgeInsets.all(8),
+          alignment: Alignment.bottomCenter,
+          child: Row(
+            children: [
+              Expanded(
+                child: AppSearchField(
+                  onChange: controller.onSearchChange,
+                ),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  controller.addBeneficiary();
+                },
+                child: const Icon(Icons.add),
+              )
+            ],
+          ),
+        )*/
+      ],
+    );
   }
 
   SliverAppBar _buildSilverAppbar() {
     return SliverAppBar(
       actions: [
         PopupMenuButton<BeneficiaryListPopMenu>(
-          onSelected: (i)=>controller.onSelectPopupMenu(i),
+          onSelected: (i) => controller.onSelectPopupMenu(i),
           itemBuilder: (BuildContext context) {
-            return controller.popupMenuList().map((BeneficiaryListPopMenu choice) {
+            return controller
+                .popupMenuList()
+                .map((BeneficiaryListPopMenu choice) {
               return PopupMenuItem<BeneficiaryListPopMenu>(
                 value: choice,
                 child: Row(
@@ -124,11 +174,13 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                           ),
                           ElevatedButton(
                               onPressed: () {
-                                Get.toNamed(AppRoute.senderKycPage,arguments: {
-                                  "dmt_type" : controller.dmtType,
-                                  "mobile_number" : controller.sender!.senderNumber!
+                                Get.toNamed(AppRoute.senderKycPage, arguments: {
+                                  "dmt_type": controller.dmtType,
+                                  "mobile_number":
+                                      controller.sender!.senderNumber!
                                 });
-                              }, child: Text("Do Kyc"))
+                              },
+                              child: Text("Do Kyc"))
                         ],
                       ),
                     )
@@ -140,30 +192,24 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   }
 
   SliverList _buildSilverList() {
-    var mList = controller.beneficiaries;
-    var isListEmpty = mList.isEmpty;
-    var mCount = mList.length;
-    if (isListEmpty) {
-      mCount = 1;
-    }
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, int index) {
-          return Obx((){
-            controller.beneficiaries.value;
-            if (isListEmpty) {
+          return Obx(() {
+            controller.beneficiaryListObs.value;
+            if (controller.beneficiaryListObs.isEmpty) {
               return Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Text(
-                      "No beneficiary found!",
-                      style: Get.textTheme.headline3,
-                    ),
-                  ));
+                padding: const EdgeInsets.all(24.0),
+                child: Text(
+                  "No beneficiary found!",
+                  style: Get.textTheme.headline3,
+                ),
+              ));
             } else {
               var bottomPadding = 1.0;
-              if (index == controller.beneficiaries.length - 1) {
+              if (index == controller.beneficiaryListObs.value.length - 1) {
                 bottomPadding = 120.0;
               }
 
@@ -175,9 +221,8 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
             }
           });
         },
-        childCount: mCount,
+        childCount: (controller.beneficiaryListObs.isEmpty) ? 1  : controller.beneficiaryListObs.length,
       ),
     );
   }
 }
-

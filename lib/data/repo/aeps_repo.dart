@@ -2,6 +2,7 @@ import 'package:spayindia/model/aeps/aeps_bank.dart';
 import 'package:spayindia/model/aeps/aeps_transaction.dart';
 import 'package:spayindia/model/aeps/kyc/e_kyc.dart';
 import 'package:spayindia/model/aeps/settlement/balance.dart';
+import 'package:spayindia/model/aeps/settlement/bank.dart';
 import 'package:spayindia/model/bank.dart';
 import 'package:spayindia/model/common.dart';
 
@@ -22,11 +23,14 @@ abstract class AepsRepo {
   Future<BankListResponse> fetchAepsSettlementBank();
   Future<TransactionInfoResponse> spayAccountSettlement(data);
   Future<TransactionInfoResponse> bankAccountSettlement(data);
+  Future<AepsSettlementBankListResponse> fetchAepsSettlementBank2();
+  Future<CommonResponse> addSettlementBank(data);
 
   //matm
   Future<CommonResponse> getMamtTransactionNumber();
   Future<MatmRequestResponse> initiateMatm(data);
   Future<CommonResponse> updateMatmDataToServer(data);
+  Future<MatmCheckTransactionInitiated> isMatmInitiated(data);
 
   //onbaording
   Future<AepsStateListResponse> getAepsState();
@@ -38,4 +42,6 @@ abstract class AepsRepo {
   Future<EKycResponse> eKycResendOtp(data);
   Future<EKycResponse> eKycVerifyOtp(data);
   Future<CommonResponse> eKycAuthenticate(data);
+
+
 }

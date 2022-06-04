@@ -114,12 +114,8 @@ class HomeController extends GetxController {
     });
     userDetailObs.value = const Resource.onInit();
     try {
-      if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {
-        await Future.delayed(const Duration(seconds: 2));
-        if (appPreference.mobileNumber != "7982607742") {
-          throw TestingServerError();
-        }
-      }
+
+      AppUtil.throwUatExceptionOnDeployment(appPreference.mobileNumber);
 
       UserDetail response = await homeRepo.fetchAgentInfo();
       user = response;
@@ -277,6 +273,19 @@ class HomeController extends GetxController {
       case HomeServiceType.ott:
         {
           Get.toNamed(AppRoute.ottOperatorPage);
+        }
+        break;
+      case HomeServiceType.virtualAccount:
+        {
+          Get.bottomSheet(VirtualAccountOptionDialog(
+            onAccountView: () {
+              Get.toNamed(AppRoute.virtualAccountPage);
+            },
+            onTransactionView:  () {
+              Get.toNamed(AppRoute.virtualAccountTransactionTabPage);
+            },
+          ));
+
         }
         break;
       default:

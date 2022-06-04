@@ -1,0 +1,28 @@
+<html>
+<body>
+
+<div>
+    <h1>
+        PG WebView Testing
+    </h1>
+
+    <button id="myBtn" >
+        click
+    </button>
+
+</div>
+
+</body>
+
+<script type='text/javascript'>
+
+    window.addEventListener('DOMContentLoaded', function () {
+
+          document.getElementById("myBtn").addEventListener("click", sendData, false);
+    });
+    function sendData(){
+    alert("hello dev");
+        MakeLog.postMessage('Hello World being called from Javascript code');
+    }
+</script>
+</html>

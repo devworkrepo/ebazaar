@@ -37,46 +37,39 @@ class LoginController extends GetxController {
     appPreference.setSessionKey("na");
     isLoginCheck.value = appPreference.isLoginCheck;
 
-    if(appPreference.isLoginCheck){
+    if (appPreference.isLoginCheck) {
       mobileController.text = appPreference.mobileNumber;
       passwordController.text = appPreference.password;
     }
-   /* if(kDebugMode){
+    /* if(kDebugMode){
       mobileController.text = "7982607742";
       passwordController.text = "Akash@123";
     }*/
 
-
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-
-
-       if(!appPreference.isLoginBondAccepted){
-         Get.dialog(LoginTermAndConditionDialog(onAccept: () async{
-           await appPreference.setIsLoginBondAccepted(true);
-         }, onReject: () async{
-           await  appPreference.setIsLoginBondAccepted(false);
-         }));
-
-     }
+      if (!appPreference.isLoginBondAccepted) {
+        Get.dialog(LoginTermAndConditionDialog(onAccept: () async {
+          await appPreference.setIsLoginBondAccepted(true);
+        }, onReject: () async {
+          await appPreference.setIsLoginBondAccepted(false);
+        }));
+      }
     });
   }
-
 
   login() async {
     var isValidate = loginFormKey.currentState?.validate();
     if (!isValidate!) return;
 
-
-    if(!appPreference.isLoginBondAccepted){
-      Get.dialog(LoginTermAndConditionDialog(onAccept: () async{
+    if (!appPreference.isLoginBondAccepted) {
+      Get.dialog(LoginTermAndConditionDialog(onAccept: () async {
         await appPreference.setIsLoginBondAccepted(true);
         login();
-      }, onReject: () async{
-        await  appPreference.setIsLoginBondAccepted(false);
+      }, onReject: () async {
+        await appPreference.setIsLoginBondAccepted(false);
       }));
       return;
     }
-
 
     StatusDialog.progress(title: "Login");
 
@@ -92,11 +85,7 @@ class LoginController extends GetxController {
         "accesskey": AppConfig.apiKey
       };
 
-      if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {
-        if (mobileController.text != "7982607742") {
-          throw TestingServerError();
-        }
-      }
+      AppUtil.throwUatExceptionOnDeployment(mobileController.text);
 
 
       AppUtil.logger(loginData.toString());
@@ -104,12 +93,11 @@ class LoginController extends GetxController {
       LoginResponse login = await authRepo.agentLogin(loginData);
       Get.back();
 
-      if (login.code == 1 ) {
-
-       Get.toNamed(AppRoute.loginOtpPage, parameters: {
+      if (login.code == 1) {
+        Get.toNamed(AppRoute.loginOtpPage, parameters: {
           "mobileNumber": mobileController.text.toString(),
-          "isLoginChecked" : isLoginCheck.value.toString(),
-          "password" : passwordController.text.toString(),
+          "isLoginChecked": isLoginCheck.value.toString(),
+          "password": passwordController.text.toString(),
           "loginData": json.encode(login.toJson())
         });
       } else {
@@ -117,7 +105,7 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 }

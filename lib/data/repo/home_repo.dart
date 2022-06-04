@@ -32,4 +32,6 @@ abstract class HomeRepo{
 
   Future<CommonResponse> changePin(data);
   Future<AppUpdateInfo> updateInfo();
+
+  Future<void> downloadFileAndSaveToGallery(String baseUrl, String extension);
 }

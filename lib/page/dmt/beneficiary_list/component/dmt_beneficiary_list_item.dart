@@ -17,7 +17,7 @@ class DmtBeneficiaryListItem extends GetView<BeneficiaryListController>
 
   @override
   Widget build(BuildContext context) {
-    Beneficiary beneficiary = controller.beneficiaries[index];
+    Beneficiary beneficiary = controller.beneficiaryListObs.value[index];
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => controller.onBeneficiaryClick(beneficiary),

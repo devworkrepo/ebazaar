@@ -1,9 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/aeps_repo.dart';
 import 'package:spayindia/model/aeps/aeps_bank.dart';
 import 'package:spayindia/model/aeps/aeps_transaction.dart';
 import 'package:spayindia/model/aeps/kyc/e_kyc.dart';
 import 'package:spayindia/model/aeps/settlement/balance.dart';
+import 'package:spayindia/model/aeps/settlement/bank.dart';
 import 'package:spayindia/model/bank.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/report/requery.dart';
@@ -13,10 +15,9 @@ import 'package:spayindia/util/app_util.dart';
 import '../../model/aeps/aeps_state.dart';
 import '../../model/matm/matm_request_response.dart';
 
-class AepsRepoImpl extends AepsRepo{
-  
+class AepsRepoImpl extends AepsRepo {
   NetworkClient client = Get.find();
-  
+
   @override
   Future<AepsBankResponse> fetchAepsBankList() async {
     var response = await client.post("/GetAEPSBanks");
@@ -24,9 +25,9 @@ class AepsRepoImpl extends AepsRepo{
   }
 
   @override
-  Future<AepsTransactionResponse> aepsTransaction(data)async {
-  var response = await client.post("/AEPSTransaction",data: data);
-  return AepsTransactionResponse.fromJson(response.data);
+  Future<AepsTransactionResponse> aepsTransaction(data) async {
+    var response = await client.post("/AEPSTransaction", data: data);
+    return AepsTransactionResponse.fromJson(response.data);
   }
 
   @override
@@ -100,22 +101,39 @@ class AepsRepoImpl extends AepsRepo{
   }
 
   @override
-  Future<TransactionInfoResponse> bankAccountSettlement(data)async {
-    var response = await client.post("/WithdrawAEPSInBank",data: data);
+  Future<TransactionInfoResponse> bankAccountSettlement(data) async {
+    var response = await client.post("/WithdrawAEPSInBank", data: data);
     return TransactionInfoResponse.fromJson(response.data);
   }
 
   @override
   Future<TransactionInfoResponse> spayAccountSettlement(data) async {
-    var response = await client.post("/WithdrawAEPSInWallet",data: data);
+    var response = await client.post("/WithdrawAEPSInWallet", data: data);
     return TransactionInfoResponse.fromJson(response.data);
   }
 
   @override
   Future<AepsTransactionResponse> aadhaaPayTransaction(data) async {
-    var response = await client.post("/AadharPayTransaction",data: data);
+    var response = await client.post("/AadharPayTransaction", data: data);
     return AepsTransactionResponse.fromJson(response.data);
   }
 
+  @override
+  Future<MatmCheckTransactionInitiated> isMatmInitiated(data) async {
+    var url = "https://www.comrade.tramo.in/matm/spay/is-transaction-initiated";
+    var response = await Dio().get(url, queryParameters: data);
+    return MatmCheckTransactionInitiated.fromJson(response.data);
+  }
 
+  @override
+  Future<AepsSettlementBankListResponse> fetchAepsSettlementBank2() async {
+    var response = await client.post("/GetAEPSSettleBanks");
+    return AepsSettlementBankListResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> addSettlementBank(data) async {
+    var response = await client.post("/AddAEPSBank",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
 }

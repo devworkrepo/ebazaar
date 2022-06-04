@@ -66,6 +66,8 @@ class _MyAppState extends State<MyApp> {
       initialPage = AppRoute.rootPage;
     }
 
+    //initialPage = AppRoute.testPage;
+
     var backgroundColor =
         (AppConstant.baseUrl == AppConstant.uatBaseUrl)
             ? Colors.black

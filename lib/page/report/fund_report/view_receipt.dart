@@ -87,14 +87,14 @@ class _ViewFundReceiptDialogState extends State<ViewFundReceiptDialog> {
               children: [
               Expanded(
                 child: AppNetworkImage(
-                  AppConstant.fundRequestBaseUrl+widget.report.picName!,
+                  AppConstant.requestImageBaseUrl+widget.report.picName!,
                   size: getx.Get.width-200,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: ElevatedButton(onPressed: (){
-                  downloadImage(AppConstant.fundRequestBaseUrl+widget.report.picName!);
+                  downloadImage(AppConstant.requestImageBaseUrl+widget.report.picName!);
                 }, child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
