@@ -1,10 +1,13 @@
 package app.spayindia.com.spayindia
 
+import `in`.credopay.payment.sdk.CredopayPaymentConstants
+import `in`.credopay.payment.sdk.PaymentActivity
 import android.content.Intent
 import android.widget.Toast
 import androidx.annotation.NonNull
 import app.spayindia.com.AppConstant
 import app.spayindia.com.AppConstant.AEPS_SERVICE_METHOD_NAME
+import app.spayindia.com.AppConstant.CREDO_PAY_METHOD_NAME
 import app.spayindia.com.AppConstant.MATM_SERVICE_METHOD_NAME
 import app.spayindia.com.AppConstant.ROOT_CHECKER_METHOD_NAME
 import app.spayindia.com.AppConstant.METHOD_CHANNEL
@@ -55,6 +58,9 @@ class MainActivity : FlutterFragmentActivity() {
                     result!!.success(mData)
 
                 }
+                call.method.equals(CREDO_PAY_METHOD_NAME) -> {
+                    credoPayTransaction(call)
+                }
             }
         }
     }
@@ -64,7 +70,7 @@ class MainActivity : FlutterFragmentActivity() {
         result?.success(isRooted)
     }
 
-    private fun launchMatm(call: MethodCall) {
+    private  fun credoPayTransaction(call: MethodCall){
         try {
             val merchantUserId = call.argument<String>("merchantUserId")
             val merchantPassword = call.argument<String>("merchantPassword")
@@ -98,6 +104,23 @@ class MainActivity : FlutterFragmentActivity() {
                 putExtra(Constants.TYPE, type?.toInt())
             }
             startActivityForResult(intent, AppConstant.MATM_LAUNCH_RESULT_CODE)
+        } catch (e: Exception) {
+        }
+    }
+
+    private fun launchMatm(call: MethodCall) {
+        try {
+            val intent = Intent(
+                this@MainActivity,
+                PaymentActivity::class.java
+            ).apply {
+                putExtra("TRANSACTION_TYPE", CredopayPaymentConstants.BALANCE_ENQUIRY)
+                putExtra("DEBUG_MODE",true)
+                putExtra("PRODUCTION",false)
+                putExtra("AMOUNT",100)
+                putExtra("IMEI","23984289424892")
+            }
+            startActivityForResult(intent, AppConstant.CREDO_PAY_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
         }
     }

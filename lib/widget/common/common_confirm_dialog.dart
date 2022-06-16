@@ -53,6 +53,7 @@ class CommonConfirmDialogWidget extends StatelessWidget {
       child: Text(
         description!,
         style: Get.textTheme.subtitle1,
+        textAlign: TextAlign.center,
       ),
     );
   }

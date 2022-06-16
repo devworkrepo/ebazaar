@@ -25,6 +25,7 @@ class WalletFav{
   String? outletCode;
   String? mobileNumber;
   String? picName;
+  String? favId;
 
   WalletFav();
 
@@ -35,6 +36,7 @@ class WalletFav{
     outletCode = json['outletcode'];
     mobileNumber = json['mobileno'];
     picName = json['picname'];
+    favId = json['favid'];
 
   }
 

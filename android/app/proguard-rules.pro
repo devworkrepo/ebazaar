@@ -59,3 +59,27 @@
 -dontwarn org.xmlpull.v1.XmlSerializer
 -keep class org.xmlpull.v1.* {*;}
 
+
+#credopay
+-keep class in.credopay.**{
+<fields>;
+public <methods>;
+}
+-keepclassmembers class in.credopay.** { <fields>; }
+-keepclassmembers class in.credopay.payment.sdk.ApiRequest { <fields>;
+}
+-keepclassmembers class in.credopay.payment.sdk.ApiResponse { <fields>;
+}
+-keepclassmembers class in.credopay.payment.sdk.ApiRequest$IsoData {
+<fields>; }
+-keepclassmembers class in.credopay.payment.sdk.ApiResponse$IsoData {
+<fields>; }
+-keepclassmembers class in.credopay.payment.sdk.ApiResponse$IsoData {
+<fields>; }
+-keepclassmembers class in.credopay.payment.sdk.ApiErrorResponse {
+<fields>; }
+-keepclassmembers class in.credopay.payment.sdk.TransactionModel {
+<fields>; }
+-keepclassmembers class in.credopay.payment.sdk.TransactionResponse {
+<fields>; }
+

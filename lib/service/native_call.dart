@@ -9,6 +9,7 @@ class NativeCall {
   static const _matmServiceMethodName = "launch_matm_service";
   static const _rdServiceSerialNumber = "rd_service_serial_number";
   static const _rootCheckerService = "root_checker_service";
+  static const _credoPayService = "credo_pay_service";
 
   static Future<String> launchAepsService(Map<String, dynamic> data) async {
     final String result = await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
@@ -22,6 +23,15 @@ class NativeCall {
   static Future<String> getRdSerialNumber(String data) async {
     var resultData = await _methodChannel.invokeMethod(_rdServiceSerialNumber, {
       "pidData" : data
+    });
+    return resultData;
+
+  }
+
+
+  static Future<String> credoPayService(String data) async {
+    var resultData = await _methodChannel.invokeMethod(_credoPayService, {
+
     });
     return resultData;
 

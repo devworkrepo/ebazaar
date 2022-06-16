@@ -505,20 +505,24 @@ class AppSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 48,
+      alignment: Alignment.center,
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextField(
+
         enableInteractiveSelection : false,
         onChanged: onChange,
         autofocus: focus,
         decoration: const InputDecoration(
             border: InputBorder.none,
+
             hintText: 'Search',
             hintStyle: TextStyle(color: Colors.grey),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16),
+            contentPadding: EdgeInsets.only(left: 8,right: 8,bottom: 5,top: 5),
             suffix: Icon(Icons.search,color: Colors.grey,)
         ),
       ),

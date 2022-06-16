@@ -76,7 +76,7 @@ class _AddNewVirtualAccountWidget extends GetView<VirtualAccountController> {
   }
 }
 
-class _BuildItemListWidget extends StatelessWidget {
+class _BuildItemListWidget extends GetView<VirtualAccountController> {
   final VirtualAccountCreationType type;
   final VirtualAccountDetailResponse response;
 
@@ -98,7 +98,23 @@ class _BuildItemListWidget extends StatelessWidget {
               Card(
                 child: Column(children: [
 
-                  if (response.iciciVirtualAccount?.isexist ?? false)
+                  if ((response.iciciVirtualAccount?.isexist ?? false) ||
+                      (response.yesBankVirtualAccount?.isexist ?? false))
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: Get.width,
+                        child: Column(
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                          const Text("Account Holder Name"),
+                          Text(controller.appPreference.user.outletName ?? "",style: Get.textTheme.headline6,)
+                        ],),
+                      ),
+                    ),
+
+                    if (response.iciciVirtualAccount?.isexist ?? false)
                     _BuildIciciBankWidget(response.iciciVirtualAccount!),
                   if (response.yesBankVirtualAccount?.isexist ?? false)
                     _BuildYesBankWidget(response.yesBankVirtualAccount!),
@@ -148,7 +164,7 @@ mixin _VirtualAccountWidgetMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            accountNumber,
+           "A/C No :"+ accountNumber,
             style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
           ),
           const SizedBox(

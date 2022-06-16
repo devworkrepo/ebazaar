@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/widget/common/common_confirm_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/wallet_repo.dart';
 import 'package:spayindia/data/repo_impl/wallet_repo_impl.dart';
@@ -8,8 +9,7 @@ import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 
-class WalletSearchController extends GetxController{
-
+class WalletSearchController extends GetxController {
   WalletRepo repo = Get.find<WalletRepoImpl>();
 
   var mobileController = TextEditingController();
@@ -26,37 +26,32 @@ class WalletSearchController extends GetxController{
     _fetchFavList();
   }
 
-
-  _fetchFavList() async{
-    try{
+  _fetchFavList() async {
+    try {
       favListResponseObs.value = const Resource.onInit();
       var response = await repo.fetchFavList();
       favList = response.favList!;
       favListResponseObs.value = Resource.onSuccess(response);
-    }catch(e){
+    } catch (e) {
       favListResponseObs.value = Resource.onFailure(e);
     }
   }
 
-  searchWalletAccount() async{
-    try{
+  searchWalletAccount() async {
+    try {
       StatusDialog.progress(title: "Searching...");
-      var response = await repo.searchWallet({
-        "mobileno" : mobileController.text
-      });
+      var response =
+          await repo.searchWallet({"mobileno": mobileController.text});
       Get.back();
 
-      if(response.code == 1){
-        Get.toNamed(AppRoute.walletTransferPage,arguments: response);
-      }
-      else{
+      if (response.code == 1) {
+        Get.toNamed(AppRoute.walletTransferPage, arguments: response);
+      } else {
         StatusDialog.failure(title: response.message);
       }
-
-
-    }catch(e){
+    } catch (e) {
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 
@@ -66,22 +61,45 @@ class WalletSearchController extends GetxController{
     if (mobileNumber.length == 10) {
       showSearchButton.value = true;
       searchWalletAccount();
-
     } else {
       showSearchButton.value = false;
     }
   }
 
   onFavItemClick(WalletFav fav) {
-
-    if(fav.mobileNumber != null){
-      if(fav.mobileNumber!.length == 10){
+    if (fav.mobileNumber != null) {
+      if (fav.mobileNumber!.length == 10) {
         mobileController.text = fav.mobileNumber!;
         showSearchButton.value = true;
-        if(isSearchingSender.isFalse){
+        if (isSearchingSender.isFalse) {
           searchWalletAccount();
         }
       }
+    }
+  }
+
+  removeFav(WalletFav walletFav) async {
+    Get.dialog(CommonConfirmDialogWidget(
+        title: "Confirm Delete",
+        description: "You are sure! to remove from favourite list.",
+        onConfirm: () {
+          _removeFavItem(walletFav);
+        }));
+  }
+
+  _removeFavItem(WalletFav walletFav) async {
+    try {
+      StatusDialog.progress(title: "Removing...");
+      var response = await repo.deleteFav({"favid": walletFav.favId ?? ""});
+      Get.back();
+      if (response.code == 1) {
+        StatusDialog.success(title: response.message).then((value) => _fetchFavList());
+      } else {
+        StatusDialog.failure(title: response.message);
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 }

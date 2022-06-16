@@ -12,6 +12,8 @@ object AppConstant {
     const val MATM_SERVICE_METHOD_NAME = "launch_matm_service"
     const val MATM_LAUNCH_RESULT_CODE = 1100
     const val ROOT_CHECKER_METHOD_NAME= "root_checker_service"
+    const val CREDO_PAY_METHOD_NAME= "credo_pay_service"
+    const val CREDO_PAY_LAUNCH_RESULT_CODE = 1200
 
 
 

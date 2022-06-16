@@ -50,6 +50,7 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
   @override
   void initState() {
     super.initState();
+    status = widget.status ?? "All";
     fromDateController.text = widget.fromDate;
     toDateController.text = widget.toDate;
   }

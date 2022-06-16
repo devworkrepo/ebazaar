@@ -31,12 +31,19 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
   @override
   void initState() {
     super.initState();
-    updateCheck();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      updateCheck();
+
+      AppUpdateUtil.checkUpdate();
+    });
   }
 
   void updateCheck() async {
     await Upgrader().initialize();
     var value = Upgrader().isUpdateAvailable();
+    AppUtil.logger("App Update : ${Upgrader().isUpdateAvailable()}");
+    AppUtil.logger("App Update : ${Upgrader().currentAppStoreVersion()}");
+    AppUtil.logger("App Update : ${Upgrader().currentInstalledVersion()}");
     if (!value) {
       AppUtil.logger("AppUpdate : update not available");
 
@@ -75,9 +82,6 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     var ifForceUpdate = isForce ||
         !minVersionSupport(
             Upgrader().currentInstalledVersion(), info.minVersion);
-
-    //check in app update
-    AppUpdateUtil.checkUpdate(isUpdate, isForce);
 
     AppUtil.logger("AppUpdate : Update is available");
     if (appPreference.appUpdateTimeWaiting > 0) {

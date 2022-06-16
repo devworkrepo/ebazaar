@@ -28,5 +28,11 @@ class WalletRepoImpl extends WalletRepo{
     return WalletTransactionResponse.fromJson(response.data);
   }
 
+  @override
+  Future<CommonResponse> deleteFav(data) async {
+    var response = await client.post("/RemoveWalletFav",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
 
 }
