@@ -55,15 +55,15 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     //callback for app update to child widget
     try {
       AppUtil.logger("AppUpdate : Network app update info on try block");
-      AppUpdateInfo info = await repo.updateInfo();
+      NetworkAppUpdateInfo info = await repo.updateInfo();
       _setupUpdate(info);
     } catch (e) {
       AppUtil.logger("AppUpdate : Network app update info on catch block");
-      _setupUpdate(AppUpdateInfo());
+      _setupUpdate(NetworkAppUpdateInfo());
     }
   }
 
-  _setupUpdate(AppUpdateInfo info) {
+  _setupUpdate(NetworkAppUpdateInfo info) {
     bool isUpdate = info.isUpdate ?? true;
     bool isForce = info.isForce ?? true;
 
