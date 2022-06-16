@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/virtual_account_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/virtual_account_impl.dart';
@@ -15,6 +16,8 @@ import 'package:spayindia/widget/image.dart';
 class VirtualAccountController extends GetxController {
   VirtualAccountRepo repo = Get.find<VirtualAccountImpl>();
   var responseObs = Resource.onInit(data: VirtualAccountDetailResponse()).obs;
+
+  AppPreference appPreference = Get.find();
 
   @override
   void onInit() {

@@ -62,7 +62,7 @@ class _BankListWidget extends GetView<SettlementBankListController> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          _addNewBankWidget(),
+        //  _addNewBankWidget(),
           Expanded(
             child: Card(
               child: ListView.builder(

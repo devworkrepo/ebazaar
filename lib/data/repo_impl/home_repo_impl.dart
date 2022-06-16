@@ -99,9 +99,9 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<AppUpdateInfo> updateInfo() async {
+  Future<NetworkAppUpdateInfo> updateInfo() async {
     var response = await client.get("/CheckAppUpdates");
-    return AppUpdateInfo.fromJson(response.data);
+    return NetworkAppUpdateInfo.fromJson(response.data);
   }
 
   @override

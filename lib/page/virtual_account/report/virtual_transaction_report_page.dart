@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/model/virtual_account/virtual_report.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 import 'package:spayindia/util/tags.dart';
 import 'package:spayindia/widget/api_component.dart';
@@ -56,17 +57,21 @@ class VirtualTransactionReportPage
         CommonReportSeasrchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
-          isDateSearch: (controllerTag == AppTag.virtualAccountPendingTag) ? false : true,
-          status: (controllerTag == AppTag.virtualAccountPendingTag) ? null : controller.searchStatus,
+          isDateSearch:
+              (controllerTag == AppTag.virtualAccountPendingTag) ? false : true,
+          status: (controllerTag == AppTag.virtualAccountPendingTag)
+              ? null
+              : controller.searchStatus,
           statusList: (controllerTag == AppTag.virtualAccountPendingTag)
               ? null
               : ["All", "Accepted", "Pending", "Declined"],
           inputFieldOneTile: "Transaction Number",
-          onSubmit:
-              (fromDate, toDate, searchInput, searchInputType, status, _) {
+          onSubmit: (fromDate, toDate, searchInput, _, status, __) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
+            controller.searchStatus = status;
+            AppUtil.logger("check search filter : $status");
             controller.onSearch();
           },
         ),
@@ -146,12 +151,14 @@ class _BuildListItem extends StatelessWidget {
           ListTitleValue(
               title: "Modified Date", value: report.modifyDate.toString()),
         ],
-        actionWidget2: ((report.status ?? "").toLowerCase() == "pending") ? AppButton(
-          text: "View & Accept",
-          onClick: () => controller.fetchBond(report),
-          width: 140,
-          height: 40,
-        ) : null,
+        actionWidget2: ((report.status ?? "").toLowerCase() == "pending")
+            ? AppButton(
+                text: "View & Accept",
+                onClick: () => controller.fetchBond(report),
+                width: 140,
+                height: 40,
+              )
+            : null,
       ),
     );
   }

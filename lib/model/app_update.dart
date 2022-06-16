@@ -1,4 +1,4 @@
-class AppUpdateInfo {
+class NetworkAppUpdateInfo {
   int? code;
   String? delayHour;
   bool? isForce;
@@ -9,9 +9,9 @@ class AppUpdateInfo {
   String? description;
   String? heading;
 
-  AppUpdateInfo();
+  NetworkAppUpdateInfo();
 
-  AppUpdateInfo.fromJson(Map<String, dynamic> json) {
+  NetworkAppUpdateInfo.fromJson(Map<String, dynamic> json) {
     code = json["code"];
     delayHour = json["delay_hrs"];
     isForce = json["isforce"];

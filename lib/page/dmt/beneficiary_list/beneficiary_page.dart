@@ -56,9 +56,9 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
             left: 8,
             right: 8,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
               width: Get.width,
-              decoration: AppStyle.searchDecoration(color:Get.theme.primaryColor,borderRadius: 5),
+              decoration: AppStyle.searchDecoration(color:Colors.black38,borderRadius: 5),
               child: Row(
                 children: [
                   Expanded(
@@ -68,7 +68,7 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                     ),
                   ),
                   FloatingActionButton(
-                    mini: false,
+                    mini: true,
                     onPressed: () {
                       controller.addBeneficiary();
                     },

@@ -19,6 +19,13 @@ allprojects {
         mavenCentral()
         maven { url 'https://jitpack.io' }
         maven { url 'https://oss.sonatype.org/content/repositories/ksoap2-android-releases/' }
+        maven {
+            credentials {
+                username 'myMavenRepo'
+                password 'CredoPaySDK'
+            }
+            url "https://mymavenrepo.com/repo/nkkgWioPTZZyJhyjF9hy/"
+        }
     }
 }
 

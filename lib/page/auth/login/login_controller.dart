@@ -54,6 +54,7 @@ class LoginController extends GetxController {
           await appPreference.setIsLoginBondAccepted(false);
         }));
       }
+
     });
   }
 

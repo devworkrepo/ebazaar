@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:spayindia/data/repo/home_repo.dart';
+import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
+import 'package:spayindia/model/app_update.dart';
 
 import '../widget/common.dart';
 import 'app_util.dart';
@@ -9,18 +13,17 @@ class AppUpdateUtil {
 
   AppUpdateUtil._();
 
-  static Future<void> checkUpdate(bool isUpdate, bool isForceUpdate) async {
+  static Future<void> checkUpdate() async {
 
-    if(!isUpdate) return;
 
-    InAppUpdate.checkForUpdate().then((info) {
+    InAppUpdate.checkForUpdate().then((info)  async{
       var isUpdateAvailable =
           info.updateAvailability == UpdateAvailability.updateAvailable;
 
       AppUtil.logger("InAppUpdate : package name : ${info.packageName}");
 
       if (isUpdateAvailable) {
-        _performImmediateUpdate(isUpdate,isForceUpdate);
+        _fetchUpdateDetail();
       } else {
         AppUtil.logger("InAppUpdate : app update not available");
       }
@@ -34,12 +37,23 @@ class AppUpdateUtil {
     });
   }
 
+
+  static _fetchUpdateDetail() async{
+    try{
+      NetworkAppUpdateInfo info = await Get.find<HomeRepoImpl>().updateInfo();
+      _performImmediateUpdate(info.isUpdate ?? true,info.isForce ?? true);
+    }catch(e){
+      _performImmediateUpdate(true,true);
+    }
+  }
+
   static _performImmediateUpdate(bool isUpdate, bool isForceUpdate) {
+    if(!isUpdate) return;
     InAppUpdate.performImmediateUpdate().catchError((e) {
       AppUtil.logger(
           "InAppUpdateError _performImmediateUpdate: " + e.toString());
       if(isForceUpdate){
-        checkUpdate(isUpdate,isForceUpdate);
+        checkUpdate();
       }
     });
   }

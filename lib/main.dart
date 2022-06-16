@@ -69,9 +69,9 @@ class _MyAppState extends State<MyApp> {
     //initialPage = AppRoute.testPage;
 
     var backgroundColor =
-        (AppConstant.baseUrl == AppConstant.uatBaseUrl)
+    /*(AppConstant.baseUrl == AppConstant.uatBaseUrl)
             ? Colors.black
-            : AppColor.backgroundColor;
+            : */AppColor.backgroundColor;
 
     ThemeData themeData = ThemeData(
         scaffoldBackgroundColor: backgroundColor,

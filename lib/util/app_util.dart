@@ -83,14 +83,20 @@ class AppUtil {
 
   static void throwUatExceptionOnDeployment(String mobileNumber){
 
-    var whiteListNumbers = ["79826077421","9785172173"];
+
+    var whiteListNumbers = ["7982607742","9785172173","9211044444"];
 
     if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {
-
+      var isExist = false;
       for (var element in whiteListNumbers) {
-        if (mobileNumber != element) {
-          throw UatUpdateException();
+        if (mobileNumber == element) {
+          isExist = true;
+          break;
         }
+      }
+
+      if(!isExist){
+        throw UatUpdateException();
       }
     }
   }

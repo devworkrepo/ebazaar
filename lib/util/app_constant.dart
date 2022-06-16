@@ -3,7 +3,7 @@ class AppConstant{
  //todo check live api
  static const liveBaseUrl = "https://apiv2app.spayindia.in/AppSpayService.svc/";
  static const uatBaseUrl = "https://api.spayindia.in/AppSpayService.svc/";
- static String baseUrl = uatBaseUrl;
+ static String baseUrl = liveBaseUrl;
 
  static const profileBaseUrl = "https://spayindia.in/commonimg/user/";
  static const requestImageBaseUrl = "https://spayindia.in/commonimg/request/";

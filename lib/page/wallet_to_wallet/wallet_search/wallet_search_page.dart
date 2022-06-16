@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/image.dart';
+import 'package:spayindia/widget/no_data_found.dart';
 import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/model/wallet/wallet_fav.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_controller.dart';
@@ -20,10 +21,9 @@ class WalletSearchPage extends GetView<WalletSearchController> {
         title: const Text("Wallet to Wallet"),
         actions: [
           PopupMenuButton<String>(
-            onSelected: (i){
+            onSelected: (i) {
               Get.toNamed(AppRoute.walletReportPage);
             },
-
             itemBuilder: (BuildContext context) {
               return {'Report'}.map((String choice) {
                 return PopupMenuItem<String>(
@@ -141,11 +141,15 @@ class _BuildFavListWidget extends GetView<WalletSearchController> {
                 height: 16,
               ),
               Expanded(
-                child: ListView.builder(
-                    itemCount: count,
-                    itemBuilder: (context, index) {
-                      return _buildListItem(list[index]);
-                    }),
+                child: (list.isEmpty)
+                    ? const NoItemFoundWidget(
+                  message: "No Favourite",
+                )
+                    : ListView.builder(
+                        itemCount: count,
+                        itemBuilder: (context, index) {
+                          return _buildListItem(list[index]);
+                        }),
               )
             ],
           ),
@@ -166,23 +170,37 @@ class _BuildFavListWidget extends GetView<WalletSearchController> {
               children: [
                 AppCircleNetworkImage(
                     AppConstant.profileBaseUrl + (fav.picName ?? "")),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      fav.agentName ?? "",
-                      style: Get.textTheme.subtitle1,
-                    ),
-                    Text(
-                      fav.outletName ?? "",
-                      style: Get.textTheme.bodyText1,
-                    ),
-                    Text(
-                      "Mob : " + (fav.mobileNumber ?? ""),
-                      style: Get.textTheme.bodyText1,
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        fav.agentName ?? "",
+                        style: Get.textTheme.subtitle1,
+                      ),
+                      Text(
+                        fav.outletName ?? "",
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      Text(
+                        "Mob : " + (fav.mobileNumber ?? ""),
+                        style: Get.textTheme.bodyText1,
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => controller.removeFav(fav),
+                  icon: const Icon(Icons.delete_forever),
+                  iconSize: 32,
+                  color: Colors.red,
                 )
+
+                /*ElevatedButton.icon(
+                  onPressed:()=> controller.removeFav(fav),
+                  icon: const Icon(Icons.delete_forever),
+                  style: ElevatedButton.styleFrom(primary: Colors.red),
+                ),*/
               ],
             ),
             Divider()
