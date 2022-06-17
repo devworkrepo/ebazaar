@@ -26,7 +26,6 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/tags.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/status_bar_color_widget.dart';
-import 'package:upgrader/upgrader.dart';
 
 import '../service/native_call.dart';
 import '../widget/dialog/status_dialog.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_version/new_version.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/widget/common/animate_icon_widget.dart';
-import 'package:upgrader/upgrader.dart';
 
 class HomeAppUpdateWidget extends GetView<HomeController> {
   const HomeAppUpdateWidget({Key? key}) : super(key: key);
@@ -47,8 +47,8 @@ class HomeAppUpdateWidget extends GetView<HomeController> {
                     )),
                     ElevatedButton(
                         onPressed: () {
-                          Upgrader().initialize().then((value) =>
-                              Upgrader().onUserUpdated(context, false));
+                          NewVersion().launchAppStore(
+                              Get.find<VersionStatus?>()?.appStoreLink ?? "");
                         },
                         child: const Text("Update"))
                   ],

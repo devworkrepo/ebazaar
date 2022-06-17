@@ -44,7 +44,7 @@ class MainActivity : FlutterFragmentActivity() {
                     captureAepsPidData(call)
                 }
                 call.method.equals(MATM_SERVICE_METHOD_NAME) -> {
-                    launchMatm(call)
+                    tramoMatm(call)
                 }
                 call.method.equals(ROOT_CHECKER_METHOD_NAME) -> {
                     rootCheck()
@@ -59,7 +59,7 @@ class MainActivity : FlutterFragmentActivity() {
 
                 }
                 call.method.equals(CREDO_PAY_METHOD_NAME) -> {
-                    credoPayTransaction(call)
+                    credoPayMatm(call)
                 }
             }
         }
@@ -70,7 +70,7 @@ class MainActivity : FlutterFragmentActivity() {
         result?.success(isRooted)
     }
 
-    private  fun credoPayTransaction(call: MethodCall){
+    private  fun tramoMatm(call: MethodCall){
         try {
             val merchantUserId = call.argument<String>("merchantUserId")
             val merchantPassword = call.argument<String>("merchantPassword")
@@ -108,7 +108,7 @@ class MainActivity : FlutterFragmentActivity() {
         }
     }
 
-    private fun launchMatm(call: MethodCall) {
+    private fun credoPayMatm(call: MethodCall) {
         try {
             val intent = Intent(
                 this@MainActivity,

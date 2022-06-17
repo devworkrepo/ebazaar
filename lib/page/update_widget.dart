@@ -8,8 +8,8 @@ import 'package:spayindia/res/style.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/common/amount_background.dart';
-import 'package:upgrader/upgrader.dart';
-import 'package:version/version.dart';
+import 'package:new_version/new_version.dart';
+
 
 import '../util/in_app_update.dart';
 
@@ -39,16 +39,21 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
   }
 
   void updateCheck() async {
-    await Upgrader().initialize();
-    var value = Upgrader().isUpdateAvailable();
-    AppUtil.logger("App Update : ${Upgrader().isUpdateAvailable()}");
-    AppUtil.logger("App Update : ${Upgrader().currentAppStoreVersion()}");
-    AppUtil.logger("App Update : ${Upgrader().currentInstalledVersion()}");
+    VersionStatus? status = Get.find();
+    var value = status?.canUpdate ?? false;
+
+    AppUtil.logger("App Update : ${status?.canUpdate ?? false}");
+    AppUtil.logger("App Update : ${status?.localVersion}");
+    AppUtil.logger("App Update : ${status?.storeVersion}");
+    AppUtil.logger("App Update : ${status?.appStoreLink}");
+
     if (!value) {
       AppUtil.logger("AppUpdate : update not available");
 
-      var currentV = Upgrader().currentAppStoreVersion();
-      var storeV = Upgrader().currentInstalledVersion();
+      var currentV = status?.storeVersion;
+      var storeV = status?.storeVersion;
+
+
       if (currentV == null || storeV == null) return;
       if (currentV.isEmpty || storeV.isEmpty) return;
       if (!currentV.contains(".") && !storeV.contains(".")) return;
@@ -63,14 +68,14 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     try {
       AppUtil.logger("AppUpdate : Network app update info on try block");
       NetworkAppUpdateInfo info = await repo.updateInfo();
-      _setupUpdate(info);
+      _setupUpdate(info,status);
     } catch (e) {
       AppUtil.logger("AppUpdate : Network app update info on catch block");
-      _setupUpdate(NetworkAppUpdateInfo());
+      _setupUpdate(NetworkAppUpdateInfo(),status);
     }
   }
 
-  _setupUpdate(NetworkAppUpdateInfo info) {
+  _setupUpdate(NetworkAppUpdateInfo info, VersionStatus? status) {
     bool isUpdate = info.isUpdate ?? true;
     bool isForce = info.isForce ?? true;
 
@@ -79,9 +84,6 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
       if (widget.onAvailable != null) widget.onAvailable!(isUpdate);
     }
 
-    var ifForceUpdate = isForce ||
-        !minVersionSupport(
-            Upgrader().currentInstalledVersion(), info.minVersion);
 
     AppUtil.logger("AppUpdate : Update is available");
     if (appPreference.appUpdateTimeWaiting > 0) {
@@ -92,19 +94,21 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
 
       if (DateTime.now().isAfter(savedTime)) {
         AppUtil.logger("AppUpdate : on after saved time");
-        var playVersion = Upgrader().currentAppStoreVersion() ?? "N/A";
-        var currentVersion = Upgrader().currentInstalledVersion() ?? "N/A";
+
+
+        var playVersion = status?.storeVersion ?? "N/A";
+        var currentVersion = status?.localVersion ?? "N/A";
 
         if (isUpdate) {
           Get.dialog(
             _ShowAppUpdateDialog(
               playVersion: playVersion,
               currentVersion: currentVersion,
-              isForce: ifForceUpdate,
+              isForce: isForce,
               heading: info.heading,
               description: info.description,
             ),
-            barrierDismissible: (ifForceUpdate) ? false : true,
+            barrierDismissible: (isForce) ? false : true,
           );
         }
       }
@@ -116,15 +120,6 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
     }
   }
 
-  bool minVersionSupport(String? currentVersion, String? minVersion) {
-    try {
-      final mCurrentVersion = Version.parse(currentVersion);
-      final mMinVersion = Version.parse(minVersion);
-      return mCurrentVersion >= mMinVersion;
-    } catch (e) {
-      return true;
-    }
-  }
 
   Duration _getDelayHourInMilliSecond(String? delayHour) {
 
@@ -267,8 +262,10 @@ class _ShowAppUpdateDialog extends StatelessWidget {
                   AppButton(
                       text: "Update",
                       onClick: () {
-                        Upgrader().initialize().then((value) =>
-                            Upgrader().onUserUpdated(context, false));
+
+                        var status = Get.find<VersionStatus?>();
+                        if(status?.appStoreLink == null) return;
+                        NewVersion().launchAppStore(status?.appStoreLink ?? "");
                         if (currentVersion == playVersion) {
                           Get.back();
                         }

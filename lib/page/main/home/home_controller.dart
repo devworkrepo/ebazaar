@@ -21,7 +21,6 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/in_app_update.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:upgrader/upgrader.dart';
 
 import '../../../util/app_constant.dart';
 

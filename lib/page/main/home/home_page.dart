@@ -11,7 +11,6 @@ import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/route_aware_widget.dart';
 import 'package:spayindia/page/update_widget.dart';
 import 'package:spayindia/util/app_util.dart';
-import 'package:upgrader/upgrader.dart';
 
 import 'component/home_appbar_section.dart';
 import 'component/home_header_section.dart';

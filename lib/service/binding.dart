@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:new_version/new_version.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
@@ -20,6 +21,13 @@ appBinding() async {
   Get.put(preferences, permanent: true);
   Get.put(AppPreference(Get.find()));
 
+  var newVersion =  NewVersion(androidId: 'com.spayindia.app',);
+  VersionStatus? versionStatus = await newVersion.getVersionStatus();
+  Get.put(versionStatus,permanent: true);
+
+
+
+
   //network client binding
   Get.lazyPut(() => Connectivity(), fenix: true);
   Get.lazyPut(() => NetworkClient(Get.find(), Get.find()), fenix: true);
@@ -34,4 +42,5 @@ appBinding() async {
   Get.lazyPut(() => WalletRepoImpl(), fenix: true);
   Get.lazyPut(() => MoneyRequestImpl(), fenix: true);
   Get.lazyPut(() => VirtualAccountImpl(), fenix: true);
+
 }

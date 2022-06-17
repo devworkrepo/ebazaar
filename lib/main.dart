@@ -12,6 +12,7 @@ import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/app_constant.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:spayindia/util/security/app_config.dart';
 

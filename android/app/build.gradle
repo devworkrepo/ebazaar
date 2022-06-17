@@ -101,8 +101,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.google.code.ksoap2-android:ksoap2-android:3.6.2'
     implementation files('../libs/matm.aar')
-    implementation files('../libs/mosambeelib.aar')
-    implementation files('../libs/morefun_mpos.jar')
+    implementation files('../libs/mosambeelib_v_1.1.0.0007.08.aar')
+    implementation files('../libs/morefun_mpos_sdk_v2.1.20210628.jar')
 
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okio:okio:1.14.0'
