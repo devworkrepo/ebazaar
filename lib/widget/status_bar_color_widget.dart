@@ -18,7 +18,7 @@ class _StatusBarColorWidgetState extends State<StatusBarColorWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         WidgetUtil.statusBarColor(widget.color ?? Get.theme.primaryColorDark);
       });

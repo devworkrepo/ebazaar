@@ -36,6 +36,7 @@ import 'package:spayindia/page/wallet_to_wallet/wallet_transfer/wallet_transfer_
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/test/test_credo_pay.dart';
 import 'package:spayindia/test/test_local_auth_page.dart';
+import 'package:spayindia/test/test_notification_page.dart';
 import 'package:spayindia/test/test_pg.dart';
 
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
@@ -65,7 +66,7 @@ final getAllPages = [
 
   GetPage(
     name: AppRoute.testPage,
-    page: () => const TestCredoPayPage(),
+    page: () => const TestNotificationPage(),
   ),
 
   GetPage(

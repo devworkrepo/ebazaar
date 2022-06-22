@@ -46,7 +46,7 @@ class LoginController extends GetxController {
       passwordController.text = "Akash@123";
     }*/
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (!appPreference.isLoginBondAccepted) {
         Get.dialog(LoginTermAndConditionDialog(onAccept: () async {
           await appPreference.setIsLoginBondAccepted(true);

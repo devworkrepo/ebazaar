@@ -35,7 +35,7 @@ class DmtSearchSenderController extends GetxController {
     numberController.text = mobile ?? "";
     if (numberController.text.toString().length == 10) {
       showSearchButton.value = true;
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _searchSender();
       });
     }

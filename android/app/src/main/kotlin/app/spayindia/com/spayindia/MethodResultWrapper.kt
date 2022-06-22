@@ -30,7 +30,7 @@ class MethodResultWrapper (private val methodResult : MethodChannel.Result): Met
         }
     }
 
-    override fun error(errorCode: String?, errorMessage: String?, errorDetails: Any?) {
+    override fun error(errorCode: String, errorMessage: String?, errorDetails: Any?) {
         try{
             handler?.post {
                 try {
@@ -42,8 +42,9 @@ class MethodResultWrapper (private val methodResult : MethodChannel.Result): Met
         }catch (e : Exception){
             android.util.Log.d("NativeAndroidException", "nativeError2: ${   e.message.toString()}")
         }
-
     }
+
+
 
     override fun notImplemented() {
         try{

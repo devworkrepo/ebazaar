@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +11,9 @@ import 'package:spayindia/route/page_route.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
+import 'package:spayindia/service/fcm_service.dart';
 import 'package:spayindia/service/local_auth.dart';
-import 'package:spayindia/util/app_constant.dart';
+import 'package:spayindia/service/local_notifications.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:spayindia/util/security/app_config.dart';
@@ -19,62 +21,86 @@ import 'package:spayindia/util/security/app_config.dart';
 import 'data/app_pref.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
+bool _isBiometricAvailable = false;
+bool _isRealDevice = true;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+Future<void> _initBiometric() async {
+  _isBiometricAvailable = await LocalAuthService.isAvailable();
+}
+
+Future<void> _iniSafeDevice() async {
+  _isRealDevice = await SafeDevice.isRealDevice;
+  if (kDebugMode) _isRealDevice = true;
+}
+
+Future<void> _initOrientations() async {
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+}
+
+Future<void> backgroundFcmHandler(RemoteMessage message) async {
+  AppUtil.logger(" This is message from background");
+
+}
+
+Future<void> _initFirebaseService() async {
   await Firebase.initializeApp();
-  var isBiometricAvailable = await LocalAuthService.isAvailable();
+  FirebaseMessaging.onBackgroundMessage(backgroundFcmHandler);
   if (kDebugMode) {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
   }
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await appBinding();
-  var isRealDevice = await SafeDevice.isRealDevice;
-  if (kDebugMode) {
-    isRealDevice = true;
-  }
+}
 
-  runApp(MyApp(isBiometricAvailable,isRealDevice));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  LocalNotificationService.initialize();
+  await _initFirebaseService();
+  await _initBiometric();
+  await _iniSafeDevice();
+  await _iniSafeDevice();
+  await _initOrientations();
+  await appBinding();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final bool isBiometricAvailable;
-  final bool isRealDevice;
-
-  const MyApp(this.isBiometricAvailable,this.isRealDevice, {Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp> {
-
-
   AppPreference appPreference = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    var initialPage =
-        (appPreference.sessionKey.isEmpty || appPreference.sessionKey == "na")
-            ? AppRoute.loginPage
-            : AppRoute.mainPage;
-    if (!widget.isBiometricAvailable) {
+    var initialPage = _initialPage();
+    if (!_isBiometricAvailable) {
       initialPage = AppRoute.deviceLockPage;
     }
-
-    if (!widget.isRealDevice) {
+    if (!_isRealDevice) {
       initialPage = AppRoute.rootPage;
     }
-
     //initialPage = AppRoute.testPage;
+    var backgroundColor = AppColor.backgroundColor;
+    ThemeData themeData = _themeData(backgroundColor);
 
-    var backgroundColor =
-    /*(AppConstant.baseUrl == AppConstant.uatBaseUrl)
-            ? Colors.black
-            : */AppColor.backgroundColor;
+    return AppLifecycleManager(
+      child: GetMaterialApp(
+          navigatorKey: navState,
+          themeMode: ThemeMode.light,
+          navigatorObservers: [routeObserver],
+          theme: themeData,
+          initialRoute: initialPage,
+          getPages: getAllPages),
+    );
+  }
 
-    ThemeData themeData = ThemeData(
+  ThemeData _themeData(HexColor backgroundColor) {
+    return ThemeData(
         scaffoldBackgroundColor: backgroundColor,
         dividerColor: Colors.grey,
         dividerTheme:
@@ -93,15 +119,13 @@ class _MyAppState extends State<MyApp> {
         primaryColorDark: HexColor("0a1233"),
         primaryColorLight: HexColor("1A3187"),
         textTheme: buildTextTheme());
-    return AppLifecycleManager(
-      child: GetMaterialApp(
-          themeMode: ThemeMode.light,
-          navigatorObservers: [routeObserver],
-          theme: themeData,
-          //  initialRoute: AppRoute.testPage,
-          initialRoute: initialPage,
-          getPages: getAllPages),
-    );
+  }
+
+  String _initialPage() {
+    return (appPreference.sessionKey.isEmpty ||
+            appPreference.sessionKey == "na")
+        ? AppRoute.loginPage
+        : AppRoute.mainPage;
   }
 
   TextTheme buildTextTheme() {
@@ -131,12 +155,20 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    FirebaseMessaging.instance.getInitialMessage().then((value) {});
+
+    FirebaseMessaging.onMessage.listen((message) {
+      AppUtil.logger("Firebase Testing : onMessage : $message");
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      AppUtil.logger("Firebase Testing : onMessageOpenedApp : $message");
+    });
     AppConfig.init();
   }
 
   @override
   void dispose() {
-
     super.dispose();
   }
 }
