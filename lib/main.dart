@@ -14,6 +14,7 @@ import 'package:spayindia/service/binding.dart';
 import 'package:spayindia/service/fcm_service.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/service/local_notifications.dart';
+import 'package:spayindia/test/test_credo_pay.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:spayindia/util/security/app_config.dart';
@@ -24,6 +25,8 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 bool _isBiometricAvailable = false;
 bool _isRealDevice = true;
+
+Widget? testPageMode() =>const TestCredoPayPage();
 
 Future<void> _initBiometric() async {
   _isBiometricAvailable = await LocalAuthService.isAvailable();
@@ -40,7 +43,6 @@ Future<void> _initOrientations() async {
 
 Future<void> backgroundFcmHandler(RemoteMessage message) async {
   AppUtil.logger(" This is message from background");
-
 }
 
 Future<void> _initFirebaseService() async {
@@ -84,7 +86,10 @@ class _MyAppState extends State<MyApp> {
     if (!_isRealDevice) {
       initialPage = AppRoute.rootPage;
     }
-    //initialPage = AppRoute.testPage;
+
+    if (testPageMode() != null) {
+      initialPage = AppRoute.testPage;
+    }
     var backgroundColor = AppColor.backgroundColor;
     ThemeData themeData = _themeData(backgroundColor);
 

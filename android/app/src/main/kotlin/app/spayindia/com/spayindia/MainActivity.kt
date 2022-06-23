@@ -2,9 +2,11 @@ package app.spayindia.com.spayindia
 
 import `in`.credopay.payment.sdk.CredopayPaymentConstants
 import `in`.credopay.payment.sdk.PaymentActivity
+import `in`.credopay.payment.sdk.Utils
 import android.content.Intent
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat
 import app.spayindia.com.AppConstant
 import app.spayindia.com.AppConstant.AEPS_SERVICE_METHOD_NAME
 import app.spayindia.com.AppConstant.CREDO_PAY_METHOD_NAME
@@ -12,6 +14,7 @@ import app.spayindia.com.AppConstant.MATM_SERVICE_METHOD_NAME
 import app.spayindia.com.AppConstant.ROOT_CHECKER_METHOD_NAME
 import app.spayindia.com.AppConstant.METHOD_CHANNEL
 import app.spayindia.com.AppConstant.RD_SERVICE_SERIAL_NUMBER
+import app.spayindia.com.R
 import app.spayindia.com.XmPidParser
 import app.spayindia.com.RootChecker
 import com.fingpay.microatmsdk.MicroAtmLoginScreen
@@ -52,9 +55,9 @@ class MainActivity : FlutterFragmentActivity() {
                 call.method.equals(RD_SERVICE_SERIAL_NUMBER) -> {
 
                     val mData =
-                            XmPidParser.getDeviceSerialNumber(
-                                    call.argument<String>("pidData") ?: ""
-                            )
+                        XmPidParser.getDeviceSerialNumber(
+                            call.argument<String>("pidData") ?: ""
+                        )
                     result!!.success(mData)
 
                 }
@@ -70,7 +73,7 @@ class MainActivity : FlutterFragmentActivity() {
         result?.success(isRooted)
     }
 
-    private  fun tramoMatm(call: MethodCall){
+    private fun tramoMatm(call: MethodCall) {
         try {
             val merchantUserId = call.argument<String>("merchantUserId")
             val merchantPassword = call.argument<String>("merchantPassword")
@@ -114,14 +117,29 @@ class MainActivity : FlutterFragmentActivity() {
                 this@MainActivity,
                 PaymentActivity::class.java
             ).apply {
-                putExtra("TRANSACTION_TYPE", CredopayPaymentConstants.BALANCE_ENQUIRY)
-                putExtra("DEBUG_MODE",true)
-                putExtra("PRODUCTION",false)
-                putExtra("AMOUNT",100)
-                putExtra("IMEI","23984289424892")
+                putExtra("TRANSACTION_TYPE", CredopayPaymentConstants.MICROATM)
+                putExtra("DEBUG_MODE", true)
+                putExtra("PRODUCTION", true)
+                putExtra("AMOUNT", 100)
+                putExtra("LOGIN_ID", "2000005429")
+                putExtra("LOGIN_PASSWORD", "d9%dhTrzzx")
+                putExtra("TID", "E0022603")
+                putExtra("CRN_U", "000132")
+                putExtra("MOBILE_NUMBER", "7982607742")
+                putExtra("IMEI", "23984289424892")
+                putExtra(
+                    "LOGO", Utils.getVariableImage(
+                        ContextCompat.getDrawable(
+                            applicationContext,
+                            R.drawable.splash
+                        )
+                    )
+                )
             }
             startActivityForResult(intent, AppConstant.CREDO_PAY_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
+
+            AppUtil.logD("CredoPay Exception : " + e.message)
         }
     }
 
@@ -139,19 +157,24 @@ class MainActivity : FlutterFragmentActivity() {
             )
             startActivityForResult(intent, AppConstant.AEPS_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
-           /* result?.error(
-                "99",
-                "Captured failed, please check biometric device is connected",
-                "exception"
-            )*/
+            /* result?.error(
+                 "99",
+                 "Captured failed, please check biometric device is connected",
+                 "exception"
+             )*/
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode != RESULT_CANCELED && data != null && resultCode == RESULT_OK) {
+        if (AppConstant.CREDO_PAY_LAUNCH_RESULT_CODE == requestCode) {
+            handleCredoPaymentResult(
+                requestCode, resultCode, data
+            )
+        }
 
+        if (resultCode != RESULT_CANCELED && data != null && resultCode == RESULT_OK) {
             when (requestCode) {
                 AppConstant.AEPS_LAUNCH_RESULT_CODE -> handleRDServiceResult(
                     requestCode,
@@ -163,12 +186,61 @@ class MainActivity : FlutterFragmentActivity() {
                     resultCode,
                     data
                 )
+
             }
         } else {
             result?.error("101", "Result delivered with black response", "data is null");
         }
 
 
+    }
+
+    private fun handleCredoPaymentResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        AppUtil.logD("CredoPay Response RequestCode: $requestCode")
+        AppUtil.logD("CredoPay Response Result Code: $resultCode")
+
+        if (data != null) {
+            val rrn : String = data.getStringExtra("rrn") ?: ""
+            val transactionId : String = data.getStringExtra("transaction_id") ?: ""
+            val maskedPan : String = data.getStringExtra("masked_pan") ?: ""
+            val tc : String = data.getStringExtra("tc") ?: ""
+            val tvr : String = data.getStringExtra("tvr") ?: ""
+            val tsi : String = data.getStringExtra("tsi") ?: ""
+            val approvalCode : String = data.getStringExtra("approval_code") ?: ""
+            val network : String = data.getStringExtra("network") ?: ""
+            val cardApplicationName : String = data.getStringExtra("card_application_name") ?: ""
+            val cardHolderName : String = data.getStringExtra("card_holder_name") ?: ""
+            val appVersion : String = data.getStringExtra("app_version") ?: ""
+            val cardType : String = data.getStringExtra("card_type") ?: ""
+            val accountBalance : String = data.getStringExtra("account_balance") ?: ""
+            val transactionType : String = data.getStringExtra("card_type") ?: ""
+            val error : String = data.getStringExtra("error") ?: ""
+
+
+            AppUtil.logD(
+                """
+                CredoPay Response :
+                 
+                 \n rrn = $rrn
+                 \n transactionId = $transactionId
+                 \n maskedPan = $maskedPan
+                 \n tc = $tc
+                 \n tvr = $tvr
+                 \n tsi = $tsi
+                 \n approvalCode = $approvalCode
+                 \n network = $network
+                 \n cardApplicationName = $cardApplicationName
+                 \n cardHolderName = $cardHolderName
+                 \n appVersion = $appVersion
+                 \n cardType = $cardType
+                 \n accountBalance = $accountBalance
+                 \n transactionType = $transactionType
+                 \n error = $error
+                
+            """.trimIndent()
+            )
+        }
     }
 
     private fun handleRDServiceResult(requestCode: Int, resultCode: Int, data: Intent?) {

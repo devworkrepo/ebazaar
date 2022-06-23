@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/aeps/aeps_e_kyc/aeps_e_kyc_page.dart';
 import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
@@ -39,6 +40,7 @@ import 'package:spayindia/test/test_local_auth_page.dart';
 import 'package:spayindia/test/test_notification_page.dart';
 import 'package:spayindia/test/test_pg.dart';
 
+import '../main.dart';
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 import '../page/main/settlement/aeps_settlement_page.dart';
@@ -66,7 +68,13 @@ final getAllPages = [
 
   GetPage(
     name: AppRoute.testPage,
-    page: () => const TestNotificationPage(),
+    page: () =>
+        testPageMode() ??
+        const Scaffold(
+          body: Center(
+            child: Text("Test Page Not Found!"),
+          ),
+        ),
   ),
 
   GetPage(
@@ -188,7 +196,6 @@ final getAllPages = [
     page: () => const ImportBeneficiaryTabPage(),
   ),
 
-
   GetPage(
     name: AppRoute.fundRequestPage,
     page: () => const FundRequestPage(),
@@ -200,10 +207,7 @@ final getAllPages = [
   ),
 
   GetPage(
-    name: AppRoute.walletReportPage,
-    page: () => const WalletPayReportPage()
-  ),
-
+      name: AppRoute.walletReportPage, page: () => const WalletPayReportPage()),
 
   GetPage(
     name: AppRoute.changePassword,
@@ -236,7 +240,6 @@ final getAllPages = [
     name: AppRoute.walletSearchPage,
     page: () => const WalletSearchPage(),
   ),
-
 
   GetPage(
     name: AppRoute.walletTransferPage,
@@ -272,12 +275,11 @@ final getAllPages = [
     name: AppRoute.summaryPage,
     page: () => const SummaryPage(),
   ),
-
 ];
 
 _bindController(String controllerType) {
   switch (controllerType) {
-  /* case RouteName.homePage:
+    /* case RouteName.homePage:
       return BindingsBuilder(() => Get.lazyPut(() => HomeController()));
     case RouteName.secondPage:
       return BindingsBuilder(() => Get.lazyPut(() => SecondController()));*/
