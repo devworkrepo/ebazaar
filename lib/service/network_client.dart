@@ -25,6 +25,7 @@ class NetworkClient {
 
   NetworkClient(this.connectivity, this.appPreference) {
     dio.options = _options;
+
     if (kDebugMode) {
       dio.interceptors.add(PrettyDioLogger(
           requestHeader: true,

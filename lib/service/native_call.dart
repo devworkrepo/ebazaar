@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:spayindia/util/app_util.dart';
 
 class NativeCall {
   static const _methodChannelName = "app.spayindia.com";
@@ -29,10 +30,10 @@ class NativeCall {
   }
 
 
-  static Future<String> credoPayService(String data) async {
-    var resultData = await _methodChannel.invokeMethod(_credoPayService, {
+  static Future<Map<dynamic,dynamic>> credoPayService(Map<String,dynamic> data) async {
+    var resultData = await _methodChannel.invokeMethod(_credoPayService, data);
 
-    });
+    AppUtil.logger("credoPay Native call response : $resultData");
     return resultData;
 
   }

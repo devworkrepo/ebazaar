@@ -14,7 +14,6 @@ class _TestNotificationPageState extends State<TestNotificationPage> {
   String notificationMsg = "Waiting for notifications";
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     // Terminated State
@@ -27,16 +26,16 @@ class _TestNotificationPageState extends State<TestNotificationPage> {
       }
     });
 
-    // Foregrand State
+    // Foreground State
     FirebaseMessaging.onMessage.listen((event) {
-      LocalNotificationService.showNotificationOnForeground(event);
+      LocalNotificationService.showNotificationOnForeground(message: event);
       setState(() {
         notificationMsg =
             "${event.notification!.title} ${event.notification!.body} I am coming from foreground";
       });
     });
 
-    // background State
+    // Background State
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       setState(() {
         notificationMsg =

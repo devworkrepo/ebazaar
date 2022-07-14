@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_controller.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_beneficiary_list_item.dart';
 import 'package:spayindia/page/dmt/beneficiary_list/component/sender_header.dart';
+import 'package:spayindia/page/dmt/beneficiary_list/component/sender_kyc_dialog.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/res/style.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/exception.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/api_component.dart';
 
 import '../../../widget/text_field.dart';
@@ -56,14 +58,14 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
             left: 8,
             right: 8,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               width: Get.width,
-              decoration: AppStyle.searchDecoration(color:Colors.black38,borderRadius: 5),
+              decoration: AppStyle.searchDecoration(
+                  color: Colors.black38, borderRadius: 5),
               child: Row(
                 children: [
                   Expanded(
                     child: AppSearchField(
-
                       onChange: controller.onSearchChange,
                     ),
                   ),
@@ -130,7 +132,7 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
           },
         ),
       ],
-      expandedHeight: (controller.sender!.isKycVerified ?? false) ? 190 : 270,
+      expandedHeight: controller.sender!.isKycVerified ?? false ? 190 : 270,
       pinned: true,
       title: const Text("Beneficiary List"),
       flexibleSpace: FlexibleSpaceBar(background: LayoutBuilder(
@@ -174,11 +176,30 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                           ),
                           ElevatedButton(
                               onPressed: () {
-                                Get.toNamed(AppRoute.senderKycPage, arguments: {
-                                  "dmt_type": controller.dmtType,
-                                  "mobile_number":
-                                      controller.sender!.senderNumber!
-                                });
+                                Get.dialog(SenderKycDialog((aadhaarNumber) {
+                                  Get.back();
+                                  Get.toNamed(AppRoute.dmtEkycPage)
+                                      ?.then((value) {
+                                    if (value != null) {
+                                      if (value is Map) {
+                                        var isCompleted =
+                                            value["isEkycCompleted"];
+                                        if (isCompleted) {
+                                          Get.back(result: {
+                                            "mobile_number":
+                                                controller.sender!.senderNumber,
+                                          });
+                                        }
+                                      }
+                                    }
+                                  });
+                                }));
+
+                                /*Get.toNamed(AppRoute.senderKycPage, arguments: {
+                            "dmt_type": controller.dmtType,
+                            "mobile_number":
+                            controller.sender!.senderNumber!
+                          });*/
                               },
                               child: Text("Do Kyc"))
                         ],
@@ -192,7 +213,6 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
   }
 
   SliverList _buildSilverList() {
-
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, int index) {
@@ -221,7 +241,9 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
             }
           });
         },
-        childCount: (controller.beneficiaryListObs.isEmpty) ? 1  : controller.beneficiaryListObs.length,
+        childCount: (controller.beneficiaryListObs.isEmpty)
+            ? 1
+            : controller.beneficiaryListObs.length,
       ),
     );
   }

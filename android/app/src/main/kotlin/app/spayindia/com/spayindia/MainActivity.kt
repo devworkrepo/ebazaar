@@ -113,20 +113,44 @@ class MainActivity : FlutterFragmentActivity() {
 
     private fun credoPayMatm(call: MethodCall) {
         try {
+
+            val loginId = call.argument<String>("loginId")
+            val password = call.argument<String>("password")
+            val transactionType = call.argument<String>("transactionType")
+            val amount = call.argument<Int>("amount")
+            val tid = call.argument<String>("tid")
+            val crnU = call.argument<String>("crnU")
+            val mobileNumber = call.argument<String>("mobileNumber")
+            val debugMode = call.argument<Boolean>("debugMode")
+            val production = call.argument<Boolean>("production")
+
+
+            val mTxnType = when (transactionType?.uppercase()) {
+                "MATM" -> CredopayPaymentConstants.MICROATM
+                "BE" -> CredopayPaymentConstants.BALANCE_ENQUIRY
+                "PURCHASE" -> CredopayPaymentConstants.PURCHASE
+                "CASH_AT_POS" -> CredopayPaymentConstants.CASH_AT_POS
+                "UPI" -> CredopayPaymentConstants.UPI
+                "VOID" -> CredopayPaymentConstants.VOID
+                else -> 0
+            }
+
+
             val intent = Intent(
                 this@MainActivity,
                 PaymentActivity::class.java
             ).apply {
-                putExtra("TRANSACTION_TYPE", CredopayPaymentConstants.MICROATM)
-                putExtra("DEBUG_MODE", true)
-                putExtra("PRODUCTION", true)
-                putExtra("AMOUNT", 100)
-                putExtra("LOGIN_ID", "2000005429")
-                putExtra("LOGIN_PASSWORD", "d9%dhTrzzx")
-                putExtra("TID", "E0022603")
-                putExtra("CRN_U", "000132")
-                putExtra("MOBILE_NUMBER", "7982607742")
-                putExtra("IMEI", "23984289424892")
+
+
+                putExtra("TRANSACTION_TYPE", mTxnType)
+                putExtra("DEBUG_MODE", debugMode)
+                putExtra("PRODUCTION", production)
+                putExtra("AMOUNT", amount)
+                putExtra("LOGIN_ID", loginId)
+                putExtra("LOGIN_PASSWORD", password)
+                putExtra("TID", tid)
+                putExtra("CRN_U", crnU)
+                putExtra("MOBILE_NUMBER", mobileNumber)
                 putExtra(
                     "LOGO", Utils.getVariableImage(
                         ContextCompat.getDrawable(
@@ -139,7 +163,7 @@ class MainActivity : FlutterFragmentActivity() {
             startActivityForResult(intent, AppConstant.CREDO_PAY_LAUNCH_RESULT_CODE)
         } catch (e: Exception) {
 
-            AppUtil.logD("CredoPay Exception : " + e.message)
+            AppUtil.logD("CredoPay Exception : " + e.stackTrace)
         }
     }
 
@@ -197,50 +221,103 @@ class MainActivity : FlutterFragmentActivity() {
 
     private fun handleCredoPaymentResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
+
+        fun onTransactionCompleted() {
+            if (data != null) {
+                val rrn: String = data.getStringExtra("rrn") ?: ""
+                val transactionId: String = data.getStringExtra("transaction_id") ?: ""
+                val maskedPan: String = data.getStringExtra("masked_pan") ?: ""
+                val tc: String = data.getStringExtra("tc") ?: ""
+                val tvr: String = data.getStringExtra("tvr") ?: ""
+                val tsi: String = data.getStringExtra("tsi") ?: ""
+                val approvalCode: String = data.getStringExtra("approval_code") ?: ""
+                val network: String = data.getStringExtra("network") ?: ""
+                val cardApplicationName: String = data.getStringExtra("card_application_name") ?: ""
+                val cardHolderName: String = data.getStringExtra("card_holder_name") ?: ""
+                val appVersion: String = data.getStringExtra("app_version") ?: ""
+                val cardType: String = data.getStringExtra("card_type") ?: ""
+                val accountBalance: String = data.getStringExtra("account_balance") ?: ""
+                val transactionType: String = data.getStringExtra("transaction_type") ?: ""
+
+                result?.success(
+                    hashMapOf(
+                        "code" to 1,
+                        "rrn" to rrn,
+                        "transactionId" to transactionId,
+                        "maskedPan" to maskedPan,
+                        "tc" to tc,
+                        "tvr" to tvr,
+                        "tsi" to tsi,
+                        "approvalCode" to approvalCode,
+                        "network" to network,
+                        "cardApplicationName" to cardApplicationName,
+                        "cardHolderName" to cardHolderName,
+                        "appVersion" to appVersion,
+                        "cardType" to cardType,
+                        "accountBalance" to accountBalance,
+                        "transactionType" to transactionType,
+                    )
+                )
+            }
+            else{
+                result?.success(hashMapOf(
+                    "code" to 3,
+                    "message" to "Transaction in progress"
+                ))
+            }
+        }
+
+        fun onTransactionFailed() {
+            val error: String = data?.getStringExtra("error") ?: ""
+            result?.success(
+                hashMapOf(
+                    "code" to 2,
+                    "error" to error
+                )
+            )
+        }
+
+        fun onPasswordChanged() {
+            result?.success(
+                hashMapOf(
+                    "code" to 4,
+                    "type" to "CHANGE_PASSWORD"
+                )
+            )
+        }
+
+        fun onPasswordChangeFailed() {
+            result?.success(
+                hashMapOf(
+                    "code" to 4,
+                    "type" to "PASSWORD_CHANGE_FAILED"
+                )
+            )
+        }
+
+        fun onLoginFailed() {
+            result?.success(
+                hashMapOf(
+                    "code" to 4,
+                    "type" to "LOGIN_FAILED"
+                )
+            )
+        }
+
+
+        when (resultCode) {
+            CredopayPaymentConstants.TRANSACTION_COMPLETED -> onTransactionCompleted()
+            CredopayPaymentConstants.TRANSACTION_CANCELLED -> onTransactionFailed()
+            CredopayPaymentConstants.VOID_CANCELLED -> onTransactionFailed()
+            CredopayPaymentConstants.CHANGE_PASSWORD -> onPasswordChanged()
+            CredopayPaymentConstants.CHANGE_PASSWORD_SUCCESS -> onPasswordChanged()
+            CredopayPaymentConstants.CHANGE_PASSWORD_FAILED -> onPasswordChangeFailed()
+            CredopayPaymentConstants.LOGIN_FAILED -> onLoginFailed()
+        }
+
         AppUtil.logD("CredoPay Response RequestCode: $requestCode")
         AppUtil.logD("CredoPay Response Result Code: $resultCode")
 
-        if (data != null) {
-            val rrn : String = data.getStringExtra("rrn") ?: ""
-            val transactionId : String = data.getStringExtra("transaction_id") ?: ""
-            val maskedPan : String = data.getStringExtra("masked_pan") ?: ""
-            val tc : String = data.getStringExtra("tc") ?: ""
-            val tvr : String = data.getStringExtra("tvr") ?: ""
-            val tsi : String = data.getStringExtra("tsi") ?: ""
-            val approvalCode : String = data.getStringExtra("approval_code") ?: ""
-            val network : String = data.getStringExtra("network") ?: ""
-            val cardApplicationName : String = data.getStringExtra("card_application_name") ?: ""
-            val cardHolderName : String = data.getStringExtra("card_holder_name") ?: ""
-            val appVersion : String = data.getStringExtra("app_version") ?: ""
-            val cardType : String = data.getStringExtra("card_type") ?: ""
-            val accountBalance : String = data.getStringExtra("account_balance") ?: ""
-            val transactionType : String = data.getStringExtra("card_type") ?: ""
-            val error : String = data.getStringExtra("error") ?: ""
-
-
-            AppUtil.logD(
-                """
-                CredoPay Response :
-                 
-                 \n rrn = $rrn
-                 \n transactionId = $transactionId
-                 \n maskedPan = $maskedPan
-                 \n tc = $tc
-                 \n tvr = $tvr
-                 \n tsi = $tsi
-                 \n approvalCode = $approvalCode
-                 \n network = $network
-                 \n cardApplicationName = $cardApplicationName
-                 \n cardHolderName = $cardHolderName
-                 \n appVersion = $appVersion
-                 \n cardType = $cardType
-                 \n accountBalance = $accountBalance
-                 \n transactionType = $transactionType
-                 \n error = $error
-                
-            """.trimIndent()
-            )
-        }
     }
 
     private fun handleRDServiceResult(requestCode: Int, resultCode: Int, data: Intent?) {

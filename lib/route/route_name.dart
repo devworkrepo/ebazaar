@@ -39,6 +39,7 @@ class AppRoute {
   static const dmtChangeSenderNamePage = "/dmt-change-sender-name-page";
   static const dmtChangeSenderMobilePage = "/dmt-change-sender-mobile-page";
   static const dmtImportBeneficiaryPage = "/dmt-import-beneficiary-page";
+  static const dmtEkycPage = "/dmt-ekyc-page";
 
 
   //fund request

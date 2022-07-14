@@ -9,7 +9,7 @@ class CounterWidget extends StatefulWidget {
   final VoidCallback onTimerComplete;
 
   const CounterWidget(
-      {Key? key, this.durationSecond = (kDebugMode) ? 5 : 60, required this.onTimerComplete})
+      {Key? key, this.durationSecond =kDebugMode ? 5 : 60, required this.onTimerComplete})
       : super(key: key);
 
   @override

@@ -26,7 +26,7 @@ final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 bool _isBiometricAvailable = false;
 bool _isRealDevice = true;
 
-Widget? testPageMode() =>const TestCredoPayPage();
+Widget? testPageMode() => null;
 
 Future<void> _initBiometric() async {
   _isBiometricAvailable = await LocalAuthService.isAvailable();
@@ -35,6 +35,7 @@ Future<void> _initBiometric() async {
 Future<void> _iniSafeDevice() async {
   _isRealDevice = await SafeDevice.isRealDevice;
   if (kDebugMode) _isRealDevice = true;
+
 }
 
 Future<void> _initOrientations() async {
@@ -161,14 +162,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    FirebaseMessaging.instance.getInitialMessage().then((value) {});
-
-    FirebaseMessaging.onMessage.listen((message) {
-      AppUtil.logger("Firebase Testing : onMessage : $message");
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      AppUtil.logger("Firebase Testing : onMessageOpenedApp : $message");
-    });
     AppConfig.init();
   }
 

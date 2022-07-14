@@ -116,6 +116,7 @@ class DmtSearchSenderController extends GetxController {
         Get.toNamed(AppRoute.dmtBeneficiaryListPage, arguments: args)?.then((value){
           if(value!=null){
             if(value is Map){
+
               numberController.text = value["mobile_number"];
               _searchSender(delay: 3);
             }

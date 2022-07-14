@@ -1,4 +1,5 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/in_app_update.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
+import '../../../service/local_notifications.dart';
 import '../../../util/app_constant.dart';
 
 var isLocalAuthDone = false;
@@ -46,6 +48,13 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+
+
+
+     // LocalNotificationService.showNotificationOnForeground();
+
+
 
     scrollController = ScrollController();
     appPreference.setIsTransactionApi(false);
@@ -133,6 +142,12 @@ class HomeController extends GetxController {
           isLocalAuthDone = true;
         }
 
+        //firebase token
+        _firebaseServices();
+
+
+
+
       }
       userDetailObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -147,6 +162,24 @@ class HomeController extends GetxController {
         ));
       }
     }
+  }
+
+  _firebaseServices() async{
+    FirebaseMessaging.instance.onTokenRefresh.listen((event) {
+      AppUtil.logger("FirebaseService onRefreshToken: $event");
+    });
+
+     FirebaseMessaging.instance.getToken().then((token) {
+       AppUtil.logger("FirebaseService : token : $token");
+     });
+
+    FirebaseMessaging.onMessage.listen((event) {
+      AppUtil.logger("Firebase Service == message from foreground");
+      LocalNotificationService.showNotificationOnForeground(message: event);
+    });
+
+
+
   }
 
 

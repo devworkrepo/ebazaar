@@ -41,10 +41,6 @@ class LoginController extends GetxController {
       mobileController.text = appPreference.mobileNumber;
       passwordController.text = appPreference.password;
     }
-    /* if(kDebugMode){
-      mobileController.text = "7982607742";
-      passwordController.text = "Akash@123";
-    }*/
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (!appPreference.isLoginBondAccepted) {

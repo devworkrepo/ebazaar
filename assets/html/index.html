@@ -1,13 +1,34 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title></head>
+<body>
+<form method="post" action="./page1.aspx" id="form1">
+
+    <div>
+        Page 1
+        <input type="submit" name="BtnSubmit" value="CLick To Ekyc SUccess" id="BtnSubmit" />
+    </div>
+</form>
+</body>
+</html>
+
+
+
+
+<!--
 <html>
 <body>
 
 <div>
     <h1>
-        PG WebView Testing
+        E-Kyc is completed!
     </h1>
 
     <button id="myBtn" >
-        click
+        Start Transaction
     </button>
 
 </div>
@@ -21,8 +42,7 @@
           document.getElementById("myBtn").addEventListener("click", sendData, false);
     });
     function sendData(){
-    alert("hello dev");
-        MakeLog.postMessage('Hello World being called from Javascript code');
+        TxnEvent.postMessage("true");
     }
 </script>
-</html>
+</html>-->

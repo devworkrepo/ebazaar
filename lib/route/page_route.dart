@@ -16,6 +16,7 @@ import 'package:spayindia/page/dmt/search_sender/search_sender_page.dart';
 import 'package:spayindia/page/dmt/sender_add/sender_add_page.dart';
 import 'package:spayindia/page/dmt/sender_change/change_mobile/sender_change_mobile_page.dart';
 import 'package:spayindia/page/dmt/sender_change/change_name/sender_change_name_page.dart';
+import 'package:spayindia/page/dtm_ekyc/dmt_ekyc_page.dart';
 import 'package:spayindia/page/fund/fund_request_page.dart';
 import 'package:spayindia/page/main/change_password/change_password_page.dart';
 import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
@@ -194,6 +195,10 @@ final getAllPages = [
   GetPage(
     name: AppRoute.dmtImportBeneficiaryPage,
     page: () => const ImportBeneficiaryTabPage(),
+  ),
+  GetPage(
+    name: AppRoute.dmtEkycPage,
+    page: () => const DmtKycWebView(),
   ),
 
   GetPage(
