@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:encrypt/encrypt.dart';
 import 'package:spayindia/util/app_util.dart';
 
@@ -6,6 +8,19 @@ import 'app_config.dart';
 class Encryption {
 
   Encryption._();
+  
+  
+  static String encryptCredopPayPassword(String valueToBeDecrypted) {
+    final key = Key.fromUtf8("62f3add5c2d74dcfa7d865a3aae6db25");
+   // final iv = IV.fromUtf8("62f3add5c2d74dcfa7d865a3aae6db25");
+    final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+
+    Uint8List ivData = Uint8List.fromList([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0]);
+    var iv = IV(ivData);
+    var data = encrypter.decrypt(Encrypted.fromBase64(valueToBeDecrypted),iv: iv);
+    AppUtil.logger("Decrypted credopay data : $data");
+    return data;
+  }
 
   static String encryptMPIN(String text){
     return text;

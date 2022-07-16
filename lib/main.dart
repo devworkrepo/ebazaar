@@ -11,7 +11,6 @@ import 'package:spayindia/route/page_route.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
-import 'package:spayindia/service/fcm_service.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/service/local_notifications.dart';
 import 'package:spayindia/test/test_credo_pay.dart';
@@ -26,7 +25,7 @@ final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 bool _isBiometricAvailable = false;
 bool _isRealDevice = true;
 
-Widget? testPageMode() => null;
+Widget? testPageMode() => const TestCredoPayPage();
 
 Future<void> _initBiometric() async {
   _isBiometricAvailable = await LocalAuthService.isAvailable();

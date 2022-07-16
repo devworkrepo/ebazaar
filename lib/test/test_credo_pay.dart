@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/service/native_call.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/security/encription.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/radio.dart';
 import 'package:spayindia/widget/text_field.dart';
@@ -16,11 +17,21 @@ enum _TestTransactionType {
 }
 
 class _TestCredoController extends GetxController {
+
+
+
   var transactionTypeObs = _TestTransactionType.balanceEnquiry.obs;
   var crnUController = TextEditingController();
   var resultController = TextEditingController();
 
   var retryCount = 0;
+
+
+  @override
+  void onInit() {
+    super.onInit();
+
+  }
 
   String getTransactionType() {
     if (transactionTypeObs.value == _TestTransactionType.balanceEnquiry) {
@@ -62,63 +73,63 @@ class TestCredoPayPage extends GetView<_TestCredoController> {
                 ),
                 Card(
                   child: Obx(() => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            AppRadioButton(
-                                groupValue: controller.transactionTypeObs.value,
-                                value: _TestTransactionType.balanceEnquiry,
-                                title: "Balance Enquiry",
-                                onChange: (_TestTransactionType value) {
-                                  controller.transactionTypeObs.value = value;
-                                }),
-                            AppRadioButton(
-                                groupValue: controller.transactionTypeObs.value,
-                                value: _TestTransactionType.microAtm,
-                                title: "Micro Atm",
-                                onChange: (_TestTransactionType value) {
-                                  controller.transactionTypeObs.value = value;
-                                }),
-                            AppRadioButton(
-                                groupValue: controller.transactionTypeObs.value,
-                                value: _TestTransactionType.purchase,
-                                title: "Purchase",
-                                onChange: (_TestTransactionType value) {
-                                  controller.transactionTypeObs.value = value;
-                                }),
-                            AppRadioButton(
-                                groupValue: controller.transactionTypeObs.value,
-                                value: _TestTransactionType.voidTransaction,
-                                title: "Void Transaction",
-                                onChange: (_TestTransactionType value) {
-                                  controller.transactionTypeObs.value = value;
-                                }),
-                            AppRadioButton(
-                                groupValue: controller.transactionTypeObs.value,
-                                value: _TestTransactionType.cashAtPos,
-                                title: "Cash At Pos",
-                                onChange: (_TestTransactionType value) {
-                                  controller.transactionTypeObs.value = value;
-                                }),
-                            AppRadioButton(
-                                groupValue: controller.transactionTypeObs.value,
-                                value: _TestTransactionType.upi,
-                                title: "UPI",
-                                onChange: (_TestTransactionType value) {
-                                  controller.transactionTypeObs.value = value;
-                                }),
-                            AppTextField(
-                              controller: controller.crnUController,
-                              inputType: TextInputType.number,
-                              label: "Crn Number",
-                            ),
-                            AppTextField(
-                              controller: controller.resultController,
-                              label: "Result",
-                            )
-                          ],
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        AppRadioButton(
+                            groupValue: controller.transactionTypeObs.value,
+                            value: _TestTransactionType.balanceEnquiry,
+                            title: "Balance Enquiry",
+                            onChange: (_TestTransactionType value) {
+                              controller.transactionTypeObs.value = value;
+                            }),
+                        AppRadioButton(
+                            groupValue: controller.transactionTypeObs.value,
+                            value: _TestTransactionType.microAtm,
+                            title: "Micro Atm",
+                            onChange: (_TestTransactionType value) {
+                              controller.transactionTypeObs.value = value;
+                            }),
+                        AppRadioButton(
+                            groupValue: controller.transactionTypeObs.value,
+                            value: _TestTransactionType.purchase,
+                            title: "Purchase",
+                            onChange: (_TestTransactionType value) {
+                              controller.transactionTypeObs.value = value;
+                            }),
+                        AppRadioButton(
+                            groupValue: controller.transactionTypeObs.value,
+                            value: _TestTransactionType.voidTransaction,
+                            title: "Void Transaction",
+                            onChange: (_TestTransactionType value) {
+                              controller.transactionTypeObs.value = value;
+                            }),
+                        AppRadioButton(
+                            groupValue: controller.transactionTypeObs.value,
+                            value: _TestTransactionType.cashAtPos,
+                            title: "Cash At Pos",
+                            onChange: (_TestTransactionType value) {
+                              controller.transactionTypeObs.value = value;
+                            }),
+                        AppRadioButton(
+                            groupValue: controller.transactionTypeObs.value,
+                            value: _TestTransactionType.upi,
+                            title: "UPI",
+                            onChange: (_TestTransactionType value) {
+                              controller.transactionTypeObs.value = value;
+                            }),
+                        AppTextField(
+                          controller: controller.crnUController,
+                          inputType: TextInputType.number,
+                          label: "Crn Number",
                         ),
-                      )),
+                        AppTextField(
+                          controller: controller.resultController,
+                          label: "Result",
+                        )
+                      ],
+                    ),
+                  )),
                 ),
                 AppButton(
                     text: "Launch",
@@ -147,14 +158,16 @@ class TestCredoPayPage extends GetView<_TestCredoController> {
         "mobileNumber": "7982607742",
       };*/
 
+      var decryptedPassword = Encryption.encryptCredopPayPassword("NXtfwOapAvNsjY1CGjrwHg==");
+
       var params = {
         "transactionType": controller.getTransactionType(),
         "debugMode": false,
         "production": true,
         "amount": 100,
-        "loginId": "2000021001",
-        "password": "4Sge!vryku",
-        "tid": "E0058713",
+        "loginId": "2000026715",
+        "password": decryptedPassword,
+        "tid": "E0071219",
         "crnU": controller.crnUController.text,
         "mobileNumber": "7982607742",
       };
@@ -176,12 +189,12 @@ class TestCredoPayPage extends GetView<_TestCredoController> {
       if (type == "CHANGE_PASSWORD" ||
           type == "LOGIN_FAILED" ||
           type == "PASSWORD_CHANGE_FAILED") {
-          if (controller.retryCount < 2){
-            _startTransaction();
-          }
-          controller.retryCount++;
+        if (controller.retryCount < 2){
+          _startTransaction();
+        }
+        controller.retryCount++;
 
-          AppUtil.logger("retry count : ${controller.retryCount}");
+        AppUtil.logger("retry count : ${controller.retryCount}");
 
       }
     }
