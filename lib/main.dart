@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:safe_device/safe_device.dart';
 import 'package:spayindia/res/color.dart';
 import 'package:spayindia/route/page_route.dart';
 import 'package:spayindia/route/route_name.dart';
@@ -32,7 +31,7 @@ Future<void> _initBiometric() async {
 }
 
 Future<void> _iniSafeDevice() async {
-  _isRealDevice = await SafeDevice.isRealDevice;
+  _isRealDevice = true;//todo check root device
   if (kDebugMode) _isRealDevice = true;
 
 }
