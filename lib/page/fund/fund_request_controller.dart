@@ -173,6 +173,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
 
   Future<dio.FormData> _moneyRequestParam() async {
     dio.MultipartFile? fileData;
+
     if (selectedImageFile != null) {
       fileData = await dio.MultipartFile.fromFile(selectedImageFile!.path,
           filename:

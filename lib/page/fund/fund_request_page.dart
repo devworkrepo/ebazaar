@@ -120,12 +120,9 @@ class FundRequestFormField extends GetView<FundRequestController> {
                     controller: controller.uploadSlipController,
                     prefixIcon: Icons.file_copy_outlined,
                     label: "Upload Slip",
-                    hint: "Required*",
+                    hint: "",
                     onFieldTab: () =>
                         controller.showImagePickerBottomSheetDialog(),
-                    validator: (value) {
-                      return FormValidatorHelper.empty(value);
-                    },
                   ),
                 AppTextField(controller: controller.remarkController,
                   label: "Remark",
