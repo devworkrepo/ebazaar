@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:palestine_trusted_device/palestine_trusted_device.dart';
 import 'package:spayindia/res/color.dart';
 import 'package:spayindia/route/page_route.dart';
 import 'package:spayindia/route/route_name.dart';
@@ -12,7 +13,6 @@ import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/service/binding.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/service/local_notifications.dart';
-import 'package:spayindia/test/test_credo_pay.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/hex_color.dart';
 import 'package:spayindia/util/security/app_config.dart';
@@ -22,17 +22,17 @@ import 'data/app_pref.dart';
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 bool _isBiometricAvailable = false;
-bool _isRealDevice = true;
+bool _isDeviceSafe = true;
 
-Widget? testPageMode() => const TestCredoPayPage();
+Widget? testPageMode() => null;
 
 Future<void> _initBiometric() async {
   _isBiometricAvailable = await LocalAuthService.isAvailable();
 }
 
 Future<void> _iniSafeDevice() async {
-  _isRealDevice = true;//todo check root device
-  if (kDebugMode) _isRealDevice = true;
+  _isDeviceSafe =await PalTrustedDevice.check(onFail: () {  },rooted: true,devMode: false,
+      emulator: true,onExtStorage: true);
 
 }
 
@@ -59,9 +59,9 @@ void main() async {
   await _initFirebaseService();
   await _initBiometric();
   await _iniSafeDevice();
-  await _iniSafeDevice();
   await _initOrientations();
   await appBinding();
+  debugPrint = (String? message, {int? wrapWidth}) => '';
 
   runApp(const MyApp());
 }
@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
     if (!_isBiometricAvailable) {
       initialPage = AppRoute.deviceLockPage;
     }
-    if (!_isRealDevice) {
+    if (!_isDeviceSafe) {
       initialPage = AppRoute.rootPage;
     }
 
