@@ -18,6 +18,7 @@ class UserDetail {
   bool? isRecharge;
   bool? isDth;
   bool? isVirtualAccount;
+  bool? isSecurityDeposit;
   bool? isInsurance;
   bool? isBill;
   bool? isCreditCard;
@@ -55,6 +56,7 @@ class UserDetail {
     isInstantPay = json['is_instantpay'];
     isBill = json['is_bill'];
     isVirtualAccount = json['is_virtualacc'];
+    isSecurityDeposit = json['is_virtualacc'];//todo warning **("use live field for security deposit")
     isCreditCard = json['is_creditcard'];
     isPaytmWallet = json['is_paytmwallet'];
     isLic = json['is_lic'];

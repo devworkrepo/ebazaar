@@ -321,6 +321,11 @@ class HomeController extends GetxController {
 
         }
         break;
+      case HomeServiceType.securityDeposity:
+        {
+          Get.toNamed(AppRoute.securityDepositPage);
+        }
+        break;
       default:
         break;
     }

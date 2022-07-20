@@ -36,6 +36,7 @@ class HomeServiceSection extends GetView<HomeController> {
                 homeServiceType == HomeServiceType.lic ||
                 homeServiceType == HomeServiceType.ott ||
                 homeServiceType == HomeServiceType.virtualAccount ||
+                homeServiceType == HomeServiceType.securityDeposity ||
                 homeServiceType == HomeServiceType.paytmWallet)
             ? _pngPicture(iconName, innerPadding)
             : _svgPicture(iconName, innerPadding),
@@ -140,6 +141,7 @@ enum HomeServiceType {
   paytmWallet,
   ott,
   virtualAccount,
+  securityDeposity,
   none
 }
 
@@ -214,6 +216,11 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
   if(user.isVirtualAccount ?? false){
     itemList.add(HomeServiceItem(
         "Virtual\nAccount", "virtual_account", HomeServiceType.virtualAccount));
+  }
+
+  if(user.isSecurityDeposit ?? false){
+    itemList.add(HomeServiceItem(
+        "Security\nDeposit", "security_deposit", HomeServiceType.securityDeposity));
   }
 
 

@@ -76,6 +76,19 @@ class FormValidatorHelper {
     if (value == null) {
       return msg;
     }
+    else if(maxAmount == -1){
+      try {
+        var amount = double.parse(value);
+        if (amount >=minAmount) {
+          return null;
+        } else {
+          return "Minimum amount is 2 LAC!";
+        }
+      } catch (e) {
+        AppUtil.logger(e.toString());
+        return "Minimum amount is 2 LAC!";
+      }
+    }
     else {
       try {
         var amount = double.parse(value);

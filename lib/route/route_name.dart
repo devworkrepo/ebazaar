@@ -89,4 +89,7 @@ class AppRoute {
   static const ottTransactionPage = "/ott-transaction-page";
   static const notificationPage = "/notification-page";
   static const summaryPage = "/summary-page";
+
+  //security deposit
+  static const securityDepositPage = "/security-deposit-page";
 }

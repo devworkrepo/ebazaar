@@ -30,6 +30,7 @@ import 'package:spayindia/page/recharge/provider/provider_page.dart';
 import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/report/wallet_pay/wallet_report_page.dart';
+import 'package:spayindia/page/security_deposit/security_deposit_page.dart';
 import 'package:spayindia/page/summary/summary_page.dart';
 import 'package:spayindia/page/virtual_account/account/virtual_account_page.dart';
 import 'package:spayindia/page/virtual_account/report/transaction_tab.dart';
@@ -279,6 +280,10 @@ final getAllPages = [
   GetPage(
     name: AppRoute.summaryPage,
     page: () => const SummaryPage(),
+  ),
+  GetPage(
+    name: AppRoute.securityDepositPage,
+    page: () => const SecurityDepositPage(),
   ),
 ];
 
