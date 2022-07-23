@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/security_deposit/security_deposit_controller.dart';
 import 'package:spayindia/util/validator.dart';
 import 'package:spayindia/widget/radio.dart';
 import 'package:spayindia/widget/text_field.dart';
 
+import '../../model/profile.dart';
+import '../../util/obx_widget.dart';
 import '../../widget/button.dart';
 
 class SecurityDepositPage extends GetView<SecurityDepositController> {
@@ -13,20 +16,24 @@ class SecurityDepositPage extends GetView<SecurityDepositController> {
   @override
   Widget build(BuildContext context) {
     Get.put(SecurityDepositController());
+
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Security Deposit"),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(child: _buildFormKeyOne()),
-            ),
-          ],
-        ));
+        body:  ObsResourceWidget<UserProfile>(
+            obs: controller.responseObs,
+            childBuilder: (data) => Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(child: _buildFormKeyOne(data)),
+                ),
+              ],
+            )));
   }
 
-  _buildFormKeyOne() {
+  _buildFormKeyOne(UserProfile data) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Form(
@@ -42,38 +49,38 @@ class SecurityDepositPage extends GetView<SecurityDepositController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text("User Detail",
                           style: Get.textTheme.subtitle1
                               ?.copyWith(color: Get.theme.primaryColor)),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       _BuildTitleValueText(
                         title: "First Name",
-                        value: "Akash Kumar",
+                        value: controller.firstName,
                       ),
                       _BuildTitleValueText(
                         title: "Last Name",
-                        value: "Das",
+                        value: controller.lastName,
                       ),
                       _BuildTitleValueText(
                         title: "Mobile Number",
-                        value: "7982607742",
+                        value: data.outlet_mobile.toString(),
                       ),
                       _BuildTitleValueText(
                         title: "Email ID",
-                        value: "hiakashkd@gmail.com",
+                        value: data.emailid.toString(),
                       ),
                       _BuildTitleValueText(
                         title: "Date of Birth",
-                        value: "04/05/1998",
+                        value: controller.dob.toString(),
                       ),
                       _BuildTitleValueText(
                         title: "PAN Number",
-                        value: "CIUPD1085N",
+                        value: data.pan_no.toString(),
                       ),
                     ],
                   ),

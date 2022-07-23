@@ -36,13 +36,7 @@ class AepsRepoImpl extends AepsRepo {
     return MatmRequestResponse.fromJson(response.data);
   }
 
-  @override
-  Future<CommonResponse> getMamtTransactionNumber() async {
-    var response = await client.post(
-      "/GetTransactionNo",
-    );
-    return CommonResponse.fromJson(response.data);
-  }
+
 
   @override
   Future<AepsStateListResponse> getAepsState() async {

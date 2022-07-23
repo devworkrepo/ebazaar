@@ -80,10 +80,17 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         onClick: ()=>Get.toNamed(AppRoute.walletReportPage),
                         count: 4,
                       ),
+
                       if(controller.appPreference.user.isVirtualAccount ?? false) _NavSubTitle(
                         title: "Virtual Account",
                         onClick: ()=>Get.toNamed(AppRoute.virtualAccountTransactionTabPage),
                         count: 5,
+                      ),
+
+                      if(controller.appPreference.user.isSecurityDeposit ?? false) _NavSubTitle(
+                        title: "Security Deposit",
+                        onClick: ()=>Get.toNamed(AppRoute.securityDepositReportPage),
+                        count: (controller.appPreference.user.isVirtualAccount ?? false) ? 6 : 5,
                       ),
                     ],
                   ),

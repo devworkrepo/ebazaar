@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/aeps_repo.dart';
+import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
+import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/model/matm/matm_request_response.dart';
 import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/matm/process/matm_process_page.dart';
+import 'package:spayindia/page/matm_tramo/process/matm_process_page.dart';
 import 'package:spayindia/service/location.dart';
 import 'package:spayindia/service/native_call.dart';
 import 'package:spayindia/util/app_util.dart';
@@ -20,20 +22,21 @@ import '../../route/route_name.dart';
 import '../../util/api/resource/resource.dart';
 import '../../widget/list_component.dart';
 import '../aeps/widget/ekyc_info_widget.dart';
-import '../response/matm/matm_txn_response_page.dart';
+import '../response/matm_tramo/matm_txn_response_page.dart';
 import 'matm_page.dart';
 
 const bool _redirectForReQueryPage = false;
 
-class MatmController extends GetxController
+class MatmTramoController extends GetxController
     with TransactionHelperMixin, LocationHelperMixin {
   AepsRepo repo = Get.find<AepsRepoImpl>();
+  HomeRepo homeRepo = Get.find<HomeRepoImpl>();
   AppPreference appPreference = Get.find();
 
   var matmFormKey = GlobalKey<FormState>();
   var mobileController = TextEditingController();
   var amountController = TextEditingController();
-  var transactionType = MatmTransactionType.cashWithdrawal.obs;
+  var transactionType = MatmTramoTransactionType.cashWithdrawal.obs;
   String? transactionNumber;
   MatmRequestResponse? requestResponse;
   bool updateToServerCalled = false;
@@ -109,7 +112,7 @@ class MatmController extends GetxController
     }
 
     Get.dialog(AmountConfirmDialogWidget(
-        amount: (transactionType.value == MatmTransactionType.cashWithdrawal)
+        amount: (transactionType.value == MatmTramoTransactionType.cashWithdrawal)
             ? amountController.text
             : null,
         title: "Matm Transaction ? ",
@@ -126,7 +129,7 @@ class MatmController extends GetxController
   _getTransactionNumber() async {
     try {
       StatusDialog.progress(title: "Initiating Transaction...");
-      var response = await repo.getMamtTransactionNumber();
+      var response = await homeRepo.getTransactionNumber();
       if (response.code == 1) {
         transactionNumber ??= response.transactionNumber;
         if (requestResponse == null) {
@@ -149,7 +152,7 @@ class MatmController extends GetxController
         "cust_mobile": mobileController.text,
         "txntype": getSpayRequestTxnType(),
         "deviceid": await AppUtil.getDeviceID(),
-        "amount": transactionType.value == MatmTransactionType.balanceEnquiry
+        "amount": transactionType.value == MatmTramoTransactionType.balanceEnquiry
             ? "0"
             : amountWithoutRupeeSymbol(amountController),
         "latitude": position!.latitude.toString(),
@@ -198,7 +201,7 @@ class MatmController extends GetxController
   }
 
   _updateUnknownResponseToServer() {
-    if (transactionType.value == MatmTransactionType.balanceEnquiry) {
+    if (transactionType.value == MatmTramoTransactionType.balanceEnquiry) {
       if (!updateToServerCalled) {
         updateToServerCalled = true;
         _updateToServer(MatmResult.fromJson({
@@ -257,7 +260,7 @@ class MatmController extends GetxController
       String status;
       String message;
       if (_redirectForReQueryPage) {
-        status = (transactionType.value == MatmTransactionType.cashWithdrawal)
+        status = (transactionType.value == MatmTramoTransactionType.cashWithdrawal)
             ? "3"
             : (result.status)
                 ? "1"
@@ -285,9 +288,9 @@ class MatmController extends GetxController
       result.statusId = (result.status) ? 1 : 2;
 
       if(_redirectForReQueryPage){
-        if(transactionType.value == MatmTransactionType.balanceEnquiry || !result.status){
+        if(transactionType.value == MatmTramoTransactionType.balanceEnquiry || !result.status){
           result.statusId = (result.status) ? 1 : 2;
-          Get.offAll(() => MatmTxnResponsePage(),
+          Get.offAll(() => MatmTramoTxnResponsePage(),
               arguments: {"response": result, "txnType": transactionType.value});
         }
         else{
@@ -297,7 +300,7 @@ class MatmController extends GetxController
         }
       }
       else{
-        Get.offAll(() => MatmTxnResponsePage(),
+        Get.offAll(() => MatmTramoTxnResponsePage(),
             arguments: {"response": result, "txnType": transactionType.value});
       }
     }
@@ -305,27 +308,27 @@ class MatmController extends GetxController
 
   getTransactionTypeInString() {
     switch (transactionType.value) {
-      case MatmTransactionType.cashWithdrawal:
+      case MatmTramoTransactionType.cashWithdrawal:
         return "Cash Withdrawal";
-      case MatmTransactionType.balanceEnquiry:
+      case MatmTramoTransactionType.balanceEnquiry:
         return "Balance Enquiry";
     }
   }
 
   getSpayRequestTxnType() {
     switch (transactionType.value) {
-      case MatmTransactionType.cashWithdrawal:
+      case MatmTramoTransactionType.cashWithdrawal:
         return "CW";
-      case MatmTransactionType.balanceEnquiry:
+      case MatmTramoTransactionType.balanceEnquiry:
         return "BE";
     }
   }
 
   _transactionTypeInCode() {
     switch (transactionType.value) {
-      case MatmTransactionType.cashWithdrawal:
+      case MatmTramoTransactionType.cashWithdrawal:
         return 2;
-      case MatmTransactionType.balanceEnquiry:
+      case MatmTramoTransactionType.balanceEnquiry:
         return 4;
     }
   }

@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/matm/matm_page.dart';
 import 'package:spayindia/widget/transaction_page.dart';
 
+import '../../matm_tramo/matm_page.dart';
 import 'matm_txn_response_controller.dart';
 
 // ignore: must_be_immutable
-class MatmTxnResponsePage extends GetView<MatmTxnResponseController>
+class MatmTramoTxnResponsePage extends GetView<MatmTramoTxnResponseController>
     with TransactionPageComponent {
-  MatmTxnResponsePage({Key? key}) : super(key: key);
+  MatmTramoTxnResponsePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MatmTxnResponseController());
+    Get.put(MatmTramoTxnResponseController());
 
     return baseTxnResponseWidget(
       child: screenshotHelperWidget(
@@ -22,14 +22,14 @@ class MatmTxnResponsePage extends GetView<MatmTxnResponseController>
           buildStatusIcon(controller.response.statusId ?? 3),
           buildStatusTitle(controller.response.statusId ?? 3,
           ),
-          buildMessage((controller.type == MatmTransactionType.cashWithdrawal && controller.response.statusId ==3)
+          buildMessage((controller.type == MatmTramoTransactionType.cashWithdrawal && controller.response.statusId ==3)
               ? "Transaction processing."
               : controller.response.message.toString()),
           buildTransactionTime(controller.response.time),
           buildProviderAndAmount(
               title: controller.getTxnType(),
               subTitle: "Micro Atm",
-              amount: (controller.type == MatmTransactionType.cashWithdrawal)
+              amount: (controller.type == MatmTramoTransactionType.cashWithdrawal)
                   ? controller.response.transAmount.toString()
                   : null,
               imageSvgPath: "assets/svg/matm.svg"),
@@ -46,7 +46,7 @@ class MatmTxnResponsePage extends GetView<MatmTxnResponseController>
             buildTitleValueWidget(
                 title: "Message", value: controller.response.message),
           ], topBottom: true),
-          if (controller.type == MatmTransactionType.cashWithdrawal && controller.response.statusId == 3)
+          if (controller.type == MatmTramoTransactionType.cashWithdrawal && controller.response.statusId == 3)
             Column(
               children: [
                 SizedBox(

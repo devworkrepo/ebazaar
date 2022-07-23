@@ -59,11 +59,11 @@ class DmtRefundPage extends GetView<DmtRefundController> {
 
   _onSearch() {
     Get.bottomSheet(
-        CommonReportSeasrchDialog(
+        CommonReportSearchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           inputFieldOneTile: "Transaction Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
+          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_,__) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;

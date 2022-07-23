@@ -48,7 +48,7 @@ class _UserBalance extends GetView<HomeController> {
           padding: const EdgeInsets.symmetric(vertical: 7),
           child: Row(children: [
             Image.asset("assets/image/money_bag.png",height: 24,width: 24,color: Colors.white,),
-            SizedBox(width: 8,),
+            const SizedBox(width: 8,),
             Text(controller.user.availableBalance ?? "0",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 24),),
 
 
@@ -56,17 +56,17 @@ class _UserBalance extends GetView<HomeController> {
         ),
 
 
-        GestureDetector(
+        if(controller.appPreference.user.isMoneyRequest ?? true) GestureDetector(
           onTap: ()=>controller.onAddFundClick(),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12,vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 color: Colors.white70
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Icon(Icons.add),
                 SizedBox(width: 8,),
                 Text("Add Fund",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),)

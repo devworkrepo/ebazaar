@@ -117,7 +117,8 @@ class _AppTextFieldState extends State<AppTextField> {
     );
   }
 
-  InputDecoration buildInputDecoration(bool isPassword, String hint, String label) {
+  InputDecoration buildInputDecoration(
+      bool isPassword, String hint, String label) {
     return InputDecoration(
       counterStyle: const TextStyle(
         height: double.minPositive,
@@ -125,7 +126,8 @@ class _AppTextFieldState extends State<AppTextField> {
       counterText: "",
       label: Text(label),
       labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-      errorStyle:  TextStyle(fontWeight: FontWeight.w500,color: Colors.red[900]),
+      errorStyle:
+          TextStyle(fontWeight: FontWeight.w500, color: Colors.red[900]),
       hintStyle: TextStyle(
           fontSize: widget.fontSize?.toDouble(),
           fontWeight: FontWeight.w400,
@@ -147,7 +149,6 @@ class _AppTextFieldState extends State<AppTextField> {
       hintText: hint,
     );
   }
-
 }
 
 class AmountTextField extends StatelessWidget {
@@ -267,6 +268,7 @@ class MobileTextField extends StatelessWidget {
   final bool focus;
   final bool enable;
   final Function(String)? onChange;
+  final Function(String?)? validator;
   final Widget? rightButton;
   final String label;
 
@@ -274,9 +276,11 @@ class MobileTextField extends StatelessWidget {
       {required this.controller,
       this.focus = false,
       this.onChange,
+      this.validator,
       this.rightButton,
       this.enable = true,
-      Key? key, this.label="Mobile Number"})
+      Key? key,
+      this.label = "Mobile Number"})
       : super(key: key);
 
   @override
@@ -295,7 +299,9 @@ class MobileTextField extends StatelessWidget {
       inputType: TextInputType.number,
       rightButton: rightButton,
       onChange: onChange,
-      validator: (value) => FormValidatorHelper.mobileNumberValidation(value),
+      validator: (value) => (validator == null)
+          ? FormValidatorHelper.mobileNumberValidation(value)
+          : validator!(value),
     );
   }
 }
@@ -380,7 +386,6 @@ class OtpTextField extends StatelessWidget {
   }
 }
 
-
 class MPinTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool focus;
@@ -390,11 +395,11 @@ class MPinTextField extends StatelessWidget {
 
   const MPinTextField(
       {required this.controller,
-        this.focus = false,
-        this.enable = true,
-        this.onChange,
-        this.rightButton,
-        Key? key})
+      this.focus = false,
+      this.enable = true,
+      this.onChange,
+      this.rightButton,
+      Key? key})
       : super(key: key);
 
   @override
@@ -454,7 +459,8 @@ class DobTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool enable;
 
-  const DobTextField({required this.controller, Key? key,this.enable = true}) : super(key: key);
+  const DobTextField({required this.controller, Key? key, this.enable = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -474,7 +480,7 @@ class DobTextField extends StatelessWidget {
           }
         },
         onFieldTab: () {
-          if(!enable) return;
+          if (!enable) return;
           showDatePicker(
                   context: Get.context!,
                   initialDate: DateTime(1998),
@@ -499,7 +505,8 @@ class AppSearchField extends StatelessWidget {
   final Function(String)? onChange;
   final bool focus;
 
-  const AppSearchField({Key? key, this.controller, this.onChange,this.focus = false})
+  const AppSearchField(
+      {Key? key, this.controller, this.onChange, this.focus = false})
       : super(key: key);
 
   @override
@@ -513,18 +520,19 @@ class AppSearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextField(
-
-        enableInteractiveSelection : false,
+        enableInteractiveSelection: false,
         onChanged: onChange,
         autofocus: focus,
         decoration: const InputDecoration(
             border: InputBorder.none,
-
             hintText: 'Search',
             hintStyle: TextStyle(color: Colors.grey),
-            contentPadding: EdgeInsets.only(left: 8,right: 8,bottom: 5,top: 5),
-            suffix: Icon(Icons.search,color: Colors.grey,)
-        ),
+            contentPadding:
+                EdgeInsets.only(left: 8, right: 8, bottom: 5, top: 5),
+            suffix: Icon(
+              Icons.search,
+              color: Colors.grey,
+            )),
       ),
     );
   }
@@ -532,11 +540,13 @@ class AppSearchField extends StatelessWidget {
 
 class AadhaarTextField extends StatelessWidget {
   final TextEditingController controller;
-  const AadhaarTextField({Key? key,required this.controller}) : super(key: key);
+
+  const AadhaarTextField({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return   AppTextField(
+    return AppTextField(
         inputType: TextInputType.number,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
@@ -559,12 +569,14 @@ class AadhaarTextField extends StatelessWidget {
 class CardTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool enable;
-  const CardTextField({Key? key,required this.controller,this.enable=true}) : super(key: key);
+
+  const CardTextField({Key? key, required this.controller, this.enable = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return   AppTextField(
-      enable: enable,
+    return AppTextField(
+        enable: enable,
         inputType: TextInputType.number,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
@@ -583,5 +595,3 @@ class CardTextField extends StatelessWidget {
         controller: controller);
   }
 }
-
-

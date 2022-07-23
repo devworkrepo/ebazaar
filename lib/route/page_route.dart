@@ -21,13 +21,14 @@ import 'package:spayindia/page/fund/fund_request_page.dart';
 import 'package:spayindia/page/main/change_password/change_password_page.dart';
 import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
 import 'package:spayindia/page/main_page.dart';
-import 'package:spayindia/page/matm/matm_page.dart';
+import 'package:spayindia/page/matm_credo/matm_credo_page.dart';
 import 'package:spayindia/page/ott/ott_operator/ott_operator_page.dart';
 import 'package:spayindia/page/paytm_wallet/paytm_wallet_page.dart';
 import 'package:spayindia/page/recharge/bill_payment/bill_payment_page.dart';
 import 'package:spayindia/page/recharge/lic_online_payment/lic_online_page.dart';
 import 'package:spayindia/page/recharge/provider/provider_page.dart';
 import 'package:spayindia/page/recharge/recharge/recharge_page.dart';
+import 'package:spayindia/page/report/security_deposit_report/security_deposit_report_page.dart';
 import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/report/wallet_pay/wallet_report_page.dart';
 import 'package:spayindia/page/security_deposit/security_deposit_page.dart';
@@ -48,7 +49,7 @@ import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 import '../page/main/settlement/aeps_settlement_page.dart';
 import '../page/main/settlement_bank/add_settlement_bank/settlement_bank_add_page.dart';
 import '../page/main/settlement_bank/settlement_bank_list/settlement_bank_list_page.dart';
-import '../page/matm/process/matm_process_page.dart';
+import '../page/matm_tramo/matm_page.dart';
 import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
 import '../page/ott/ott_transaction/ott_transaction_page.dart';
@@ -147,8 +148,12 @@ final getAllPages = [
     page: () => const AepsOnboardingPage(),
   ),
   GetPage(
-    name: AppRoute.mamtPage,
-    page: () => const MatmPage(),
+    name: AppRoute.matmTramopage,
+    page: () => const MatmTramoPage(),
+  ),
+  GetPage(
+    name: AppRoute.matmCredoPage,
+    page: () => const MatmCredoPage(),
   ),
   GetPage(
     name: AppRoute.creditCardPage,
@@ -214,6 +219,9 @@ final getAllPages = [
 
   GetPage(
       name: AppRoute.walletReportPage, page: () => const WalletPayReportPage()),
+
+  GetPage(
+      name: AppRoute.securityDepositReportPage, page: () => const SecurityDepositReportPage()),
 
   GetPage(
     name: AppRoute.changePassword,

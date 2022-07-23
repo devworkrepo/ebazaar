@@ -27,7 +27,7 @@ abstract class AepsRepo {
   Future<CommonResponse> addSettlementBank(data);
 
   //matm
-  Future<CommonResponse> getMamtTransactionNumber();
+
   Future<MatmRequestResponse> initiateMatm(data);
   Future<CommonResponse> updateMatmDataToServer(data);
   Future<MatmCheckTransactionInitiated> isMatmInitiated(data);

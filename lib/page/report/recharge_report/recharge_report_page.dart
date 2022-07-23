@@ -55,7 +55,7 @@ class RechargeReportPage extends GetView<RechargeReportController> {
 
   _onSearch() {
     Get.bottomSheet(
-        CommonReportSeasrchDialog(
+        CommonReportSearchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           status: (origin != "summary") ? controller.searchStatus : null,
@@ -90,7 +90,7 @@ class RechargeReportPage extends GetView<RechargeReportController> {
             "Municipal Services",
             "Hospital",
             "Subscription"],
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,rechargeType) {
+          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,rechargeType,_) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;

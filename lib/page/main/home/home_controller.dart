@@ -218,7 +218,16 @@ class HomeController extends GetxController {
 
       break;
       case HomeServiceType.matm:
-        Get.toNamed(AppRoute.mamtPage);
+        {
+          Get.bottomSheet(MatmOptionDialog(
+            oldMatmClick: () {
+              Get.toNamed(AppRoute.matmTramopage);
+            },
+            newMatmClick: () {
+              Get.toNamed(AppRoute.matmCredoPage);
+            },
+          ));
+        }
         break;
       case HomeServiceType.moneyTransfer:
         {

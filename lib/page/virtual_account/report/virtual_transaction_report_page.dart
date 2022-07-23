@@ -54,7 +54,7 @@ class VirtualTransactionReportPage
 
   _onSearch() {
     Get.bottomSheet(
-        CommonReportSeasrchDialog(
+        CommonReportSearchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           isDateSearch:
@@ -66,7 +66,7 @@ class VirtualTransactionReportPage
               ? null
               : ["All", "Accepted", "Pending", "Declined"],
           inputFieldOneTile: "Transaction Number",
-          onSubmit: (fromDate, toDate, searchInput, _, status, __) {
+          onSubmit: (fromDate, toDate, searchInput, _, status, __,___) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;

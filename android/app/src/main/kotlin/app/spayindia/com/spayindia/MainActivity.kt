@@ -150,6 +150,7 @@ class MainActivity : FlutterFragmentActivity() {
                 putExtra("LOGIN_PASSWORD", password)
                 putExtra("TID", tid)
                 putExtra("CRN_U", crnU)
+                putExtra("CUSTOM_FIELD1", crnU)
                 putExtra("MOBILE_NUMBER", mobileNumber)
                 putExtra(
                     "LOGO", Utils.getVariableImage(
@@ -224,6 +225,7 @@ class MainActivity : FlutterFragmentActivity() {
 
         fun onTransactionCompleted() {
             if (data != null) {
+                AppUtil.logD("CredoPay Response Result Code: ${data!!.toString()}")
                 val rrn: String = data.getStringExtra("rrn") ?: ""
                 val transactionId: String = data.getStringExtra("transaction_id") ?: ""
                 val maskedPan: String = data.getStringExtra("masked_pan") ?: ""
@@ -238,10 +240,12 @@ class MainActivity : FlutterFragmentActivity() {
                 val cardType: String = data.getStringExtra("card_type") ?: ""
                 val accountBalance: String = data.getStringExtra("account_balance") ?: ""
                 val transactionType: String = data.getStringExtra("transaction_type") ?: ""
+                val customFieldOne: String = data.getStringExtra("custom_field_1") ?: ""
 
                 result?.success(
                     hashMapOf(
                         "code" to 1,
+                        "message" to "Transaction Success",
                         "rrn" to rrn,
                         "transactionId" to transactionId,
                         "maskedPan" to maskedPan,
@@ -256,23 +260,24 @@ class MainActivity : FlutterFragmentActivity() {
                         "cardType" to cardType,
                         "accountBalance" to accountBalance,
                         "transactionType" to transactionType,
+                        "custom_field_1" to customFieldOne,
                     )
                 )
             }
             else{
                 result?.success(hashMapOf(
                     "code" to 3,
-                    "message" to "Transaction in progress"
+                    "message" to "Transaction InProgress"
                 ))
             }
         }
 
         fun onTransactionFailed() {
-            val error: String = data?.getStringExtra("error") ?: ""
+            val error: String = data?.getStringExtra("error") ?: "Transaction Failure"
             result?.success(
                 hashMapOf(
                     "code" to 2,
-                    "error" to error
+                    "message" to error
                 )
             )
         }
@@ -280,8 +285,9 @@ class MainActivity : FlutterFragmentActivity() {
         fun onPasswordChanged() {
             result?.success(
                 hashMapOf(
-                    "code" to 4,
-                    "type" to "CHANGE_PASSWORD"
+                    "code" to 0,
+                    "type" to "CHANGE_PASSWORD",
+                    "message" to "On password changed !"
                 )
             )
         }
@@ -289,8 +295,9 @@ class MainActivity : FlutterFragmentActivity() {
         fun onPasswordChangeFailed() {
             result?.success(
                 hashMapOf(
-                    "code" to 4,
-                    "type" to "PASSWORD_CHANGE_FAILED"
+                    "code" to 0,
+                    "type" to "PASSWORD_CHANGE_FAILED",
+                    "message" to "On password change failed !"
                 )
             )
         }
@@ -298,8 +305,9 @@ class MainActivity : FlutterFragmentActivity() {
         fun onLoginFailed() {
             result?.success(
                 hashMapOf(
-                    "code" to 4,
-                    "type" to "LOGIN_FAILED"
+                    "code" to 0,
+                    "type" to "LOGIN_FAILED",
+                    "message" to "Login failed !"
                 )
             )
         }
@@ -317,6 +325,7 @@ class MainActivity : FlutterFragmentActivity() {
 
         AppUtil.logD("CredoPay Response RequestCode: $requestCode")
         AppUtil.logD("CredoPay Response Result Code: $resultCode")
+
 
     }
 

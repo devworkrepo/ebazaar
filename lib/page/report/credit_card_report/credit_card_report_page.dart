@@ -51,12 +51,12 @@ class CreditCardReportPage extends GetView<CreditCardReportController> {
 
   _onSearch() {
     Get.bottomSheet(
-        CommonReportSeasrchDialog(
+        CommonReportSearchDialog(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           status: (origin != "summary") ? controller.searchStatus : null,
           inputFieldOneTile: "Request Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_) {
+          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_,__) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;

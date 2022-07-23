@@ -10,12 +10,12 @@ import 'package:spayindia/widget/text_field.dart';
 
 import 'matm_controller.dart';
 
-class MatmPage extends GetView<MatmController> {
-  const MatmPage({Key? key}) : super(key: key);
+class MatmTramoPage extends GetView<MatmTramoController> {
+  const MatmTramoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MatmController());
+    Get.put(MatmTramoController());
     return StatusBarColorWidget(
       color: Get.theme.primaryColorDark,
       child: Scaffold(
@@ -83,19 +83,19 @@ class MatmPage extends GetView<MatmController> {
                         const SizedBox(
                           height: 8,
                         ),
-                        AppRadioButton<MatmTransactionType>(
+                        AppRadioButton<MatmTramoTransactionType>(
                           groupValue: controller.transactionType.value,
-                          value: MatmTransactionType.cashWithdrawal,
+                          value: MatmTramoTransactionType.cashWithdrawal,
                           title: "Cash Withdrawal",
-                          onChange: (MatmTransactionType type) {
+                          onChange: (MatmTramoTransactionType type) {
                             controller.transactionType.value = type;
                           },
                         ),
-                        AppRadioButton<MatmTransactionType>(
+                        AppRadioButton<MatmTramoTransactionType>(
                           groupValue: controller.transactionType.value,
-                          value: MatmTransactionType.balanceEnquiry,
+                          value: MatmTramoTransactionType.balanceEnquiry,
                           title: "Balance Enquiry",
-                          onChange: (MatmTransactionType type) {
+                          onChange: (MatmTramoTransactionType type) {
                             controller.transactionType.value = type;
                           },
                         ),
@@ -104,7 +104,7 @@ class MatmPage extends GetView<MatmController> {
                   ),
                 ),
                 Obx(() => (controller.transactionType.value ==
-                        MatmTransactionType.cashWithdrawal)
+                        MatmTramoTransactionType.cashWithdrawal)
                     ? Card(
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -145,7 +145,7 @@ class MatmPage extends GetView<MatmController> {
   }
 }
 
-enum MatmTransactionType {
+enum MatmTramoTransactionType {
   cashWithdrawal,
   balanceEnquiry,
 }

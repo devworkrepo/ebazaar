@@ -33,5 +33,7 @@ abstract class HomeRepo{
   Future<CommonResponse> changePin(data);
   Future<NetworkAppUpdateInfo> updateInfo();
 
+  Future<CommonResponse> getTransactionNumber();
+
   Future<void> downloadFileAndSaveToGallery(String baseUrl, String extension);
 }

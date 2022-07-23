@@ -5,11 +5,14 @@ import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
+import 'package:spayindia/data/repo_impl/matm_credo_impl.dart';
 import 'package:spayindia/data/repo_impl/money_request_impl.dart';
 import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
+import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
 import 'package:spayindia/data/repo_impl/virtual_account_impl.dart';
 import 'package:spayindia/data/repo_impl/wallet_repo_impl.dart';
+import 'package:spayindia/page/matm_credo/matm_credo_page.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/service/provide_async.dart';
 import 'package:get/get.dart';
@@ -42,5 +45,7 @@ appBinding() async {
   Get.lazyPut(() => WalletRepoImpl(), fenix: true);
   Get.lazyPut(() => MoneyRequestImpl(), fenix: true);
   Get.lazyPut(() => VirtualAccountImpl(), fenix: true);
+  Get.lazyPut(() => SecurityDepositImpl(), fenix: true);
+  Get.lazyPut(() => MatmCredoImpl(), fenix: true);
 
 }

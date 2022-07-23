@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/matm/process/matm_process_controller.dart';
+
+import 'matm_process_controller.dart';
 
 class MatmInProcessPage extends GetView<MatmProcessController> {
   const MatmInProcessPage({Key? key}) : super(key: key);

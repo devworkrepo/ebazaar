@@ -30,6 +30,7 @@ class UserDetail {
   bool? isAeps;
   bool? isMatm;
   bool? isLoginResendOtp;
+  bool? isMoneyRequest;
 
 
   UserDetail();
@@ -65,6 +66,7 @@ class UserDetail {
     isAeps = json['is_aeps'];
     isMatm = json['is_matm'];
     isLoginResendOtp = json['is_matm'];
+    isMoneyRequest = json['is_moneyrequest'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +100,7 @@ class UserDetail {
     data ['is_aeps']=isAeps;
     data ['is_matm']=isMatm;
     data ['is_matm']=isLoginResendOtp;
+    data ['is_moneyrequest']=isMoneyRequest;
     return data;
   }
 

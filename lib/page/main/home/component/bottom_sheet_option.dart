@@ -56,6 +56,34 @@ class RechargeOptionDialog extends StatelessWidget {
   }
 }
 
+
+
+class MatmOptionDialog extends StatelessWidget {
+  final VoidCallback oldMatmClick;
+  final VoidCallback newMatmClick;
+
+  const MatmOptionDialog(
+      {Key? key, required this.oldMatmClick, required this.newMatmClick})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _BaseOptionDialogWidget(
+      title: "Mpos / Matm Services",
+      option: [
+        _BaseOption(
+            title: "M-ATM",
+            onClick: oldMatmClick,
+            svgName: "matm"),
+        _BaseOption(
+            title: "M-POS",
+            onClick: newMatmClick,
+            svgName: "matm"),
+      ],
+    );
+  }
+}
+
 class _BaseOption {
   final VoidCallback onClick;
   final String title;
@@ -140,7 +168,7 @@ class _BuildItem extends StatelessWidget {
                         )),
                 Text(
                   title,
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.subtitle2,
                   textAlign: TextAlign.center,
                 )
               ],

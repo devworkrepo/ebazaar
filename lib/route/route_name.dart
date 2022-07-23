@@ -19,7 +19,8 @@ class AppRoute {
 
   //aeps
   static const aepsPage = "/aeps";
-  static const mamtPage = "/matm";
+  static const matmTramopage = "/matm";
+  static const matmCredoPage = "/matm-mpos";
 
   //credit card
   static const creditCardPage = "/credit_card_page";
@@ -49,6 +50,7 @@ class AppRoute {
   static const fundRequestPage = "/fund-request-page";
   static const fundReportPage = "/fund-report-page";
   static const walletReportPage = "/wallet-report-page";
+  static const securityDepositReportPage = "/security-deposity-report-page";
   static const fundRequestUpiPage = "/fund-request-upi-page";
   static const showQRCodePage = "/show-qr-code-page";
 

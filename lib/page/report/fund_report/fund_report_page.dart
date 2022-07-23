@@ -47,7 +47,7 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
   }
 
   _onSearch() {
-    Get.bottomSheet(CommonReportSeasrchDialog(
+    Get.bottomSheet(CommonReportSearchDialog(
       fromDate: controller.fromDate,
       toDate: controller.toDate,
       status:(controller.isPendingRequest) ? null :  controller.searchStatus,
@@ -59,7 +59,7 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
         "Declined"
       ],
       inputFieldOneTile : "Request Number",
-      onSubmit: (fromDate, toDate, searchInput,searchInputType, status,_) {
+      onSubmit: (fromDate, toDate, searchInput,searchInputType, status,_,__) {
         controller.fromDate = fromDate;
         controller.toDate = toDate;
         controller.searchInput = searchInput;

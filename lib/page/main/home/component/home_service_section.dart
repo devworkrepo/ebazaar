@@ -164,7 +164,7 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
         "Payout Transfer", "money", HomeServiceType.payoutTransfer));
   }
   if (user.isMatm.orFalse()) {
-    itemList.add(HomeServiceItem("Matm", "matm", HomeServiceType.matm));
+    itemList.add(HomeServiceItem("Matm / Mpos", "matm", HomeServiceType.matm));
   }
   if (user.isAeps.orFalse()) {
     itemList.add(

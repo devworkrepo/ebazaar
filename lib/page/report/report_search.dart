@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,26 +5,33 @@ import 'package:spayindia/widget/drop_down.dart';
 import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/util/date_util.dart';
 
-
-class CommonReportSeasrchDialog extends StatefulWidget {
+class CommonReportSearchDialog extends StatefulWidget {
   final String fromDate;
   final String toDate;
   final String? status;
   final String? inputFieldOneTile;
+  final bool isMobileSearch;
   final List<String>? statusList;
   final List<String>? typeList;
   final bool isDateSearch;
 
-  final Function(String fromDate, String toDate, String searchInput,
-      String searchInputType, String status, String rechargeType) onSubmit;
+  final Function(
+      String fromDate,
+      String toDate,
+      String searchInput,
+      String searchInputType,
+      String status,
+      String rechargeType,
+      String mobile) onSubmit;
 
-  const CommonReportSeasrchDialog(
+  const CommonReportSearchDialog(
       {Key? key,
       required this.onSubmit,
       required this.fromDate,
       required this.toDate,
       this.status,
       this.inputFieldOneTile,
+      this.isMobileSearch = false,
       this.statusList,
       this.typeList,
       this.isDateSearch = true})
@@ -36,10 +41,11 @@ class CommonReportSeasrchDialog extends StatefulWidget {
   _SearchDialogWidgetState createState() => _SearchDialogWidgetState();
 }
 
-class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
+class _SearchDialogWidgetState extends State<CommonReportSearchDialog> {
   var fromDateController = TextEditingController();
   var toDateController = TextEditingController();
   var searchInputController = TextEditingController();
+  var mobileController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   var searchInput = "";
@@ -71,26 +77,29 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
             child: Column(
               children: [
                 filterTitleAndIcon(),
-                if(widget.isDateSearch)AppTextField(
-                  controller: fromDateController,
-                  label: "From Date",
-                  onFieldTab: () {
-                    DateUtil.showDatePickerDialog((dateInString) {
-                      fromDateController.text = dateInString;
-                    });
-                  },
-                ),
-                if(widget.isDateSearch)AppTextField(
-                  controller: toDateController,
-                  label: "To Date",
-                  onFieldTab: () {
-                    DateUtil.showDatePickerDialog((dateInString) {
-                      toDateController.text = dateInString;
-                    });
-                  },
-                ),
-                (widget.status != null) ? AppDropDown(
-                  maxHeight: Get.height / 0.75,
+                if (widget.isDateSearch)
+                  AppTextField(
+                    controller: fromDateController,
+                    label: "From Date",
+                    onFieldTab: () {
+                      DateUtil.showDatePickerDialog((dateInString) {
+                        fromDateController.text = dateInString;
+                      });
+                    },
+                  ),
+                if (widget.isDateSearch)
+                  AppTextField(
+                    controller: toDateController,
+                    label: "To Date",
+                    onFieldTab: () {
+                      DateUtil.showDatePickerDialog((dateInString) {
+                        toDateController.text = dateInString;
+                      });
+                    },
+                  ),
+                (widget.status != null)
+                    ? AppDropDown(
+                        maxHeight: Get.height / 0.75,
                         list: widget.statusList ?? _listOfStatus,
                         label: "Select Status",
                         hint: "Select Status Search",
@@ -108,7 +117,7 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                     : SizedBox(),
                 (widget.typeList != null)
                     ? AppDropDown(
-                        maxHeight: Get.height / 0.75,
+                        maxHeight: 240,
                         list: widget.typeList!,
                         label: "Select Recharge Type",
                         hint: "Select Recharge Type",
@@ -129,6 +138,20 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                         label: widget.inputFieldOneTile,
                         hint: "Enter ${widget.inputFieldOneTile}",
                       ),
+                (!widget.isMobileSearch)
+                    ? const SizedBox()
+                    : MobileTextField(
+                        controller: mobileController,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length == 10) {
+                            return null;
+                          } else {
+                            return "Enter 10 digits mobile number";
+                          }
+                        },
+                      ),
               ],
             ),
           ),
@@ -147,7 +170,8 @@ class _SearchDialogWidgetState extends State<CommonReportSeasrchDialog> {
                       searchInput,
                       searchInputType,
                       (status == "All") ? "" : status,
-                      rechargeType);
+                      rechargeType,
+                      mobileController.text);
                 }
               },
               child: Padding(

@@ -178,7 +178,8 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                               onPressed: () {
                                 Get.dialog(SenderKycDialog((aadhaarNumber) {
                                   Get.back();
-                                  Get.toNamed(AppRoute.dmtEkycPage)
+                                  Get.toNamed(AppRoute
+                                          .dmtEkycPage) // todo need to implement dmt web view e-kyc ** warning
                                       ?.then((value) {
                                     if (value != null) {
                                       if (value is Map) {

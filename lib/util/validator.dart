@@ -1,10 +1,7 @@
-
 import 'package:spayindia/util/app_util.dart';
 
 class FormValidatorHelper {
-
-
-  static String? normalValidation(value,{int minLength=3}) {
+  static String? normalValidation(value, {int minLength = 3}) {
     var msg = "Enter min $minLength characters";
     if (value == null) {
       return msg;
@@ -31,16 +28,16 @@ class FormValidatorHelper {
   }
 
   static String? emailValidation(value) {
-
-    if(value == null) {
+    if (value == null) {
       return "Field can't be empty!";
     }
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(value);
 
-    if(emailValid){
+    if (emailValid) {
       return null;
-    }
-    else {
+    } else {
       return "Enter email with valid format";
     }
   }
@@ -71,15 +68,24 @@ class FormValidatorHelper {
     }
   }
 
-  static String? amount(String? value, {int minAmount = 10,int maxAmount = 10000}) {
+  static String? amount(String? value,
+      {int minAmount = 10, int maxAmount = 10000, int? multipleOf}) {
+    bool checkMultipleOf() {
+      if (multipleOf == null) return true;
+      var doubleAmount = double.parse(value.toString());
+      return doubleAmount % multipleOf == 0;
+    }
+
     var msg = "Enter amount in range of $minAmount to $maxAmount";
     if (value == null) {
       return msg;
-    }
-    else if(maxAmount == -1){
+    } else if (maxAmount == -1) {
       try {
         var amount = double.parse(value);
-        if (amount >=minAmount) {
+        if (amount >= minAmount) {
+          if(!checkMultipleOf()){
+            return "Enter amount multiple of $multipleOf";
+          }
           return null;
         } else {
           return "Minimum amount is 2 LAC!";
@@ -88,11 +94,13 @@ class FormValidatorHelper {
         AppUtil.logger(e.toString());
         return "Minimum amount is 2 LAC!";
       }
-    }
-    else {
+    } else {
       try {
         var amount = double.parse(value);
-        if (amount >=minAmount && amount <=maxAmount) {
+        if (amount >= minAmount && amount <= maxAmount) {
+          if(!checkMultipleOf()){
+            return "Enter amount multiple of $multipleOf";
+          }
           return null;
         } else {
           return msg;
@@ -103,7 +111,6 @@ class FormValidatorHelper {
       }
     }
   }
-
 
   static String? empty(String? value) {
     var msg = "Field can't be empty!";

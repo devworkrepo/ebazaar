@@ -105,6 +105,15 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
+  Future<CommonResponse> getTransactionNumber() async {
+    var response = await client.post(
+      "/GetTransactionNo",
+    );
+    return CommonResponse.fromJson(response.data);
+  }
+
+
+  @override
   Future<void> downloadFileAndSaveToGallery(
       String baseUrl, String extension) async {
     try {
