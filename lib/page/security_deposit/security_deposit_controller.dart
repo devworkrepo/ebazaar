@@ -26,9 +26,7 @@ class SecurityDepositController extends GetxController
 
   var tenureObs = 1.obs;
 
-  var responseObs = Resource
-      .onInit(data: UserProfile())
-      .obs;
+  var responseObs = Resource.onInit(data: UserProfile()).obs;
   HomeRepo homeRepo = Get.find<HomeRepoImpl>();
   SecurityDepositRepo repo = Get.find<SecurityDepositImpl>();
 
@@ -39,14 +37,13 @@ class SecurityDepositController extends GetxController
   late String email;
   late String panNumber;
 
-
   @override
   onInit() {
     super.onInit();
     _fetchUserProfile();
   }
 
-  _parseNames(String fullName) {  
+  _parseNames(String fullName) {
     var names = fullName.toString().trim().split(" ");
     firstName = names.first;
     lastName = names.last;
@@ -70,7 +67,6 @@ class SecurityDepositController extends GetxController
         });
   }
 
-
   onSubmit() async {
     if (!formKey.currentState!.validate()) return;
 
@@ -79,8 +75,7 @@ class SecurityDepositController extends GetxController
         _postDepositFormData();
       },
       description:
-      "Are you sure! to deposit ${amountController.text} for tenure ${tenureObs
-          .value.toString()} ${(tenureObs.value == 1) ? "Year" : "Years"}",
+          "Are you sure! to deposit ${amountController.text} for tenure ${tenureObs.value.toString()} ${(tenureObs.value == 1) ? "Year" : "Years"}",
     ));
   }
 
@@ -99,7 +94,7 @@ class SecurityDepositController extends GetxController
         "aadhar_no": aadhaarWithoutSymbol(aadhaarController),
         "tenure": tenureObs.value.toString(),
         "dob": dob,
-        "amount": "2"/* amountWithoutRupeeSymbol(amountController)*/,//todo remark hardcoded amount 2 rs
+        "amount": amountWithoutRupeeSymbol(amountController),
         "transaction_no": transactionNumber,
         "mpin": mpinController.text.toString(),
       });
@@ -109,7 +104,7 @@ class SecurityDepositController extends GetxController
         StatusDialog.success(title: response.message)
             .then((value) => Get.offAllNamed(AppRoute.mainPage));
       } else if (response.code == 2 || response.code == 3) {
-        //todo redirect to deposit list screen
+        Get.offNamed(AppRoute.securityDepositReportPage);
       } else {
         StatusDialog.failure(title: response.message);
       }

@@ -57,7 +57,7 @@ class UserDetail {
     isInstantPay = json['is_instantpay'];
     isBill = json['is_bill'];
     isVirtualAccount = json['is_virtualacc'];
-    isSecurityDeposit = json['is_virtualacc'];//todo warning **("use live field for security deposit")
+    isSecurityDeposit = json['is_security_deposit'];
     isCreditCard = json['is_creditcard'];
     isPaytmWallet = json['is_paytmwallet'];
     isLic = json['is_lic'];
@@ -96,6 +96,7 @@ class UserDetail {
     data ['is_lic']=isLic;
     data ['is_ott']=isOtt;
     data ['is_virtualacc']=isVirtualAccount;
+    data ['is_security_deposit']=isSecurityDeposit;
     data ['is_billpart']=isBillPart;
     data ['is_aeps']=isAeps;
     data ['is_matm']=isMatm;

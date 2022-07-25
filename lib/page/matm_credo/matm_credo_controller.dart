@@ -148,15 +148,16 @@ class MatmCredoController extends GetxController
     AppUtil.logger("MatmCredopayResponse : $result");
 
     var status = 3;
-    var message = result["message"];
-    var cardNumber = "";
-    var bankRRN = "";
-    var bankName = "";
+    var clientId = matmCredoInitiate!.transaction_no;
+    String? message = result["message"] ?? "";
+    String? balanceAmount = result["accountBalance"] ?? "";
+    String? cardNumber = result["maskedPan"] ?? "";
+    String? bankRRN = result["rrn"] ?? "";
+    String? bankName = result["cardApplicationName"] ?? "";
+    String? transactionId = result["transactionId"] ?? "";
 
-    if (result["code"] == 1) {
-      cardNumber = result["maskedPan"];
-      bankRRN = result["rrn"];
-      bankName = result["cardApplicationName"];
+    if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry) {
+      status = result["code"];
     }
 
     int code = result["code"];
@@ -182,12 +183,13 @@ class MatmCredoController extends GetxController
           "cardNumber": cardNumber,
           "bankRRN": bankRRN,
           "message": message,
-          "providerTxnId": matmCredoInitiate!.transaction_no ?? "",
+          "balanceamt": balanceAmount,
+          "clientId": clientId,
+          "providerTxnId": transactionId,
         });
         Get.back();
         Get.back();
-
-      }catch(e){
+      } catch (e) {
         Get.back();
         Get.back();
       }
