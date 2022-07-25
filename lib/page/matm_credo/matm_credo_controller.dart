@@ -29,7 +29,7 @@ class MatmCredoController extends GetxController
   MatmCredoInitiate? matmCredoInitiate;
   String? transactionNumber;
 
-  var isMatm = true;
+  bool isMatm = Get.arguments;
 
   var retryCount = 0;
 
@@ -51,7 +51,7 @@ class MatmCredoController extends GetxController
       case MatmCredoTxnType.balanceEnquiry:
         return "BE";
       case MatmCredoTxnType.mPos:
-        return "MPOS";
+        return "CW";
     }
   }
 
@@ -63,7 +63,12 @@ class MatmCredoController extends GetxController
       return;
     }
 
+    matmCredoInitiate = null;
+    transactionNumber = null;
+
     try {
+      if (matmCredoInitiate != null && transactionNumber != null) return;
+
       StatusDialog.progress(title: "Initiating Transaction...");
 
       var txnRes = await homeRepo.getTransactionNumber();
@@ -71,14 +76,15 @@ class MatmCredoController extends GetxController
         StatusDialog.failure(title: txnRes.message);
         return;
       }
-      transactionNumber = txnRes.transactionNumber;
+      transactionNumber ??= txnRes.transactionNumber;
 
       var amount = amountWithoutRupeeSymbol(amountController);
-      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry) {
+      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry ||
+          transactionTypeObs.value == MatmCredoTxnType.voidTxn) {
         amount = "0";
       }
 
-      var response = await repo.initiateTransaction({
+      var params = {
         "transaction_no": transactionNumber.toString(),
         "cust_mobile": mobileController.text,
         "txntype": getApiTransactionType(),
@@ -86,11 +92,15 @@ class MatmCredoController extends GetxController
         "amount": amount,
         "latitude": position!.latitude.toString(),
         "longitude": position!.longitude.toString(),
-      });
+      };
+
+      var response = (isMatm)
+          ? await repo.initiateMATMTransaction(params)
+          : await repo.initiateMPOSTransaction(params);
 
       Get.back();
       if (response.code == 1) {
-        matmCredoInitiate = response;
+        matmCredoInitiate ??= response;
         _startTransaction();
       } else {
         StatusDialog.failure(title: response.message);
@@ -120,7 +130,8 @@ class MatmCredoController extends GetxController
       var decryptedPassword = Encryption.encryptCredopPayPassword(
           matmCredoInitiate!.loginPass.toString());
       var amount = amountWithoutRupeeSymbol(amountController);
-      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry) {
+      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry ||
+          transactionTypeObs.value == MatmCredoTxnType.voidTxn) {
         amount = "0";
       }
       var intAmount = int.parse(amount) * 100;
@@ -160,6 +171,10 @@ class MatmCredoController extends GetxController
       status = result["code"];
     }
 
+    if (status == 3) {
+      message = "Transaction in progress";
+    }
+
     int code = result["code"];
     if (code == 0) {
       String type = result["type"];
@@ -174,10 +189,12 @@ class MatmCredoController extends GetxController
         }
         retryCount++;
       }
+    } else if (transactionTypeObs.value == MatmCredoTxnType.voidTxn) {
+      return;
     } else {
       try {
         StatusDialog.progress(title: "Updating...");
-        await repo.updateMatmDataToServer({
+        await repo.updateTransactionToServer({
           "status": status,
           "bankName": bankName,
           "cardNumber": cardNumber,

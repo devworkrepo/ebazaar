@@ -31,6 +31,9 @@ class UserDetail {
   bool? isMatm;
   bool? isLoginResendOtp;
   bool? isMoneyRequest;
+  bool? is_mpos_credo;
+  bool? is_matm_credo;
+  bool? is_aeps_air;
 
 
   UserDetail();
@@ -67,6 +70,9 @@ class UserDetail {
     isMatm = json['is_matm'];
     isLoginResendOtp = json['is_matm'];
     isMoneyRequest = json['is_moneyrequest'];
+    is_mpos_credo = json['is_mpos_credo'];
+    is_matm_credo = json['is_matm_credo'];
+    is_aeps_air = json['is_aeps_air'];
   }
 
   Map<String, dynamic> toJson() {
@@ -102,6 +108,9 @@ class UserDetail {
     data ['is_matm']=isMatm;
     data ['is_matm']=isLoginResendOtp;
     data ['is_moneyrequest']=isMoneyRequest;
+    data ['is_mpos_credo']=is_mpos_credo;
+    data ['is_matm_credo']=is_matm_credo;
+    data ['is_aeps_air']=is_aeps_air;
     return data;
   }
 

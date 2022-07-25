@@ -59,11 +59,11 @@ class RechargeOptionDialog extends StatelessWidget {
 
 
 class MatmOptionDialog extends StatelessWidget {
-  final VoidCallback oldMatmClick;
-  final VoidCallback newMatmClick;
+  final VoidCallback matmClick;
+  final VoidCallback mposClick;
 
   const MatmOptionDialog(
-      {Key? key, required this.oldMatmClick, required this.newMatmClick})
+      {Key? key, required this.matmClick, required this.mposClick})
       : super(key: key);
 
   @override
@@ -73,11 +73,11 @@ class MatmOptionDialog extends StatelessWidget {
       option: [
         _BaseOption(
             title: "M-ATM",
-            onClick: oldMatmClick,
+            onClick: matmClick,
             svgName: "matm"),
         _BaseOption(
             title: "M-POS",
-            onClick: newMatmClick,
+            onClick: mposClick,
             svgName: "matm"),
       ],
     );

@@ -50,12 +50,6 @@ class HomeController extends GetxController {
     super.onInit();
 
 
-
-
-     // LocalNotificationService.showNotificationOnForeground();
-
-
-
     scrollController = ScrollController();
     appPreference.setIsTransactionApi(false);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -191,6 +185,9 @@ class HomeController extends GetxController {
     Get.toNamed(AppRoute.showQRCodePage);
   }
 
+
+
+
   void logout() async {
     try {
       StatusDialog.progress(title: "Log out...");
@@ -219,14 +216,39 @@ class HomeController extends GetxController {
       break;
       case HomeServiceType.matm:
         {
-          Get.bottomSheet(MatmOptionDialog(
-            oldMatmClick: () {
-              Get.toNamed(AppRoute.matmTramopage);
-            },
-            newMatmClick: () {
-              Get.toNamed(AppRoute.matmCredoPage);
-            },
-          ));
+
+          //todo remove fake condition for matm and mpos route page
+          var user = appPreference.user;
+          var isMatm = false;//user.isMatm ?? false;
+          var isMatmCredo = true;//user.is_matm_credo ?? false;
+          var isMposCredo = true;//user.is_mpos_credo ?? false;
+
+
+          if((isMatm || isMatmCredo) && isMposCredo){
+            Get.bottomSheet(MatmOptionDialog(
+              matmClick: () {
+                if(isMatm){
+                  Get.toNamed(AppRoute.matmTramopage);
+                }
+                else if(isMatmCredo){
+                  Get.toNamed(AppRoute.matmCredoPage,arguments: true);
+                }
+              },
+              mposClick: () {
+                Get.toNamed(AppRoute.matmCredoPage,arguments: false);
+              },
+            ));
+          }
+          else if(isMposCredo){
+            Get.toNamed(AppRoute.matmCredoPage,arguments: false);
+          }
+          else if(isMatmCredo){
+            Get.toNamed(AppRoute.matmCredoPage,arguments: true);
+          }
+          else if(isMatm){
+            Get.toNamed(AppRoute.matmTramopage);
+          }
+
         }
         break;
       case HomeServiceType.moneyTransfer:

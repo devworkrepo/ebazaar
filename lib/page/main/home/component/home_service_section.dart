@@ -154,6 +154,11 @@ class HomeServiceItem {
 }
 
 List<HomeServiceItem> _homeServiceList(UserDetail user) {
+  //todo remove fake condition for matm and mpos route page
+  var isMatm = false; //user.isMatm ?? false;
+  var isMatmCredo = true; //user.is_matm_credo ?? false;
+  var isMposCredo = true; //user.is_mpos_credo ?? false;
+
   List<HomeServiceItem> itemList = [];
 
   itemList.add(HomeServiceItem(
@@ -163,8 +168,15 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
     itemList.add(HomeServiceItem(
         "Payout Transfer", "money", HomeServiceType.payoutTransfer));
   }
-  if (user.isMatm.orFalse()) {
-    itemList.add(HomeServiceItem("Matm / Mpos", "matm", HomeServiceType.matm));
+  if (isMatm || isMatmCredo || isMposCredo) {
+    itemList.add(HomeServiceItem(
+        ((isMatm || isMatmCredo) && isMposCredo)
+            ? "Matm / Mpos"
+            : (isMposCredo)
+                ? "Mpos"
+                : "Matm",
+        "matm",
+        HomeServiceType.matm));
   }
   if (user.isAeps.orFalse()) {
     itemList.add(
@@ -213,16 +225,15 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
         .add(HomeServiceItem("OTT\nSubscription", "ott", HomeServiceType.ott));
   }
 
-  if(user.isVirtualAccount ?? false){
+  if (user.isVirtualAccount ?? false) {
     itemList.add(HomeServiceItem(
         "Virtual\nAccount", "virtual_account", HomeServiceType.virtualAccount));
   }
 
-  if(user.isSecurityDeposit ?? false){
-    itemList.add(HomeServiceItem(
-        "Security\nDeposit", "security_deposit", HomeServiceType.securityDeposity));
+  if (user.isSecurityDeposit ?? false) {
+    itemList.add(HomeServiceItem("Security\nDeposit", "security_deposit",
+        HomeServiceType.securityDeposity));
   }
-
 
   var length = itemList.length;
 
