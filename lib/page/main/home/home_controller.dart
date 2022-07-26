@@ -52,7 +52,7 @@ class HomeController extends GetxController {
 
     scrollController = ScrollController();
     appPreference.setIsTransactionApi(false);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       scrollController.addListener(_scrollListener);
 
     });
@@ -103,7 +103,7 @@ class HomeController extends GetxController {
 
   fetchUserDetails() async {
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
       _fetchUserDetails();
     });
@@ -112,7 +112,7 @@ class HomeController extends GetxController {
 
   _fetchUserDetails() async {
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
     });
     userDetailObs.value = const Resource.onInit();

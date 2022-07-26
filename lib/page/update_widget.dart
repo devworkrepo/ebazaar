@@ -31,7 +31,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       updateCheck();
 
       AppUpdateUtil.checkUpdate();

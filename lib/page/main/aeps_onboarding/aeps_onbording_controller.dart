@@ -28,7 +28,7 @@ class AepsOnboardingController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       validateLocation(progress: false);
       _fetchAepsState();
     });

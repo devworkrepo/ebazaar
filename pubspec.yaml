@@ -27,7 +27,7 @@ dependencies:
   dropdown_search: ^2.0.0
   cupertino_icons: ^1.0.2
   geolocator: ^8.0.0
-  app_settings: ^4.1.8
+  app_settings: ^4.1.6
   image_picker: ^0.8.5
   image_cropper: ^1.4.1
   intl: ^0.17.0
@@ -58,10 +58,9 @@ dependencies:
   #safe_device: ^1.1.1
   palestine_trusted_device: ^0.1.1
   url_launcher: ^6.1.2
-  #firebase notifications
   firebase_core: ^1.18.0
   firebase_messaging: ^11.4.2
-  flutter_local_notifications: ^9.6.1
+  flutter_local_notifications: ^9.2.0
 
 
 
