@@ -25,4 +25,10 @@ class MatmCredoImpl extends MatmCredoRepo {
     var response = await client.post("/MPosTransactionCredo", data: data);
     return MatmCredoInitiate.fromJson(response.data);
   }
+
+  @override
+  Future<MatmCredoInitiate> initiateVOIDTransaction(data) async {
+    var response = await client.post("/MPosVoidCredo", data: data);
+    return MatmCredoInitiate.fromJson(response.data);
+  }
 }

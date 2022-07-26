@@ -68,7 +68,6 @@ class UserDetail {
     isBillPart = json['is_billpart'];
     isAeps = json['is_aeps'];
     isMatm = json['is_matm'];
-    isLoginResendOtp = json['is_matm'];
     isMoneyRequest = json['is_moneyrequest'];
     is_mpos_credo = json['is_mpos_credo'];
     is_matm_credo = json['is_matm_credo'];
@@ -106,7 +105,6 @@ class UserDetail {
     data ['is_billpart']=isBillPart;
     data ['is_aeps']=isAeps;
     data ['is_matm']=isMatm;
-    data ['is_matm']=isLoginResendOtp;
     data ['is_moneyrequest']=isMoneyRequest;
     data ['is_mpos_credo']=is_mpos_credo;
     data ['is_matm_credo']=is_matm_credo;

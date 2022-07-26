@@ -176,7 +176,7 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                           ),
                           ElevatedButton(
                               onPressed: () {
-                                Get.dialog(SenderKycDialog((aadhaarNumber) {
+                                /*Get.dialog(SenderKycDialog((aadhaarNumber) {
                                   Get.back();
                                   Get.toNamed(AppRoute
                                           .dmtEkycPage) // todo need to implement dmt web view e-kyc ** warning
@@ -195,14 +195,14 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                                     }
                                   });
                                 }));
-
-                                /*Get.toNamed(AppRoute.senderKycPage, arguments: {
-                            "dmt_type": controller.dmtType,
-                            "mobile_number":
-                            controller.sender!.senderNumber!
-                          });*/
+*/
+                                Get.toNamed(AppRoute.senderKycPage, arguments: {
+                                  "dmt_type": controller.dmtType,
+                                  "mobile_number":
+                                      controller.sender!.senderNumber!
+                                });
                               },
-                              child: Text("Do Kyc"))
+                              child: const Text("Do Kyc"))
                         ],
                       ),
                     )

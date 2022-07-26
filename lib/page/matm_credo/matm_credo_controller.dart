@@ -84,19 +84,28 @@ class MatmCredoController extends GetxController
         amount = "0";
       }
 
-      var params = {
-        "transaction_no": transactionNumber.toString(),
-        "cust_mobile": mobileController.text,
-        "txntype": getApiTransactionType(),
-        "deviceid": await AppUtil.getDeviceID(),
-        "amount": amount,
-        "latitude": position!.latitude.toString(),
-        "longitude": position!.longitude.toString(),
-      };
+      MatmCredoInitiate response;
 
-      var response = (isMatm)
-          ? await repo.initiateMATMTransaction(params)
-          : await repo.initiateMPOSTransaction(params);
+      if (transactionTypeObs.value == MatmCredoTxnType.voidTxn) {
+        var voidParam = {
+          "transaction_no": transactionNumber.toString(),
+        };
+        response = await repo.initiateVOIDTransaction(voidParam);
+      } else {
+        var params = {
+          "transaction_no": transactionNumber.toString(),
+          "cust_mobile": mobileController.text,
+          "txntype": getApiTransactionType(),
+          "deviceid": await AppUtil.getDeviceID(),
+          "amount": amount,
+          "latitude": position!.latitude.toString(),
+          "longitude": position!.longitude.toString(),
+        };
+
+        response = (isMatm)
+            ? await repo.initiateMATMTransaction(params)
+            : await repo.initiateMPOSTransaction(params);
+      }
 
       Get.back();
       if (response.code == 1) {

@@ -168,8 +168,8 @@ class HomeController extends GetxController {
      });
 
     FirebaseMessaging.onMessage.listen((event) {
-      AppUtil.logger("Firebase Service == message from foreground");
-      LocalNotificationService.showNotificationOnForeground(message: event);
+      /*AppUtil.logger("Firebase Service == message from foreground");
+      LocalNotificationService.showNotificationOnForeground(message: event);*/
     });
 
 
