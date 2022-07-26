@@ -39,7 +39,9 @@ class MatmCredoController extends GetxController
     transactionTypeObs.value =
         (isMatm) ? MatmCredoTxnType.microAtm : MatmCredoTxnType.mPos;
     position = null;
-    validateLocation(progress: false);
+   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+     validateLocation(progress: false);
+   });
   }
 
   getApiTransactionType() {

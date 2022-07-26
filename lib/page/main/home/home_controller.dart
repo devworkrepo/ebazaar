@@ -217,11 +217,10 @@ class HomeController extends GetxController {
       case HomeServiceType.matm:
         {
 
-          //todo remove fake condition for matm and mpos route page
           var user = appPreference.user;
-          var isMatm = false;//user.isMatm ?? false;
-          var isMatmCredo = true;//user.is_matm_credo ?? false;
-          var isMposCredo = true;//user.is_mpos_credo ?? false;
+          var isMatm = user.isMatm ?? false;
+          var isMatmCredo = user.is_matm_credo ?? false;
+          var isMposCredo = user.is_mpos_credo ?? false;
 
 
           if((isMatm || isMatmCredo) && isMposCredo){
