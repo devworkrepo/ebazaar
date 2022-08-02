@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
@@ -13,7 +14,7 @@ import '../../util/mixin/transaction_helper_mixin.dart';
 import '../exception_page.dart';
 import '../response/paytm_wallet/paytm_wallet_txn_response_page.dart';
 
-class PaytmWalletController extends GetxController with TransactionHelperMixin {
+class PaytmWalletController extends GetxController with TransactionHelperMixin,LocationHelperMixin {
   var mobileController = TextEditingController();
   var nameController = TextEditingController();
   var amountController = TextEditingController();
@@ -25,10 +26,25 @@ class PaytmWalletController extends GetxController with TransactionHelperMixin {
 
   var actionType = PaytmWalletLoadActionType.verify.obs;
 
+
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      validateLocation(progress: false);
+    });
+  }
+
   verify() async {
     if (!formKey.currentState!.validate()) {
       return;
     }
+
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
+
 
     String? transactionNumber = await fetchTransactionNumber();
     if (transactionNumber == null) {
@@ -94,6 +110,11 @@ class PaytmWalletController extends GetxController with TransactionHelperMixin {
       return;
     }
 
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
+
     Get.dialog(AmountConfirmDialogWidget(
         amount: amountController.text,
         onConfirm: () {
@@ -115,7 +136,9 @@ class PaytmWalletController extends GetxController with TransactionHelperMixin {
         "mpin": Encryption.encryptMPIN(mpinController.text),
         "transaction_no": transactionNumber,
         "mobileno": mobileController.text,
-        "amount": amountWithoutRupeeSymbol(amountController)
+        "amount": amountWithoutRupeeSymbol(amountController),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       });
       Get.back();
       if (response.code == 1) {

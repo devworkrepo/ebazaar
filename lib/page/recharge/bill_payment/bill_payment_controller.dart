@@ -13,6 +13,7 @@ import 'package:spayindia/page/recharge/provider/provider_controller.dart';
 import 'package:spayindia/page/response/bill_payment/bill_payment_txn_response_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
@@ -20,7 +21,8 @@ import 'package:spayindia/widget/list_component.dart';
 
 import '../../../util/security/encription.dart';
 
-class BillPaymentController extends GetxController with TransactionHelperMixin {
+class BillPaymentController extends GetxController
+    with TransactionHelperMixin, LocationHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
 
   Map<String, dynamic> argument = Get.arguments;
@@ -63,7 +65,9 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
     providerType = argument["provider_type"];
     isPartBillPayment = argument["is_part_bill"] ?? false;
 
-    _fetchExtraParam();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _fetchExtraParam();
+    });
   }
 
   _fetchExtraParam() async {
@@ -75,8 +79,7 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
         "cattype": getProviderInfo(providerType)?.requestParam ?? ""
       });
       if (response.code == 1) {
-
-        if(providerType == ProviderType.insurance){
+        if (providerType == ProviderType.insurance) {
           response.field1 = "Policy Number";
           response.field2 = "Date of Birth";
           response.field3 = "Email ID";
@@ -92,8 +95,14 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
     }
   }
 
-  onProceed() {
+  onProceed() async {
     if (!_validateForFetchBill()) return;
+
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
+
     if (actionType.value == BillPaymentActionType.fetchBill) {
       _fetchBillInfo();
     } else {
@@ -107,8 +116,6 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
     return true;
   }
 
-
-
   _confirmBillPayDialog() {
     var value = checkBalance(
         appPreference.user.availableBalance, amountController.text.trim());
@@ -116,7 +123,7 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
 
     Get.dialog(
         AmountConfirmDialogWidget(
-          isDecimal: true,
+            isDecimal: true,
             amount: amountController.text.toString(),
             detailWidget: [
               ListTitleValue(
@@ -129,8 +136,7 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
         barrierDismissible: false);
   }
 
-  _paymentParam() =>
-      <String, String>{
+  _paymentParam() => <String, String>{
         "transaction_no": billInfoResponse.transactionNumber ?? "",
         "cattype": getProviderInfo(providerType)?.requestParam ?? "",
         "operatorid": provider.id,
@@ -143,6 +149,8 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
         "field2": fieldTwoController.text,
         "field3": fieldThreeController.text,
         "mpin": Encryption.encryptMPIN(mpinController.text),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       };
 
   _makeBillPayment() async {
@@ -170,10 +178,13 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(() => ExceptionPage(error: e,data: {
-        "param": _paymentParam(),
-        "transaction_type": "Bill Payment : ${provider.name.toString()}"
-      },));
+      Get.to(() => ExceptionPage(
+            error: e,
+            data: {
+              "param": _paymentParam(),
+              "transaction_type": "Bill Payment : ${provider.name.toString()}"
+            },
+          ));
     }
   }
 
@@ -234,9 +245,10 @@ class BillPaymentController extends GetxController with TransactionHelperMixin {
     fieldTwoController.dispose();
     fieldThreeController.dispose();
     mpinController.dispose();
-    if(cancelToken!= null){
-      if(!(cancelToken?.isCancelled ?? false)){
-        cancelToken?.cancel("Transaction was initiate but didn't catch response");
+    if (cancelToken != null) {
+      if (!(cancelToken?.isCancelled ?? false)) {
+        cancelToken
+            ?.cancel("Transaction was initiate but didn't catch response");
       }
     }
     super.dispose();

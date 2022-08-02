@@ -17,7 +17,7 @@ import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import '../../../util/security/encription.dart';
 
 class LicOnlineController extends GetxController
-    with TransactionHelperMixin {
+    with TransactionHelperMixin, LocationHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
 
   AppPreference appPreference = Get.find();
@@ -35,8 +35,22 @@ class LicOnlineController extends GetxController
 
   var strDueDate = "";
 
-  onProceed() {
+  @override
+  onInit() {
+    super.onInit();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      validateLocation(progress: false);
+    });
+  }
+
+  onProceed() async {
     if (!_validateForFetchBill()) return;
+
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
+
     if (actionType.value == LicOnlineActionType.fetchBill) {
       _fetchBillInfo();
     } else {
@@ -78,14 +92,15 @@ class LicOnlineController extends GetxController
         "amount": amountWithoutRupeeSymbol(amountController),
         "policyno": policyNumberController.text,
         "emailid": emailController.text,
-        "mpin":Encryption.encryptMPIN(mpinController.text),
+        "mpin": Encryption.encryptMPIN(mpinController.text),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       };
 
   _makeBillPayment() async {
     var validBalance = checkBalance(appPreference.user.availableBalance,
         amountWithoutRupeeSymbol(amountController));
     if (!validBalance) return;
-
 
     StatusDialog.transaction();
     try {
@@ -95,9 +110,8 @@ class LicOnlineController extends GetxController
           await repo.makeLicOnlineBillPayment(_paymentParam(), cancelToken);
       Get.back();
       if (response.code == 1) {
-        Get.to(()=>BillPaymentTxnResponsePage(),arguments: {
-          "response" : response
-        });
+        Get.to(() => BillPaymentTxnResponsePage(),
+            arguments: {"response": response});
       } else {
         StatusDialog.failure(title: response.message ?? "message not found");
       }

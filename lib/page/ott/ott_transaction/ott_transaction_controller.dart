@@ -9,12 +9,13 @@ import 'package:spayindia/model/ott/ott_plan.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/page/response/recharge/recharge_txn_response_page.dart';
 
+import '../../../util/mixin/location_helper_mixin.dart';
 import '../../../util/security/encription.dart';
 import '../../../widget/common.dart';
 import '../../../widget/dialog/status_dialog.dart';
 import '../../exception_page.dart';
 
-class OttTransactionController extends GetxController {
+class OttTransactionController extends GetxController with LocationHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
 
   AppPreference appPreference = Get.find();
@@ -29,10 +30,17 @@ class OttTransactionController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      validateLocation(progress: false);
+    });
   }
 
-  onProceed() {
+  onProceed() async{
     if (!formKey.currentState!.validate()) {
+      return;
+    }
+    if (position == null) {
+      await validateLocation();
       return;
     }
     Get.dialog(AmountConfirmDialogWidget(
@@ -81,6 +89,8 @@ class OttTransactionController extends GetxController {
         "planid": plan.id.toString(),
         "operatorcode": operator.operatorCode.toString(),
         "operatorname": operator.operatorName.toString(),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       });
       Get.back();
       if (response.code == 1) {

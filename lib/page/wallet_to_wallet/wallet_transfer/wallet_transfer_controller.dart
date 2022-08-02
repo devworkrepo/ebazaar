@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/response/wallet_load/wallet_load_txn_response_page.dart';
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/security/encription.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
@@ -11,7 +12,7 @@ import 'package:spayindia/model/wallet/wallet_fav.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
-class WalletTransferController extends GetxController with TransactionHelperMixin {
+class WalletTransferController extends GetxController with TransactionHelperMixin ,LocationHelperMixin{
   WalletSearchResponse data = Get.arguments;
   WalletRepo repo = Get.find<WalletRepoImpl>();
 
@@ -23,8 +24,22 @@ class WalletTransferController extends GetxController with TransactionHelperMixi
   var isFavouriteChecked = true.obs;
   var formKey = GlobalKey<FormState>();
 
+
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      validateLocation(progress: false);
+    });
+
+  }
+
   onProceed() async {
     if (!formKey.currentState!.validate()) return;
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
     Get.dialog(AmountConfirmDialogWidget(onConfirm: (){
       _transfer();
     },amount: amountController.text,));
@@ -41,6 +56,8 @@ class WalletTransferController extends GetxController with TransactionHelperMixi
         "remark" : (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
         "mpin" : Encryption.encryptMPIN(mpinController.text),
         "isfav" : isFavouriteChecked.value.toString(),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       });
 
       Get.back();

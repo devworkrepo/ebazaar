@@ -7,6 +7,7 @@ import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import 'package:spayindia/widget/common/common_confirm_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
@@ -18,7 +19,7 @@ import '../../util/api/resource/resource.dart';
 import '../../util/future_util.dart';
 
 class SecurityDepositController extends GetxController
-    with TransactionHelperMixin {
+    with TransactionHelperMixin, LocationHelperMixin {
   var formKey = GlobalKey<FormState>();
   var amountController = TextEditingController();
   var aadhaarController = TextEditingController();
@@ -40,7 +41,10 @@ class SecurityDepositController extends GetxController
   @override
   onInit() {
     super.onInit();
-    _fetchUserProfile();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _fetchUserProfile();
+      validateLocation(progress: false);
+    });
   }
 
   _parseNames(String fullName) {
@@ -69,6 +73,10 @@ class SecurityDepositController extends GetxController
 
   onSubmit() async {
     if (!formKey.currentState!.validate()) return;
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
 
     Get.dialog(CommonConfirmDialogWidget(
       onConfirm: () {
@@ -97,6 +105,8 @@ class SecurityDepositController extends GetxController
         "amount": amountWithoutRupeeSymbol(amountController),
         "transaction_no": transactionNumber,
         "mpin": mpinController.text.toString(),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       });
       Get.back();
 

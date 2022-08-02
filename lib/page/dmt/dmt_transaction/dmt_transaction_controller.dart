@@ -13,6 +13,7 @@ import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/response/dmt/dmt_txn_response_page.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import 'package:spayindia/widget/common.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
@@ -23,7 +24,7 @@ import '../../../util/security/encription.dart';
 import '../../fund/component/bond_dialog.dart';
 
 class DmtTransactionController extends GetxController
-    with TransactionHelperMixin {
+    with TransactionHelperMixin, LocationHelperMixin {
   AppPreference appPreference = Get.find();
 
   DmtRepo repo = Get.find<DmtRepoImpl>();
@@ -50,7 +51,10 @@ class DmtTransactionController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    _calculateTransactionCharge();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      validateLocation(progress: false);
+      _calculateTransactionCharge();
+    });
   }
 
   void onProceed() async {
@@ -108,13 +112,16 @@ class DmtTransactionController extends GetxController
         }));
   }
 
-
   _dmtTransfer() async {
     var value = checkBalance(appPreference.user.availableBalance, amount);
     if (!value) return;
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
 
     try {
-      cancelToken =CancelToken();
+      cancelToken = CancelToken();
       StatusDialog.transaction();
 
       DmtTransactionResponse response;
@@ -122,13 +129,16 @@ class DmtTransactionController extends GetxController
       switch (dmtType) {
         case DmtType.instantPay:
           if ((sender.isKycVerified ?? false)) {
-            response = await repo.kycTransaction(_transactionParam(),cancelToken);
+            response =
+                await repo.kycTransaction(_transactionParam(), cancelToken);
           } else {
-            response = await repo.nonKycTransaction(_transactionParam(),cancelToken);
+            response =
+                await repo.nonKycTransaction(_transactionParam(), cancelToken);
           }
           break;
         case DmtType.payout:
-          response = await repo.payoutTransaction(_transactionParam(),cancelToken);
+          response =
+              await repo.payoutTransaction(_transactionParam(), cancelToken);
           break;
       }
 
@@ -139,11 +149,10 @@ class DmtTransactionController extends GetxController
       } else {
         Get.to(() => DmtTxnResponsePage(), arguments: {
           "response": response,
-          "amount" : amount,
-          "dmtType" : dmtType
+          "amount": amount,
+          "dmtType": dmtType
         });
       }
-
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
@@ -157,8 +166,7 @@ class DmtTransactionController extends GetxController
     }
   }
 
-  _transactionParam() =>
-      {
+  _transactionParam() => {
         "beneid": beneficiary.id ?? "",
         "transfer_amt": amount,
         "mpin": Encryption.encryptMPIN(mpinController.text),
@@ -166,7 +174,9 @@ class DmtTransactionController extends GetxController
             ? "Transaction"
             : remarkController.text,
         "calcid": calculateChargeResponse.calcId.toString(),
-        "trans_type": (transferType == DmtTransferType.imps) ? "IMPS" : "NEFT"
+        "trans_type": (transferType == DmtTransferType.imps) ? "IMPS" : "NEFT",
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       };
 
   _calculateTransactionCharge() async {
@@ -196,13 +206,12 @@ class DmtTransactionController extends GetxController
 
       calculateChargeResponse = response;
 
-      if(response.code == 1){
+      if (response.code == 1) {
         calculateChargeResponseObs.value = Resource.onSuccess(response);
+      } else {
+        StatusDialog.failure(title: response.message)
+            .then((value) => Get.back());
       }
-      else{
-        StatusDialog.failure(title: response.message).then((value) => Get.back());
-      }
-
     } catch (e) {
       calculateChargeResponseObs.value = Resource.onFailure(e);
       Get.to(() => () => ExceptionPage(error: e));
@@ -218,9 +227,10 @@ class DmtTransactionController extends GetxController
   void dispose() {
     mpinController.dispose();
     remarkController.dispose();
-    if(cancelToken!= null){
-      if(!(cancelToken?.isCancelled ?? false)){
-        cancelToken?.cancel("Transaction was initiate but didn't catch response");
+    if (cancelToken != null) {
+      if (!(cancelToken?.isCancelled ?? false)) {
+        cancelToken
+            ?.cancel("Transaction was initiate but didn't catch response");
       }
     }
     super.dispose();

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/widget/common.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
@@ -18,11 +19,10 @@ import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import '../../util/security/encription.dart';
 import '../response/credit_card/credit_card_txn_response_page.dart';
 
-class CreditCardController extends GetxController with TransactionHelperMixin {
+class CreditCardController extends GetxController
+    with TransactionHelperMixin, LocationHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
-  var initialObs = Resource
-      .onInit(data: CreditCardTypeResponse())
-      .obs;
+  var initialObs = Resource.onInit(data: CreditCardTypeResponse()).obs;
 
   AppPreference appPreference = Get.find();
 
@@ -46,7 +46,10 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
   @override
   void onInit() {
     super.onInit();
-    _fetchInitialInfo();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _fetchInitialInfo();
+      validateLocation(progress: false);
+    });
   }
 
   _fetchInitialInfo() async {
@@ -65,90 +68,87 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
     }
   }
 
-  onProceed() {
+  onProceed() async {
     var isValidate = formKey.currentState!.validate();
     if (!isValidate) return;
 
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
+
     if (actionType.value == CreditCardActionType.fetch) {
       _fetchCreditLimit();
-    }
-    else {
+    } else {
       Get.dialog(
           AmountConfirmDialogWidget(
               amount: amountController.text.toString(),
               detailWidget: [
                 ListTitleValue(
-                    title: "Card Number", value: numberController.text.toString()),
+                    title: "Card Number",
+                    value: numberController.text.toString()),
                 ListTitleValue(
-                    title: "Mobile Number", value: mobileController.text.toString()),
-                ListTitleValue(
-                    title: "Card Type", value: selectedType),
+                    title: "Mobile Number",
+                    value: mobileController.text.toString()),
+                ListTitleValue(title: "Card Type", value: selectedType),
                 ListTitleValue(
                     title: "Bank Name", value: selectedBank?.bankName ?? ""),
-                ListTitleValue(
-                    title: "User Name", value: nameController.text),
-
+                ListTitleValue(title: "User Name", value: nameController.text),
               ],
               onConfirm: () {
                 _fetchTransactionNumber();
               }),
           barrierDismissible: false);
     }
-
-
   }
 
-  _fetchTransactionNumber() async{
-    try{
-
+  _fetchTransactionNumber() async {
+    try {
       StatusDialog.progress();
       var response = await repo.fetchTransactionNumber();
       Get.back();
-      if(response.code == 1){
+      if (response.code == 1) {
         _makePayment(response.transactionNumber!);
+      } else {
+        StatusDialog.failure(title: response.message);
       }
-      else{
-        StatusDialog.failure(title: response.message );
-      }
-    }catch(e){
+    } catch (e) {
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
-
-
   }
-  
-  _makePayment(String transactionNumber) async {
-    try{
 
+  _makePayment(String transactionNumber) async {
+    try {
       cancelToken = CancelToken();
       StatusDialog.transaction();
       var param = {
-        "transaction_no" : transactionNumber,
-        "mpin" : Encryption.encryptMPIN(mpinController.text),
-        "amount" : amountWithoutRupeeSymbol(amountController),
-        "mobileno" : mobileController.text,
-        "cardno" : aadhaarWithoutSymbol(numberController),
-        "card_holdername" : nameController.text,
-        "card_type" : selectedType,
-        "bankname" : selectedBank?.bankName ?? "",
-        "ifsc" : ifscCodeController.text,
+        "transaction_no": transactionNumber,
+        "mpin": Encryption.encryptMPIN(mpinController.text),
+        "amount": amountWithoutRupeeSymbol(amountController),
+        "mobileno": mobileController.text,
+        "cardno": aadhaarWithoutSymbol(numberController),
+        "card_holdername": nameController.text,
+        "card_type": selectedType,
+        "bankname": selectedBank?.bankName ?? "",
+        "ifsc": ifscCodeController.text,
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       };
 
       var response = await repo.makeCardPayment(param, cancelToken);
       Get.back();
-      if(response.code == 1){
-        Get.to(()=>CreditCardTxnResponsePage(),arguments: {
-          "response" : response
-        });
+      if (response.code == 1) {
+        Get.to(() => CreditCardTxnResponsePage(),
+            arguments: {"response": response});
+      } else {
+        StatusDialog.failure(
+            title: response.message ?? "Something went wrong!!");
       }
-      else{
-        StatusDialog.failure(title: response.message ?? "Something went wrong!!");
-      }
-    }catch(e){
+    } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 
@@ -156,8 +156,8 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
     try {
       StatusDialog.progress();
       var param = {
-        "mobileno" : mobileController.text,
-        "cardno" : aadhaarWithoutSymbol(numberController)
+        "mobileno": mobileController.text,
+        "cardno": aadhaarWithoutSymbol(numberController)
       };
       var response = await repo.fetchCreditLimit(param);
       Get.back();
@@ -166,14 +166,13 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
         actionType.value = CreditCardActionType.payment;
         showSuccessSnackbar(
             title: "Credit Limit", message: response.message ?? "");
-      }
-      else{
+      } else {
         showFailureSnackbar(
             title: "Credit Limit", message: response.message ?? "");
       }
     } catch (e) {
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
   }
 
@@ -195,7 +194,4 @@ class CreditCardController extends GetxController with TransactionHelperMixin {
   }
 }
 
-enum CreditCardActionType {
-  fetch,
-  payment
-}
+enum CreditCardActionType { fetch, payment }

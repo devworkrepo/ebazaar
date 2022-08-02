@@ -4,6 +4,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as path;
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
@@ -22,7 +23,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../exception_page.dart';
 
-class FundRequestController extends GetxController with TransactionHelperMixin {
+class FundRequestController extends GetxController with TransactionHelperMixin, LocationHelperMixin {
   MoneyRequestRepo repo = Get.find<MoneyRequestImpl>();
   AppPreference appPreference = Get.find();
 
@@ -50,7 +51,11 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
   void onInit() {
     super.onInit();
     paymentDateController.text = DateUtil.formatter.format(DateTime.now());
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
     _fetchBankTypeDetails();
+    validateLocation(progress: false);
+    });
   }
 
   _fetchBankTypeDetails() async {
@@ -115,6 +120,10 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
   onFundRequestSubmitButtonClick() async {
     bool isValid = fundRequestFormKey.currentState!.validate();
     if (!isValid) return;
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
     _confirmDialog();
   }
 
@@ -189,6 +198,8 @@ class FundRequestController extends GetxController with TransactionHelperMixin {
       "remark": (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
       "amount": amountController.text,
       "images ": fileData,
+      "latitude": position!.latitude.toString(),
+      "longitude": position!.longitude.toString(),
     };
 
     if(updateDetail !=null){

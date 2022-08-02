@@ -13,7 +13,7 @@ import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/widget/image.dart';
 
-class VirtualAccountController extends GetxController {
+class VirtualAccountController extends GetxController  {
   VirtualAccountRepo repo = Get.find<VirtualAccountImpl>();
   var responseObs = Resource.onInit(data: VirtualAccountDetailResponse()).obs;
 

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/widget/list_component.dart';
@@ -18,8 +19,8 @@ import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import '../../../util/security/encription.dart';
 import '../../response/recharge/recharge_txn_response_page.dart';
 
-class RechargeController extends GetxController with TransactionHelperMixin {
-
+class RechargeController extends GetxController
+    with TransactionHelperMixin, LocationHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
 
   Map<String, dynamic> argument = Get.arguments;
@@ -56,7 +57,9 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     providerType = argument["provider_type"];
     transactionNumber = argument["transactionNumber"];
 
-    _fetchCircles();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _fetchCircles();
+    });
   }
 
   _fetchCircles() async {
@@ -65,14 +68,21 @@ class RechargeController extends GetxController with TransactionHelperMixin {
       var response = await repo.fetchCircles({});
       circleList = response.circles!;
       circleResponseObs.value = Resource.onSuccess(response);
+
+      validateLocation(progress: false);
     } catch (e) {
       circleResponseObs.value = Resource.onFailure(e);
     }
   }
 
-  onProceed() {
+  onProceed() async {
     var isValidate = rechargeFormKey.currentState!.validate();
     if (!isValidate) return;
+
+    if (position == null) {
+      await validateLocation();
+      return;
+    }
 
     Get.dialog(
         AmountConfirmDialogWidget(
@@ -94,10 +104,12 @@ class RechargeController extends GetxController with TransactionHelperMixin {
       cancelToken = CancelToken();
 
       RechargeResponse response = (providerType == ProviderType.dth)
-          ? await repo.makeDthRecharge(_transactionParam(),cancelToken)
+          ? await repo.makeDthRecharge(_transactionParam(), cancelToken)
           : (providerType == ProviderType.prepaid)
-              ? await repo.makeMobilePrepaidRecharge(_transactionParam(),cancelToken)
-              : await repo.makeMobilePostpaidRecharge(_transactionParam(),cancelToken);
+              ? await repo.makeMobilePrepaidRecharge(
+                  _transactionParam(), cancelToken)
+              : await repo.makeMobilePostpaidRecharge(
+                  _transactionParam(), cancelToken);
 
       Get.back();
 
@@ -110,10 +122,15 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(() => ExceptionPage(error: e,data: {
-        "param": _transactionParam(),
-        "transaction_type": "Recharge : ${provider.name.toString()}"
-      },),);
+      Get.to(
+        () => ExceptionPage(
+          error: e,
+          data: {
+            "param": _transactionParam(),
+            "transaction_type": "Recharge : ${provider.name.toString()}"
+          },
+        ),
+      );
     }
   }
 
@@ -125,7 +142,9 @@ class RechargeController extends GetxController with TransactionHelperMixin {
         "circleid": circle.id.toString(),
         "circlename": circle.name.toString(),
         "mobileno": numberController.text.toString(),
-        "amount": amountWithoutRupeeSymbol(amountController)
+        "amount": amountWithoutRupeeSymbol(amountController),
+        "latitude": position!.latitude.toString(),
+        "longitude": position!.longitude.toString(),
       };
 
   String getNumberLabel() {
@@ -151,27 +170,22 @@ class RechargeController extends GetxController with TransactionHelperMixin {
   }
 
   numberValidation(String? value) {
-
-    if(providerType == ProviderType.postpaid || providerType == ProviderType.prepaid){
-      if(value!.length == 10) {
+    if (providerType == ProviderType.postpaid ||
+        providerType == ProviderType.prepaid) {
+      if (value!.length == 10) {
         return null;
-      }
-      else{
+      } else {
         return "Enter 10 digits mobile number";
       }
-    }
-    else if(providerType == ProviderType.dth){
-      if(value!.length >5 && value.length < 15) {
+    } else if (providerType == ProviderType.dth) {
+      if (value!.length > 5 && value.length < 15) {
         return null;
-      }
-      else{
+      } else {
         return "Enter valid 6 - 14 digits Customer Id";
       }
-    }
-    else {
+    } else {
       return "Provider Type not valid";
     }
-
   }
 
   getMaxLength() {
@@ -190,9 +204,10 @@ class RechargeController extends GetxController with TransactionHelperMixin {
     numberController.dispose();
     amountController.dispose();
     mpinController.dispose();
-    if(cancelToken!= null){
-      if(!(cancelToken?.isCancelled ?? false)){
-        cancelToken?.cancel("Transaction was initiate but didn't catch response");
+    if (cancelToken != null) {
+      if (!(cancelToken?.isCancelled ?? false)) {
+        cancelToken
+            ?.cancel("Transaction was initiate but didn't catch response");
       }
     }
     super.dispose();
