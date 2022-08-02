@@ -105,8 +105,8 @@ class MatmTramoController extends GetxController
     if (!isValidate) return;
 
     try {
-      position = await LocationService.determinePosition();
-      AppUtil.logger("Position : " + position.toString());
+      await validateLocation(progress: true);
+      if(position == null) return;
     } catch (e) {
       return;
     }

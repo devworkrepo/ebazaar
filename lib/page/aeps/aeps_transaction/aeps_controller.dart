@@ -109,7 +109,7 @@ class AepsController extends GetxController
     if (!isValidate) return;
     try {
       await validateLocation(progress: true);
-      AppUtil.logger("Position : " + position.toString());
+      if(position == null) return;
     } catch (e) {
       return;
     }

@@ -118,7 +118,10 @@ class MatmCredoPage extends GetView<MatmCredoController> {
                 Obx(() => (controller.transactionTypeObs.value ==
                             MatmCredoTxnType.microAtm ||
                         controller.transactionTypeObs.value ==
-                            MatmCredoTxnType.mPos)
+                            MatmCredoTxnType.mPos ||
+                    controller.transactionTypeObs.value ==
+                        MatmCredoTxnType.voidTxn
+                )
                     ? Card(
                         child: Padding(
                           padding: const EdgeInsets.only(

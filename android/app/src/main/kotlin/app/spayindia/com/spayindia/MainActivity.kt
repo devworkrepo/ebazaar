@@ -125,6 +125,15 @@ class MainActivity : FlutterFragmentActivity() {
             val production = call.argument<Boolean>("production")
 
 
+            AppUtil.logD("Request Param CredoPay : " + loginId)
+            AppUtil.logD("Request Param CredoPay : " + password)
+            AppUtil.logD("Request Param CredoPay : " + amount)
+            AppUtil.logD("Request Param CredoPay : " + tid)
+            AppUtil.logD("Request Param CredoPay : " + mobileNumber)
+            AppUtil.logD("Request Param CredoPay : " + debugMode.toString())
+            AppUtil.logD("Request Param CredoPay : " + production.toString())
+
+
             val mTxnType = when (transactionType?.uppercase()) {
                 "MATM" -> CredopayPaymentConstants.MICROATM
                 "BE" -> CredopayPaymentConstants.BALANCE_ENQUIRY

@@ -81,8 +81,7 @@ class MatmCredoController extends GetxController
       transactionNumber ??= txnRes.transactionNumber;
 
       var amount = amountWithoutRupeeSymbol(amountController);
-      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry ||
-          transactionTypeObs.value == MatmCredoTxnType.voidTxn) {
+      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry ) {
         amount = "0";
       }
 
@@ -141,8 +140,7 @@ class MatmCredoController extends GetxController
       var decryptedPassword = Encryption.encryptCredopPayPassword(
           matmCredoInitiate!.loginPass.toString());
       var amount = amountWithoutRupeeSymbol(amountController);
-      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry ||
-          transactionTypeObs.value == MatmCredoTxnType.voidTxn) {
+      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry) {
         amount = "0";
       }
       var intAmount = int.parse(amount) * 100;
