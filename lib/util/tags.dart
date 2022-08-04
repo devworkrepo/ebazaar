@@ -8,6 +8,7 @@ class AppTag {
   static const String aepsReportControllerTag = "AEPS_REPORT_CONTROLLER_TAG";
   static const String aadhaarPayReportControllerTag = "AADHAAR_PAY_REPORT_CONTROLLER_TAG";
   static const String matmReportControllerTag = "MAMT_REPORT_CONTROLLER_TAG";
+  static const String mposReportControllerTag = "MPOS_REPORT_CONTROLLER_TAG";
   static const String accountStatementControllerTag = "ACCOUNT_STATEMENT_CONTROLLER_TAG";
   static const String aepsStatementControllerTag = "AEPS_STATEMENT_CONTROLLER_TAG";
   static const String creditStatementControllerTag = "CREDIT_STATEMENT_CONTROLLER_TAG";

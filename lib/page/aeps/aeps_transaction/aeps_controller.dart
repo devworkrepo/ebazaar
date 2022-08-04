@@ -83,6 +83,9 @@ class AepsController extends GetxController
       }
       else{
         validateLocation(progress: false);
+
+        if(selectedAepsBank != null){
+        }
       }
     } catch (e) {
       aepsBankListResponseObs.value = Resource.onFailure(e);
@@ -197,7 +200,7 @@ class AepsController extends GetxController
           "response": response,
           "aeps_type": aepsTransactionType.value,
           "isAadhaarPay": isAadhaarPay
-        });
+        })?.then((value) => _fetchBankList());
       } else {
         StatusDialog.failure(title: response.message ?? "");
       }
@@ -244,7 +247,7 @@ class AepsController extends GetxController
           "response": response,
           "aeps_type": aepsTransactionType.value,
           "isAadhaarPay": isAadhaarPay
-        });
+        })?.then((value) => _fetchBankList());
       } else {
         StatusDialog.failure(title: response.message ?? "");
       }

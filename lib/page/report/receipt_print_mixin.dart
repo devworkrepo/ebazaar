@@ -16,7 +16,7 @@ import 'package:spayindia/page/pdf_html/credit_card_receipt_html.dart';
 import 'package:spayindia/page/pdf_html/dmt_receipt_html.dart';
 import 'package:spayindia/page/pdf_html/recharge_receipt_html.dart';
 
-enum ReceiptType { money, payout, recharge, aeps,aadhaarPay, matm, creditCard }
+enum ReceiptType { money, payout, recharge, aeps,aadhaarPay, matm,mpos, creditCard }
 
 mixin ReceiptPrintMixin {
   ReportRepo repo = Get.find<ReportRepoImpl>();
@@ -44,6 +44,9 @@ mixin ReceiptPrintMixin {
         _fetchAadhaarPayReceiptData(_param, receiptType);
         break;
       case ReceiptType.matm:
+        _fetchAepsReceiptData(_param, receiptType);
+        break;
+      case ReceiptType.mpos:
         _fetchAepsReceiptData(_param, receiptType);
         break;
       case ReceiptType.creditCard:
@@ -77,7 +80,11 @@ mixin ReceiptPrintMixin {
 
     if (receiptType == ReceiptType.matm) {
       _printPdfData(AepsReceiptHtmlData(response,"Micro-ATM").printData());
-    } else {
+    }
+    else  if (receiptType == ReceiptType.mpos) {
+      _printPdfData(AepsReceiptHtmlData(response,"MPOS").printData());
+    }
+    else {
       _printPdfData(AepsReceiptHtmlData(response,"AEPS").printData());
     }
   }

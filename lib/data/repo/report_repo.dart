@@ -27,6 +27,7 @@ abstract class ReportRepo{
   Future<RechargeReportResponse> fetchRechargeTransactionList(data);
   Future<AepsReportResponse> fetchAepsTransactionList(data);
   Future<AepsReportResponse> fetchMatmTransactionList(data);
+  Future<AepsReportResponse> fetchMposTransactionList(data);
   Future<AepsReportResponse> fetchAadhaarTransactionList(data);
   Future<WalletPayReportResponse> fetchWalletPayReport(data);
   Future<CreditCardReportResponse> fetchCreditCardReport(data);

@@ -26,12 +26,12 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
 
   final String tag;
 
-  AepsMatmReportController(this.tag,this.origin);
+  AepsMatmReportController(this.tag, this.origin);
 
   @override
   void onInit() {
     super.onInit();
-    if(origin ==  "summary"){
+    if (origin == "summary") {
       searchStatus = "InProgress";
     }
     fromDate = DateUtil.currentDateInYyyyMmDd();
@@ -53,7 +53,9 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
           ? await repo.fetchAepsTransactionList(_param())
           : (tag == AppTag.aadhaarPayReportControllerTag)
               ? await repo.fetchAadhaarTransactionList(_param())
-              : await repo.fetchMatmTransactionList(_param());
+              : (tag == AppTag.matmReportControllerTag)
+                  ? await repo.fetchMatmTransactionList(_param())
+                  : await repo.fetchMposTransactionList(_param());
       if (response.code == 1) {
         reportList = response.reportList!;
       }
@@ -69,7 +71,7 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
-    if(origin ==  "summary"){
+    if (origin == "summary") {
       searchStatus = "InProgress";
     }
     fetchReport();
@@ -100,12 +102,9 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
               "transaction_no": report.transactionNumber ?? "",
             });
 
-
-
       Get.back();
       if (response.code == 1) {
-        ReportHelperWidget.requeryStatus(
-            response.trans_status ?? "InProgress",
+        ReportHelperWidget.requeryStatus(response.trans_status ?? "InProgress",
             response.trans_response ?? "Message not found", () {
           fetchReport();
         });

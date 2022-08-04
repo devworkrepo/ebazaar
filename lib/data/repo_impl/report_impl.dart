@@ -81,6 +81,12 @@ class ReportRepoImpl extends ReportRepo {
   }
 
   @override
+  Future<AepsReportResponse> fetchMposTransactionList(data) async {
+    var response = await client.post("/MPosTransactionList", data: data);
+    return AepsReportResponse.fromJson(response.data);
+  }
+
+  @override
   Future<AepsReportResponse> fetchAadhaarTransactionList(data) async {
     var response = await client.post("/AadharPayTransactionList", data: data);
     return AepsReportResponse.fromJson(response.data);
@@ -250,4 +256,5 @@ class ReportRepoImpl extends ReportRepo {
     var response = await client.post("/AcceptVirtualPayment", data: data);
     return CommonResponse.fromJson(response.data);
   }
+
 }

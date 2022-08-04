@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
 import 'package:spayindia/widget/transaction_page.dart';
 
 import 'aeps_txn_response_controller.dart';
@@ -13,7 +14,18 @@ class AepsTxnResponsePage extends GetView<AepsTxnResponseController> with Transa
   Widget build(BuildContext context) {
     Get.put(AepsTxnResponseController());
 
+    var goBack = false;
+    goBack = controller.aepsTransactionType == AepsTransactionType.balanceEnquiry;
+
+    if(controller.aepsTransactionType == AepsTransactionType.cashWithdrawal){
+      var status =  getStatusIdFromString(controller.response.transactionStatus ?? "Pending");
+      if(status == 2){
+        goBack = true;
+      }
+    }
+
     return baseTxnResponseWidget(
+      goBack: goBack,
       child: screenshotHelperWidget(
         screenshotController: controller.screenshotController,
         children: [

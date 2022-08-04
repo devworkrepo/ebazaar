@@ -34,10 +34,11 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
     return Scaffold(
         appBar: (origin == "summary")
             ? AppBar(
-                title: Text(
-                    (controllerTag == AppTag.aepsReportControllerTag)
-                        ? "Aeps InProgress"
-                        : "Aadhaar Pay InProgress"),
+                title: Text((controllerTag == AppTag.aepsReportControllerTag)
+                    ? "AEPS InProgress"
+                    : (controllerTag == AppTag.aadhaarPayReportControllerTag)
+                        ? "Aadhaar Pay InProgress"
+                        : ""),
               )
             : null,
         body: Obx(
@@ -70,7 +71,7 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
           status: (origin != "summary") ? controller.searchStatus : null,
           inputFieldOneTile: "Transaction Number",
           onSubmit:
-              (fromDate, toDate, searchInput, searchInputType, status, _,__) {
+              (fromDate, toDate, searchInput, searchInputType, status, _, __) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
@@ -100,7 +101,7 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
           top: 8,
         ),
         child: ListView.builder(
-          padding: const EdgeInsets.only(top: 0,bottom: 100),
+          padding: const EdgeInsets.only(top: 0, bottom: 100),
           itemBuilder: (context, index) {
             return _BuildListItem(list[index], controller);
           },
@@ -139,32 +140,45 @@ class _BuildListItem extends StatelessWidget {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (report.transactionStatus!.toLowerCase() == "inprogress" || report.transactionStatus!.toLowerCase() == "pending" || kDebugMode)
+            (report.transactionStatus!.toLowerCase() == "inprogress" ||
+                    report.transactionStatus!.toLowerCase() == "pending" ||
+                    kDebugMode)
                 ? ReportActionButton(
-              title: "Re-query",
-              icon: Icons.refresh,
-              onClick: () {
-               controller.requeryTransaction(report);
-              },
-            )
+                    title: "Re-query",
+                    icon: Icons.refresh,
+                    onClick: () {
+                      controller.requeryTransaction(report);
+                    },
+                  )
                 : const SizedBox(),
-            const SizedBox(width: 8,),
+            const SizedBox(
+              width: 8,
+            ),
             ReportActionButton(
               title: "Print",
               icon: Icons.print,
               onClick: () {
-                 if(controller.tag == AppTag.aepsReportControllerTag){
-                   controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.aeps);
-                 }
-                 else if(controller.tag == AppTag.aadhaarPayReportControllerTag){
-                   controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.aadhaarPay);
-                 }
-                 else{
-                   controller.printReceipt((report.transactionNumber ?? ""),ReceiptType.matm);
-                 }
+                if (controller.tag == AppTag.aepsReportControllerTag) {
+                  controller.printReceipt(
+                      (report.transactionNumber ?? ""), ReceiptType.aeps);
+                } else if (controller.tag ==
+                    AppTag.aadhaarPayReportControllerTag) {
+                  controller.printReceipt(
+                      (report.transactionNumber ?? ""), ReceiptType.aadhaarPay);
+                }
+
+                else if(controller.tag == AppTag.mposReportControllerTag){
+                  controller.printReceipt(
+                      (report.transactionNumber ?? ""), ReceiptType.mpos);
+                }
+                else {
+                  controller.printReceipt(
+                      (report.transactionNumber ?? ""), ReceiptType.matm);
+                }
               },
             )
-          ],),
+          ],
+        ),
       ),
     );
   }
@@ -176,9 +190,7 @@ class _BuildListItem extends StatelessWidget {
           title: "Transaction Id", value: report.transactionId.toString()),
       ListTitleValue(
           title: "Transaction No.", value: report.transactionNumber.toString()),
-
-      ListTitleValue(
-          title: "BC Id", value: report.bcid.toString()),
+      ListTitleValue(title: "BC Id", value: report.bcid.toString()),
       ListTitleValue(title: "UTR", value: report.rrn.toString()),
       ListTitleValue(title: "Commission", value: report.commission.toString()),
       ListTitleValue(

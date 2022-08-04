@@ -175,6 +175,8 @@ class _MainPageState extends State<MainPage> {
             tag: AppTag.aadhaarPayReportControllerTag);
         Get.delete<AepsMatmReportController>(
             tag: AppTag.matmReportControllerTag);
+        Get.delete<AepsMatmReportController>(
+            tag: AppTag.mposReportControllerTag);
         Get.delete<CreditCardReportController>();
         return const TransactionTabPage();
       case 4:

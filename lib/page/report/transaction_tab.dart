@@ -8,7 +8,6 @@ import 'package:spayindia/util/tags.dart';
 
 import 'aeps_matm_report/aeps_matm_report_page.dart';
 
-
 class TransactionTabPage extends StatefulWidget {
   const TransactionTabPage({Key? key}) : super(key: key);
 
@@ -29,9 +28,6 @@ class _TransactionTabPageState extends State<TransactionTabPage>
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext mContext, bool innerBoxIsScrolled) {
@@ -59,51 +55,69 @@ class _TransactionTabPageState extends State<TransactionTabPage>
   }
 
   List<Tab> _tabList() {
-    var mList = [
-      const Tab(text: 'Dmt'),
-      const Tab(text: 'Matm'),
-      const Tab(text: 'Aeps'),
-      const Tab(text: 'Aadhaar Pay'),
-      const Tab(text: 'Recharge'),
-      const Tab(text: 'Credit Card'),
-    ];
-   if(appPreference.user.isPayout ?? false){
-     mList.add(const Tab(text: 'Payout'));
-   }
+    var mList = <Tab>[];
+
+    var isPayout = appPreference.user.isPayout ?? false;
+    var isMpos = appPreference.user.is_mpos_credo ?? false;
+
+    mList.add(const Tab(text: 'Dmt'));
+    mList.add(const Tab(text: 'M-ATM'));
+    mList.addIf(isMpos, const Tab(text: 'M-POS'));
+    mList.add(const Tab(text: 'AEPS'));
+    mList.add(const Tab(text: 'Aadhaar Pay'));
+    mList.add(const Tab(text: 'Recharge'));
+    mList.add(const Tab(text: 'Credit Card'));
+    mList.addIf(isPayout, const Tab(text: 'Payout'));
     return mList;
   }
 
   List<Widget> _tabWidgetList() {
-    var mList = <Widget>[
-      const MoneyReportPage(
-        controllerTag: AppTag.moneyReportControllerTag,
-        origin: "report",
-      ),
-      const AepsMatmReportPage(
-        controllerTag: AppTag.matmReportControllerTag,
-        origin: "report",
-      ),
-      const AepsMatmReportPage(
-        controllerTag: AppTag.aepsReportControllerTag,
-        origin: "report",
-      ),
-      const AepsMatmReportPage(
-        controllerTag: AppTag.aadhaarPayReportControllerTag,
-        origin: "report",
-      ),
-      const RechargeReportPage(origin: "report",),
-      const CreditCardReportPage(origin: "report",),
-    ];
+    var isPayout = appPreference.user.isPayout ?? false;
+    var isMpos = appPreference.user.is_mpos_credo ?? false;
 
-    if(appPreference.user.isPayout ?? false){
-      mList.add(
+    var mList = <Widget>[];
+
+    mList.add(const MoneyReportPage(
+      controllerTag: AppTag.moneyReportControllerTag,
+      origin: "report",
+    ));
+
+    mList.addIf(
+        isMpos,
+        const AepsMatmReportPage(
+          controllerTag: AppTag.matmReportControllerTag,
+          origin: "report",
+        ));
+
+    mList.add(const AepsMatmReportPage(
+      controllerTag: AppTag.mposReportControllerTag,
+      origin: "report",
+    ));
+
+    mList.add(const AepsMatmReportPage(
+      controllerTag: AppTag.aepsReportControllerTag,
+      origin: "report",
+    ));
+
+    mList.add(const AepsMatmReportPage(
+      controllerTag: AppTag.aadhaarPayReportControllerTag,
+      origin: "report",
+    ));
+
+    mList.add(const RechargeReportPage(
+      origin: "report",
+    ));
+
+    mList.add(const CreditCardReportPage(
+      origin: "report",
+    ));
+
+    mList.addIf(
+        isPayout,
         const MoneyReportPage(
           controllerTag: AppTag.payoutReportControllerTag,
           origin: "report",
-        ),
-      );
-    }
+        ));
     return mList;
   }
 }
-
