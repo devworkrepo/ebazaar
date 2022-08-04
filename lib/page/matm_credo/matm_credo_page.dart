@@ -119,9 +119,8 @@ class MatmCredoPage extends GetView<MatmCredoController> {
                             MatmCredoTxnType.microAtm ||
                         controller.transactionTypeObs.value ==
                             MatmCredoTxnType.mPos ||
-                    controller.transactionTypeObs.value ==
-                        MatmCredoTxnType.voidTxn
-                )
+                        controller.transactionTypeObs.value ==
+                            MatmCredoTxnType.voidTxn)
                     ? Card(
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -148,7 +147,12 @@ class MatmCredoPage extends GetView<MatmCredoController> {
                                             : 100,
                                         maxAmount: (controller.isMatm)
                                             ? 10000
-                                            : 200000, multipleOf: 10),
+                                            : 10000,
+                                        multipleOf: (controller
+                                                    .transactionTypeObs.value ==
+                                                MatmCredoTxnType.mPos)
+                                            ? null
+                                            : 10),
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 16),
@@ -169,10 +173,12 @@ class MatmCredoPage extends GetView<MatmCredoController> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    const Text(
+                                    if (controller.transactionTypeObs.value ==
+                                        MatmCredoTxnType.microAtm)  const Text(
                                         "Enter amount in multiple of 10."),
-                                    Text(
-                                        "Enter amount in range of 100 to ${controller.isMatm ? 10000 : 200000}"),
+
+                                      Text(
+                                          "Enter amount in range of 100 to ${controller.isMatm ? 10000 : 10000}"),
                                   ],
                                 ),
                               )

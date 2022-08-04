@@ -5,6 +5,7 @@ import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/matm_credo_impl.dart';
 import 'package:spayindia/model/matm_credo/matm_credo_initiate.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
@@ -199,7 +200,7 @@ class MatmCredoController extends GetxController
         retryCount++;
       }
     } else if (transactionTypeObs.value == MatmCredoTxnType.voidTxn) {
-      return;
+      Get.offAllNamed(AppRoute.mainPage);
     } else {
       try {
         StatusDialog.progress(title: "Updating...");

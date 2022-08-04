@@ -61,6 +61,7 @@ class ReportHelperWidget{
       return 1;
     } else if (status.toLowerCase() == "initiated" ||
         status.toLowerCase() == "refunded" ||
+        status.toLowerCase() == "reversed" ||
         status.toLowerCase() == "inprogress"
     ) {
       return 4;

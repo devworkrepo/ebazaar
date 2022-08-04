@@ -3,7 +3,7 @@ class AppConstant{
 
  static const liveBaseUrl = "https://apiv2app.spayindia.in/AppSpayService.svc/";
  static const uatBaseUrl = "https://api.spayindia.in/AppSpayService.svc/";
- static String baseUrl = uatBaseUrl; //todo change uat to live url
+ static String baseUrl = liveBaseUrl;
 
  static const profileBaseUrl = "https://spayindia.in/commonimg/user/";
  static const requestImageBaseUrl = "https://spayindia.in/commonimg/request/";
