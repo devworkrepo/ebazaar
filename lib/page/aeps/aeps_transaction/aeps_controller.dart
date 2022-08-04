@@ -49,7 +49,10 @@ class AepsController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    _fetchBankList();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _fetchBankList();
+      validateLocation(progress: false);
+    });
   }
 
   void _fetchBankList() async {

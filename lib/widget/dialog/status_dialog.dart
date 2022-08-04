@@ -233,6 +233,18 @@ class StatusDialog {
     );
   }
 
+  static Future alert({required String title}) {
+    return Get.dialog(
+      _StatusDialog(
+          title: title,
+          backPress: true,
+          type: StatusType.alert,
+          buttonText : "  Done  "
+      ),
+      barrierDismissible: false,
+    );
+  }
+
   static transaction() {
     return Get.to(()=>
       const FullScreenProgressDialogWidget(),

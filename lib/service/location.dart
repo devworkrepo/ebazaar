@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/dialog/location.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
-
 enum LocationError {
-  locationNotEnable,permissionIsPermanentlyDenied, permissionIsDenied
+  locationNotEnable,
+  permissionIsPermanentlyDenied,
+  permissionIsDenied
 }
 
 class LocationService {
@@ -17,11 +19,11 @@ class LocationService {
     permission = await Geolocator.requestPermission();
 
     if (permission == LocationPermission.denied) {
-      Get.to(
+      /* Get.to(
         () => const LocationDialog(
             locationError: LocationError.permissionIsDenied),
         fullscreenDialog: true,
-      );
+      );*/
       return Future.error(LocationError.permissionIsDenied);
     } else if (permission == LocationPermission.deniedForever) {
       await Get.to(
@@ -33,19 +35,25 @@ class LocationService {
     } else {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
-      if(!serviceEnabled){
-        try{
-          await Geolocator.getCurrentPosition();
-        }catch(e){
+      if(Get.isSnackbarOpen){
+        Get.closeAllSnackbars();
+      }
+      if (!serviceEnabled) {
+        if (progress) StatusDialog.progress(title: title);
+        try {
+          var result = await Geolocator.getCurrentPosition();
+          if (progress) Get.back();
+          return result;
+        } catch (e) {
+          if (progress) Get.back();
           return Future.error(LocationError.locationNotEnable);
         }
+      } else {
+        if (progress) StatusDialog.progress(title: title);
+        var result = await Geolocator.getCurrentPosition();
+        if (progress) Get.back();
+        return result;
       }
-
-      if (progress) StatusDialog.progress(title: title);
-      var result = await Geolocator.getCurrentPosition();
-      if (kDebugMode) await Future.delayed(const Duration(seconds: 0));
-      if (progress) Get.back();
-      return result;
     }
   }
 }

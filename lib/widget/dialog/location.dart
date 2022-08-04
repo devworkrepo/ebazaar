@@ -17,27 +17,36 @@ class LocationDialog extends StatelessWidget {
     var locationData = _getLocationMessageAndIcon();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                 Icon(locationData["icon"],size: 80,color: Colors.red,),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-
-                    locationData["message"],
-                    textAlign: TextAlign.center,
-                    style:
-                    Get.textTheme.headline4?.copyWith(color: Colors.black),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey,)
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 32),
+              margin: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   Icon(locationData["icon"],size: 80,color: Colors.red,),
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+
+                      locationData["message"],
+                      textAlign: TextAlign.center,
+                      style:
+                      Get.textTheme.headline6?.copyWith(color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           (locationError == LocationError.permissionIsPermanentlyDenied) ? Positioned(

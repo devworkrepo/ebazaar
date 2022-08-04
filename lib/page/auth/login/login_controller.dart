@@ -22,94 +22,93 @@ import '../../../util/app_constant.dart';
 import '../../../util/mixin/location_helper_mixin.dart';
 
 class LoginController extends GetxController with LocationHelperMixin {
+  AuthRepo authRepo = Get.find<AuthRepoImpl>();
+  AppPreference appPreference = Get.find();
 
-AuthRepo authRepo = Get.find<AuthRepoImpl>();
-AppPreference appPreference = Get.find();
+  var loginFormKey = GlobalKey<FormState>();
+  var mobileController = TextEditingController();
+  var passwordController = TextEditingController();
 
-var loginFormKey = GlobalKey<FormState>();
-var mobileController = TextEditingController();
-var passwordController = TextEditingController();
+  var isLoginCheck = false.obs;
 
-var isLoginCheck = false.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    appPreference.setIsTransactionApi(false);
+    appPreference.setSessionKey("na");
+    isLoginCheck.value = appPreference.isLoginCheck;
 
-@override
-void onInit() {
-  super.onInit();
-  appPreference.setIsTransactionApi(false);
-  appPreference.setSessionKey("na");
-  isLoginCheck.value = appPreference.isLoginCheck;
+    if (appPreference.isLoginCheck) {
+      mobileController.text = appPreference.mobileNumber;
+      passwordController.text = appPreference.password;
+    }
 
-  if (appPreference.isLoginCheck) {
-    mobileController.text = appPreference.mobileNumber;
-    passwordController.text = appPreference.password;
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      if (!appPreference.isLoginBondAccepted) {
+        Get.dialog(LoginTermAndConditionDialog(onAccept: () async {
+          await appPreference.setIsLoginBondAccepted(true);
+        }, onReject: () async {
+          await appPreference.setIsLoginBondAccepted(false);
+        }));
+      }
+
+      validateLocation(progress: false);
+    });
   }
 
-  WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+  login() async {
+    var isValidate = loginFormKey.currentState?.validate();
+    if (!isValidate!) return;
+
+    if (position == null) {
+      await validateLocation();
+      if (position == null) return;
+    }
+
     if (!appPreference.isLoginBondAccepted) {
       Get.dialog(LoginTermAndConditionDialog(onAccept: () async {
         await appPreference.setIsLoginBondAccepted(true);
+        login();
       }, onReject: () async {
         await appPreference.setIsLoginBondAccepted(false);
       }));
+      return;
     }
 
-    validateLocation(progress: false);
-  });
+    StatusDialog.progress(title: "Login");
+
+    final mobileNumber = mobileController.text.toString();
+    final password = Encryption.aesEncrypt(passwordController.text.toString());
+
+    try {
+      final loginData = {
+        "mobileno": mobileNumber,
+        "password": password,
+        "dvckey": await AppUtil.getDeviceID(),
+        "appid": AppConfig.apiCode,
+        "accesskey": AppConfig.apiKey
+      };
+
+      AppUtil.throwUatExceptionOnDeployment(mobileController.text);
+
+      AppUtil.logger(loginData.toString());
+
+      LoginResponse login = await authRepo.agentLogin(loginData);
+      Get.back();
+
+      if (login.code == 1) {
+        Get.toNamed(AppRoute.loginOtpPage, parameters: {
+          "mobileNumber": mobileController.text.toString(),
+          "isLoginChecked": isLoginCheck.value.toString(),
+          "password": passwordController.text.toString(),
+          "loginData": json.encode(login.toJson())
+        });
+      } else {
+        StatusDialog.failure(title: login.message);
+      }
+    } catch (e) {
+      Get.back();
+      Get.to(() => ExceptionPage(error: e));
+    }
+  }
 }
-
-login() async {
-  var isValidate = loginFormKey.currentState?.validate();
-  if (!isValidate!) return;
-
-  if (position == null) {
-    await validateLocation();
-    return;
-  }
-
-  if (!appPreference.isLoginBondAccepted) {
-    Get.dialog(LoginTermAndConditionDialog(onAccept: () async {
-      await appPreference.setIsLoginBondAccepted(true);
-      login();
-    }, onReject: () async {
-      await appPreference.setIsLoginBondAccepted(false);
-    }));
-    return;
-  }
-
-  StatusDialog.progress(title: "Login");
-
-  final mobileNumber = mobileController.text.toString();
-  final password = Encryption.aesEncrypt(passwordController.text.toString());
-
-  try {
-    final loginData = {
-      "mobileno": mobileNumber,
-      "password": password,
-      "dvckey": await AppUtil.getDeviceID(),
-      "appid": AppConfig.apiCode,
-      "accesskey": AppConfig.apiKey
-    };
-
-    AppUtil.throwUatExceptionOnDeployment(mobileController.text);
-
-
-    AppUtil.logger(loginData.toString());
-
-    LoginResponse login = await authRepo.agentLogin(loginData);
-    Get.back();
-
-    if (login.code == 1) {
-      Get.toNamed(AppRoute.loginOtpPage, parameters: {
-        "mobileNumber": mobileController.text.toString(),
-        "isLoginChecked": isLoginCheck.value.toString(),
-        "password": passwordController.text.toString(),
-        "loginData": json.encode(login.toJson())
-      });
-    } else {
-      StatusDialog.failure(title: login.message);
-    }
-  } catch (e) {
-    Get.back();
-    Get.to(() => ExceptionPage(error: e));
-  }
-}}
