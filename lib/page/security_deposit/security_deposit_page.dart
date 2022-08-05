@@ -151,7 +151,7 @@ class SecurityDepositPage extends GetView<SecurityDepositController> {
                         label: "Deposit Amount",
                         controller: controller.amountController,
                         validator: (value) => FormValidatorHelper.amount(value,
-                            minAmount: 200000, maxAmount: -1),
+                            minAmount: 50000, maxAmount: -1),
                       ),
                       AadhaarTextField(
                           controller: controller.aadhaarController),

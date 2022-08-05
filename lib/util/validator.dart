@@ -88,11 +88,11 @@ class FormValidatorHelper {
           }
           return null;
         } else {
-          return "Minimum amount is 2 LAC!";
+          return "Minimum amount is $minAmount";
         }
       } catch (e) {
         AppUtil.logger(e.toString());
-        return "Minimum amount is 2 LAC!";
+        return "Minimum amount is $minAmount";
       }
     } else {
       try {
