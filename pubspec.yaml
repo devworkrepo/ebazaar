@@ -1,7 +1,7 @@
 name: spayindia
 description: Spay India a money response based fintech application service
 
-version: 1.1.25+23
+version: 1.1.26+24
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -56,7 +56,7 @@ dependencies:
   cached_network_image: ^3.2.0
   firebase_crashlytics: ^2.6.2
   #safe_device: ^1.1.1
-  palestine_trusted_device: ^0.1.1
+  #palestine_trusted_device: ^0.1.1
   url_launcher: ^6.1.2
   firebase_core: ^1.18.0
   firebase_messaging: ^11.4.2

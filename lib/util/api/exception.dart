@@ -38,6 +38,14 @@ class UatUpdateException extends _BaseException {
   String message;
 }
 
+class LocalApkException extends _BaseException {
+  LocalApkException(
+      {this.message =
+          "Please uninstall and install spay india application from google play console"})
+      : super(msg: message);
+  String message;
+}
+
 class ResponseException extends _BaseException {
   final int? code;
   String? message;
@@ -152,7 +160,11 @@ getDioException(error) {
         e = SocketException();
       } else if (error is UatUpdateException) {
         e = UatUpdateException();
-      } else {
+      }
+      else if (error is LocalApkException) {
+        e = LocalApkException();
+      }
+      else {
         e = UnknownException(message: error.toString());
       }
       return e;

@@ -108,7 +108,15 @@ class _ExceptionPageState extends State<ExceptionPage> {
           lottieType: LottieType.server,
           title: "Unauthorized Access!",
           message: exception.message.toString());
-    } else if (exception is BadRequestException) {
+    }
+    else if (exception is LocalApkException) {
+      shouldGoLoginPage = true;
+      return _buildLottieWidget(
+          lottieType: LottieType.alert,
+          title: "Reinstall Application",
+          message: exception.message.toString());
+    }
+    else if (exception is BadRequestException) {
       return _buildLottieWidget(
           lottieType: LottieType.server,
           title: "Bad Request",

@@ -23,12 +23,13 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/in_app_update.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
+import '../../../main.dart';
 import '../../../service/local_notifications.dart';
 import '../../../util/app_constant.dart';
 
 var isLocalAuthDone = false;
-class HomeController extends GetxController {
 
+class HomeController extends GetxController {
   var isUpdateObs = false.obs;
 
   HomeRepo homeRepo = Get.find<HomeRepoImpl>();
@@ -49,16 +50,13 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
 
-
     scrollController = ScrollController();
     appPreference.setIsTransactionApi(false);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       scrollController.addListener(_scrollListener);
-
     });
     _fetchBanners();
   }
-
 
   _fetchBanners() async {
     try {
@@ -96,33 +94,32 @@ class HomeController extends GetxController {
 
       var elevation = 20 * colorOpacity;
 
-
       appbarElevation.value = elevation;
     }
   }
 
   fetchUserDetails() async {
-
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
       _fetchUserDetails();
     });
-
   }
 
   _fetchUserDetails() async {
-
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
     });
     userDetailObs.value = const Resource.onInit();
     try {
-
       AppUtil.throwUatExceptionOnDeployment(appPreference.mobileNumber);
 
       UserDetail response = await homeRepo.fetchAgentInfo();
       user = response;
       await appPreference.setUser(user);
+
+     /* if (!(user.allow_local_apk ?? true) && isLocalApk) {
+        throw LocalApkException();
+      }*/
 
       await setupCrashID();
 
@@ -138,10 +135,6 @@ class HomeController extends GetxController {
 
         //firebase token
         _firebaseServices();
-
-
-
-
       }
       userDetailObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -158,35 +151,28 @@ class HomeController extends GetxController {
     }
   }
 
-  _firebaseServices() async{
+  _firebaseServices() async {
     FirebaseMessaging.instance.onTokenRefresh.listen((event) {
       AppUtil.logger("FirebaseService onRefreshToken: $event");
     });
 
-     FirebaseMessaging.instance.getToken().then((token) {
-       AppUtil.logger("FirebaseService : token : $token");
-     });
+    FirebaseMessaging.instance.getToken().then((token) {
+      AppUtil.logger("FirebaseService : token : $token");
+    });
 
     FirebaseMessaging.onMessage.listen((event) {
       /*AppUtil.logger("Firebase Service == message from foreground");
       LocalNotificationService.showNotificationOnForeground(message: event);*/
     });
-
-
-
   }
 
-
-  onTopUpButtonClick (){
+  onTopUpButtonClick() {
     Get.toNamed(AppRoute.fundRequestOptionPage);
   }
 
   onQRCodeButtonClick() {
     Get.toNamed(AppRoute.showQRCodePage);
   }
-
-
-
 
   void logout() async {
     try {
@@ -209,45 +195,39 @@ class HomeController extends GetxController {
           Get.toNamed(AppRoute.aepsPage, arguments: false);
         }
         break;
-      case HomeServiceType.aadhaarPay:{
-        Get.toNamed(AppRoute.aepsPage, arguments: true);
-      }
+      case HomeServiceType.aadhaarPay:
+        {
+          Get.toNamed(AppRoute.aepsPage, arguments: true);
+        }
 
-      break;
+        break;
       case HomeServiceType.matm:
         {
-
           var user = appPreference.user;
           var isMatm = user.isMatm ?? false;
           var isMatmCredo = user.is_matm_credo ?? false;
           var isMposCredo = user.is_mpos_credo ?? false;
 
-
-          if((isMatm || isMatmCredo) && isMposCredo){
+          if ((isMatm || isMatmCredo) && isMposCredo) {
             Get.bottomSheet(MatmOptionDialog(
               matmClick: () {
-                if(isMatm){
+                if (isMatm) {
                   Get.toNamed(AppRoute.matmTramopage);
-                }
-                else if(isMatmCredo){
-                  Get.toNamed(AppRoute.matmCredoPage,arguments: true);
+                } else if (isMatmCredo) {
+                  Get.toNamed(AppRoute.matmCredoPage, arguments: true);
                 }
               },
               mposClick: () {
-                Get.toNamed(AppRoute.matmCredoPage,arguments: false);
+                Get.toNamed(AppRoute.matmCredoPage, arguments: false);
               },
             ));
-          }
-          else if(isMposCredo){
-            Get.toNamed(AppRoute.matmCredoPage,arguments: false);
-          }
-          else if(isMatmCredo){
-            Get.toNamed(AppRoute.matmCredoPage,arguments: true);
-          }
-          else if(isMatm){
+          } else if (isMposCredo) {
+            Get.toNamed(AppRoute.matmCredoPage, arguments: false);
+          } else if (isMatmCredo) {
+            Get.toNamed(AppRoute.matmCredoPage, arguments: true);
+          } else if (isMatm) {
             Get.toNamed(AppRoute.matmTramopage);
           }
-
         }
         break;
       case HomeServiceType.moneyTransfer:
@@ -268,10 +248,12 @@ class HomeController extends GetxController {
         {
           Get.bottomSheet(RechargeOptionDialog(
             onPrepaidClick: () {
-              Get.toNamed(AppRoute.providerPage, arguments: ProviderType.prepaid);
+              Get.toNamed(AppRoute.providerPage,
+                  arguments: ProviderType.prepaid);
             },
             onPostpaidClick: () {
-              Get.toNamed(AppRoute.providerPage, arguments: ProviderType.postpaid);
+              Get.toNamed(AppRoute.providerPage,
+                  arguments: ProviderType.postpaid);
             },
           ));
         }
@@ -344,11 +326,10 @@ class HomeController extends GetxController {
             onAccountView: () {
               Get.toNamed(AppRoute.virtualAccountPage);
             },
-            onTransactionView:  () {
+            onTransactionView: () {
               Get.toNamed(AppRoute.virtualAccountTransactionTabPage);
             },
           ));
-
         }
         break;
       case HomeServiceType.securityDeposity:
@@ -378,7 +359,8 @@ class HomeController extends GetxController {
     var agentCode = appPreference.user.agentCode.toString();
     await FirebaseCrashlytics.instance.setCustomKey("user ID", userId);
     await FirebaseCrashlytics.instance.setCustomKey("user Code", agentCode);
-    await FirebaseCrashlytics.instance.setCustomKey("Mobile", appPreference.mobileNumber);
+    await FirebaseCrashlytics.instance
+        .setCustomKey("Mobile", appPreference.mobileNumber);
   }
 }
 
@@ -392,8 +374,6 @@ class HomeService {
     required this.iconPath,
     this.onClick,
   });
-
-
 }
 
 enum ProviderType {
