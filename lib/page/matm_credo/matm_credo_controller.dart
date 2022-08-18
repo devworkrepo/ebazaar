@@ -1,14 +1,19 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:spayindia/data/repo/matm_credo_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/matm_credo_impl.dart';
 import 'package:spayindia/model/matm_credo/matm_credo_initiate.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/route/route_name.dart';
+import 'package:spayindia/service/permission_service.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:spayindia/widget/dialog/bluetooth_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 import '../../data/app_pref.dart';
@@ -40,9 +45,9 @@ class MatmCredoController extends GetxController
     transactionTypeObs.value =
         (isMatm) ? MatmCredoTxnType.microAtm : MatmCredoTxnType.mPos;
     position = null;
-   WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-     validateLocation(progress: false);
-   });
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      validateLocation(progress: false);
+    });
   }
 
   getApiTransactionType() {
@@ -66,6 +71,18 @@ class MatmCredoController extends GetxController
       return;
     }
 
+    var isBluetoothPermissionGranted =
+        await PermissionService.checkBluetoothPermission();
+    if (!isBluetoothPermissionGranted) return;
+
+    if (!await NativeCall.bluetoothCheckEnable()) {
+      return;
+    }
+    if (!await NativeCall.bluetoothCheckPaired()) {
+      Get.dialog(const BluetoothDialog());
+      return;
+    }
+
     matmCredoInitiate = null;
     transactionNumber = null;
 
@@ -82,7 +99,7 @@ class MatmCredoController extends GetxController
       transactionNumber ??= txnRes.transactionNumber;
 
       var amount = amountWithoutRupeeSymbol(amountController);
-      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry ) {
+      if (transactionTypeObs.value == MatmCredoTxnType.balanceEnquiry) {
         amount = "0";
       }
 

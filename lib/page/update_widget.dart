@@ -8,7 +8,6 @@ import 'package:spayindia/res/style.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/common/amount_background.dart';
-import 'package:new_version/new_version.dart';
 
 
 import '../util/in_app_update.dart';
@@ -32,13 +31,13 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      updateCheck();
+    //  updateCheck();
 
       AppUpdateUtil.checkUpdate();
     });
   }
 
-  void updateCheck() async {
+/*  void updateCheck() async {
     VersionStatus? status = Get.find();
     var value = status?.canUpdate ?? false;
 
@@ -150,7 +149,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
       }
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     var child = widget.child;
@@ -158,7 +157,7 @@ class _AppUpdateWidgetState extends State<AppUpdateWidget> {
   }
 }
 
-class _ShowAppUpdateDialog extends StatelessWidget {
+/*class _ShowAppUpdateDialog extends StatelessWidget {
   final String currentVersion;
   final String playVersion;
   final bool isForce;
@@ -263,12 +262,12 @@ class _ShowAppUpdateDialog extends StatelessWidget {
                       text: "Update",
                       onClick: () {
 
-                        var status = Get.find<VersionStatus?>();
+                        *//*var status = Get.find<VersionStatus?>();
                         if(status?.appStoreLink == null) return;
                         NewVersion().launchAppStore(status?.appStoreLink ?? "");
                         if (currentVersion == playVersion) {
                           Get.back();
-                        }
+                        }*//*
                       }),
                   const SizedBox(
                     height: 16,
@@ -374,4 +373,4 @@ class _UpdateHelpWidget extends StatelessWidget {
       ),
     );
   }
-}
+}*/

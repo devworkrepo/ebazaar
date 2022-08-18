@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/page/lifecycle_widget.dart';
 import 'package:spayindia/page/main/home/component/home_update_widget.dart';
+import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/widget/exception.dart';
 import 'package:spayindia/widget/progress.dart';
 import 'package:spayindia/model/user/user.dart';
@@ -24,32 +26,37 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
-    return RouteAwareWidget(
-      child: SafeArea(
-        child: AppUpdateWidget(
-          onAvailable: (isUpdate) {
-            controller.isUpdateObs.value = isUpdate;
-          },
-          child: Scaffold(
-            key: controller.scaffoldKey,
-            drawer: const HomeDrawerWidget(),
-            body: Obx(() => controller.userDetailObs.value.when(
-                onSuccess: (data) {
-                  userInfo(data);
-                  return _buildSingleChildScrollView();
-                },
-                onFailure: (e) => ExceptionPage(error: e),
-                onInit: (data) => const AppProgressbar())),
+    return AppLifecycleWidget(
+        onResume: () {
+          controller.authenticateSecurity();
+        },
+
+        child: RouteAwareWidget(
+          child: SafeArea(
+            child: AppUpdateWidget(
+              onAvailable: (isUpdate) {
+                controller.isUpdateObs.value = isUpdate;
+              },
+              child: Scaffold(
+                key: controller.scaffoldKey,
+                drawer: const HomeDrawerWidget(),
+                body: Obx(() => controller.userDetailObs.value.when(
+                    onSuccess: (data) {
+                      userInfo(data);
+                      return _buildSingleChildScrollView();
+                    },
+                    onFailure: (e) => ExceptionPage(error: e),
+                    onInit: (data) => const AppProgressbar())),
+              ),
+            ),
           ),
-        ),
-      ),
-      didPopNext: () {
-        controller.fetchUserDetails();
-      },
-      didPush: () {
-        controller.fetchUserDetails();
-      },
-    );
+          didPopNext: () {
+            controller.fetchUserDetails();
+          },
+          didPush: () {
+            controller.fetchUserDetails();
+          },
+        ));
   }
 
   Widget _buildSingleChildScrollView() {

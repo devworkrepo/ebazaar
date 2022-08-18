@@ -29,6 +29,7 @@ import 'package:spayindia/widget/status_bar_color_widget.dart';
 
 import '../service/native_call.dart';
 import '../widget/dialog/status_dialog.dart';
+import 'main/home/home_controller.dart';
 
 
 var isBottomNavShowObs = true.obs;
@@ -234,6 +235,7 @@ class _MainPageState extends State<MainPage> {
                   child: AppButton(
                     text: "Exit",
                     onClick: () {
+                      isLocalAuthDone = false;
                       Get.back();
                       SystemNavigator.pop();
                     },

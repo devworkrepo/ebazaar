@@ -10,6 +10,9 @@ class NativeCall {
   static const _matmServiceMethodName = "launch_matm_service";
   static const _rdServiceSerialNumber = "rd_service_serial_number";
   static const _rootCheckerService = "root_checker_service";
+  static const _bluetoothService = "bluetooth_service";
+  static const _bluetoothCheckEnable = "bluetooth_check_enable";
+  static const _bluetoothCheckPaired = "bluetooth_check_paired";
   static const _credoPayService = "credo_pay_service";
 
   static Future<String> launchAepsService(Map<String, dynamic> data) async {
@@ -41,6 +44,19 @@ class NativeCall {
   static Future<bool> isDeviceRooted() async {
     var resultData = await _methodChannel.invokeMethod(_rootCheckerService);
     return resultData ?? false;
+  }
+
+
+  static Future<bool> bluetoothCheckEnable() async {
+    bool? resultData = await _methodChannel.invokeMethod(_bluetoothCheckEnable);
+    return resultData ?? true;
+  }
+
+
+
+  static Future<bool> bluetoothCheckPaired() async {
+    bool? resultData = await _methodChannel.invokeMethod(_bluetoothCheckPaired);
+    return resultData ?? true;
   }
 
 

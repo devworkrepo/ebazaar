@@ -19,8 +19,7 @@ import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import '../../util/security/encription.dart';
 import '../response/credit_card/credit_card_txn_response_page.dart';
 
-class CreditCardController extends GetxController
-    with TransactionHelperMixin, LocationHelperMixin {
+class CreditCardController extends GetxController with TransactionHelperMixin, LocationHelperMixin {
   RechargeRepo repo = Get.find<RechargeRepoImpl>();
   var initialObs = Resource.onInit(data: CreditCardTypeResponse()).obs;
 

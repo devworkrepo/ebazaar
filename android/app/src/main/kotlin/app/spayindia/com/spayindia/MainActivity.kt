@@ -4,19 +4,17 @@ import `in`.credopay.payment.sdk.CredopayPaymentConstants
 import `in`.credopay.payment.sdk.PaymentActivity
 import `in`.credopay.payment.sdk.Utils
 import android.content.Intent
-import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
-import app.spayindia.com.AppConstant
-import app.spayindia.com.AppConstant.AEPS_SERVICE_METHOD_NAME
-import app.spayindia.com.AppConstant.CREDO_PAY_METHOD_NAME
-import app.spayindia.com.AppConstant.MATM_SERVICE_METHOD_NAME
-import app.spayindia.com.AppConstant.ROOT_CHECKER_METHOD_NAME
-import app.spayindia.com.AppConstant.METHOD_CHANNEL
-import app.spayindia.com.AppConstant.RD_SERVICE_SERIAL_NUMBER
+import app.spayindia.com.spayindia.AppConstant.AEPS_SERVICE_METHOD_NAME
+import app.spayindia.com.spayindia.AppConstant.BLUETOOTH_CHECK_ENABLE
+import app.spayindia.com.spayindia.AppConstant.BLUETOOTH_CHECK_PAIRED
+import app.spayindia.com.spayindia.AppConstant.CREDO_PAY_METHOD_NAME
+import app.spayindia.com.spayindia.AppConstant.MATM_SERVICE_METHOD_NAME
+import app.spayindia.com.spayindia.AppConstant.METHOD_CHANNEL
+import app.spayindia.com.spayindia.AppConstant.RD_SERVICE_SERIAL_NUMBER
+import app.spayindia.com.spayindia.AppConstant.ROOT_CHECKER_METHOD_NAME
 import app.spayindia.com.R
-import app.spayindia.com.XmPidParser
-import app.spayindia.com.RootChecker
 import com.fingpay.microatmsdk.MicroAtmLoginScreen
 import com.fingpay.microatmsdk.utils.Constants
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -64,8 +62,30 @@ class MainActivity : FlutterFragmentActivity() {
                 call.method.equals(CREDO_PAY_METHOD_NAME) -> {
                     credoPayMatm(call)
                 }
+
+                call.method.equals(BLUETOOTH_CHECK_ENABLE) -> {
+                    bluetoothCheckEnable(call)
+                }
+
+                call.method.equals(BLUETOOTH_CHECK_PAIRED) -> {
+                    bluetoothCheckPaired(call)
+                }
+
+
             }
         }
+    }
+
+    private fun bluetoothCheckEnable(call: MethodCall) {
+
+        val isEnableEnable = BluetoothUtil.isEnable(this)
+        result?.success(isEnableEnable)
+
+    }
+
+    private fun bluetoothCheckPaired(call: MethodCall) {
+        val isPaired = BluetoothUtil.isDevicePairedWithMachine(this)
+        result?.success(isPaired)
     }
 
     private fun rootCheck() {
@@ -202,6 +222,7 @@ class MainActivity : FlutterFragmentActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+
         if (AppConstant.CREDO_PAY_LAUNCH_RESULT_CODE == requestCode) {
             handleCredoPaymentResult(
                 requestCode, resultCode, data
@@ -272,12 +293,13 @@ class MainActivity : FlutterFragmentActivity() {
                         "custom_field_1" to customFieldOne,
                     )
                 )
-            }
-            else{
-                result?.success(hashMapOf(
-                    "code" to 3,
-                    "message" to "Transaction InProgress"
-                ))
+            } else {
+                result?.success(
+                    hashMapOf(
+                        "code" to 3,
+                        "message" to "Transaction InProgress"
+                    )
+                )
             }
         }
 

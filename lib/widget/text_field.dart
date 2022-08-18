@@ -586,10 +586,10 @@ class CardTextField extends StatelessWidget {
         hint: "Required*",
         label: "Card Number",
         validator: (value) {
-          if (value!.length == 19) {
+          if (value!.length == 18 || value.length == 19) {
             return null;
           } else {
-            return "Enter 16 digits card number";
+            return "Enter 15 - 16 digits card number";
           }
         },
         controller: controller);

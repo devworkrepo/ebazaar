@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../page/main/home/home_controller.dart';
+
 class LocalAuthService {
   static Future<bool> isAvailable() async {
     try {
@@ -20,6 +22,7 @@ class LocalAuthService {
             "Access app with biometric authentication is more secure");
 
         if (!isAuthenticate) {
+          isLocalAuthDone = false;
           SystemNavigator.pop();
           return false;
         }

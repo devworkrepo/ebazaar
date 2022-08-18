@@ -98,6 +98,13 @@ class HomeController extends GetxController {
     }
   }
 
+   authenticateSecurity(){
+     if (!isLocalAuthDone) {
+       LocalAuthService.authenticate();
+       isLocalAuthDone = true;
+     }
+   }
+
   fetchUserDetails() async {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
@@ -121,17 +128,14 @@ class HomeController extends GetxController {
         throw LocalApkException();
       }*/
 
+      authenticateSecurity();
+
       await setupCrashID();
 
       if (response.code == 1) {
         isBottomNavShowObs.value = true;
         appbarBackgroundOpacity.value = 0;
         appbarElevation.value = 0;
-
-        if (!isLocalAuthDone && kReleaseMode) {
-          LocalAuthService.authenticate();
-          isLocalAuthDone = true;
-        }
 
         //firebase token
         _firebaseServices();

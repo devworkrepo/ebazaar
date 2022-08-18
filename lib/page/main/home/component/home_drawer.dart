@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:new_version/new_version.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
@@ -242,7 +241,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                  child: Padding(
                    padding: const EdgeInsets.all(12.0),
 
-                   child: Text("App Version : ${Get.find<VersionStatus?>()?.localVersion ?? ""}",style: Get.textTheme.subtitle2,),
+                   child: Text("App Version :N/A",style: Get.textTheme.subtitle2,),
                  ),
                )
               ],
