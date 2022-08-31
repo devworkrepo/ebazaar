@@ -35,8 +35,7 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
     if(origin ==  "summary"){
       searchStatus = "InProgress";
     }
-    //todo remove hard coded before date
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       fetchReport();

@@ -73,11 +73,14 @@ class AccountStatementPage extends GetView<AccountStatementController> {
         controller.swipeRefresh();
       },
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2)
+        ),
         margin: const EdgeInsets.only(
-          bottom: 8,
-          left: 8,
-          right: 8,
-          top: 8,
+          bottom: 0,
+          left: 4,
+          right: 4,
+          top: 4,
         ),
         color: Colors.white,
         child: ListView.builder(
@@ -89,42 +92,44 @@ class AccountStatementPage extends GetView<AccountStatementController> {
                 return Column(
                   children: [
                     SummaryHeaderWidget(
+                      totalCreditedAmount: mData.total_credit,
+                      totalDebitedAmount: mData.total_debit,
                       summaryHeader1: [
                         SummaryHeader(
                             title: "Amount\nCredited",
                             value: "${mData.amt_cr}",
-                            color: Colors.green[800]),
+                            backgroundColor: Colors.green[800]),
                         SummaryHeader(
                             title: "Amount\nDebited",
                             value: "${mData.amt_dr}",
-                            color: Colors.red[800]),
+                            backgroundColor: Colors.red[800]),
                         SummaryHeader(
                             title: "Charge\nDeducted",
                             value: "${mData.chg_dr}",
-                            color: Colors.red[800]),
+                            backgroundColor: Colors.red[800]),
                         SummaryHeader(
                             title: "Charge\nReversed",
                             value: "${mData.chg_cr}",
-                            color: Colors.green[800]),
+                            backgroundColor: Colors.green[800]),
                       ],
                       summaryHeader2: [
 
                         SummaryHeader(
                             title: "Commission\nCredited",
                             value: "${mData.comm_cr}",
-                            color: Colors.green[800]),
+                            backgroundColor: Colors.green[800]),
                         SummaryHeader(
                             title: "Commission\nReversed",
                             value: "${mData.comm_dr}",
-                            color: Colors.red[800]),
+                            backgroundColor: Colors.red[800]),
                         SummaryHeader(
                             title: "TDS\nDeducted",
                             value: "${mData.tds_dr}",
-                            color: Colors.red[800]),
+                            backgroundColor: Colors.red[800]),
                         SummaryHeader(
                             title: "TDS\nReversed",
-                            value: "${mData.tds_dr}",
-                            color: Colors.green[800]),
+                            value: "${mData.tds_cr}",
+                            backgroundColor: Colors.green[800]),
                       ],
                       callback: () {
                         _onSearch();

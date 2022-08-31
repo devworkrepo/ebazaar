@@ -40,8 +40,7 @@ class FundRequestReportController extends GetxController
     if (isPendingRequest) {
       searchStatus = "Pending";
     }
-    //todo remove hard coded before date
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _fetchReport();

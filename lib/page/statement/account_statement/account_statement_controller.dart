@@ -34,8 +34,8 @@ class AccountStatementController extends GetxController with ReceiptPrintMixin {
   @override
   void onInit() {
     super.onInit();
-    //todo remove hard coded before date
-    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
+
+    fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       fetchReport();
