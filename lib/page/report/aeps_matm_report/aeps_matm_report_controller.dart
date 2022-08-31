@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
+import 'package:spayindia/model/report/summary/summary_aeps.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
@@ -21,10 +23,12 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
   String searchInput = "";
 
   var reportResponseObs = Resource.onInit(data: AepsReportResponse()).obs;
-  late List<AepsReport> reportList;
+  var reportList = <AepsReport>[].obs;
   AepsReport? previousReport;
 
   final String tag;
+
+  Rx<SummaryAepsReport?> summaryReport = SummaryAepsReport().obs;
 
   AepsMatmReportController(this.tag, this.origin);
 
@@ -34,12 +38,41 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
     if (origin == "summary") {
       searchStatus = "InProgress";
     }
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    //todo remove hard coded before date
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    fetchReport();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      fetchReport();
+    });
+  }
+
+  fetchSummaryReport() async {
+    String serviceType = "";
+    if (tag == AppTag.aepsReportControllerTag) {
+      serviceType = "AEPS";
+    } else if (tag == AppTag.matmReportControllerTag) {
+      serviceType = "MATM";
+    } else if (tag == AppTag.mposReportControllerTag) {
+      serviceType = "MPOS";
+    }
+
+    var param = {
+      "fromdate": fromDate,
+      "todate": toDate,
+      "transaction_no": searchInput,
+      "status": searchStatus,
+      "service_type": serviceType
+    };
+    var response = (serviceType == "")
+        ? await fetchSummary<SummaryAepsReport>(param, ReportSummaryType.aadhaar)
+        : await fetchSummary<SummaryAepsReport>(param, ReportSummaryType.aeps);
+
+    summaryReport.value = response;
   }
 
   fetchReport() async {
+    fetchSummaryReport();
+
     _param() => {
           "fromdate": fromDate,
           "todate": toDate,
@@ -57,7 +90,7 @@ class AepsMatmReportController extends GetxController with ReceiptPrintMixin {
                   ? await repo.fetchMatmTransactionList(_param())
                   : await repo.fetchMposTransactionList(_param());
       if (response.code == 1) {
-        reportList = response.reportList!;
+        reportList.value = response.reportList!;
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {

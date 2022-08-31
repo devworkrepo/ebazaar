@@ -60,7 +60,7 @@ class _TransactionTabPageState extends State<TransactionTabPage>
     var isPayout = appPreference.user.isPayout ?? false;
     var isMpos = appPreference.user.is_mpos_credo ?? false;
 
-    mList.add(const Tab(text: 'Dmt'));
+    mList.add(const Tab(text: 'DMT'));
     mList.add(const Tab(text: 'M-ATM'));
     mList.addIf(isMpos, const Tab(text: 'M-POS'));
     mList.add(const Tab(text: 'AEPS'));

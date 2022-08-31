@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/credit_card.dart';
+import 'package:spayindia/model/report/summary/summary_credit_card.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
@@ -20,7 +22,9 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
   String searchInput = "";
 
   var reportResponseObs = Resource.onInit(data: CreditCardReportResponse()).obs;
-  late List<CreditCardReport> reportList;
+  var reportList = <CreditCardReport>[].obs;
+  Rx<SummaryCreditCardReport?> summaryReport = SummaryCreditCardReport().obs;
+
   CreditCardReport? previousReport;
 
   CreditCardReportController(this.origin);
@@ -31,12 +35,29 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
     if(origin ==  "summary"){
       searchStatus = "InProgress";
     }
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    //todo remove hard coded before date
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    fetchReport();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      fetchReport();
+    });
   }
 
+  fetchSummaryReport() async {
+
+
+    var response = await fetchSummary<SummaryCreditCardReport>({
+      "fromdate": fromDate,
+      "todate": toDate,
+      "transaction_no": searchInput,
+      "status": searchStatus,
+    }, ReportSummaryType.creditCard);
+    summaryReport.value = response;
+  }
+
+
   fetchReport() async {
+    fetchSummaryReport();
     _param() => {
           "fromdate": fromDate,
           "todate": toDate,
@@ -48,7 +69,7 @@ class CreditCardReportController extends GetxController with ReceiptPrintMixin {
       reportResponseObs.value = const Resource.onInit();
       final response = await repo.fetchCreditCardReport(_param());
       if (response.code == 1) {
-        reportList = response.reports!;
+        reportList.value = response.reports!;
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {

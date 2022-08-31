@@ -9,6 +9,12 @@ import 'package:spayindia/model/refund/credit_card.dart';
 import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
+import 'package:spayindia/model/report/summary/summary_aeps.dart';
+import 'package:spayindia/model/report/summary/summary_credit_card.dart';
+import 'package:spayindia/model/report/summary/summary_dmt_utility.dart';
+import 'package:spayindia/model/report/summary/summary_money_reqeuest.dart';
+import 'package:spayindia/model/report/summary/summary_statement.dart';
+import 'package:spayindia/model/report/summary/summary_wallet_pay.dart';
 import 'package:spayindia/model/virtual_account/virtual_report.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
@@ -255,6 +261,74 @@ class ReportRepoImpl extends ReportRepo {
   Future<CommonResponse> acceptVirtualPayment(data) async {
     var response = await client.post("/AcceptVirtualPayment", data: data);
     return CommonResponse.fromJson(response.data);
+  }
+
+
+
+
+
+
+
+
+  ////////////////////////summary///////////////////////////////////////////////
+  @override
+  Future<SummaryAepsReport> fetchSummaryAadhaar(data) async {
+    var response = await client.post("/GetSummary_Aadhar", data: data);
+    return SummaryAepsReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryAepsReport> fetchSummaryAeps(data) async {
+    var response = await client.post("/GetSummary_Aeps", data: data);
+    return SummaryAepsReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryCreditCardReport> fetchSummaryCreditCard(data) async{
+    var response = await client.post("/GetSummary_CreditCard", data: data);
+    return SummaryCreditCardReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryDmtUtilityReport> fetchSummaryDMT(data) async{
+    var response = await client.post("/GetSummary_Dmt", data: data);
+    return SummaryDmtUtilityReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryMoneyRequestReport> fetchSummaryMoneyRequest(data)async {
+    var response = await client.post("/GetSummary_MoneyRequest", data: data);
+    return SummaryMoneyRequestReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryDmtUtilityReport> fetchSummaryPayout(data) async{
+    var response = await client.post("/GetSummary_Payout", data: data);
+    return SummaryDmtUtilityReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryStatementReport> fetchSummaryStatement(data) async{
+    var response = await client.post("/GetSummary_Statement", data: data);
+    return SummaryStatementReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryStatementReport> fetchSummaryStatementAeps(data)async {
+    var response = await client.post("/GetSummary_StatementAeps", data: data);
+    return SummaryStatementReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryDmtUtilityReport> fetchSummaryUtility(data) async{
+    var response = await client.post("/GetSummary_Utility", data: data);
+    return SummaryDmtUtilityReport.fromJson(response.data);
+  }
+
+  @override
+  Future<SummaryWalletPayReport> fetchSummaryWalletPay(data) async {
+    var response = await client.post("/GetSummary_WalletPay", data: data);
+    return SummaryWalletPayReport.fromJson(response.data);
   }
 
 }

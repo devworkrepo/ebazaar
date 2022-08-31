@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/model/report/recharge.dart';
+import 'package:spayindia/model/report/summary/summary_dmt_utility.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
@@ -22,7 +24,10 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
   String rechargeType = "";
 
   var reportResponseObs = Resource.onInit(data: RechargeReportResponse()).obs;
-  late List<RechargeReport> reportList;
+  var  reportList = <RechargeReport>[].obs;
+
+  Rx<SummaryDmtUtilityReport?> summaryReport = SummaryDmtUtilityReport().obs;
+
   RechargeReport? previousReport;
 
   RechargeReportController(this.origin);
@@ -33,17 +38,35 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
     if(origin ==  "summary"){
       searchStatus = "InProgress";
     }
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    //todo remove hard coded before date
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    fetchRechargeValue();
-    fetchReport();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      fetchRechargeValue();
+      fetchReport();
+    });
   }
 
   fetchRechargeValue() async {
     repo.rechargeValues();
   }
 
+  fetchSummaryReport() async{
+
+    var response = await fetchSummary<SummaryDmtUtilityReport>({
+      "fromdate": fromDate,
+      "todate": toDate,
+      "transaction_no": searchInput,
+      "status": searchStatus,
+      "rech_type": rechargeType,
+    }, ReportSummaryType.utility);
+    summaryReport.value = response;
+
+
+  }
+
   fetchReport() async {
+    fetchSummaryReport();
     _param() =>
         {
           "fromdate": fromDate,
@@ -57,7 +80,7 @@ class RechargeReportController extends GetxController with ReceiptPrintMixin{
       reportResponseObs.value = const Resource.onInit();
       final response = await repo.fetchRechargeTransactionList(_param());
       if (response.code == 1) {
-        reportList = response.reports!;
+        reportList.value = response.reports!;
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {

@@ -10,10 +10,12 @@ import 'package:spayindia/widget/list_component.dart';
 import 'package:spayindia/widget/no_data_found.dart';
 
 import '../../../model/report/aeps.dart';
+import '../../../test/test_summary_header.dart';
 import '../../../widget/common/report_action_button.dart';
 import '../receipt_print_mixin.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
+import '../widget/summary_header.dart';
 import 'aeps_matm_report_controller.dart';
 
 class AepsMatmReportPage extends GetView<AepsMatmReportController> {
@@ -57,10 +59,16 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
                 }, onInit: (data) {
                   return ApiProgress(data);
                 })),
-        floatingActionButton: FloatingActionButton.extended(
-            icon: const Icon(Icons.search),
-            onPressed: () => _onSearch(),
-            label: const Text("Search")));
+        floatingActionButton: Obx(() {
+          if (controller.reportList.isEmpty) {
+            return  FloatingActionButton.extended(
+                icon: const Icon(Icons.search),
+                onPressed: () => _onSearch(),
+                label: const Text("Search"));
+          } else {
+            return const SizedBox();
+          }
+        }));
   }
 
   _onSearch() {
@@ -86,24 +94,68 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
 
   RefreshIndicator _buildListBody() {
     var list = controller.reportList;
-    var count = list.length;
+    var count = list.length + 1;
 
     return RefreshIndicator(
       onRefresh: () async {
         controller.swipeRefresh();
       },
       child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         color: Colors.white,
-        margin: const EdgeInsets.only(
-          bottom: 8,
-          left: 8,
-          right: 8,
-          top: 8,
-        ),
+        margin: const EdgeInsets.only(top: 4,left: 4,right: 4,bottom: 0),
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0, bottom: 100),
           itemBuilder: (context, index) {
-            return _BuildListItem(list[index], controller);
+            if (index == 0) {
+              return Obx(() {
+                var mData = controller.summaryReport.value!;
+                return Column(
+                  children: [
+                    SummaryHeaderWidget(
+                      summaryHeader1: [
+                        SummaryHeader(
+                            title: "Total\nTransactions",
+                            value: "${mData.total_count}",
+                            isRupee: false),
+                        SummaryHeader(
+                            title: "Total\nAmount",
+                            value: "${mData.total_amt}"),
+
+                      ],
+                      summaryHeader2: [
+                        SummaryHeader(
+                            title: "Charges\n", value: "${mData.charges_paid}"),
+
+                        SummaryHeader(
+                            title: "Commission\n",
+                            value: "${mData.charges_paid}"),
+                        /*SummaryHeader(
+                            title: "Aeps\n",
+                            value: "${mData.aeps_no}",
+                            isRupee: false),
+                        SummaryHeader(
+                            title: "M-ATM\n",
+                            value: "${mData.matm_no}",
+                            isRupee: false),
+                        SummaryHeader(
+                            title: "M-POS\n",
+                            value: "${mData.mpos_no}",
+                            isRupee: false),*/
+                      ],
+                      callback: () {
+                        _onSearch();
+                      },
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    )
+                  ],
+                );
+              });
+            }
+
+            return _BuildListItem(list[index - 1], controller);
           },
           itemCount: count,
         ),
@@ -165,13 +217,10 @@ class _BuildListItem extends StatelessWidget {
                     AppTag.aadhaarPayReportControllerTag) {
                   controller.printReceipt(
                       (report.transactionNumber ?? ""), ReceiptType.aadhaarPay);
-                }
-
-                else if(controller.tag == AppTag.mposReportControllerTag){
+                } else if (controller.tag == AppTag.mposReportControllerTag) {
                   controller.printReceipt(
                       (report.transactionNumber ?? ""), ReceiptType.mpos);
-                }
-                else {
+                } else {
                   controller.printReceipt(
                       (report.transactionNumber ?? ""), ReceiptType.matm);
                 }

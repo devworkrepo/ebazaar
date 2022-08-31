@@ -16,7 +16,28 @@ import 'package:spayindia/page/pdf_html/credit_card_receipt_html.dart';
 import 'package:spayindia/page/pdf_html/dmt_receipt_html.dart';
 import 'package:spayindia/page/pdf_html/recharge_receipt_html.dart';
 
-enum ReceiptType { money, payout, recharge, aeps,aadhaarPay, matm,mpos, creditCard }
+enum ReceiptType {
+  money,
+  payout,
+  recharge,
+  aeps,
+  aadhaarPay,
+  matm,
+  mpos,
+  creditCard
+}
+enum ReportSummaryType {
+  dmt,
+  payout,
+  utility,
+  aeps,
+  aadhaar,
+  creditCard,
+  moneyRequest,
+  statement,
+  statementAeps,
+  walletPay
+}
 
 mixin ReceiptPrintMixin {
   ReportRepo repo = Get.find<ReportRepoImpl>();
@@ -55,44 +76,82 @@ mixin ReceiptPrintMixin {
     }
   }
 
+  Future<T?> fetchSummary<T>(
+      Map<String, String> param, ReportSummaryType summaryType) async {
+    try {
+      switch (summaryType) {
+        case ReportSummaryType.dmt:
+          var response = await repo.fetchSummaryDMT(param);
+          return response as T;
+        case ReportSummaryType.payout:
+          var response = await repo.fetchSummaryPayout(param);
+          return response as T;
+        case ReportSummaryType.utility:
+          var response = await repo.fetchSummaryUtility(param);
+          return response as T;
+        case ReportSummaryType.aeps:
+          var response = await repo.fetchSummaryAeps(param);
+          return response as T;
+        case ReportSummaryType.aadhaar:
+          var response = await repo.fetchSummaryAadhaar(param);
+          return response as T;
+        case ReportSummaryType.creditCard:
+          var response = await repo.fetchSummaryCreditCard(param);
+          return response as T;
+        case ReportSummaryType.moneyRequest:
+          var response = await repo.fetchSummaryMoneyRequest(param);
+          return response as T;
+        case ReportSummaryType.statement:
+          var response = await repo.fetchSummaryStatement(param);
+          return response as T;
+        case ReportSummaryType.statementAeps:
+          var response = await repo.fetchSummaryStatementAeps(param);
+          return response as T;
+        case ReportSummaryType.walletPay:
+          var response = await repo.fetchSummaryWalletPay(param);
+          return response as T;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   _fetchDmtReceiptData(param, ReceiptType receiptType) async {
     var response = (receiptType == ReceiptType.money)
         ? await _fetchHelper<MoneyReceiptResponse>(
             repo.moneyTransactionReceipt(param))
         : await _fetchHelper<MoneyReceiptResponse>(
             repo.payoutTransactionReceipt(param));
-    if(response == null) return;
+    if (response == null) return;
     _printPdfData(MoneyReceiptHtmlData(response).printData());
   }
 
   _fetchRechargeReceiptData(param, ReceiptType receiptType) async {
     var response = await _fetchHelper<RechargeReceiptResponse>(
         repo.rechargeTransactionReceipt(param));
-    if(response == null)return;
+    if (response == null) return;
     _printPdfData(RechargeReceiptHtmlData(response).printData());
   }
-
 
   _fetchAepsReceiptData(param, ReceiptType receiptType) async {
     var response = await _fetchHelper<AepsReceiptResponse>(
         repo.aepsTransactionReceipt(param));
-    if(response == null)return;
+    if (response == null) return;
 
     if (receiptType == ReceiptType.matm) {
-      _printPdfData(AepsReceiptHtmlData(response,"Micro-ATM").printData());
-    }
-    else  if (receiptType == ReceiptType.mpos) {
-      _printPdfData(AepsReceiptHtmlData(response,"MPOS").printData());
-    }
-    else {
-      _printPdfData(AepsReceiptHtmlData(response,"AEPS").printData());
+      _printPdfData(AepsReceiptHtmlData(response, "Micro-ATM").printData());
+    } else if (receiptType == ReceiptType.mpos) {
+      _printPdfData(AepsReceiptHtmlData(response, "MPOS").printData());
+    } else {
+      _printPdfData(AepsReceiptHtmlData(response, "AEPS").printData());
     }
   }
-  _fetchAadhaarPayReceiptData(param,ReceiptType type) async {
-    var response = await _fetchHelper<AepsReceiptResponse>(repo.aadhaarPayTransactionReceipt(param));
-    if(response == null)return;
-      _printPdfData(AepsReceiptHtmlData(response,"Aadhaar Pay").printData());
 
+  _fetchAadhaarPayReceiptData(param, ReceiptType type) async {
+    var response = await _fetchHelper<AepsReceiptResponse>(
+        repo.aadhaarPayTransactionReceipt(param));
+    if (response == null) return;
+    _printPdfData(AepsReceiptHtmlData(response, "Aadhaar Pay").printData());
   }
 
   _fetchCreditCardReceiptData(param, ReceiptType receiptType) async {

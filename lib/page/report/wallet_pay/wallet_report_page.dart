@@ -9,6 +9,7 @@ import 'package:spayindia/util/etns/on_string.dart';
 
 import '../../../model/report/wallet.dart';
 import '../report_helper.dart';
+import '../widget/summary_header.dart';
 import 'wallet_report_controller.dart';
 import '../report_search.dart';
 
@@ -39,10 +40,12 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
           }, onInit: (data) {
             return ApiProgress(data);
           })),
-        floatingActionButton: FloatingActionButton.extended(
-            icon: const Icon(Icons.search),
-            onPressed: () => _onSearch(),
-            label: const Text("Search"))
+        floatingActionButton: Obx((){
+          return (controller.reportList.isEmpty) ? FloatingActionButton.extended(
+              icon: const Icon(Icons.search),
+              onPressed: () => _onSearch(),
+              label: const Text("Search")) : const SizedBox();
+        })
     );
   }
 
@@ -61,7 +64,7 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
   RefreshIndicator _buildListBody() {
 
     var list = controller.reportList;
-    var count = list.length;
+    var count = list.length+1;
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -71,7 +74,55 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
         child: ListView.builder(
           padding: EdgeInsets.only(top: 0,bottom: 100),
           itemBuilder: (context, index) {
-          return _BuildListItem(list[index]);
+            if (index == 0) {
+              return Obx(() {
+                var mData = controller.summaryReport.value!;
+                return Column(
+                  children: [
+                    SummaryHeaderWidget(
+                      summaryHeader1: [
+                        SummaryHeader(
+                            title: "Total\nTransactions",
+                            value: "${mData.total_count}",
+                          isRupee: false
+                            ),
+                        SummaryHeader(
+                            title: "Total\nAmount",
+                            value: "${mData.total_amt}",
+                            ),
+                        SummaryHeader(
+                            title: "Charge\nPaid",
+                            value: "${mData.charge_paid}",
+                            ),
+
+                      ],
+                      summaryHeader2: [
+                        SummaryHeader(
+                          title: "Amount\nTransferred",
+                          value: "${mData.amt_trf}",
+                        ),
+                        SummaryHeader(
+                            title: "Amount\nReceived",
+                            value: "${mData.amt_rec}",
+                            ),
+
+
+                      ],
+                      callback: () {
+                        _onSearch();
+                      },
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    )
+                  ],
+                );
+              });
+            }
+
+            return _BuildListItem(
+              list[index - 1],
+            );
         },itemCount: count,),
       ),
     );

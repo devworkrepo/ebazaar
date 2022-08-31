@@ -12,6 +12,7 @@ import '../../../widget/common/report_action_button.dart';
 import '../receipt_print_mixin.dart';
 import '../report_helper.dart';
 import '../report_search.dart';
+import '../widget/summary_header.dart';
 import 'credit_card_report_controller.dart';
 
 class CreditCardReportPage extends GetView<CreditCardReportController> {
@@ -42,10 +43,12 @@ class CreditCardReportPage extends GetView<CreditCardReportController> {
             }, onInit: (data) {
               return ApiProgress(data);
             })),
-        floatingActionButton: FloatingActionButton.extended(
-            icon: const Icon(Icons.search),
-            onPressed: () => _onSearch(),
-            label: const Text("Search"))
+        floatingActionButton: Obx((){
+          return (controller.reportList.isEmpty) ? FloatingActionButton.extended(
+              icon: const Icon(Icons.search),
+              onPressed: () => _onSearch(),
+              label: const Text("Search")) : const SizedBox();
+        })
     );
   }
 
@@ -71,7 +74,7 @@ class CreditCardReportPage extends GetView<CreditCardReportController> {
 
   RefreshIndicator _buildListBody() {
     var list = controller.reportList;
-    var count = list.length;
+    var count = list.length+1;
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -83,7 +86,34 @@ class CreditCardReportPage extends GetView<CreditCardReportController> {
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0,bottom: 100),
           itemBuilder: (context, index) {
-            return _BuildListItem(list[index],);
+
+            if(index == 0){
+              return Obx((){
+                var mData = controller.summaryReport.value!;
+                return Column(
+                  children: [
+                    SummaryHeaderWidget(
+                      summaryHeader1: [
+                        SummaryHeader(title: "Total\nTransactions", value: "${mData.total_count}",isRupee: false),
+                        SummaryHeader(title: "Total\nAmount", value: "${mData.total_amt}"),
+                        SummaryHeader(title: "Charge\nPaid", value: "${mData.charges_paid}"),
+
+                      ],
+                      summaryHeader2: [
+                        SummaryHeader(title: "Commission\nReceived", value: "${mData.comm_rec}"),
+                        SummaryHeader(title: "Refund\nPending", value: "${mData.refund_pending}",isRupee: false),
+                        SummaryHeader(title: "Refund\nTransactions", value: "${mData.refunded}",isRupee: false),
+                      ],
+                      callback: (){
+                        _onSearch();
+                      },
+                    ),
+                    const SizedBox(height: 12,)
+                  ],
+                );
+              });
+            }
+            return _BuildListItem(list[index-1],);
           },itemCount: count,),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/model/report/summary/summary_wallet_pay.dart';
+import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/money_request_repo.dart';
 import 'package:spayindia/data/repo_impl/money_request_impl.dart';
@@ -13,7 +15,7 @@ import 'package:spayindia/util/date_util.dart';
 
 import '../../../data/repo/report_repo.dart';
 
-class WalletPayReportController extends GetxController {
+class WalletPayReportController extends GetxController with ReceiptPrintMixin {
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
   String fromDate = "";
@@ -21,19 +23,38 @@ class WalletPayReportController extends GetxController {
 
   var reportResponseObs =
       Resource.onInit(data: WalletPayReportResponse()).obs;
-  late List<WalletPayReport> reportList;
+  var reportList = <WalletPayReport>[].obs;
+  Rx<SummaryWalletPayReport?> summaryReport = SummaryWalletPayReport().obs;
+
   WalletPayReport? previousReport;
 
   @override
   void onInit() {
     super.onInit();
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    //todo remove hard coded before date
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
     toDate = DateUtil.currentDateInYyyyMmDd();
 
-    _fetchReport();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _fetchReport();
+    });
   }
 
+  fetchSummaryReport() async{
+
+    var response = await fetchSummary<SummaryWalletPayReport>({
+      "fromdate": fromDate,
+      "todate": toDate,
+    }, ReportSummaryType.walletPay);
+    summaryReport.value = response;
+
+
+  }
+
+
+
   _fetchReport() async {
+    fetchSummaryReport();
     try {
       reportResponseObs.value = const Resource.onInit();
       final response = await repo.fetchWalletPayReport({
@@ -41,7 +62,7 @@ class WalletPayReportController extends GetxController {
         "todate": toDate,
       });
       if (response.code == 1) {
-        reportList = response.reports!;
+        reportList.value = response.reports!;
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {

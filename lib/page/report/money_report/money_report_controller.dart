@@ -1,19 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/dmt.dart';
+import 'package:spayindia/model/report/summary/summary_dmt_utility.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/report/receipt_print_mixin.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/tags.dart';
 
-import '../../../widget/dialog/status_dialog.dart';
-import '../report_helper.dart';
+import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:spayindia/page/report/report_helper.dart';
 
 class MoneyReportController extends GetxController with ReceiptPrintMixin {
-
   final String tag;
   final String origin;
   String fromDate = "";
@@ -22,23 +23,46 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
   String searchInput = "";
 
   var reportResponseObs = Resource.onInit(data: MoneyReportResponse()).obs;
-  late List<MoneyReport> reportList;
+  var reportList = <MoneyReport>[].obs;
   MoneyReport? previousReport;
+  Rx<SummaryDmtUtilityReport?> summaryReport = SummaryDmtUtilityReport().obs;
 
-  MoneyReportController(this.tag,this.origin);
+  MoneyReportController(this.tag, this.origin);
 
   @override
   void onInit() {
     super.onInit();
-    if(origin ==  "summary"){
+    if (origin == "summary") {
       searchStatus = "InProgress";
     }
-    fromDate = DateUtil.currentDateInYyyyMmDd();
+    //todo remove hard coded before date
+    fromDate = DateUtil.currentDateInYyyyMmDd(dayBefore: 360);
     toDate = DateUtil.currentDateInYyyyMmDd();
-    fetchReport();
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      fetchReport();
+    });
+  }
+
+  fetchSummaryReport() async {
+    ReportSummaryType type;
+    if (tag == AppTag.payoutReportControllerTag) {
+      type = ReportSummaryType.payout;
+    } else {
+      type = ReportSummaryType.dmt;
+    }
+
+    var response = await fetchSummary<SummaryDmtUtilityReport>({
+      "fromdate": fromDate,
+      "todate": toDate,
+      "transaction_no": searchInput,
+      "status": searchStatus,
+    }, type);
+    summaryReport.value = response;
   }
 
   fetchReport() async {
+    fetchSummaryReport();
     _param() => {
           "fromdate": fromDate,
           "todate": toDate,
@@ -52,7 +76,7 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
           ? await repo.fetchMoneyTransactionList(_param())
           : await repo.fetchPayoutTransactionList(_param());
       if (response.code == 1) {
-        reportList = response.reports!;
+        reportList.value = response.reports!;
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
@@ -62,39 +86,38 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
   }
 
   void requeryTransaction(MoneyReport report) async {
-    try{
+    try {
       StatusDialog.progress();
       var response = (tag == AppTag.moneyReportControllerTag)
           ? await repo.requeryDmtTransaction({
-        "transaction_no": report.transactionNumber ?? "",
-      })
+              "transaction_no": report.transactionNumber ?? "",
+            })
           : await repo.requeryPayoutTransaction({
-        "transaction_no": report.transactionNumber ?? "",
-      });
+              "transaction_no": report.transactionNumber ?? "",
+            });
 
       Get.back();
       if (response.code == 1) {
-        ReportHelperWidget.requeryStatus(response.trans_response ?? "InProgress",
+        ReportHelperWidget.requeryStatus(
+            response.trans_response ?? "InProgress",
             response.trans_response ?? "Message not found", () {
-              fetchReport();
-            });
+          fetchReport();
+        });
       } else {
         StatusDialog.failure(title: response.message ?? "Something went wrong");
       }
-    }catch(e){
+    } catch (e) {
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.to(() => ExceptionPage(error: e));
     }
   }
-
-
 
   void swipeRefresh() {
     fromDate = DateUtil.currentDateInYyyyMmDd();
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
-    if(origin ==  "summary"){
+    if (origin == "summary") {
       searchStatus = "InProgress";
     }
     fetchReport();
@@ -117,5 +140,4 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
   void onSearch() {
     fetchReport();
   }
-
 }

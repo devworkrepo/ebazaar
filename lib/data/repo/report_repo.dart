@@ -6,6 +6,11 @@ import 'package:spayindia/model/receipt/recharge.dart';
 import 'package:spayindia/model/refund/dmt_refund.dart';
 import 'package:spayindia/model/report/aeps.dart';
 import 'package:spayindia/model/report/dmt.dart';
+import 'package:spayindia/model/report/summary/summary_credit_card.dart';
+import 'package:spayindia/model/report/summary/summary_dmt_utility.dart';
+import 'package:spayindia/model/report/summary/summary_money_reqeuest.dart';
+import 'package:spayindia/model/report/summary/summary_statement.dart';
+import 'package:spayindia/model/report/summary/summary_wallet_pay.dart';
 import 'package:spayindia/model/report/wallet.dart';
 import 'package:spayindia/model/virtual_account/virtual_report.dart';
 import '../../model/receipt/credit_card.dart';
@@ -15,6 +20,7 @@ import '../../model/refund/recharge.dart';
 import '../../model/report/credit_card.dart';
 import '../../model/report/recharge.dart';
 import '../../model/report/requery.dart';
+import '../../model/report/summary/summary_aeps.dart';
 import '../../model/statement/account_statement.dart';
 import '../../model/statement/credit_debit_statement.dart';
 
@@ -71,6 +77,19 @@ abstract class ReportRepo{
   Future<AccountStatementResponse> fetchAepsStatement(data);
   Future<CreditDebitStatementResponse> fetchCreditStatement(data);
   Future<CreditDebitStatementResponse> fetchDebitStatement(data);
+
+  //summary report
+
+  Future<SummaryDmtUtilityReport> fetchSummaryDMT(data);
+  Future<SummaryDmtUtilityReport> fetchSummaryPayout(data);
+  Future<SummaryDmtUtilityReport> fetchSummaryUtility(data);
+  Future<SummaryAepsReport> fetchSummaryAeps(data);
+  Future<SummaryAepsReport> fetchSummaryAadhaar(data);
+  Future<SummaryCreditCardReport> fetchSummaryCreditCard(data);
+  Future<SummaryMoneyRequestReport> fetchSummaryMoneyRequest(data);
+  Future<SummaryStatementReport> fetchSummaryStatement(data);
+  Future<SummaryStatementReport> fetchSummaryStatementAeps(data);
+  Future<SummaryWalletPayReport> fetchSummaryWalletPay(data);
 
 
 }

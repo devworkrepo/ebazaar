@@ -66,7 +66,7 @@ class AppExpandListWidget extends StatelessWidget {
                           ? null
                           : const EdgeInsets.symmetric(horizontal: 4),
                       child: Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(2),
                         margin: const EdgeInsets.symmetric(vertical: 4),
                         child: Column(
                           children: [
@@ -99,7 +99,7 @@ class AppExpandListWidget extends StatelessWidget {
                         if(actionWidget2!=null)
                           actionWidget2!,
                         const Divider(
-                          indent: 0,
+                          indent: 10,
                           color: Colors.grey,
                         )
                       ],
@@ -186,7 +186,7 @@ class _BuildHeaderSection extends StatelessWidget {
         Text(
           title,
           maxLines: 2,
-          style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.w800,fontSize: 15),
+          style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.w600,fontSize: 15),
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -206,7 +206,7 @@ class _BuildHeaderSection extends StatelessWidget {
           subTitle,
           maxLines: 1,
           style: Get.textTheme.subtitle1?.copyWith(
-              fontWeight: FontWeight.w400, fontSize: 16, color: color),
+              fontWeight: FontWeight.w400, fontSize: 14, color: color),
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -228,7 +228,7 @@ class _BuildHeaderSection extends StatelessWidget {
     return Text(
       "₹ " + amount,
       maxLines: 1,
-      style: Get.textTheme.subtitle1?.copyWith(color: color),
+      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -256,7 +256,7 @@ class _BuildHeaderSection extends StatelessWidget {
         maxLines: 2,
         textAlign: TextAlign.center,
         style: Get.textTheme.subtitle1?.copyWith(
-          fontSize: 14,
+          fontSize: 12,
             color: ((statusId == 1 || status == "Credit")
                 ? Colors.green
                 : ((statusId == 2 || status == "Debit")
@@ -295,10 +295,10 @@ class _BuildHeaderSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTitle(),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     _buildSubtitle(),
                     const SizedBox(
-                      height: 8,
+                      height: 2,
                     ),
                     _buildDate(),
                   ],

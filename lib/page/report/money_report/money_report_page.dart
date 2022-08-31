@@ -10,9 +10,11 @@ import 'package:spayindia/widget/api_component.dart';
 import 'package:spayindia/widget/list_component.dart';
 import 'package:spayindia/widget/no_data_found.dart';
 
-import '../../../widget/common/report_action_button.dart';
-import '../report_helper.dart';
-import '../report_search.dart';
+import 'package:spayindia/widget/common/report_action_button.dart';
+import 'package:spayindia/page/report/report_helper.dart';
+import 'package:spayindia/page/report/report_search.dart';
+import '../../../test/test_summary_header.dart';
+import '../widget/summary_header.dart';
 import 'money_report_controller.dart';
 
 class MoneyReportPage extends GetView<MoneyReportController> {
@@ -22,39 +24,46 @@ class MoneyReportPage extends GetView<MoneyReportController> {
   @override
   String? get tag => controllerTag;
 
-  const MoneyReportPage({Key? key, required this.controllerTag,required this.origin}) : super(key: key);
+  const MoneyReportPage(
+      {Key? key, required this.controllerTag, required this.origin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MoneyReportController(controllerTag,origin), tag: controllerTag);
+    Get.put(MoneyReportController(controllerTag, origin), tag: controllerTag);
 
     return Scaffold(
-      appBar: (origin == "summary") ? AppBar(
-        title: Text((controllerTag == AppTag.moneyReportControllerTag
+        appBar: (origin == "summary")
+            ? AppBar(
+                title: Text((controllerTag == AppTag.moneyReportControllerTag
                     ? "DMT InProgress"
                     : "Payout InProgress")),
-              ): null,
-        body: Obx(() =>
-            controller.reportResponseObs.value.when(onSuccess: (data) {
-              if (data.code == 1) {
-                if (data.reports!.isEmpty) {
-                  return const NoItemFoundWidget();
-                } else {
-                  return _buildListBody();
-                }
-              } else {
-                return ExceptionPage(error: Exception(data.message));
-              }
-            }, onFailure: (e) {
-              return ExceptionPage(error: e);
-            }, onInit: (data) {
-            return ApiProgress(data);
-          })),
-        floatingActionButton: FloatingActionButton.extended(
-            icon: const Icon(Icons.search),
-            onPressed: () => _onSearch(),
-            label: const Text("Search"))
-    );
+              )
+            : null,
+        body: Obx(
+            () => controller.reportResponseObs.value.when(onSuccess: (data) {
+                  if (data.code == 1) {
+                    if (data.reports!.isEmpty) {
+                      return const NoItemFoundWidget();
+                    } else {
+                      return _buildListBody();
+                    }
+                  } else {
+                    return ExceptionPage(error: Exception(data.message));
+                  }
+                }, onFailure: (e) {
+                  return ExceptionPage(error: e);
+                }, onInit: (data) {
+                  return ApiProgress(data);
+                })),
+        floatingActionButton: Obx((){
+
+
+          return (controller.reportList.isEmpty) ? FloatingActionButton.extended(
+              icon: const Icon(Icons.search),
+              onPressed: () => _onSearch(),
+              label: const Text("Search")) : const SizedBox();
+        }));
   }
 
   _onSearch() {
@@ -64,11 +73,12 @@ class MoneyReportPage extends GetView<MoneyReportController> {
           toDate: controller.toDate,
           status: (origin != "summary") ? controller.searchStatus : null,
           inputFieldOneTile: "Transaction Number",
-          onSubmit: (fromDate, toDate, searchInput, searchInputType, status,_,__) {
+          onSubmit:
+              (fromDate, toDate, searchInput, searchInputType, status, _, __) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
-            if(origin != "summary"){
+            if (origin != "summary") {
               controller.searchStatus = status;
             }
             controller.onSearch();
@@ -78,32 +88,72 @@ class MoneyReportPage extends GetView<MoneyReportController> {
   }
 
   RefreshIndicator _buildListBody() {
-
     var list = controller.reportList;
-    var count = list.length;
+    var count = list.length+1;
 
     return RefreshIndicator(
       onRefresh: () async {
         controller.swipeRefresh();
       },
       child: Card(
-        color:Colors.white,
-        margin: const EdgeInsets.only(bottom: 8,left: 8,right: 8,top: 8,),
-        child: ListView.builder(padding: const EdgeInsets.only(top: 0,bottom: 100),itemBuilder: (context, index) {
-          return _BuildListItem(list[index],controller: controller,);
-        },itemCount: count,),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2)
+        ),
+        color: Colors.white,
+        margin: const EdgeInsets.only(
+          bottom: 0,
+          left: 4,
+          right: 4,
+          top: 4,
+        ),
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 0, bottom: 100),
+          itemBuilder: (context, index) {
+
+            if(index == 0){
+              return Obx((){
+                var mData = controller.summaryReport.value!;
+                return Column(
+                  children: [
+                    SummaryHeaderWidget(
+                      summaryHeader1: [
+                        SummaryHeader(title: "Total\nTransactions", value: "${mData.total_count}",isRupee: false),
+                        SummaryHeader(title: "Total\nAmount", value: "${mData.total_amt}"),
+                        SummaryHeader(title: "Charge\nPaid", value: "${mData.charges_paid}"),
+
+                      ],
+                      summaryHeader2: [
+                        SummaryHeader(title: "Commission\nReceived", value: "${mData.comm_rec}"),
+                        SummaryHeader(title: "Refund\nPending", value: "${mData.refund_pending}",isRupee: false),
+                        SummaryHeader(title: "Refund\nTransactions", value: "${mData.refunded}",isRupee: false),
+                      ],
+                      callback: (){
+                        _onSearch();
+                      },
+                    ),
+                    const SizedBox(height: 12,)
+                  ],
+                );
+              });
+            }
+            return _BuildListItem(
+              list[index-1],
+              controller: controller,
+            );
+          },
+          itemCount: count,
+        ),
       ),
     );
   }
 }
 
-
-
 class _BuildListItem extends StatelessWidget {
   final MoneyReport report;
   final MoneyReportController controller;
 
-  const _BuildListItem(this.report, {Key? key,required this.controller}) : super(key: key);
+  const _BuildListItem(this.report, {Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -117,10 +167,9 @@ class _BuildListItem extends StatelessWidget {
         amount: report.amount.toString(),
         status: report.transactionStatus.toString(),
         statusId: ReportHelperWidget.getStatusId(report.transactionStatus),
-        actionWidget2:
-            (controller.origin == "summary") ? _requeryButton(
-              Get.theme.primaryColorDark,Colors.white
-            ) : null,
+        actionWidget2: (controller.origin == "summary")
+            ? _requeryButton(Get.theme.primaryColorDark, Colors.white)
+            : null,
         expandList: [
           ListTitleValue(
               title: "Remitter Number", value: report.senderNubber.toString()),
@@ -146,7 +195,7 @@ class _BuildListItem extends StatelessWidget {
         actionWidget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _requeryButton(Colors.white,Colors.black),
+            _requeryButton(Colors.white, Colors.black),
             const SizedBox(
               width: 8,
             ),
