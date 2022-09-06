@@ -115,21 +115,21 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
                     SummaryHeaderWidget(
                       summaryHeader1: [
                         SummaryHeader(
-                            title: "Total\nTransactions",
+                            title: "Total Transactions",
                             value: "${mData.total_count}",
                             isRupee: false),
                         SummaryHeader(
-                            title: "Total\nAmount",
+                            title: "Total Amount",
                             value: "${mData.total_amt}"),
 
                       ],
                       summaryHeader2: [
                         SummaryHeader(
-                            title: "Charges\n", value: "${mData.charges_paid}"),
+                            title: "Charges", value: "${mData.charges_paid}"),
 
                         SummaryHeader(
-                            title: "Commission\n",
-                            value: "${mData.charges_paid}"),
+                            title: "Commission",
+                            value: "${mData.comm_rec}"),
                         /*SummaryHeader(
                             title: "Aeps\n",
                             value: "${mData.aeps_no}",

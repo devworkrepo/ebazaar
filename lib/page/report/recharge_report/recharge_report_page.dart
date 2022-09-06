@@ -145,7 +145,7 @@ class RechargeReportPage extends GetView<RechargeReportController> {
                             title: "Total\nAmount",
                             value: "${mData.total_amt}"),
                         SummaryHeader(
-                            title: "Charge\nPaid",
+                            title: "Charges\nPaid",
                             value: "${mData.charges_paid}"),
                       ],
                       summaryHeader2: [
@@ -157,7 +157,7 @@ class RechargeReportPage extends GetView<RechargeReportController> {
                             value: "${mData.refund_pending}",
                             isRupee: false),
                         SummaryHeader(
-                            title: "Refund\nTransactions",
+                            title: "Refunded\nTransactions",
                             value: "${mData.refunded}",
                             isRupee: false),
                       ],

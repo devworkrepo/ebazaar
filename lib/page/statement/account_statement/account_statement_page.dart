@@ -94,42 +94,54 @@ class AccountStatementPage extends GetView<AccountStatementController> {
                     SummaryHeaderWidget(
                       totalCreditedAmount: mData.total_credit,
                       totalDebitedAmount: mData.total_debit,
+                      availableBalance: mData.avail_balance,
+                      availableBalanceInWord: mData.balance_words,
                       summaryHeader1: [
                         SummaryHeader(
                             title: "Amount\nCredited",
                             value: "${mData.amt_cr}",
-                            backgroundColor: Colors.green[800]),
+                            backgroundColor: Colors.green[800],
+                          valueFont: 14
+                        ),
                         SummaryHeader(
                             title: "Amount\nDebited",
                             value: "${mData.amt_dr}",
-                            backgroundColor: Colors.red[800]),
+                            backgroundColor: Colors.red[800],
+                            valueFont: 14
+                        ),
                         SummaryHeader(
-                            title: "Charge\nDeducted",
+                            title: "Charges\nDeducted",
                             value: "${mData.chg_dr}",
-                            backgroundColor: Colors.red[800]),
+                            backgroundColor: Colors.red[800],
+                            valueFont: 14),
                         SummaryHeader(
-                            title: "Charge\nReversed",
+                            title: "Charges\nReversed",
                             value: "${mData.chg_cr}",
-                            backgroundColor: Colors.green[800]),
+                            backgroundColor: Colors.green[800],
+                            valueFont: 14),
                       ],
                       summaryHeader2: [
 
                         SummaryHeader(
                             title: "Commission\nCredited",
                             value: "${mData.comm_cr}",
-                            backgroundColor: Colors.green[800]),
+                            backgroundColor: Colors.green[800],
+                            valueFont: 14),
                         SummaryHeader(
                             title: "Commission\nReversed",
                             value: "${mData.comm_dr}",
-                            backgroundColor: Colors.red[800]),
+                            backgroundColor: Colors.red[800],
+                            valueFont: 14),
                         SummaryHeader(
                             title: "TDS\nDeducted",
                             value: "${mData.tds_dr}",
-                            backgroundColor: Colors.red[800]),
+                            backgroundColor: Colors.red[800],
+                            valueFont: 14),
                         SummaryHeader(
                             title: "TDS\nReversed",
                             value: "${mData.tds_cr}",
-                            backgroundColor: Colors.green[800]),
+                            backgroundColor: Colors.green[800],
+                            valueFont: 14),
                       ],
                       callback: () {
                         _onSearch();

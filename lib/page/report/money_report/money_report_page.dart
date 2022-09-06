@@ -119,13 +119,13 @@ class MoneyReportPage extends GetView<MoneyReportController> {
                       summaryHeader1: [
                         SummaryHeader(title: "Total\nTransactions", value: "${mData.total_count}",isRupee: false),
                         SummaryHeader(title: "Total\nAmount", value: "${mData.total_amt}"),
-                        SummaryHeader(title: "Charge\nPaid", value: "${mData.charges_paid}"),
+                        SummaryHeader(title: "Charges\nPaid", value: "${mData.charges_paid}"),
 
                       ],
                       summaryHeader2: [
                         SummaryHeader(title: "Commission\nReceived", value: "${mData.comm_rec}"),
                         SummaryHeader(title: "Refund\nPending", value: "${mData.refund_pending}",isRupee: false),
-                        SummaryHeader(title: "Refund\nTransactions", value: "${mData.refunded}",isRupee: false),
+                        SummaryHeader(title: "Refunded\nTransactions", value: "${mData.refunded}",isRupee: false),
                       ],
                       callback: (){
                         _onSearch();

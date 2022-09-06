@@ -71,6 +71,9 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
         controller.swipeRefresh();
       },
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2)
+        ),
         child: ListView.builder(
           padding: EdgeInsets.only(top: 0,bottom: 100),
           itemBuilder: (context, index) {
@@ -91,18 +94,18 @@ class WalletPayReportPage extends GetView<WalletPayReportController> {
                             value: "${mData.total_amt}",
                             ),
                         SummaryHeader(
-                            title: "Charge\nPaid",
+                            title: "Charges\nPaid",
                             value: "${mData.charge_paid}",
                             ),
 
                       ],
                       summaryHeader2: [
                         SummaryHeader(
-                          title: "Amount\nTransferred",
+                          title: "Amount Transferred",
                           value: "${mData.amt_trf}",
                         ),
                         SummaryHeader(
-                            title: "Amount\nReceived",
+                            title: "Amount Received",
                             value: "${mData.amt_rec}",
                             ),
 

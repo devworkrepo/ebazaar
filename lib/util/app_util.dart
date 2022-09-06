@@ -26,7 +26,7 @@ class AppUtil {
       return iosDeviceInfo.identifierForVendor;
     } else {
       var androidDeviceInfo = await deviceInfo.androidInfo;
-      return androidDeviceInfo.androidId ;
+      return androidDeviceInfo.androidId;
     }
   }
 
@@ -49,8 +49,7 @@ class AppUtil {
       return iosDeviceInfo.name;
     } else {
       var androidDeviceInfo = await deviceInfo.androidInfo;
-      return androidDeviceInfo.brand + " "+ androidDeviceInfo.model;
-
+      return androidDeviceInfo.brand + " " + androidDeviceInfo.model;
     }
   }
 
@@ -64,8 +63,8 @@ class AppUtil {
 
   static void captureAndShare(
       {required ScreenshotController screenshotController,
-      required String amount,
-      required String type}) async {
+        required String amount,
+        required String type}) async {
     var image = await screenshotController.capture();
 
     if (image == null) return;
@@ -77,13 +76,12 @@ class AppUtil {
 
     imageFile.writeAsBytesSync(image);
     await Share.shareFiles([imageFile.path], text: text);
-
   }
 
 
-  static void throwUatExceptionOnDeployment(String mobileNumber){
+  static void throwUatExceptionOnDeployment(String mobileNumber) {
 
-    var whiteListNumbers = ["7982607742","9785172173","9211044444"];
+    var whiteListNumbers = ["7982607742", "9785172173", "9211044444"];
 
     if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {
       var isExist = false;
@@ -94,7 +92,7 @@ class AppUtil {
         }
       }
 
-      if(!isExist){
+      if (!isExist) {
         throw UatUpdateException();
       }
     }

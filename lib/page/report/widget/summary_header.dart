@@ -2,18 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
+import 'package:spayindia/util/cash_convereter.dart';
 
 class SummaryHeader {
   final String title;
   final String value;
   final bool isRupee;
+  final int titleFont;
+  final int valueFont;
   final Color? backgroundColor;
 
-  SummaryHeader(
-      {required this.title,
-      required this.value,
-      this.isRupee = true,
-      this.backgroundColor});
+  SummaryHeader({
+    required this.title,
+    required this.value,
+    this.isRupee = true,
+    this.backgroundColor,
+    this.titleFont = 12,
+    this.valueFont = 18,
+
+  });
 }
 
 class SummaryHeaderWidget extends StatelessWidget {
@@ -21,6 +28,8 @@ class SummaryHeaderWidget extends StatelessWidget {
   final List<SummaryHeader?>? summaryHeader2;
   final String? totalCreditedAmount;
   final String? totalDebitedAmount;
+  final String? availableBalance;
+  final String? availableBalanceInWord;
   final VoidCallback callback;
 
   const SummaryHeaderWidget(
@@ -29,6 +38,8 @@ class SummaryHeaderWidget extends StatelessWidget {
       this.summaryHeader2,
       this.totalCreditedAmount,
       this.totalDebitedAmount,
+      this.availableBalance,
+      this.availableBalanceInWord,
       Key? key})
       : super(key: key);
 
@@ -43,8 +54,8 @@ class SummaryHeaderWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (totalCreditedAmount != null && totalDebitedAmount != null)
-              _BuildAmountSectionWidget(
-                  totalDebitedAmount, totalCreditedAmount),
+              _BuildAmountSectionWidget(totalDebitedAmount, totalCreditedAmount,
+                  availableBalance, availableBalanceInWord),
             Text(
               "Summary",
               style: Get.textTheme.headline6
@@ -148,21 +159,21 @@ class SummaryHeaderWidget extends StatelessWidget {
                         : summaryHeader.value,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: summaryHeader.valueFont.toDouble(),
                     color: (summaryHeader.backgroundColor != null)
                         ? Colors.white
-                        : Colors.black)),
+                        : Get.theme.primaryColorDark)),
             const SizedBox(
               height: 8,
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               summaryHeader.title,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 12,
+                fontSize: summaryHeader.titleFont.toDouble(),
                 color: (summaryHeader.backgroundColor == null)
-                    ? Colors.black.withOpacity(0.8)
+                    ? Get.theme.primaryColor
                     : Colors.white.withOpacity(0.9),
               ),
             )
@@ -176,9 +187,14 @@ class SummaryHeaderWidget extends StatelessWidget {
 class _BuildAmountSectionWidget extends StatelessWidget {
   final String? totalDebitedAmount;
   final String? totalCreditedAmount;
+  final String? availableBalance;
+  final String? availableBalanceInWord;
 
   const _BuildAmountSectionWidget(
-      this.totalDebitedAmount, this.totalCreditedAmount);
+      this.totalDebitedAmount,
+      this.totalCreditedAmount,
+      this.availableBalance,
+      this.availableBalanceInWord);
 
   @override
   Widget build(BuildContext context) {
@@ -195,14 +211,22 @@ class _BuildAmountSectionWidget extends StatelessWidget {
           height: 5,
         ),
         Text(
-          "₹ ${appPreference.user.availableBalance}",
+          "₹ $availableBalance",
           style: TextStyle(
-              fontSize: 24,
+              fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.green[800]),
         ),
         const SizedBox(
-          height: 12,
+          height: 5,
+        ),
+        Text(
+          availableBalanceInWord.toString(),
+          style: TextStyle(
+              fontWeight: FontWeight.w600, fontSize: 14, color: Colors.green),
+        ),
+        const SizedBox(
+          height: 20,
         ),
         Row(
           children: [

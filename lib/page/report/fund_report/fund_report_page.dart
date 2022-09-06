@@ -100,7 +100,15 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
         controller.swipeRefresh();
       },
       child: Card(
-        margin: EdgeInsets.all(8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2)
+        ),
+        margin: EdgeInsets.only(
+          top: 4,
+          left: 4,
+          right: 4,
+          bottom: 0
+        ),
         child: ListView.builder(
           padding: EdgeInsets.only(top: 0, bottom: 100),
           itemBuilder: (context, index) {
@@ -131,7 +139,7 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
                 SummaryHeader(
                     title: "Total\nAmount", value: "${mData.total_amt}"),
                 SummaryHeader(
-                    title: "Charge/Cheque/\nFund Transfer", value: "${mData.cash_tot}"),
+                    title: "Cash/Cheque/\nFund Transfer", value: "${mData.cash_tot}"),
               ],
               summaryHeader2: [
                 SummaryHeader(
