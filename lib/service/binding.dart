@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
+import 'package:spayindia/data/repo_impl/complain_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/matm_credo_impl.dart';
@@ -54,5 +55,6 @@ appBinding() async {
   Get.lazyPut(() => VirtualAccountImpl(), fenix: true);
   Get.lazyPut(() => SecurityDepositImpl(), fenix: true);
   Get.lazyPut(() => MatmCredoImpl(), fenix: true);
+  Get.lazyPut(() => ComplainRepoImpl(), fenix: true);
 
 }

@@ -66,8 +66,7 @@ class AppRoute {
   static const refundReportPage = "/refund-report-page";
   static const statementReportPage = "/statement-report-page";
   static const aepsAllReportPage = "/aeps-all-report-page";
-  static const complainListPage = "/complain-list-page";
-  static const complainPostPage = "/complain-post-page";
+  static const complainListPage = "/complaint-list-page";
 
   static const aepsEkycPage = "/aeps-kyc-page";
   static const senderKycPage = "/sender-kyc-page";
@@ -91,6 +90,9 @@ class AppRoute {
   static const ottTransactionPage = "/ott-transaction-page";
   static const notificationPage = "/notification-page";
   static const summaryPage = "/summary-page";
+  static const complaintPage = "/complaint-page";
+  static const complainPostPage = "/complaint-post-page";
+  static const complainInfoPage = "/complaint-info-page";
 
   //security deposit
   static const securityDepositPage = "/security-deposit-page";

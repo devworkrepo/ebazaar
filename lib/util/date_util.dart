@@ -15,14 +15,24 @@ class DateUtil {
     if (dateTime != null) onPick(formatter.format(dateTime));
   }
 
-
-  static String currentDateInYyyyMmDd({int? dayBefore}){
-    if(dayBefore == null) {
+  static String currentDateInYyyyMmDd({int? dayBefore}) {
+    if (dayBefore == null) {
       return formatter.format(DateTime.now());
     } else {
-      return formatter.format(DateTime.now().subtract(Duration(days: dayBefore)));
+      return formatter
+          .format(DateTime.now().subtract(Duration(days: dayBefore)));
     }
   }
 
+  static DateTime _parseData(String strDate) {
+    return DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z").parse(strDate);
+  }
 
+  static String formatMonthDay(String date) {
+    return DateFormat("MM/dd/yyyy").format(DateFormat("MM/dd/yy").parse(date));
+  }
+
+  static String currentDateWithddMMyyyyHHss(){
+    return DateFormat("dd/MM/yyyy HH:mm:ss a").format(DateTime.now());
+  }
 }

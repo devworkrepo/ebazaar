@@ -5,6 +5,7 @@ import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
 import 'package:spayindia/page/app_setting/login_session_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
+import 'package:spayindia/page/complaint/complain_info/complain_info_page.dart';
 import 'package:spayindia/page/credit_card/credit_card_page.dart';
 import 'package:spayindia/page/device_security_page.dart';
 import 'package:spayindia/page/dmt/beneficiary_add/beneficiary_add_page.dart';
@@ -44,6 +45,8 @@ import 'package:spayindia/test/test_notification_page.dart';
 import 'package:spayindia/test/test_pg.dart';
 
 import '../main.dart';
+import '../page/complaint/complain_post/complain_post_page.dart';
+import '../page/complaint/complaint_list/complaint_list_page.dart';
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 import '../page/main/settlement/aeps_settlement_page.dart';
@@ -292,6 +295,21 @@ final getAllPages = [
   GetPage(
     name: AppRoute.securityDepositPage,
     page: () => const SecurityDepositPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.complaintPage,
+    page: () => const ComplaintListPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.complainPostPage,
+    page: () => const ComplainPostPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.complainInfoPage,
+    page: () => const ComplainInfoPage(),
   ),
 ];
 

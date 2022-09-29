@@ -112,15 +112,15 @@ class FormValidatorHelper {
     }
   }
 
-  static String? empty(String? value) {
-    var msg = "Field can't be empty!";
+  static String? empty(String? value,{String? message ="Field can't be empty!"} ) {
+
     if (value == null) {
-      return msg;
+      return message;
     } else {
       if (value.isNotEmpty) {
         return null;
       } else {
-        return msg;
+        return message;
       }
     }
   }

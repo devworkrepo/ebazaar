@@ -218,6 +218,19 @@ class HomeDrawerWidget extends GetView<HomeController> {
                   ),
                 ),
 
+                Card(
+                  child: ListTile(
+                    onTap: (){
+                      Get.back();
+                      Get.toNamed(AppRoute.complaintPage);
+                    },
+                    title: Text(
+                      "Complaint",
+                      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
+                    ),
+                    leading:  Icon(Icons.messenger_outline,color: color,),
+                  ),
+                ),
 
                 Card(
                   child: ListTile(
@@ -235,6 +248,9 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     leading:  Icon(Icons.power_settings_new,color: color,),
                   ),
                 ),
+
+
+
                 
                 Align(
                  alignment: Alignment.center,

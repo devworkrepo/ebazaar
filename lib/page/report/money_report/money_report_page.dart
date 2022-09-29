@@ -211,6 +211,16 @@ class _BuildListItem extends StatelessWidget {
                       (report.calcId ?? ""), ReceiptType.payout);
                 }
               },
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            ReportActionButton(
+              title: "Complaint",
+              icon: Icons.messenger_outline,
+              onClick: () {
+
+              },
             )
           ],
         ),
