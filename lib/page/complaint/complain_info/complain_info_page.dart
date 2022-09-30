@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/model/complaint.dart';
 import 'package:spayindia/page/complaint/complain_info/complain_info_controller.dart';
-import 'package:spayindia/widget/text_field.dart';
-
 import '../../../util/app_constant.dart';
-import 'complain_message_list.dart';
 
 class ComplainInfoPage extends GetView<ComplainInfoController> {
   const ComplainInfoPage({Key? key}) : super(key: key);
@@ -51,7 +48,7 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
   Expanded _listSection() {
     return Expanded(
         child: Obx(() => ListView.builder(
-            padding: EdgeInsets.only(bottom: 60),
+            padding: const EdgeInsets.only(bottom: 60),
             controller: controller.commentListController,
             itemCount: controller.commentsObs.length,
             reverse: true,
@@ -59,7 +56,7 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
               ComplaintComment comment = controller.commentsObs[index];
               return _itemChat(
                   context: context,
-                  chat: 1,
+                  self: int.parse(comment.retailerid!) > 0,
                   message: comment.replydesc!,
                   time: comment.addeddate);
             })));
@@ -70,7 +67,7 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(const Radius.circular(30)),
           border: Border.all(),
           color: Colors.white70),
       child: Row(
@@ -89,7 +86,7 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
             controller: controller.textController,
             decoration: const InputDecoration(
               border: InputBorder.none,
-              hintText: "Hi..",
+              hintText: "Write..",
             ),
           )),
 
@@ -102,7 +99,7 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
               onPressed: () {
                 controller.addReply();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.send,
                 color: Colors.blue,
               ))
@@ -113,58 +110,62 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
 
   _itemChat(
       {required BuildContext context,
-      required int chat,
+      required bool self,
       required message,
       time}) {
     return Row(
-      mainAxisAlignment:
-          chat == 0 ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: self ? MainAxisAlignment.start : MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        if (chat == 0)
-          SizedBox(
+        if (!self)
+          const SizedBox(
             width: 100,
           ),
         Flexible(
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10, top: 20),
-            padding: EdgeInsets.all(10),
+            margin: const EdgeInsets.only(left: 10, right: 10, top: 20),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: chat == 0 ? Colors.indigo.shade50 : Colors.grey.shade200,
-              borderRadius: chat == 0
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    )
-                  : BorderRadius.only(
+              color: self ? Colors.green : Colors.indigo,
+              borderRadius: self
+                  ? const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                       bottomRight: Radius.circular(20),
+                    )
+                  : const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
                     ),
             ),
             child: Column(
-              crossAxisAlignment: (chat == 1)
+              crossAxisAlignment: (self)
                   ? CrossAxisAlignment.start
                   : CrossAxisAlignment.end,
               children: [
                 Text(
                   '$message',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Text(
                   '$time',
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: const TextStyle(color: Colors.white70),
                 ),
+                Text(
+                  (self) ? "You wrote" : "Team respond",
+                  style: const TextStyle(color: Colors.white70),
+                )
               ],
             ),
           ),
         ),
-        if (chat == 1)
-          SizedBox(
+        if (self)
+          const SizedBox(
             width: 100,
           ),
       ],
@@ -187,14 +188,29 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(top: 5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.yellow[800]),
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: const Text(
-              "1",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  controller.complain.cat_type.toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500, fontSize: 16),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.done_all,
+                  color: (controller.complain.isread ?? false)
+                      ? Colors.green
+                      : Colors.grey,
+                )
+              ],
             ),
           ),
           const SizedBox(

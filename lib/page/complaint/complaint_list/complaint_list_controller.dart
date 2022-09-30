@@ -55,4 +55,6 @@ class ComplaintListController extends GetxController {
     tickNumberController.text = "";
     fetchComplaints(param: {});
   }
+
+
 }

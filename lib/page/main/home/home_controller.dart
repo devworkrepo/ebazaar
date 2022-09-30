@@ -63,16 +63,12 @@ class HomeController extends GetxController {
       var response = await homeRepo.fetchBanners();
       if (response.banners != null) {
         var mList = <AppBanner>[]; //response.banners!;
-        /*response.banners!.forEach((element) {
+        response.banners!.forEach((element) {
           mList.add(element);
         });
-        if(mList.isNotEmpty){
-          mList.add(AppBanner(
-              rawPicName: "https://spayindia.in/images/spay_features.png"));
-        }*/
-
-        mList.add(AppBanner(
-            rawPicName: "https://spayindia.in/images/spay_features.png"));
+        if(mList.isEmpty){
+          mList.add(AppBanner(rawPicName: "https://spayindia.in/images/spay_features.png"));}
+       mList.add(AppBanner(rawPicName: "https://spayindia.in/images/spay_features.png"));
         bannerList.value = mList;
       }
     } catch (e) {}

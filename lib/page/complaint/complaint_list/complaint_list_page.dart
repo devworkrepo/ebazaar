@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:spayindia/model/complaint.dart';
 import 'package:spayindia/page/complaint/widget/complaint_filter_dialog.dart';
 import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/obx_widget.dart';
 
 import 'complaint_list_controller.dart';
@@ -56,7 +54,8 @@ class ComplaintListPage extends GetView<ComplaintListController> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 8),
                           child: Row(
                             children: [
                               Image.asset(
@@ -72,54 +71,88 @@ class ComplaintListPage extends GetView<ComplaintListController> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Ticket# ${complaint.subject_name}",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Ticket# ${complaint.subject_name}",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
+                                            ),
+                                            Text(
+                                              "${complaint.full_desc}",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.grey[700]),
+                                            )
+                                          ],
+                                        )),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey[800]),
+                                            ),
+                                            Icon(
+                                              Icons.reply_all_sharp,
+                                              size: 24,
+                                              color: Colors.grey[800],
+                                            ),
+                                          ],
+                                        )
+                                      ],
                                     ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "${complaint.full_desc}",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[700]),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 5),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: Colors.yellow[800]),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      child: Text(
-                                        (complaint.cat_type ?? "") + " (1)",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12),
-                                      ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.yellow[800]
+                                                  ?.withOpacity(0.7)),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          child: Text(
+                                            (complaint.cat_type ?? ""),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12),
+                                          ),
+                                        ),
+                                        Expanded(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  complaint.addeddate.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.grey[700]),
+                                                ),
+                                                SizedBox(width: 4,),
+                                                Icon(
+                                                  Icons.done_all,
+                                                  size: 16,
+                                                  color:
+                                                      (complaint.isread ?? false)
+                                                          ? Colors.green
+                                                          : Colors.grey[700],
+                                                )
+                                              ],
+                                            ))
+                                      ],
                                     ),
                                   ],
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "todo",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey[800]),
-                                  ),
-                                  Icon(
-                                    Icons.reply_all_sharp,
-                                    size: 24,
-                                    color: Colors.grey[800],
-                                  ),
-                                ],
-                              )
                             ],
                           ),
                         ),
@@ -258,24 +291,26 @@ class ComplaintListPage extends GetView<ComplaintListController> {
               height: 16,
             ),
             TextField(
+
+
               controller: controller.tickNumberController,
               textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(8),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.blueAccent, width: 1.0),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      controller.searchTicketNumber();
-                    },
-                    icon: const Icon(Icons.search),
-                  ),
-                  hintText: "Enter Ticket #"),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(100.0),
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        controller.searchTicketNumber();
+                      },
+                      icon: const Icon(Icons.search),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    filled: true,
+                    hintStyle: TextStyle(color: Colors.grey),
+                    hintText: "Enter Ticket #",
+                    fillColor: Colors.grey[100]),
             ),
           ],
         ),
