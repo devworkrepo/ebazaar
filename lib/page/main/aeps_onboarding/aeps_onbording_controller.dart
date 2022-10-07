@@ -9,6 +9,8 @@ import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/util/mixin/location_helper_mixin.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 
+import '../../../data/repo/aeps_aitel_repo.dart';
+import '../../../data/repo_impl/aeps_aitel_impl.dart';
 import '../../../service/location.dart';
 import '../../../util/app_util.dart';
 import '../../exception_page.dart';
@@ -16,6 +18,9 @@ import '../../exception_page.dart';
 class AepsOnboardingController extends GetxController
     with LocationHelperMixin, TransactionHelperMixin {
   AepsRepo repo = Get.find<AepsRepoImpl>();
+  AepsAirtelRepo aepsAitelRepo = Get.find<AepsAirtelRepoImpl>();
+
+  bool isApesTramo = Get.arguments ?? true;
 
   var aadhaarController = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -30,7 +35,7 @@ class AepsOnboardingController extends GetxController
     super.onInit();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       validateLocation(progress: false);
-      _fetchAepsState();
+      if (isApesTramo) _fetchAepsState();
     });
   }
 
@@ -60,13 +65,19 @@ class AepsOnboardingController extends GetxController
     }
     try {
       StatusDialog.progress(title: "Progressing");
-      var response = await repo.onBoardAeps({
-        "aadhar_no": aadhaarWithoutSymbol(aadhaarController),
-        "stateid": selectedState!.id.toString(),
-        "statename": selectedState!.name.toString(),
-        "latitude": position!.latitude.toString(),
-        "longitude": position!.longitude.toString(),
-      });
+      var response = (isApesTramo)
+          ? await repo.onBoardAeps({
+              "aadhar_no": aadhaarWithoutSymbol(aadhaarController),
+              "stateid": selectedState!.id.toString(),
+              "statename": selectedState!.name.toString(),
+              "latitude": position!.latitude.toString(),
+              "longitude": position!.longitude.toString(),
+            })
+          : await aepsAitelRepo.aepsOnBoarding({
+              "aadhar_no": aadhaarWithoutSymbol(aadhaarController),
+              "latitude": position!.latitude.toString(),
+              "longitude": position!.longitude.toString(),
+            });
       Get.back();
 
       if (response.code == 1) {

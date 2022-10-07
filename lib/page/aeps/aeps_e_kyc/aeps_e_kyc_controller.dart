@@ -160,7 +160,7 @@ class AepsEKycController extends GetxController {
     Get.dialog(AepsRdServiceDialog(
       onClick: (rdServicePackageUrl) async {
         try {
-          var result = await NativeCall.launchAepsService(
+          var result = await NativeCall.launchTramoAepsService(
               {"packageUrl": rdServicePackageUrl, "isTransaction": false});
           _authKyc(result);
         } on PlatformException catch (e) {

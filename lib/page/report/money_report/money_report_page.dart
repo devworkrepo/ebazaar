@@ -219,7 +219,10 @@ class _BuildListItem extends StatelessWidget {
               title: "Complaint",
               icon: Icons.messenger_outline,
               onClick: () {
-
+                controller.postNewComplaint({
+                  "transactionNumber" : report.transactionNumber.toString(),
+                  "type" : "Money Transfer"
+                });
               },
             )
           ],

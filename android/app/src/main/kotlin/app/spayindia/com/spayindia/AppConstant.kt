@@ -8,7 +8,8 @@ object AppConstant {
     const val METHOD_CHANNEL = "app.spayindia.com"
     const val AEPS_SERVICE_METHOD_NAME = "launch_aeps_service"
     const val RD_SERVICE_SERIAL_NUMBER = "rd_service_serial_number"
-    const val AEPS_LAUNCH_RESULT_CODE = 1000
+    const val AEPS_TRAMO_RESULT_CODE = 1000
+    const val AEPS_AIRTEL_RESULT_CODE = 1400
     const val MATM_SERVICE_METHOD_NAME = "launch_matm_service"
     const val MATM_LAUNCH_RESULT_CODE = 1100
     const val ROOT_CHECKER_METHOD_NAME= "root_checker_service"

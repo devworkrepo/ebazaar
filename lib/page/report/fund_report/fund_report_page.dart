@@ -8,6 +8,7 @@ import 'package:spayindia/model/fund/request_report.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 
+import '../../../widget/common/report_action_button.dart';
 import '../report_helper.dart';
 import '../widget/summary_header.dart';
 import 'fund_report_controller.dart';
@@ -232,7 +233,23 @@ class _BuildListItem extends GetView<FundRequestReportController> {
                             ],
                           )),
                     )
-                  : SizedBox()
+                  : SizedBox(),
+              const SizedBox(
+                width: 8,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 12),
+                child: ReportActionButton(
+                  title: "Complaint",
+                  icon: Icons.messenger_outline,
+                  onClick: () {
+                    controller.postNewComplaint({
+                      "transactionNumber": report.requestNumber.toString(),
+                      "type": "Money Requests"
+                    });
+                  },
+                ),
+              )
             ],
           )),
     );

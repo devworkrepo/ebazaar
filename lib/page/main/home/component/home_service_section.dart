@@ -43,7 +43,7 @@ class HomeServiceSection extends GetView<HomeController> {
         Center(
           child: Text(
             title,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
           ),
         ),
@@ -56,7 +56,7 @@ class HomeServiceSection extends GetView<HomeController> {
     var homeServiceList = _homeServiceList(controller.user);
     var itemCount = homeServiceList.length;
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 12, left: 12, right: 12),
+      padding: const EdgeInsets.only(top: 4, bottom: 12, left: 12, right: 12),
       child: Card(
         child: GridView.count(
           shrinkWrap: true,
@@ -181,7 +181,7 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
     itemList.add(
         HomeServiceItem("Aadhaar Pay", "aeps", HomeServiceType.aadhaarPay));
   }
-  if (user.isAeps.orFalse()) {
+  if (user.isAeps.orFalse() || user.is_aeps_air.orFalse()) {
     itemList.add(HomeServiceItem("Aeps", "aeps", HomeServiceType.aeps));
   }
   if (user.isRecharge.orFalse()) {

@@ -174,6 +174,19 @@ class _BuildListItem extends GetView<CreditCardReportController> {
                 controller.printReceipt(
                     (report.transactionNumber ?? ""), ReceiptType.creditCard);
               },
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            ReportActionButton(
+              title: "Complaint",
+              icon: Icons.messenger_outline,
+              onClick: () {
+                controller.postNewComplaint({
+                  "transactionNumber" : report.transactionNumber.toString(),
+                  "type" : "Credit Card"
+                });
+              },
             )
           ],
         ),

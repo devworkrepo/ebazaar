@@ -233,6 +233,19 @@ class _BuildListItem extends GetView<RechargeReportController> {
                 controller.printReceipt(
                     (report.transactionNumber ?? ""), ReceiptType.recharge);
               },
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            ReportActionButton(
+              title: "Complaint",
+              icon: Icons.messenger_outline,
+              onClick: () {
+                controller.postNewComplaint({
+                  "transactionNumber": report.transactionNumber.toString(),
+                  "type":"Utility"
+                });
+              },
             )
           ],
         ),

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:spayindia/model/aeps/aeps_transaction.dart';
-import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
+import 'package:spayindia/page/aeps/aeps_tramo/aeps_page.dart';
 import 'package:spayindia/util/app_util.dart';
 
 class AepsTxnResponseController extends GetxController {

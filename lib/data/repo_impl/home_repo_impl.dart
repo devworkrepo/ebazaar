@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo/recharge_repo.dart';
+import 'package:spayindia/model/alert.dart';
 import 'package:spayindia/model/app_update.dart';
 import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/common.dart';
@@ -141,5 +142,12 @@ class HomeRepoImpl extends HomeRepo {
       Get.back();
       StatusDialog.failure(title: "Failed to download file");
     }
+
+  }
+
+  @override
+  Future<AlertMessageResponse> alertMessage() async {
+    var response = await client.post("/GetAlertBell");
+    return AlertMessageResponse.fromJson(response.data);
   }
 }

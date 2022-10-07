@@ -5,6 +5,7 @@ import 'package:spayindia/model/profile.dart';
 import 'package:spayindia/model/summary.dart';
 import 'package:spayindia/model/user/user.dart';
 
+import '../../model/alert.dart';
 import '../../model/app_update.dart';
 import '../../model/notification.dart';
 
@@ -36,4 +37,6 @@ abstract class HomeRepo{
   Future<CommonResponse> getTransactionNumber();
 
   Future<void> downloadFileAndSaveToGallery(String baseUrl, String extension);
+
+  Future<AlertMessageResponse> alertMessage();
 }

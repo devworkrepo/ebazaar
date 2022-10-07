@@ -1,6 +1,7 @@
 package app.spayindia.com.spayindia
 
 
+import android.util.Log
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import org.xmlpull.v1.XmlPullParserFactory
@@ -10,8 +11,12 @@ import java.io.StringReader
 
 object XmPidParser {
 
+    const val TAG = "XMLTESTING"
+
     @Throws(XmlPullParserException::class, IOException::class)
     fun parse(xml: String?): Array<String> {
+
+
         val factory = XmlPullParserFactory.newInstance()
         factory.isNamespaceAware = true
         val xmlPullParser = factory.newPullParser()
@@ -43,12 +48,12 @@ object XmPidParser {
         return respStrings
     }
 
-    fun getDeviceSerialNumber(data : String) : String {
+    fun getDeviceSerialNumber(data: String): String {
 
         var serialNumber = ""
         try {
             val factory =
-                    XmlPullParserFactory.newInstance()
+                XmlPullParserFactory.newInstance()
             factory.isNamespaceAware = true
             val xpp = factory.newPullParser()
             xpp.setInput(StringReader(data))
@@ -62,13 +67,13 @@ object XmPidParser {
 
                     }
                     XmlPullParser.START_TAG -> {
-                        if(xpp.name=="Data") isPidDataTag = true
+                        if (xpp.name == "Data") isPidDataTag = true
                     }
                     XmlPullParser.END_TAG -> {
-                        if(xpp.name == "Param"){
-                            val name = xpp.getAttributeValue(null,"name")
-                            if(name == "srno"){
-                                serialNumber = xpp.getAttributeValue(null,"value");
+                        if (xpp.name == "Param") {
+                            val name = xpp.getAttributeValue(null, "name")
+                            if (name == "srno") {
+                                serialNumber = xpp.getAttributeValue(null, "value");
                             }
                         }
 
@@ -87,10 +92,92 @@ object XmPidParser {
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
-        }
-        finally {
+        } finally {
             return serialNumber
         }
+    }
+
+
+    fun parseAirtelData(data: String): HashMap<String, String>? {
+
+        try {
+            val factory = XmlPullParserFactory.newInstance()
+            factory.isNamespaceAware = true
+            val xpp = factory.newPullParser()
+            xpp.setInput(StringReader(data))
+            var eventType = xpp.eventType
+
+
+            var hMac: String? = null
+            var pidData: String? = null
+            var deviceCode: String? = null
+            var modelId: String? = null
+            var providerCode: String? = null
+            var certificateCode: String? = null
+            var serviceId: String? = null
+            var deviceVersion: String? = null
+            var sKey: String? = null
+            var sKeyCI: String? = null
+            var deviceSerialNumber: String? = null
+
+            var isPidTagFound = false
+            var isHmacTagFound = false
+            var isSkeyTagFound = false
+
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                when (eventType) {
+                    XmlPullParser.START_DOCUMENT -> {}
+                    XmlPullParser.START_TAG -> {
+                        if (xpp.name == "DeviceInfo") {
+                            deviceCode = deviceCode ?: xpp.getAttributeValue(null, "dc")
+                            modelId = modelId ?: xpp.getAttributeValue(null, "mi")
+                            providerCode = providerCode ?: xpp.getAttributeValue(null, "dpId")
+                            certificateCode = certificateCode ?: xpp.getAttributeValue(null, "mc")
+                            serviceId = serviceId ?: xpp.getAttributeValue(null, "rdsId")
+                            deviceVersion = deviceVersion ?: xpp.getAttributeValue(null, "rdsVer")
+                        }
+                        if (xpp.name == "Param") {
+                            val name = xpp.getAttributeValue(null, "name")
+                            if (name == "srno")
+                                deviceSerialNumber =
+                                    deviceSerialNumber ?: xpp.getAttributeValue(null, "value");
+
+                        }
+                        if (xpp.name == "Skey") sKeyCI = sKeyCI ?: xpp.getAttributeValue(null, "ci")
+                        if (xpp.name == "Data") isPidTagFound = true
+                        if (xpp.name == "Hmac") isHmacTagFound = true
+                        if (xpp.name == "Skey") isSkeyTagFound = true
+                    }
+                    XmlPullParser.END_TAG -> {}
+                    XmlPullParser.TEXT -> {
+                        if (isPidTagFound) pidData = pidData ?: xpp.text
+                        if (isHmacTagFound) hMac = hMac ?: xpp.text
+                        if (isSkeyTagFound) sKey = sKey ?: xpp.text
+                    }
+                }
+                eventType = xpp.next()
+            }
+
+            return hashMapOf(
+                "hMac" to (hMac ?: ""),
+                "pidData" to (pidData ?: ""),
+                "deviceCode" to (deviceCode ?: ""),
+                "modelId" to (modelId ?: ""),
+                "providerCode" to (providerCode ?: ""),
+                "certificateCode" to (certificateCode ?: ""),
+                "serviceId" to (serviceId ?: ""),
+                "deviceVersion" to (deviceVersion ?: ""),
+                "sKey" to (sKey ?: ""),
+                "sKeyCI" to (sKeyCI ?: ""),
+                "deviceSerialNumber" to (deviceSerialNumber ?: ""),
+            )
+
+        } catch (e: XmlPullParserException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
     }
 
 }

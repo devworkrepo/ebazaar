@@ -65,8 +65,8 @@ class _ProgressDialog extends StatelessWidget {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(100.0),
-                    )),
+                  Radius.circular(100.0),
+                )),
                 child: Padding(
                   padding: EdgeInsets.all(8),
                   child: SizedBox(
@@ -78,11 +78,10 @@ class _ProgressDialog extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  title ,
+                  title,
                   style: Get.textTheme.subtitle1,
                 ),
               ),
-
             ],
           ),
         ));
@@ -94,12 +93,14 @@ class _StatusDialog extends StatelessWidget {
   final bool backPress;
   final StatusType type;
   final String? buttonText;
+  final VoidCallback? proceed;
 
   _StatusDialog(
       {required this.title,
       required this.type,
       required this.backPress,
       this.buttonText,
+      this.proceed,
       Key? key})
       : super(key: key);
 
@@ -109,7 +110,7 @@ class _StatusDialog extends StatelessWidget {
     var icon = _getIcon(type);
 
     return BaseDialogContainer(
-      padding: 50,
+        padding: 50,
         backPress: backPress,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
@@ -138,8 +139,17 @@ class _StatusDialog extends StatelessWidget {
                 style: Get.textTheme.subtitle1?.copyWith(color: color),
               ),
               const SizedBox(height: 16),
-
-              ElevatedButton(onPressed: (){Get.back();}, child: Text(buttonText ?? "       Done       "))
+              ElevatedButton(
+                  onPressed: () {
+                    if(proceed!=null){
+                      Get.back();
+                      proceed!();
+                    }
+                    else {
+                      Get.back();
+                    }
+                  },
+                  child: Text(buttonText ?? "       Done       "))
             ],
           ),
         ));
@@ -181,11 +191,7 @@ class _StatusDialog extends StatelessWidget {
 }
 
 class StatusDialog {
-
-
   static progress({String title = "Loading...", bool backPress = false}) {
-
-
     backPress = (kDebugMode) ? true : false;
 
     return Get.dialog(
@@ -221,14 +227,13 @@ class StatusDialog {
     );
   }
 
-  static Future pending({required String title,String? buttonText}) {
+  static Future pending({required String title, String? buttonText}) {
     return Get.dialog(
       _StatusDialog(
-        title: title,
-        backPress: true,
-        type: StatusType.pending,
-        buttonText : buttonText
-      ),
+          title: title,
+          backPress: true,
+          type: StatusType.pending,
+          buttonText: buttonText),
       barrierDismissible: false,
     );
   }
@@ -239,15 +244,14 @@ class StatusDialog {
           title: title,
           backPress: true,
           type: StatusType.alert,
-          buttonText : "  Done  "
-      ),
+          buttonText: "  Done  "),
       barrierDismissible: false,
     );
   }
 
   static transaction() {
-    return Get.to(()=>
-      const FullScreenProgressDialogWidget(),
+    return Get.to(
+      () => const FullScreenProgressDialogWidget(),
       fullscreenDialog: true,
     );
   }

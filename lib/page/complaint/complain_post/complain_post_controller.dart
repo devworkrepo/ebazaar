@@ -5,13 +5,25 @@ import 'package:spayindia/data/repo_impl/complain_repo_impl.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 class ComplainPostController extends GetxController {
-
   final ComplainRepo repo = Get.find<ComplainRepoImpl>();
   final formKey = GlobalKey<FormState>();
   final transactionNumberController = TextEditingController();
+  final complaintTypeController = TextEditingController();
   final subjectController = TextEditingController();
   final noteController = TextEditingController();
   final categoryObs = "".obs;
+
+  final Map<String, String>? param = Get.arguments;
+
+  @override
+  void onInit() {
+    super.onInit();
+    if (param != null) {
+      complaintTypeController.text = param!["type"].toString();
+      transactionNumberController.text = param!["transactionNumber"].toString();
+    }
+  }
+
   final complainCategoryList = [
     "Money Transfer",
     "Utility",
@@ -25,10 +37,8 @@ class ComplainPostController extends GetxController {
   ];
 
   postNewComplain() async {
-
-    final isValid =formKey.currentState!.validate();
-    if(!isValid) return;
-
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
 
     final note = noteController.text;
     final transactionNumber = transactionNumberController.text;
@@ -37,10 +47,11 @@ class ComplainPostController extends GetxController {
     StatusDialog.progress();
 
     final response = await repo.postComplain({
-      "cat_type" : categoryObs.value,
-      "transaction_no" : transactionNumber,
-      "subject_name" : subject,
-      "full_desc" : note,
+      "cat_type":
+          (param != null) ? complaintTypeController.text : categoryObs.value,
+      "transaction_no": transactionNumber,
+      "subject_name": subject,
+      "full_desc": note,
     });
     Get.back();
     if (response.code == 1) {

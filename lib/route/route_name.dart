@@ -18,7 +18,9 @@ class AppRoute {
   static const licPaymentPage = "/lic-payment-page";
 
   //aeps
-  static const aepsPage = "/aeps";
+  static const aepsTramoPage = "/aeps";
+  static const aepsAirtelPage = "/aeps-airtel";
+  static const aepsAirtelKycPage = "/aeps-airtel-kyc";
   static const matmTramopage = "/matm";
   static const matmCredoPage = "/matm-mpos";
 

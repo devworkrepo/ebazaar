@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo/aeps_repo.dart';
-import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
+import 'package:spayindia/data/repo/aeps_aitel_repo.dart';
+import 'package:spayindia/data/repo_impl/aeps_aitel_impl.dart';
 import 'package:spayindia/model/aeps/aeps_bank.dart';
-import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
 import 'package:spayindia/page/aeps/widget/ekyc_info_widget.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/response/aeps/aeps_txn_response_page.dart';
 import 'package:spayindia/service/native_call.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/aeps_rd_service_dialog.dart';
@@ -21,13 +19,12 @@ import 'package:spayindia/widget/list_component.dart';
 
 import '../../../route/route_name.dart';
 import '../../../util/mixin/location_helper_mixin.dart';
+import 'aeps_page.dart';
 
-class AepsController extends GetxController
+class AepsAirtelController extends GetxController
     with TransactionHelperMixin, LocationHelperMixin {
-  AepsRepo repo = Get.find<AepsRepoImpl>();
+  AepsAirtelRepo repo = Get.find<AepsAirtelRepoImpl>();
   AppPreference appPreference = Get.find();
-
-  bool isAadhaarPay = Get.arguments;
 
   var aepsBankListResponseObs = Resource.onInit(data: AepsBankResponse()).obs;
 
@@ -39,12 +36,11 @@ class AepsController extends GetxController
   late List<AepsBank> bankList;
 
   AepsBank? selectedAepsBank;
+  String? token;
 
   var aepsTransactionType = AepsTransactionType.cashWithdrawal.obs;
 
   late AepsBankResponse bankListResponse;
-
-  getTitle() => isAadhaarPay ? "Aadhaar Pay" : "Aeps";
 
   @override
   void onInit() {
@@ -63,43 +59,54 @@ class AepsController extends GetxController
         bankListResponse = response;
         bankList = response.aepsBankList!;
         aepsBankListResponseObs.value = Resource.onSuccess(response);
-        if (!(response.isEKcy ?? false)) {
-          showEkcyDialog("E-Kyc is Required.",
-              "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",AppRoute.aepsEkycPage);
-        }
+
+        _checkToken();
       } else if (response.code == 2) {
         showEkcyDialog(
-            "OnBoarding Required",
-            response.message ??
-                "To do aeps, aadhaar pay and matm transaction"
-                    " OnBoarding is required!",
+          "OnBoarding Required",
+          response.message ??
+              "To do aeps, aadhaar pay and matm transaction"
+                  " OnBoarding is required!",
           AppRoute.aepsOnboardingPage,
         );
-      } else if (response.code == 3) {
-        StatusDialog.pending(
-                title: response.message ?? "Pending",
-                buttonText: "Bank to Home")
-            .then((value) => Get.back());
-      }
-      else{
+      } else {
         validateLocation(progress: false);
-
-        if(selectedAepsBank != null){
-        }
+        if (selectedAepsBank != null) {}
       }
     } catch (e) {
       aepsBankListResponseObs.value = Resource.onFailure(e);
     }
   }
 
-  void showEkcyDialog(String title, String message,String route) {
+  void _checkToken() async {
+    StatusDialog.progress();
+    try {
+      final result = await repo.checkToken();
+      Get.back();
+      token = result.token;
+      if (result.code == 1) {
+      } else if (result.code == 2) {
+        showEkcyDialog(
+            "Token Expired!", result.message, AppRoute.aepsAirtelKycPage);
+      } else {
+        StatusDialog.alert(title: result.message).then((value) => Get.back());
+      }
+    } catch (e) {
+      Get.back();
+      Get.off(() => ExceptionPage(
+            error: e,
+          ));
+    }
+  }
+
+  void showEkcyDialog(String title, String message, String route) {
     Get.bottomSheet(
         EkycInfoWidget(
             title: title,
             message: message,
             onClick: () {
               Get.back();
-              Get.offAndToNamed(route);
+              Get.offAndToNamed(route, arguments: token);
             },
             onCancel: () {
               Get.back();
@@ -115,7 +122,7 @@ class AepsController extends GetxController
     if (!isValidate) return;
     try {
       await validateLocation(progress: true);
-      if(position == null) return;
+      if (position == null) return;
     } catch (e) {
       return;
     }
@@ -123,12 +130,15 @@ class AepsController extends GetxController
     Get.dialog(AepsRdServiceDialog(
       onClick: (rdServicePackageUrl) async {
         try {
-          var result = await NativeCall.launchAepsService(
-              {"packageUrl": rdServicePackageUrl, "isTransaction": true});
+          var result = await NativeCall.launchAirtelAepsService({
+            "packageUrl": rdServicePackageUrl,
+            "isTransaction": true,
+            "provider": "airtel"
+          });
           _onRdServiceResult(result);
         } on PlatformException catch (e) {
-          StatusDialog.failure(title: "Fingerprint capture failed, please try again");
-
+          StatusDialog.failure(
+              title: "Fingerprint capture failed, please try again");
         } catch (e) {
           Get.to(() => ExceptionPage(error: e));
         }
@@ -136,20 +146,19 @@ class AepsController extends GetxController
     ));
   }
 
-  _onRdServiceResult(String data) async {
+  _onRdServiceResult(Map<dynamic, dynamic> data) async {
     var transactionType = "";
-    if (aepsTransactionType.value == AepsTransactionType.cashWithdrawal ||
-        isAadhaarPay) {
+    if (aepsTransactionType.value == AepsTransactionType.cashWithdrawal) {
       transactionType = "Cash Withdrawal";
     } else if (aepsTransactionType.value ==
         AepsTransactionType.balanceEnquiry) {
       transactionType = "Balance Enquiry";
     }
 
-    var isAmountNull = (isAadhaarPay ||
-            aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
-        ? false
-        : true;
+    var isAmountNull =
+        (aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+            ? false
+            : true;
 
     Get.dialog(AmountConfirmDialogWidget(
         amount: (isAmountNull) ? null : amountController.text.toString(),
@@ -158,37 +167,54 @@ class AepsController extends GetxController
               title: "Aadhaar No.",
               value: aadhaarNumberController.text.toString()),
           ListTitleValue(title: "Txn Type", value: transactionType),
-          ListTitleValue(title: "Bank Name", value: selectedAepsBank?.name ?? ""),
+          ListTitleValue(
+              title: "Bank Name", value: selectedAepsBank?.name ?? ""),
         ],
         onConfirm: () {
-          if(isAadhaarPay){
-            _aadhaarPayTransaction(data);
-          }
-          else{
-            _aepsTransaction(data);
-          }
+          _aepsTransaction(data);
         }));
   }
 
-  _aepsTransaction(String data) async {
+  _aepsTransaction(Map<dynamic, dynamic> data) async {
+    final String hMac = data["hMac"];
+    final String pidData = data["pidData"];
+    final String deviceCode = data["deviceCode"];
+    final String modelId = data["modelId"];
+    final String providerCode = data["providerCode"];
+    final String certificateCode = data["certificateCode"];
+    final String serviceId = data["serviceId"];
+    final String deviceVersion = data["deviceVersion"];
+    final String sKey = data["sKey"];
+    final String sKeyCI = data["sKeyCI"];
+    final String deviceSerialNumber = data["deviceSerialNumber"];
 
     var _param = <String, String>{
+      "transaction_no": bankListResponse.transactionNumber ?? "",
+      "txntype": _transactionTypeInCode(),
+      "bcid": bankListResponse.bcid ?? "",
+      "amount":
+          (aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+              ? amountWithoutRupeeSymbol(amountController)
+              : "0",
       "bankiin": selectedAepsBank?.id ?? "",
       "bankName": selectedAepsBank?.name ?? "",
-      "txntype": _transactionTypeInCode(),
-      "devicetype": appPreference.rdService,
-      "amount": (isAadhaarPay ||
-          aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
-          ? amountWithoutRupeeSymbol(amountController)
-          : "0",
-      "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
       "mobileno": mobileController.text.toString(),
+      "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
+      "devicetype": appPreference.rdService,
+      "ci": sKeyCI,
+      "hmac": hMac,
+      "Piddata": pidData,
+      "devicecode": deviceCode,
+      "modelid": modelId,
+      "providercode": providerCode,
+      "certicode": certificateCode,
+      "serviceid": serviceId,
+      "devicever": deviceVersion,
+      "Skey": sKey,
+      "srno": deviceSerialNumber,
+      "token": token ?? "",
       "latitude": position!.latitude.toString(),
       "longitude": position!.longitude.toString(),
-      "biometricData": data,
-      "bcid": bankListResponse.bcid ?? "",
-      "transaction_no": bankListResponse.transactionNumber ?? "",
-      "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
     };
 
     try {
@@ -199,7 +225,7 @@ class AepsController extends GetxController
         Get.to(() => AepsTxnResponsePage(), arguments: {
           "response": response,
           "aeps_type": aepsTransactionType.value,
-          "isAadhaarPay": isAadhaarPay
+          "isAadhaarPay": false
         })?.then((value) => _fetchBankList());
       } else {
         StatusDialog.failure(title: response.message ?? "");
@@ -209,64 +235,13 @@ class AepsController extends GetxController
       Get.back();
       Get.off(ExceptionPage(
         error: e,
-        data: {
-          "param": _param,
-          "transaction_type": "Aeps Transaction"
-        },
-      ));
-    }
-  }
-
-
-  _aadhaarPayTransaction(String data) async {
-
-    var _param = <String, String>{
-      "bankiin": selectedAepsBank?.id ?? "",
-      "bankName": selectedAepsBank?.name ?? "",
-      "txntype": _transactionTypeInCode(),
-      "devicetype": appPreference.rdService,
-      "amount": (isAadhaarPay ||
-          aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
-          ? amountWithoutRupeeSymbol(amountController)
-          : "0",
-      "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
-      "mobileno": mobileController.text.toString(),
-      "latitude": position!.latitude.toString(),
-      "longitude": position!.longitude.toString(),
-      "biometricData": data,
-      "bcid": bankListResponse.bcid ?? "",
-      "transaction_no": bankListResponse.transactionNumber ?? "",
-      "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
-    };
-    try {
-      StatusDialog.transaction();
-      var response = await repo.aadhaaPayTransaction(_param);
-      Get.back();
-      if (response.code == 1) {
-        Get.to(() => AepsTxnResponsePage(), arguments: {
-          "response": response,
-          "aeps_type": aepsTransactionType.value,
-          "isAadhaarPay": isAadhaarPay
-        })?.then((value) => _fetchBankList());
-      } else {
-        StatusDialog.failure(title: response.message ?? "");
-      }
-    } catch (e) {
-      await appPreference.setIsTransactionApi(true);
-      Get.back();
-      Get.off(ExceptionPage(
-        error: e,
-          data: {
-            "param": _param,
-            "transaction_type": "Aeps Transaction"
-          }
+        data: {"param": _param, "transaction_type": "Aeps Transaction"},
       ));
     }
   }
 
   _transactionTypeInCode() {
-
-    switch(aepsTransactionType.value){
+    switch (aepsTransactionType.value) {
       case AepsTransactionType.cashWithdrawal:
         return "CW";
       case AepsTransactionType.balanceEnquiry:

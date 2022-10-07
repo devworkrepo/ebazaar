@@ -4,6 +4,7 @@ import `in`.credopay.payment.sdk.CredopayPaymentConstants
 import `in`.credopay.payment.sdk.PaymentActivity
 import `in`.credopay.payment.sdk.Utils
 import android.content.Intent
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import app.spayindia.com.spayindia.AppConstant.AEPS_SERVICE_METHOD_NAME
@@ -199,8 +200,9 @@ class MainActivity : FlutterFragmentActivity() {
 
     private fun captureAepsPidData(call: MethodCall) {
 
-        val rdServicePackageUrl = call.argument<String>("packageUrl");
+        val rdServicePackageUrl = call.argument<String>("packageUrl")
         val isTransaction = call.argument<Boolean>("isTransaction") ?: true
+        val provider = call.argument<String>("provider") ?: "tramo"
         try {
             val intent = Intent()
             intent.setPackage(rdServicePackageUrl)
@@ -209,13 +211,12 @@ class MainActivity : FlutterFragmentActivity() {
                 "PID_OPTIONS",
                 if (isTransaction) AppConstant.Aeps.PID_OPTION else AppConstant.Aeps.PID_OPTION_KYC
             )
-            startActivityForResult(intent, AppConstant.AEPS_LAUNCH_RESULT_CODE)
+            var resultCode = AppConstant.AEPS_TRAMO_RESULT_CODE
+            if (provider == "airtel") resultCode = AppConstant.AEPS_AIRTEL_RESULT_CODE
+
+            startActivityForResult(intent, resultCode)
         } catch (e: Exception) {
-            /* result?.error(
-                 "99",
-                 "Captured failed, please check biometric device is connected",
-                 "exception"
-             )*/
+
         }
     }
 
@@ -231,7 +232,12 @@ class MainActivity : FlutterFragmentActivity() {
 
         if (resultCode != RESULT_CANCELED && data != null && resultCode == RESULT_OK) {
             when (requestCode) {
-                AppConstant.AEPS_LAUNCH_RESULT_CODE -> handleRDServiceResult(
+                AppConstant.AEPS_TRAMO_RESULT_CODE -> handleTramoRDResult(
+                    requestCode,
+                    resultCode,
+                    data
+                )
+                AppConstant.AEPS_AIRTEL_RESULT_CODE -> handleAirtelRDResult(
                     requestCode,
                     resultCode,
                     data
@@ -360,11 +366,9 @@ class MainActivity : FlutterFragmentActivity() {
 
     }
 
-    private fun handleRDServiceResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
+    private fun handleTramoRDResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         val exceptionMessage = "Captured failed, please check biometric device is connected!";
-
         val mData = data!!.getStringExtra("PID_DATA")
         if (mData != null) {
             try {
@@ -380,6 +384,28 @@ class MainActivity : FlutterFragmentActivity() {
         } else {
             result!!.error("99", exceptionMessage, "result is null")
         }
+    }
+
+    private fun handleAirtelRDResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        val exceptionMessage = "Captured failed, please check biometric device is connected!";
+        val mData = data!!.getStringExtra("PID_DATA")
+        if (mData != null) {
+            try {
+                val resultMap = XmPidParser.parseAirtelData(mData)
+                if (resultMap == null)
+                    result!!.error("99", exceptionMessage, "parsing failed")
+                else {
+                    Log.d("AirtelTesting", "handleAirtelRDResult: $resultMap")
+                    result!!.success(resultMap)
+                }
+
+            } catch (e: java.lang.Exception) {
+                result!!.error("99", exceptionMessage, "parsing failed")
+            }
+        } else
+            result!!.error("99", exceptionMessage, "result is null")
+
     }
 
     private fun handleMatmResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -417,7 +443,5 @@ class MainActivity : FlutterFragmentActivity() {
                 "Result not available, please contact with admin"
             )
         }
-
-
     }
 }

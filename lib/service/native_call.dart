@@ -15,30 +15,40 @@ class NativeCall {
   static const _bluetoothCheckPaired = "bluetooth_check_paired";
   static const _credoPayService = "credo_pay_service";
 
-  static Future<String> launchAepsService(Map<String, dynamic> data) async {
-    final String result = await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
+  static Future<String> launchTramoAepsService(Map<String, dynamic> data) async {
+    data.addAll({"provider": "airtel"});
+    final String result =
+        await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
     return result;
   }
 
-  static Future<Map<dynamic,dynamic>> launchMatmService(Map<String, dynamic> data) async {
+  static Future<Map<dynamic, dynamic>> launchAirtelAepsService(
+      Map<String, dynamic> data) async {
+    data.addAll({"provider" : "airtel"});
+    final Map<dynamic, dynamic> result =
+        await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
+
+    print(result);
+    return result;
+  }
+
+  static Future<Map<dynamic, dynamic>> launchMatmService(
+      Map<String, dynamic> data) async {
     return await _methodChannel.invokeMethod(_matmServiceMethodName, data);
   }
 
   static Future<String> getRdSerialNumber(String data) async {
-    var resultData = await _methodChannel.invokeMethod(_rdServiceSerialNumber, {
-      "pidData" : data
-    });
+    var resultData = await _methodChannel
+        .invokeMethod(_rdServiceSerialNumber, {"pidData": data});
     return resultData;
-
   }
 
-
-  static Future<Map<dynamic,dynamic>> credoPayService(Map<String,dynamic> data) async {
+  static Future<Map<dynamic, dynamic>> credoPayService(
+      Map<String, dynamic> data) async {
     var resultData = await _methodChannel.invokeMethod(_credoPayService, data);
 
     AppUtil.logger("credoPay Native call response : $resultData");
     return resultData;
-
   }
 
   static Future<bool> isDeviceRooted() async {
@@ -46,19 +56,13 @@ class NativeCall {
     return resultData ?? false;
   }
 
-
   static Future<bool> bluetoothCheckEnable() async {
     bool? resultData = await _methodChannel.invokeMethod(_bluetoothCheckEnable);
     return resultData ?? true;
   }
 
-
-
   static Future<bool> bluetoothCheckPaired() async {
     bool? resultData = await _methodChannel.invokeMethod(_bluetoothCheckPaired);
     return resultData ?? true;
   }
-
-
-
 }

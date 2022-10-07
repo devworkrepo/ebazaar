@@ -19,10 +19,10 @@ class AepsOnboardingPage extends GetView<AepsOnboardingController> {
       appBar: AppBar(
         title: const Text("Aeps Onboarding"),
       ),
-      body: ObsResourceWidget(
+      body: (controller.isApesTramo) ?  ObsResourceWidget(
         obs: controller.stateListResponseObs,
         childBuilder: (data) => _buildBody(),
-      ),
+      ) : _buildBody(),
     );
   }
 
@@ -74,35 +74,37 @@ class _BuildFormWidget extends GetView<AepsOnboardingController> {
                         }
                       },
                       controller: controller.aadhaarController),
-                  AppDropDown(
-                    maxHeight: Get.height * 0.75,
-                    list:
-                        List.from(controller.aepsStateList.map((e) => e.name)),
-                    onChange: (value) {
-                      try {
-                        controller.selectedState = controller.aepsStateList
-                            .firstWhere((element) => element.name == value);
-                      } catch (e) {
-                        controller.selectedState = null;
-                        Get.snackbar("State is not selected",
-                            "Exception raised while selecting state",
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white);
-                      }
-                    },
-                    validator: (value) {
-                      if (controller.selectedState == null) {
-                        return "Select State";
-                      } else {
-                        return null;
-                      }
-                    },
-                    searchMode: true,
-                    label: "Select State",
-                    hint: "Select State",
+                  if (controller.isApesTramo)
+                    AppDropDown(
+                      maxHeight: Get.height * 0.75,
+                      list: List.from(
+                          controller.aepsStateList.map((e) => e.name)),
+                      onChange: (value) {
+                        try {
+                          controller.selectedState = controller.aepsStateList
+                              .firstWhere((element) => element.name == value);
+                        } catch (e) {
+                          controller.selectedState = null;
+                          Get.snackbar("State is not selected",
+                              "Exception raised while selecting state",
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white);
+                        }
+                      },
+                      validator: (value) {
+                        if (controller.selectedState == null) {
+                          return "Select State";
+                        } else {
+                          return null;
+                        }
+                      },
+                      searchMode: true,
+                      label: "Select State",
+                      hint: "Select State",
+                    ),
+                  const SizedBox(
+                    height: 16,
                   ),
-
-                  const SizedBox(height: 16,),
                   AppButton(text: "Proceed", onClick: controller.onProceed)
                 ],
               ),

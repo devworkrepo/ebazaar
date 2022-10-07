@@ -1,7 +1,115 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/res/color.dart';
+import 'package:spayindia/widget/button.dart';
+
+class AepsDialogWidget extends StatelessWidget {
+  final VoidCallback onTramo;
+  final VoidCallback onAirtel;
+
+  const AepsDialogWidget(
+      {Key? key, required this.onTramo, required this.onAirtel})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final appPreference = Get.find<AppPreference>();
+    final user = appPreference.user;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          color: AppColor.backgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            "assets/image/apes_server.png",
+            height: 150,
+            width: double.infinity,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            "Choose Aeps Server",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.blue[900]),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              if (user.isAeps ?? false)
+                Expanded(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Get.back();
+                        onTramo();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/image/king.png",
+                            height: 20,
+                            width: 20,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "King",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      )),
+                ),
+              if (true/*todouser.is_aeps_air ?? false*/)
+                const SizedBox(
+                  width: 16,
+                ),
+              if (true/*todo user.is_aeps_air ?? false*/)
+                Expanded(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Get.back();
+                        onAirtel();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/image/queen.png",
+                            height: 20,
+                            width: 20,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "Queen",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      )),
+                )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
 
 class VirtualAccountOptionDialog extends StatelessWidget {
   final VoidCallback onAccountView;
@@ -14,19 +122,18 @@ class VirtualAccountOptionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _BaseOptionDialogWidget(
-      title: "Virtual Account",
-      option: [
-        _BaseOption(
-            title: "Virtual\nAccount View",
-            onClick: onAccountView,
-            svgName: "virtual_account"),
-        _BaseOption(
-            title: "Virtual\nTransaction View",
-            onClick: onTransactionView,
-            svgName: "virtual_account"),
-      ],
-      isSvg : false
-    );
+        title: "Virtual Account",
+        option: [
+          _BaseOption(
+              title: "Virtual\nAccount View",
+              onClick: onAccountView,
+              svgName: "virtual_account"),
+          _BaseOption(
+              title: "Virtual\nTransaction View",
+              onClick: onTransactionView,
+              svgName: "virtual_account"),
+        ],
+        isSvg: false);
   }
 }
 
@@ -56,8 +163,6 @@ class RechargeOptionDialog extends StatelessWidget {
   }
 }
 
-
-
 class MatmOptionDialog extends StatelessWidget {
   final VoidCallback matmClick;
   final VoidCallback mposClick;
@@ -71,14 +176,8 @@ class MatmOptionDialog extends StatelessWidget {
     return _BaseOptionDialogWidget(
       title: "Mpos / Matm Services",
       option: [
-        _BaseOption(
-            title: "M-ATM",
-            onClick: matmClick,
-            svgName: "matm"),
-        _BaseOption(
-            title: "M-POS",
-            onClick: mposClick,
-            svgName: "matm"),
+        _BaseOption(title: "M-ATM", onClick: matmClick, svgName: "matm"),
+        _BaseOption(title: "M-POS", onClick: mposClick, svgName: "matm"),
       ],
     );
   }
@@ -121,10 +220,15 @@ class _BaseOptionDialogWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              ...option.map((e) => _BuildItem(e.title, e.svgName, () {
-                    Get.back();
-                    e.onClick();
-                  },isSvg: isSvg,))
+              ...option.map((e) => _BuildItem(
+                    e.title,
+                    e.svgName,
+                    () {
+                      Get.back();
+                      e.onClick();
+                    },
+                    isSvg: isSvg,
+                  ))
             ],
           ),
         ],
@@ -161,11 +265,11 @@ class _BuildItem extends StatelessWidget {
                             "assets/svg/$svgName.svg",
                           )
                         : Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
                               "assets/image/virtual_account.png",
                             ),
-                        )),
+                          )),
                 Text(
                   title,
                   style: Get.textTheme.subtitle2,

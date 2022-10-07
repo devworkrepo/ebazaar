@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
+import 'package:spayindia/page/aeps/aeps_tramo/aeps_page.dart';
 import 'package:spayindia/widget/transaction_page.dart';
 
 import 'aeps_txn_response_controller.dart';

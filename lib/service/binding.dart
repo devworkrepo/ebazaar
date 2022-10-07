@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:spayindia/data/app_pref.dart';
+import 'package:spayindia/data/repo_impl/aeps_aitel_impl.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/data/repo_impl/auth_impl.dart';
 import 'package:spayindia/data/repo_impl/complain_repo_impl.dart';
@@ -49,6 +50,7 @@ appBinding() async {
   Get.lazyPut(() => HomeRepoImpl(), fenix: true);
   Get.lazyPut(() => DmtRepoImpl(), fenix: true);
   Get.lazyPut(() => AepsRepoImpl(), fenix: true);
+  Get.lazyPut(() => AepsAirtelRepoImpl(), fenix: true);
   Get.lazyPut(() => ReportRepoImpl(), fenix: true);
   Get.lazyPut(() => WalletRepoImpl(), fenix: true);
   Get.lazyPut(() => MoneyRequestImpl(), fenix: true);

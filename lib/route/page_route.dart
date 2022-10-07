@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/aeps/aeps_e_kyc/aeps_e_kyc_page.dart';
-import 'package:spayindia/page/aeps/aeps_transaction/aeps_page.dart';
+import 'package:spayindia/page/aeps/aeps_airtel/aeps_page.dart';
+import 'package:spayindia/page/aeps/aeps_tramo/aeps_page.dart';
 import 'package:spayindia/page/app_setting/login_session_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
@@ -45,6 +46,7 @@ import 'package:spayindia/test/test_notification_page.dart';
 import 'package:spayindia/test/test_pg.dart';
 
 import '../main.dart';
+import '../page/aeps/aeps_air_kyc/aeps_e_kyc_page.dart';
 import '../page/complaint/complain_post/complain_post_page.dart';
 import '../page/complaint/complaint_list/complaint_list_page.dart';
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
@@ -114,8 +116,16 @@ final getAllPages = [
     page: () => const LicOnlinePagePage(),
   ),
   GetPage(
-    name: AppRoute.aepsPage,
+    name: AppRoute.aepsTramoPage,
     page: () => const AepsPage(),
+  ),
+  GetPage(
+    name: AppRoute.aepsAirtelPage,
+    page: () => const AepsAirtelPage(),
+  ),
+  GetPage(
+    name: AppRoute.aepsAirtelKycPage,
+    page: () => const AepsAirEKycPage(),
   ),
   GetPage(
     name: AppRoute.aepsEkycPage,

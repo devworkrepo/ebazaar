@@ -67,7 +67,7 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(const Radius.circular(30)),
+          borderRadius: const BorderRadius.all(Radius.circular(30)),
           border: Border.all(),
           color: Colors.white70),
       child: Row(

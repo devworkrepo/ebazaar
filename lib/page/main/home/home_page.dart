@@ -30,7 +30,6 @@ class HomePage extends GetView<HomeController> {
         onResume: () {
           controller.authenticateSecurity();
         },
-
         child: RouteAwareWidget(
           child: SafeArea(
             child: AppUpdateWidget(
@@ -84,6 +83,7 @@ class HomePage extends GetView<HomeController> {
                     const HomeHeaderSection(),
                     const HomeAppUpdateWidget(),
                     const HomeCarouselWidget(),
+                    _buildAlertMessage(),
                     HomeServiceSection(
                       onClick: (item) => controller.onItemClick(item),
                     ),
@@ -99,6 +99,51 @@ class HomePage extends GetView<HomeController> {
       );
     } else {
       return ExceptionWidget(Exception(controller.user.message));
+    }
+  }
+
+  Widget _buildAlertMessage() {
+    var response = controller.alertMessageObs.value;
+    var alertInfo = response.alert_no ?? 0;
+    if (alertInfo > 0) {
+      return Padding(
+        padding: const EdgeInsets.only(
+          right: 12,
+          left: 12,
+          top: 8,
+        ),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  size: 32,
+                  color: Get.theme.primaryColorDark,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Text(
+                    response.message.toString(),
+                    maxLines: 2,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        height: 1.2),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return SizedBox();
     }
   }
 }

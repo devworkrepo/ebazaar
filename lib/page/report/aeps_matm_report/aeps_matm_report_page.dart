@@ -61,7 +61,7 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
                 })),
         floatingActionButton: Obx(() {
           if (controller.reportList.isEmpty) {
-            return  FloatingActionButton.extended(
+            return FloatingActionButton.extended(
                 icon: const Icon(Icons.search),
                 onPressed: () => _onSearch(),
                 label: const Text("Search"));
@@ -103,7 +103,7 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         color: Colors.white,
-        margin: const EdgeInsets.only(top: 4,left: 4,right: 4,bottom: 0),
+        margin: const EdgeInsets.only(top: 4, left: 4, right: 4, bottom: 0),
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 0, bottom: 100),
           itemBuilder: (context, index) {
@@ -119,17 +119,13 @@ class AepsMatmReportPage extends GetView<AepsMatmReportController> {
                             value: "${mData.total_count}",
                             isRupee: false),
                         SummaryHeader(
-                            title: "Total Amount",
-                            value: "${mData.total_amt}"),
-
+                            title: "Total Amount", value: "${mData.total_amt}"),
                       ],
                       summaryHeader2: [
                         SummaryHeader(
                             title: "Charges", value: "${mData.charges_paid}"),
-
                         SummaryHeader(
-                            title: "Commission",
-                            value: "${mData.comm_rec}"),
+                            title: "Commission", value: "${mData.comm_rec}"),
                         /*SummaryHeader(
                             title: "Aeps\n",
                             value: "${mData.aeps_no}",
@@ -224,6 +220,22 @@ class _BuildListItem extends StatelessWidget {
                   controller.printReceipt(
                       (report.transactionNumber ?? ""), ReceiptType.matm);
                 }
+              },
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            ReportActionButton(
+              title: "Complaint",
+              icon: Icons.messenger_outline,
+              onClick: () {
+                controller.postNewComplaint({
+                  "transactionNumber": report.transactionNumber.toString(),
+                  "type":
+                      (controller.tag == AppTag.aadhaarPayReportControllerTag)
+                          ? "Aadhaar Pay"
+                          : "AEPS, MATM, MPOS"
+                });
               },
             )
           ],

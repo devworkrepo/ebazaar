@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
+import 'package:spayindia/model/alert.dart';
 import 'package:spayindia/model/banner.dart';
 import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/model/user/user.dart';
@@ -20,12 +21,8 @@ import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/in_app_update.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
-import '../../../main.dart';
-import '../../../service/local_notifications.dart';
-import '../../../util/app_constant.dart';
 
 var isLocalAuthDone = false;
 
@@ -46,6 +43,8 @@ class HomeController extends GetxController {
   var appbarElevation = 0.0.obs;
   var bannerList = <AppBanner>[].obs;
 
+  var alertMessageObs = AlertMessageResponse().obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -54,8 +53,17 @@ class HomeController extends GetxController {
     appPreference.setIsTransactionApi(false);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       scrollController.addListener(_scrollListener);
+      _fetchBanners();
+      _fetchAlerts();
     });
-    _fetchBanners();
+
+  }
+
+  _fetchAlerts() async {
+    try {
+      var response = await homeRepo.alertMessage();
+      alertMessageObs.value = response;
+    } catch (e) {}
   }
 
   _fetchBanners() async {
@@ -66,9 +74,12 @@ class HomeController extends GetxController {
         response.banners!.forEach((element) {
           mList.add(element);
         });
-        if(mList.isEmpty){
-          mList.add(AppBanner(rawPicName: "https://spayindia.in/images/spay_features.png"));}
-       mList.add(AppBanner(rawPicName: "https://spayindia.in/images/spay_features.png"));
+        if (mList.isEmpty) {
+          mList.add(AppBanner(
+              rawPicName: "https://spayindia.in/images/spay_features.png"));
+        }
+        mList.add(AppBanner(
+            rawPicName: "https://spayindia.in/images/spay_features.png"));
         bannerList.value = mList;
       }
     } catch (e) {}
@@ -94,12 +105,12 @@ class HomeController extends GetxController {
     }
   }
 
-   authenticateSecurity(){
-     if (!isLocalAuthDone) {
-       LocalAuthService.authenticate();
-       isLocalAuthDone = true;
-     }
-   }
+  authenticateSecurity() {
+    if (!isLocalAuthDone) {
+      LocalAuthService.authenticate();
+      isLocalAuthDone = true;
+    }
+  }
 
   fetchUserDetails() async {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
@@ -120,7 +131,7 @@ class HomeController extends GetxController {
       user = response;
       await appPreference.setUser(user);
 
-     /* if (!(user.allow_local_apk ?? true) && isLocalApk) {
+      /* if (!(user.allow_local_apk ?? true) && isLocalApk) {
         throw LocalApkException();
       }*/
 
@@ -192,12 +203,20 @@ class HomeController extends GetxController {
     switch (item.homeServiceType) {
       case HomeServiceType.aeps:
         {
-          Get.toNamed(AppRoute.aepsPage, arguments: false);
+          Get.bottomSheet(AepsDialogWidget(
+            onAirtel: () {
+              Get.toNamed(AppRoute.aepsAirtelPage);
+            },
+            onTramo: () {
+              Get.toNamed(AppRoute.aepsTramoPage, arguments: false);
+            },
+          ));
         }
         break;
       case HomeServiceType.aadhaarPay:
         {
-          Get.toNamed(AppRoute.aepsPage, arguments: true);
+          Get.toNamed(AppRoute.aepsTramoPage, arguments: true);
+
         }
 
         break;

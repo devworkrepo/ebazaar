@@ -16,6 +16,8 @@ class AepsBankResponse {
   String? message;
   String? transactionNumber;
   String? bcid;
+  String? lat;
+  String? lng;
   bool? isEKcy;
   List<AepsBank>? aepsBankList;
 
@@ -27,6 +29,8 @@ class AepsBankResponse {
     message = json["message"];
     transactionNumber = json["transaction_no"];
     bcid = json["bcid"];
+    lat = json["lat"];
+    lng = json["lng"];
     isEKcy = json["isekyc"];
     if (json["banklist"] != null) {
       aepsBankList = List<AepsBank>.from(

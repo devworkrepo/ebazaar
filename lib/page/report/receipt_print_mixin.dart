@@ -4,6 +4,7 @@ import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
@@ -40,6 +41,12 @@ enum ReportSummaryType {
 }
 
 mixin ReceiptPrintMixin {
+
+
+  void postNewComplaint(Map<String,String> param){
+    Get.toNamed(AppRoute.complainPostPage,arguments: param);
+  }
+
   ReportRepo repo = Get.find<ReportRepoImpl>();
 
   void printReceipt(String calcId, ReceiptType receiptType) {
