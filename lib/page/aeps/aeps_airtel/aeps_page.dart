@@ -24,7 +24,7 @@ class AepsAirtelPage extends GetView<AepsAirtelController> {
       color: Get.theme.primaryColorDark,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Aeps - Queen"),
+          title: Text("AEPS - QUEEN"),
         ),
         body: ObsResourceWidget(
           obs: controller.aepsBankListResponseObs,

@@ -2,7 +2,7 @@ class AlertMessageResponse {
   late int code;
   String? status;
   String? message;
-  int? alert_no;
+  String? alert_no;
 
 
   AlertMessageResponse();

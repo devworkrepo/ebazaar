@@ -225,7 +225,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                       Get.toNamed(AppRoute.complaintPage);
                     },
                     title: Text(
-                      "Complaint",
+                      "Complaints",
                       style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
                     ),
                     leading:  Icon(Icons.messenger_outline,color: color,),

@@ -44,7 +44,7 @@ class AepsController extends GetxController
 
   late AepsBankResponse bankListResponse;
 
-  getTitle() => isAadhaarPay ? "Aadhaar Pay" : "Aeps - King";
+  getTitle() => isAadhaarPay ? "Aadhaar Pay" : "AEPS - KING";
 
   @override
   void onInit() {

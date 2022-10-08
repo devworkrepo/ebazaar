@@ -42,8 +42,9 @@ class _ComplaintFilterDialogState extends State<ComplaintFilterDialog> {
 
   static const _inboxList = [
     "Complaint Inbox",
-    "Close Complaints",
     "Open Complaints",
+    "Closed Complaints",
+
   ];
 
   @override
@@ -66,7 +67,7 @@ class _ComplaintFilterDialogState extends State<ComplaintFilterDialog> {
               },
               selectedItem:
                   (widget.selectedInbox.isEmpty) ? null : widget.selectedInbox,
-              label: "Complain Inbox",
+              label: "Complaint Inbox",
               hint: "Select Inbox",
             ),
             const SizedBox(

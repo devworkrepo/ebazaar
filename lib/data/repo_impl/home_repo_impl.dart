@@ -147,6 +147,8 @@ class HomeRepoImpl extends HomeRepo {
 
   @override
   Future<AlertMessageResponse> alertMessage() async {
+/*   var a  =await AppUtil.parseJsonFromAssets("alert");
+    return AlertMessageResponse.fromJson(a);*/
     var response = await client.post("/GetAlertBell");
     return AlertMessageResponse.fromJson(response.data);
   }

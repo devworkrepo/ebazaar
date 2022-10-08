@@ -81,8 +81,7 @@ class AppUtil {
 
   static void throwUatExceptionOnDeployment(String mobileNumber) {
 
-    //todo remove in live
-    return;
+
     var whiteListNumbers = ["7982607742", "9785172173", "9211044444"];
 
     if (kReleaseMode && AppConstant.baseUrl == AppConstant.uatBaseUrl) {

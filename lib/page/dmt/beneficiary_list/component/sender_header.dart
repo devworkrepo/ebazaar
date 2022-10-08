@@ -50,12 +50,12 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
                     height: 8,
                   ),
                   (controller.sender!.isKycVerified!)
-                      ? _buildIconTitleButton(
+                      ? const SizedBox()/*_buildIconTitleButton(
                       onClick: () {
                         controller.fetchKycInfo();
                       },
                       title: "View Kyc Detail",
-                      icon: Icons.fingerprint)
+                      icon: Icons.fingerprint)*/
                       : _buildChangeWidget()
                 ],
               ),

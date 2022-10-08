@@ -101,7 +101,7 @@ class BuildComplainAndPrintWidget extends StatelessWidget {
             ? Expanded(
                 child: Padding(
                 padding: const EdgeInsets.only(top: 16.0),
-                child: AppButton(text: "Complain", onClick: onComplainClick),
+                child: AppButton(text: "Complaint", onClick: onComplainClick),
               ))
             : const SizedBox(),
         (print ?? false)

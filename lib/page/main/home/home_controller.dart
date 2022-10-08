@@ -1,7 +1,7 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
@@ -23,8 +23,8 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
-
 var isLocalAuthDone = false;
+var firstNotificationPlayed = false;
 
 class HomeController extends GetxController {
   var isUpdateObs = false.obs;
@@ -54,15 +54,14 @@ class HomeController extends GetxController {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       scrollController.addListener(_scrollListener);
       _fetchBanners();
-      _fetchAlerts();
     });
-
   }
 
   _fetchAlerts() async {
     try {
       var response = await homeRepo.alertMessage();
       alertMessageObs.value = response;
+      playNotificationSound();
     } catch (e) {}
   }
 
@@ -105,10 +104,13 @@ class HomeController extends GetxController {
     }
   }
 
-  authenticateSecurity() {
+  authenticateSecurity() async {
     if (!isLocalAuthDone) {
-      LocalAuthService.authenticate();
+      await LocalAuthService.authenticate();
       isLocalAuthDone = true;
+
+      _fetchAlerts();
+      firstNotificationPlayed = true;
     }
   }
 
@@ -116,6 +118,7 @@ class HomeController extends GetxController {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isBottomNavShowObs.value = false;
       _fetchUserDetails();
+      if (firstNotificationPlayed) _fetchAlerts();
     });
   }
 
@@ -130,10 +133,6 @@ class HomeController extends GetxController {
       UserDetail response = await homeRepo.fetchAgentInfo();
       user = response;
       await appPreference.setUser(user);
-
-      /* if (!(user.allow_local_apk ?? true) && isLocalApk) {
-        throw LocalApkException();
-      }*/
 
       authenticateSecurity();
 
@@ -216,7 +215,6 @@ class HomeController extends GetxController {
       case HomeServiceType.aadhaarPay:
         {
           Get.toNamed(AppRoute.aepsTramoPage, arguments: true);
-
         }
 
         break;
@@ -380,6 +378,18 @@ class HomeController extends GetxController {
     await FirebaseCrashlytics.instance.setCustomKey("user Code", agentCode);
     await FirebaseCrashlytics.instance
         .setCustomKey("Mobile", appPreference.mobileNumber);
+  }
+
+
+  playNotificationSound() async {
+    try {
+      if (alertMessageObs.value.alert_no != null) {
+        if (int.parse(alertMessageObs.value.alert_no!) > 0) {
+          FlutterRingtonePlayer.play(
+              fromAsset: "assets/sound/sound2.wav", looping: false);
+        }
+      }
+    } catch (e) {}
   }
 }
 

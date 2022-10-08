@@ -20,7 +20,7 @@ class AepsDialogWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: AppColor.backgroundColor,
+          color: Colors.white,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,18 +28,17 @@ class AepsDialogWidget extends StatelessWidget {
         children: [
           Image.asset(
             "assets/image/apes_server.png",
-            height: 150,
+            height: 180,
             width: double.infinity,
           ),
           const SizedBox(
             height: 8,
           ),
           Text(
-            "Choose Aeps Server",
+            "Which AEPS Server You Want To Select ?",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: Colors.blue[900]),
+                fontWeight: FontWeight.w400,
+                fontSize: 14,),
           ),
           const SizedBox(
             height: 8,
@@ -50,27 +49,17 @@ class AepsDialogWidget extends StatelessWidget {
               if (user.isAeps ?? false)
                 Expanded(
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green
+                    ),
                       onPressed: () {
                         Get.back();
                         onTramo();
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/image/king.png",
-                            height: 20,
-                            width: 20,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Aeps - King",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w500),
-                          )
-                        ],
+                      child: Text(
+                        "AEPS - KING",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
                       )),
                 ),
               if (user.is_aeps_air ?? false)
@@ -80,27 +69,17 @@ class AepsDialogWidget extends StatelessWidget {
               if (user.is_aeps_air ?? false)
                 Expanded(
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green
+                    ),
                       onPressed: () {
                         Get.back();
                         onAirtel();
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/image/queen.png",
-                            height: 20,
-                            width: 20,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Aeps - Queen",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w500),
-                          )
-                        ],
+                      child: Text(
+                        "AEPS - QUEEN",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
                       )),
                 )
             ],

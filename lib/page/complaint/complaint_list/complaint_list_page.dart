@@ -26,7 +26,7 @@ class ComplaintListPage extends GetView<ComplaintListController> {
               if (value) controller.fetchComplaints();
             }
           }),
-          label: const Text("New Complain"),
+          label: const Text("New Complaint"),
           icon: const Icon(Icons.add),
         ),
       ),
@@ -178,7 +178,7 @@ class ComplaintListPage extends GetView<ComplaintListController> {
                       width: 12,
                     ),
                     Text(
-                      "No complain found!",
+                      "No complaint found!",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     )

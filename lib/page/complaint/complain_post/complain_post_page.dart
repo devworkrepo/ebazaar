@@ -15,7 +15,7 @@ class ComplainPostPage extends GetView<ComplainPostController> {
     Get.put(ComplainPostController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Post New Complain"),
+        title: const Text("Post New Complaint"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -35,8 +35,7 @@ class ComplainPostPage extends GetView<ComplainPostController> {
                     ),
                     Expanded(
                         child: Text(
-                      "We are very sorry for your bad experience. Please, "
-                      "spend some of your valuable time to write exactly "
+                      "Please, write exactly "
                       "what happened so that we can take our steps as "
                       "soon as possible",
                       style: TextStyle(
@@ -78,7 +77,7 @@ class ComplainPostPage extends GetView<ComplainPostController> {
                         AppTextField(
                           enable: false,
                           controller: controller.complaintTypeController,
-                          hint: "Complain Type",
+                          hint: "Complaint Type",
                           label: "Complaint type",
                           validator: (value) => FormValidatorHelper.empty(value,
                               message: "Transaction number is required"),

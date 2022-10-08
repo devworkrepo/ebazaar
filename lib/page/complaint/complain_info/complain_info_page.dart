@@ -18,7 +18,7 @@ class ComplainInfoPage extends GetView<ComplainInfoController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Complain Details"),
+        title: const Text("Complaint Details"),
       ),
       body: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),

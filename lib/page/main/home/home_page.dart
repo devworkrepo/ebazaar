@@ -18,6 +18,7 @@ import 'package:spayindia/util/app_util.dart';
 import 'component/home_appbar_section.dart';
 import 'component/home_header_section.dart';
 import 'component/home_service_section.dart';
+import 'package:animated_widgets/animated_widgets.dart';
 
 class HomePage extends GetView<HomeController> {
   final Function(UserDetail) userInfo;
@@ -105,8 +106,8 @@ class HomePage extends GetView<HomeController> {
 
   Widget _buildAlertMessage() {
     var response = controller.alertMessageObs.value;
-    var alertInfo = response.alert_no ?? 0;
-    if (alertInfo > 0) {
+    var alertInfo = response.alert_no ?? "0";
+    if (int.parse(alertInfo) > 0) {
       return GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: ()=>Get.toNamed(AppRoute.complaintPage),
@@ -121,11 +122,19 @@ class HomePage extends GetView<HomeController> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.notifications_on,
-                    size: 32,
-                    color: Colors.red[900],
+                  ShakeAnimatedWidget(
+
+                    enabled: true,
+                    duration: const Duration(milliseconds: 500),
+                    shakeAngle: Rotation.deg(z: 20),
+                    curve: Curves.linear,
+                    child:Icon(
+                      Icons.notifications_on,
+                      size: 32,
+                      color: Colors.red[900],
+                    ),
                   ),
+
                   const SizedBox(
                     width: 8,
                   ),

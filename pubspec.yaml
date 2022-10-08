@@ -62,6 +62,8 @@ dependencies:
   firebase_core: ^1.18.0
   firebase_messaging: ^11.4.2
   flutter_local_notifications: ^9.2.0
+  flutter_ringtone_player: ^3.2.0
+  animated_widgets: ^1.1.0
 
 
 
@@ -83,3 +85,4 @@ flutter:
     - assets/lottie/
     - assets/json/
     - assets/html/
+    - assets/sound/
