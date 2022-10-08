@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/lifecycle_widget.dart';
 import 'package:spayindia/page/main/home/component/home_update_widget.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/app_lifecycle.dart';
 import 'package:spayindia/widget/exception.dart';
 import 'package:spayindia/widget/progress.dart';
@@ -106,44 +107,49 @@ class HomePage extends GetView<HomeController> {
     var response = controller.alertMessageObs.value;
     var alertInfo = response.alert_no ?? 0;
     if (alertInfo > 0) {
-      return Padding(
-        padding: const EdgeInsets.only(
-          right: 12,
-          left: 12,
-          top: 8,
-        ),
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.info_outline,
-                  size: 32,
-                  color: Get.theme.primaryColorDark,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                    response.message.toString(),
-                    maxLines: 2,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        height: 1.2),
-                    overflow: TextOverflow.ellipsis,
+      return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: ()=>Get.toNamed(AppRoute.complaintPage),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            right: 12,
+            left: 12,
+            top: 8,
+          ),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.notifications_on,
+                    size: 32,
+                    color: Colors.red[900],
                   ),
-                )
-              ],
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: Text(
+                      response.message.toString(),
+                      maxLines: 2,
+                      style:  TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.normal,
+                          color: Colors.red[900],
+                          height: 1.2),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
       );
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
   }
 }

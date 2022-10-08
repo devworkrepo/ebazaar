@@ -16,7 +16,7 @@ class NativeCall {
   static const _credoPayService = "credo_pay_service";
 
   static Future<String> launchTramoAepsService(Map<String, dynamic> data) async {
-    data.addAll({"provider": "airtel"});
+    data.addAll({"provider": "tramo"});
     final String result =
         await _methodChannel.invokeMethod(_aepsServiceMethodName, data);
     return result;

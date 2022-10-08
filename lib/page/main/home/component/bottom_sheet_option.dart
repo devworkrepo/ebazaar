@@ -66,18 +66,18 @@ class AepsDialogWidget extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            "King",
+                            "Aeps - King",
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w500),
                           )
                         ],
                       )),
                 ),
-              if (true/*todouser.is_aeps_air ?? false*/)
+              if (user.is_aeps_air ?? false)
                 const SizedBox(
                   width: 16,
                 ),
-              if (true/*todo user.is_aeps_air ?? false*/)
+              if (user.is_aeps_air ?? false)
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
@@ -96,7 +96,7 @@ class AepsDialogWidget extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            "Queen",
+                            "Aeps - Queen",
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w500),
                           )

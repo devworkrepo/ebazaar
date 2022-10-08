@@ -392,6 +392,7 @@ class MainActivity : FlutterFragmentActivity() {
         val mData = data!!.getStringExtra("PID_DATA")
         if (mData != null) {
             try {
+                Log.d("AirtelTesting", "PidData: $mData")
                 val resultMap = XmPidParser.parseAirtelData(mData)
                 if (resultMap == null)
                     result!!.error("99", exceptionMessage, "parsing failed")

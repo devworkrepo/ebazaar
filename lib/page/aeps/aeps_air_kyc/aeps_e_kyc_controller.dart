@@ -10,8 +10,9 @@ import 'package:spayindia/model/aeps/kyc/e_kyc.dart';
 import 'package:spayindia/page/exception_page.dart';
 
 import '../../../service/native_call.dart';
+import '../../../util/mixin/transaction_helper_mixin.dart';
 
-class AepsAirKycController extends GetxController {
+class AepsAirKycController extends GetxController with TransactionHelperMixin {
   var formOneKey = GlobalKey<FormState>();
   var otpController = TextEditingController();
   var aadhaarController = TextEditingController();
@@ -92,6 +93,7 @@ class AepsAirKycController extends GetxController {
       });
       Get.back();
       if (response.code == 1) {
+        token = response.token;
         StatusDialog.success(title: response.message).then((value) {
           actionTypeObs.value = AepsAirKycActionType.verifyBiometric;
         });
@@ -148,8 +150,9 @@ class AepsAirKycController extends GetxController {
       final String sKeyCI = biometricData["sKeyCI"];
       final String deviceSerialNumber = biometricData["deviceSerialNumber"];
 
+
       var response = await repo.verifyBiometricData({
-        "aadhar_no": aadhaarController.text,
+        "aadhar_no": aadhaarWithoutSymbol(aadhaarController),
         "ci": sKeyCI,
         "hmac": hMac,
         "Piddata": pidData,

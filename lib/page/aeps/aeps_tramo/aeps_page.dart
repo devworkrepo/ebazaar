@@ -10,6 +10,7 @@ import 'package:spayindia/util/input_validator.dart';
 import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
 
+import '../transaction_type.dart';
 import 'aeps_controller.dart';
 
 class AepsPage extends GetView<AepsController> {
@@ -195,7 +196,4 @@ class AepsPage extends GetView<AepsController> {
   }
 }
 
-enum AepsTransactionType {
-  cashWithdrawal,
-  balanceEnquiry,
-}
+

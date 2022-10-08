@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/aeps/aeps_tramo/aeps_page.dart';
 import 'package:spayindia/widget/transaction_page.dart';
 
+import '../../aeps/transaction_type.dart';
 import 'aeps_txn_response_controller.dart';
 
 // ignore: must_be_immutable

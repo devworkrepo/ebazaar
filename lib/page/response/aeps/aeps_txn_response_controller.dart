@@ -4,6 +4,8 @@ import 'package:spayindia/model/aeps/aeps_transaction.dart';
 import 'package:spayindia/page/aeps/aeps_tramo/aeps_page.dart';
 import 'package:spayindia/util/app_util.dart';
 
+import '../../aeps/transaction_type.dart';
+
 class AepsTxnResponseController extends GetxController {
   var screenshotController = ScreenshotController();
   AepsTransactionResponse response = Get.arguments["response"];

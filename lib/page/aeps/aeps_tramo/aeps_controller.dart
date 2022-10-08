@@ -20,7 +20,7 @@ import 'package:spayindia/widget/list_component.dart';
 
 import '../../../route/route_name.dart';
 import '../../../util/mixin/location_helper_mixin.dart';
-import 'aeps_page.dart';
+import '../transaction_type.dart';
 
 class AepsController extends GetxController
     with TransactionHelperMixin, LocationHelperMixin {
@@ -44,7 +44,7 @@ class AepsController extends GetxController
 
   late AepsBankResponse bankListResponse;
 
-  getTitle() => isAadhaarPay ? "Aadhaar Pay" : "Aeps";
+  getTitle() => isAadhaarPay ? "Aadhaar Pay" : "Aeps - King";
 
   @override
   void onInit() {

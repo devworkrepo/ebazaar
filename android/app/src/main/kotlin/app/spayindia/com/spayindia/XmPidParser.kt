@@ -26,7 +26,8 @@ object XmPidParser {
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_DOCUMENT) {
                 println("Start document")
-            } else if (eventType == XmlPullParser.START_TAG) {
+            }
+            else if (eventType == XmlPullParser.START_TAG) {
                 if (xmlPullParser.name.equals("Resp", ignoreCase = true)) {
                     val count = xmlPullParser.attributeCount
                     for (i in 0 until count) {

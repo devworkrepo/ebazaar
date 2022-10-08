@@ -19,7 +19,7 @@ import 'package:spayindia/widget/list_component.dart';
 
 import '../../../route/route_name.dart';
 import '../../../util/mixin/location_helper_mixin.dart';
-import 'aeps_page.dart';
+import '../transaction_type.dart';
 
 class AepsAirtelController extends GetxController
     with TransactionHelperMixin, LocationHelperMixin {

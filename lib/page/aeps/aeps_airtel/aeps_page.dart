@@ -10,7 +10,9 @@ import 'package:spayindia/util/input_validator.dart';
 import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/util/validator.dart';
 
+import '../transaction_type.dart';
 import 'aeps_controller.dart';
+
 
 class AepsAirtelPage extends GetView<AepsAirtelController> {
   const AepsAirtelPage({Key? key}) : super(key: key);
@@ -22,7 +24,7 @@ class AepsAirtelPage extends GetView<AepsAirtelController> {
       color: Get.theme.primaryColorDark,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Apps"),
+          title: Text("Aeps - Queen"),
         ),
         body: ObsResourceWidget(
           obs: controller.aepsBankListResponseObs,
@@ -188,9 +190,4 @@ class AepsAirtelPage extends GetView<AepsAirtelController> {
       ),
     );
   }
-}
-
-enum AepsTransactionType {
-  cashWithdrawal,
-  balanceEnquiry,
 }
