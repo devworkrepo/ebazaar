@@ -14,26 +14,24 @@ class LocalAuthService {
   }
 
   static Future<bool> authenticate() async {
-    if(await isAvailable()){
+    if (await isAvailable()) {
       try {
         var isAuthenticate = await LocalAuthentication().authenticate(
-            stickyAuth: true,
+            options: AuthenticationOptions(stickyAuth: true),
             localizedReason:
-            "Access app with biometric authentication is more secure");
+                "Access app with biometric authentication is more secure");
 
         if (!isAuthenticate) {
           isLocalAuthDone = false;
           SystemNavigator.pop();
           return false;
-        }
-        else{
+        } else {
           return true;
         }
       } catch (e) {
         return false;
       }
-    }
-    else{
+    } else {
       return false;
     }
   }
