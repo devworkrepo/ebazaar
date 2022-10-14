@@ -17,7 +17,7 @@ class LocalAuthService {
     if (await isAvailable()) {
       try {
         var isAuthenticate = await LocalAuthentication().authenticate(
-            options: AuthenticationOptions(stickyAuth: true),
+            stickyAuth: true,
             localizedReason:
                 "Access app with biometric authentication is more secure");
 
