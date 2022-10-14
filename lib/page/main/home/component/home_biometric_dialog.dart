@@ -51,7 +51,10 @@ class HomeBiometricDialog extends GetView<HomeController> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.green
                 ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.back();
+                    Get.to(() => const BiometricSettingPage());
+                  },
                   child: const Text("        Enable        ")),
               Padding(
                 padding: const EdgeInsets.all(12.0),
