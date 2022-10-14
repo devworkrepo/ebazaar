@@ -117,7 +117,11 @@ class HomeController extends GetxController {
     } else {
       firstNotificationPlayed = true;
       if (!appPreference.isSkipBiometricPopUp) {
-        Get.dialog(const HomeBiometricDialog(), barrierDismissible: false);
+        if(!(Get.isDialogOpen ?? true)) {
+          if(Get.currentRoute == AppRoute.mainPage) {
+            Get.dialog(const HomeBiometricDialog(), barrierDismissible: false);
+          }
+        }
       }
     }
   }
