@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
 
   String _initialPage() {
     return (appPreference.sessionKey.isEmpty ||
-            appPreference.sessionKey == "na")
+            appPreference.sessionKey == "na" || !appPreference.isBiometricAuthentication)
         ? AppRoute.loginPage
         : AppRoute.mainPage;
   }

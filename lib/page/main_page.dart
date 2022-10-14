@@ -31,7 +31,6 @@ import '../service/native_call.dart';
 import '../widget/dialog/status_dialog.dart';
 import 'main/home/home_controller.dart';
 
-
 var isBottomNavShowObs = true.obs;
 
 class MainPage extends StatefulWidget {
@@ -59,10 +58,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     setTransactionApi();
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -99,17 +95,20 @@ class _MainPageState extends State<MainPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-
-                Container(height: 1,width: Get.width,color: Colors.grey[300],),
+                Container(
+                  height: 1,
+                  width: Get.width,
+                  color: Colors.grey[300],
+                ),
                 BottomNavigationBar(
-                 backgroundColor: Colors.white,
+                  backgroundColor: Colors.white,
                   key: bottomNavKey,
                   elevation: 20,
 
                   selectedLabelStyle: bottomNavStyle,
                   unselectedLabelStyle: bottomNavStyle,
                   selectedItemColor: selectedItemColor,
-                   unselectedItemColor: Colors.black45,
+                  unselectedItemColor: Colors.black45,
                   // backgroundColor: Get.theme.primaryColor,
                   type: BottomNavigationBarType.fixed,
                   currentIndex: bottomNavSelectedIndex,
@@ -157,14 +156,17 @@ class _MainPageState extends State<MainPage> {
       case 1:
         Get.delete<AccountStatementController>(
             tag: AppTag.accountStatementControllerTag);
-        Get.delete<AccountStatementController>(tag: AppTag.aepsStatementControllerTag);
-        Get.delete<CreditDebitController>(tag: AppTag.creditStatementControllerTag);
-        Get.delete<CreditDebitController>(tag: AppTag.debitStatementControllerTag);
+        Get.delete<AccountStatementController>(
+            tag: AppTag.aepsStatementControllerTag);
+        Get.delete<CreditDebitController>(
+            tag: AppTag.creditStatementControllerTag);
+        Get.delete<CreditDebitController>(
+            tag: AppTag.debitStatementControllerTag);
         return const StatementTabPage();
       case 2:
-        return  HomePage(userInfo: (info){
-
-        },);
+        return HomePage(
+          userInfo: (info) {},
+        );
       case 3:
         Get.delete<MoneyReportController>(
             tag: AppTag.payoutReportControllerTag);
@@ -205,45 +207,59 @@ class _MainPageState extends State<MainPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-               "Exit or Logout ? " ,
+              (appPreference.isBiometricAuthentication)
+                  ? "Exit or Logout ? "
+                  : "Logout ? ",
               style: Get.textTheme.headline3
                   ?.copyWith(color: Get.theme.primaryColorDark),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24),
               child: Text(
-                "If you logout then login session will destroy and need to login with otp again.",
+                "Logout will clear all login sessions!",
                 style: Get.textTheme.bodyText1?.copyWith(
                   color: Colors.grey[700],
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                    child: AppButton(
-                  text: "Logout",
-                  onClick: () {
-                    Get.back();
-                    logout();
-                  },
-                  background: Colors.red,
-                )),
-                const SizedBox(width: 16,),
-                Expanded(
-                  child: AppButton(
-                    text: "Exit",
+            if (appPreference.isBiometricAuthentication)
+              Row(
+                children: [
+                  Expanded(
+                      child: AppButton(
+                    text: "Logout",
                     onClick: () {
-                      isLocalAuthDone = false;
                       Get.back();
-                      SystemNavigator.pop();
+                      logout();
                     },
-                    background: Get.theme.primaryColorDark,
+                    background: Colors.red,
+                  )),
+                  const SizedBox(
+                    width: 16,
                   ),
-                )
-              ],
-            )
+                  Expanded(
+                    child: AppButton(
+                      text: "Exit",
+                      onClick: () {
+                        isLocalAuthDone = false;
+                        Get.back();
+                        SystemNavigator.pop();
+                      },
+                      background: Get.theme.primaryColorDark,
+                    ),
+                  )
+                ],
+              ),
+            if (!appPreference.isBiometricAuthentication)
+              AppButton(
+                text: "Logout",
+                onClick: () {
+                  Get.back();
+                  logout();
+                },
+                background: Colors.red,
+              )
           ],
         ),
       ),

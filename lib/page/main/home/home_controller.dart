@@ -23,6 +23,8 @@ import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
+import 'component/home_biometric_dialog.dart';
+
 var isLocalAuthDone = false;
 var firstNotificationPlayed = false;
 
@@ -105,12 +107,18 @@ class HomeController extends GetxController {
   }
 
   authenticateSecurity() async {
-    if (!isLocalAuthDone) {
-      await LocalAuthService.authenticate();
-      isLocalAuthDone = true;
-
-      _fetchAlerts();
+    if (appPreference.isBiometricAuthentication) {
+      if (!isLocalAuthDone) {
+        await LocalAuthService.authenticate();
+        isLocalAuthDone = true;
+        _fetchAlerts();
+        firstNotificationPlayed = true;
+      }
+    } else {
       firstNotificationPlayed = true;
+      if (!appPreference.isSkipBiometricPopUp) {
+        Get.dialog(const HomeBiometricDialog(), barrierDismissible: false);
+      }
     }
   }
 

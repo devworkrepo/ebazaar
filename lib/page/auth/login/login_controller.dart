@@ -30,15 +30,17 @@ class LoginController extends GetxController with LocationHelperMixin {
   var passwordController = TextEditingController();
 
   var isLoginCheck = false.obs;
+  var saveLoginInfo = false;
 
   @override
   void onInit() {
     super.onInit();
+    saveLoginInfo = !appPreference.isBiometricAuthentication;
     appPreference.setIsTransactionApi(false);
     appPreference.setSessionKey("na");
     isLoginCheck.value = appPreference.isLoginCheck;
 
-    if (appPreference.isLoginCheck) {
+    if (appPreference.isLoginCheck && saveLoginInfo) {
       mobileController.text = appPreference.mobileNumber;
       passwordController.text = appPreference.password;
     }

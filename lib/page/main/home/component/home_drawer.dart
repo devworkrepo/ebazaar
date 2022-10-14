@@ -6,6 +6,7 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
 
 import '../../../../widget/image.dart';
+import '../../../biometric_setting_page.dart';
 import '../../logout_confirm_dialog.dart';
 
 class HomeDrawerWidget extends GetView<HomeController> {
@@ -213,7 +214,15 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         underline: false,
                         count: 3,
                       ),
-                     
+                      _NavSubTitle(
+                        title: "Biometric Login",
+                        onClick: () {
+                          Get.back();
+                          Get.to(()=>const BiometricSettingPage());
+                        },
+                        underline: false,
+                        count: 4,
+                      ),
                     ],
                   ),
                 ),
