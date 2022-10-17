@@ -47,6 +47,8 @@ class HomeController extends GetxController {
 
   var alertMessageObs = AlertMessageResponse().obs;
 
+  bool skipBiometric = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -109,16 +111,16 @@ class HomeController extends GetxController {
   authenticateSecurity() async {
     if (appPreference.isBiometricAuthentication) {
       if (!isLocalAuthDone) {
-        await LocalAuthService.authenticate();
-        isLocalAuthDone = true;
+        final result = await LocalAuthService.authenticate();
+        isLocalAuthDone = result;
         _fetchAlerts();
-        firstNotificationPlayed = true;
+        firstNotificationPlayed = result;
       }
     } else {
       firstNotificationPlayed = true;
-      if (!appPreference.isSkipBiometricPopUp) {
-        if(!(Get.isDialogOpen ?? true)) {
-          if(Get.currentRoute == AppRoute.mainPage) {
+      if (!skipBiometric) {
+        if (!(Get.isDialogOpen ?? true)) {
+          if (Get.currentRoute == AppRoute.mainPage) {
             Get.dialog(const HomeBiometricDialog(), barrierDismissible: false);
           }
         }

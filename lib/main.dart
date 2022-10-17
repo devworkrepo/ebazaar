@@ -25,6 +25,7 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 bool _isBiometricAvailable = false;
 bool _isDeviceRooted = true;
+
 /*bool isLocalApk = true;*/
 
 Widget? testPageMode() => null;

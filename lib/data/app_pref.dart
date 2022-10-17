@@ -21,7 +21,6 @@ class AppPreference {
   final _isLoginBondAccepted = "is_login_bond_accepted";
   final _rdService = "rd_service";
   final _biometricServiceEnable = "biometric_service_enable";
-  final _isSkipBiometricPopUp = "is_skip_biometric_pop_up";
   final _appUpdateDelayTime = "app_update_delay_time";
   final _appUpdateDelayHour = "app_update_delay_hour";
 
@@ -55,7 +54,6 @@ class AppPreference {
     var user = UserDetail.fromJson(json);
     return user;
   }
-
 
   setIsTransactionApi(bool value) async {
     _saveBoolData(_isTransactionApi, value);
@@ -92,13 +90,6 @@ class AppPreference {
 
   bool get isBiometricAuthentication =>
       _retrieveBoolData(_biometricServiceEnable, defaultValue: false);
-
-  setIsSkipBiometricPopUp(bool value) =>
-      _saveBoolData(_isSkipBiometricPopUp, value);
-
-  bool get isSkipBiometricPopUp =>
-      _retrieveBoolData(_isSkipBiometricPopUp, defaultValue: false);
-
 
   _saveStringData(String key, String value) {
     var eData = Encryption.aesEncrypt((value.isEmpty) ? "na" : value);

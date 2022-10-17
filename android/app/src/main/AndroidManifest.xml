@@ -13,9 +13,16 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission
+        android:name="android.permission.REQUEST_INSTALL_PACKAGES"
+        tools:node="remove" />
 
-    <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
 
 
     <queries>
@@ -48,7 +55,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Spay India"
         tools:replace="android:label">
-
 
 
         <activity
@@ -88,7 +94,7 @@
 
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
-                android:value="app.spayindia.com"/>
+                android:value="app.spayindia.com" />
 
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"

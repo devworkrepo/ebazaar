@@ -61,10 +61,10 @@ class HomeBiometricDialog extends GetView<HomeController> {
                 child: TextButton(
                     onPressed: () {
                       Get.back();
-                      controller.appPreference.setIsSkipBiometricPopUp(true);
+                      controller.skipBiometric = true;
                     },
-                    child: Text(
-                      "Skip and don't show again",
+                    child: const Text(
+                      "Skip for now",
                       style: TextStyle(color: Colors.white),
                     )),
               )
