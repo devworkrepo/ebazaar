@@ -55,6 +55,7 @@ class AppRoute {
   static const securityDepositReportPage = "/security-deposity-report-page";
   static const fundRequestUpiPage = "/fund-request-upi-page";
   static const showQRCodePage = "/show-qr-code-page";
+  static const addFundOnline = "/add-fund-online";
 
 
   //change pin

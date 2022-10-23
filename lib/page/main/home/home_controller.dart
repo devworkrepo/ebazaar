@@ -368,6 +368,11 @@ class HomeController extends GetxController {
           Get.toNamed(AppRoute.securityDepositPage);
         }
         break;
+      case HomeServiceType.fundAddOnline:
+        {
+          Get.toNamed(AppRoute.addFundOnline);
+        }
+        break;
       default:
         break;
     }
@@ -429,5 +434,6 @@ enum ProviderType {
   landline,
   broadband,
   insurance,
-  ott
+  ott,
+
 }

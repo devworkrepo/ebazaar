@@ -58,6 +58,7 @@ import '../page/matm_tramo/matm_page.dart';
 import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
 import '../page/ott/ott_transaction/ott_transaction_page.dart';
+import '../page/pg/payment_gateway_page.dart';
 import '../page/refund/refund_tab.dart';
 import '../page/report/fund_report/fund_report_page.dart';
 import '../page/root_page.dart';
@@ -320,6 +321,10 @@ final getAllPages = [
   GetPage(
     name: AppRoute.complainInfoPage,
     page: () => const ComplainInfoPage(),
+  ),
+  GetPage(
+    name: AppRoute.addFundOnline,
+    page: () => const PaymentGatewayPage(),
   ),
 ];
 

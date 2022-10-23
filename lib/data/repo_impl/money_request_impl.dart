@@ -12,6 +12,10 @@ import 'package:spayindia/service/network_client.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:dio/dio.dart' as dio;
 
+import '../../model/money_request/pg_charge.dart';
+import '../../model/money_request/pg_initiate.dart';
+import '../../model/money_request/pg_payment_mode.dart';
+
 class MoneyRequestImpl extends MoneyRequestRepo{
 
   NetworkClient client = Get.find();
@@ -67,6 +71,25 @@ class MoneyRequestImpl extends MoneyRequestRepo{
         }
     ));
     return CommonResponse.fromJson(response.data);
+  }
+
+
+  @override
+  Future<PgPaymentModeResponse> fetchPgPaymentList(data) async {
+    var response = await client.post("/PgChargesList",data: data);
+    return PgPaymentModeResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<PgChargeResponse> fetchPgCharge(data) async {
+    var response = await client.post("/CalcPgCharges",data: data);
+    return PgChargeResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<PgInitiateResponse> initiatePaymentGateway(data) async {
+    var response = await client.post("/AddPGTransaction",data: data);
+    return PgInitiateResponse.fromJson(response.data);
   }
 
 }
