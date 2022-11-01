@@ -179,7 +179,7 @@ class _BuildListItem extends GetView<FundRequestReportController> {
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
           isExpanded: report.isExpanded,
-          title: report.bankAccountName.orNA(),
+          title: report.referenceNumber.orNA(),
           subTitle: "Type : " + report.type.orNA(),
           date: "Date : " + report.addedDate.orNA(),
           amount: report.amount.toString(),
@@ -260,7 +260,7 @@ class _BuildListItem extends GetView<FundRequestReportController> {
       ListTitleValue(
           title: "Deposit Date", value: report.depositeDate.toString()),
       ListTitleValue(
-          title: "Ref Number", value: report.referenceNumber.toString()),
+          title: "Bank Name", value: report.bankAccountName.toString()),
       ListTitleValue(title: "Remark", value: report.remark.toString()),
       ListTitleValue(
           title: "Request Number", value: report.requestNumber.toString()),

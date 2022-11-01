@@ -82,14 +82,15 @@ class _TransactionTabPageState extends State<TransactionTabPage>
       origin: "report",
     ));
 
-    mList.addIf(
-        isMpos,
+    mList.add(
         const AepsMatmReportPage(
           controllerTag: AppTag.matmReportControllerTag,
           origin: "report",
         ));
 
-    mList.add(const AepsMatmReportPage(
+    mList.addIf(
+        isMpos,
+        const AepsMatmReportPage(
       controllerTag: AppTag.mposReportControllerTag,
       origin: "report",
     ));

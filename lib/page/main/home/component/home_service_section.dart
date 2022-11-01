@@ -237,7 +237,7 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
   }
 
 
-  if (true) {
+  if (user.is_pg ?? false) {
     itemList.add(HomeServiceItem("Add Fund\nOnline", "fund_add_online",
         HomeServiceType.fundAddOnline));
   }

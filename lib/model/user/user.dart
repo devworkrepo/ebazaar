@@ -35,6 +35,7 @@ class UserDetail {
   bool? is_matm_credo;
   bool? is_aeps_air;
   bool? allow_local_apk;
+  bool? is_pg;
 
 
   UserDetail();
@@ -73,6 +74,7 @@ class UserDetail {
     is_mpos_credo = json['is_mpos_credo'];
     is_matm_credo = json['is_matm_credo'];
     is_aeps_air = json['is_aeps_air'];
+    is_pg  = json['is_pg'];
     allow_local_apk = json['allow_local_apk'];
   }
 
@@ -111,6 +113,7 @@ class UserDetail {
     data ['is_mpos_credo']=is_mpos_credo;
     data ['is_matm_credo']=is_matm_credo;
     data ['is_aeps_air']=is_aeps_air;
+    data ['is_pg']=is_pg;
     data ['allow_local_apk']=allow_local_apk;
     return data;
   }

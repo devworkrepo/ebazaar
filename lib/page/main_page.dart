@@ -168,18 +168,13 @@ class _MainPageState extends State<MainPage> {
           userInfo: (info) {},
         );
       case 3:
-        Get.delete<MoneyReportController>(
-            tag: AppTag.payoutReportControllerTag);
+        Get.delete<MoneyReportController>(tag: AppTag.payoutReportControllerTag);
         Get.delete<MoneyReportController>(tag: AppTag.moneyReportControllerTag);
         Get.delete<RechargeReportController>();
-        Get.delete<AepsMatmReportController>(
-            tag: AppTag.aepsReportControllerTag);
-        Get.delete<AepsMatmReportController>(
-            tag: AppTag.aadhaarPayReportControllerTag);
-        Get.delete<AepsMatmReportController>(
-            tag: AppTag.matmReportControllerTag);
-        Get.delete<AepsMatmReportController>(
-            tag: AppTag.mposReportControllerTag);
+        Get.delete<AepsMatmReportController>(tag: AppTag.aepsReportControllerTag);
+        Get.delete<AepsMatmReportController>(tag: AppTag.aadhaarPayReportControllerTag);
+        Get.delete<AepsMatmReportController>(tag: AppTag.matmReportControllerTag);
+        Get.delete<AepsMatmReportController>(tag: AppTag.mposReportControllerTag);
         Get.delete<CreditCardReportController>();
         return const TransactionTabPage();
       case 4:
