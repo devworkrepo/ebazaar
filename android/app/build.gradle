@@ -62,7 +62,7 @@ android {
         applicationId "com.spayindia.app"
         // applicationId "app.spayindia.com"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
