@@ -13,30 +13,33 @@ import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 import '../../../data/repo/aeps_repo.dart';
+import '../../../model/aeps/settlement/bank.dart';
 
-class AepsSettlementController extends GetxController
-    with TransactionHelperMixin {
+class AepsSettlementController extends GetxController with TransactionHelperMixin {
   AepsRepo repo = Get.find<AepsRepoImpl>();
   AppPreference appPreference = Get.find();
 
-  var actionType = AepsSettlementType.spayAccount.obs;
+  AepsSettlementType actionType = Get.arguments["aeps_settlement_type"];
+  AepsSettlementBank? settlementBank = Get.arguments["bank_account"];
+
   var amountController = TextEditingController();
   var remarkController = TextEditingController();
+  var bankAccountController = TextEditingController();
 
   var balanceResponseObs = Resource.onInit(data: AepsBalance()).obs;
   var bankResponseObs = Resource.onInit(data: BankListResponse()).obs;
 
   var formSpayAccount = GlobalKey<FormState>();
   var formBankAccount = GlobalKey<FormState>();
-
   AepsBalance? aepsBalance;
-  List<Bank>? bankList;
-  Bank? selectedBank;
 
   @override
   void onInit() {
     super.onInit();
-    _fetchBalance();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      bankAccountController.text = settlementBank?.accountName ?? "";
+      _fetchBalance();
+    });
   }
 
   _fetchBalance() async {
@@ -44,6 +47,7 @@ class AepsSettlementController extends GetxController
       balanceResponseObs.value = Resource.onInit();
       var response = await repo.fetchAepsBalance();
       if (response.code == 1) {
+
         aepsBalance = response;
         balanceResponseObs.value = Resource.onSuccess(response);
       } else {
@@ -57,14 +61,6 @@ class AepsSettlementController extends GetxController
 
   }
 
-  _fetchBank() async {
-    ObsResponseHandler<BankListResponse>(
-        obs: bankResponseObs,
-        apiCall: repo.fetchAepsSettlementBank(),
-        result: (data) {
-          bankList = data.banks;
-        });
-  }
 
   @override
   void dispose() {
@@ -73,15 +69,6 @@ class AepsSettlementController extends GetxController
     super.dispose();
   }
 
-  onActionTypeChange(AepsSettlementType type) {
-    if (aepsBalance != null) {
-      actionType.value = type;
-
-      if (actionType.value == AepsSettlementType.bankAccount) {
-        if (bankList == null) _fetchBank();
-      }
-    }
-  }
 
   onSpayAccountSettlement() async {
     if (!formSpayAccount.currentState!.validate()) return;
@@ -102,7 +89,7 @@ class AepsSettlementController extends GetxController
     try {
       StatusDialog.transaction();
 
-      var response = (actionType.value == AepsSettlementType.spayAccount)
+      var response = (actionType == AepsSettlementType.spayAccount)
           ? await repo.spayAccountSettlement(param)
           : await repo.bankAccountSettlement(param);
       Get.back();
@@ -143,7 +130,7 @@ class AepsSettlementController extends GetxController
           "transaction_no": aepsBalance!.transaction_no.toString(),
           "amount": amountWithoutRupeeSymbol(amountController),
           "remark": (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
-          "bankid": selectedBank?.bankId ?? "",
+          "bankid": settlementBank?.accountId ?? "",
         });
       },
       amount: amountController.text,

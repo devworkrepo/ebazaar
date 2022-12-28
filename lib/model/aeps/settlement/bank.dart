@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class AepsSettlementBankListResponse {
   late int code;
   late String message;
@@ -17,6 +19,7 @@ class AepsSettlementBankListResponse {
 }
 
 class AepsSettlementBank {
+  String? accountId;
   String? accountName;
   String? accountNumber;
   String? bankName;
@@ -25,8 +28,10 @@ class AepsSettlementBank {
   String? bankStatus;
   String? remark;
   String? date;
+  RxBool isSelectedForImport = false.obs;
 
   AepsSettlementBank.fromJson(Map<String, dynamic> json) {
+    accountId = json["acc_id"];
     accountName = json["acc_name"];
     accountNumber = json["acc_no"];
     bankName = json["bank_name"];

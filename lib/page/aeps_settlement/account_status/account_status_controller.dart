@@ -15,7 +15,7 @@ import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/widget/common.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
-class SettlementBankListController extends GetxController {
+class SettlementAccountStatusController extends GetxController {
   AepsRepo repo = Get.find<AepsRepoImpl>();
   var responseObs = Resource.onInit(data: AepsSettlementBankListResponse()).obs;
 

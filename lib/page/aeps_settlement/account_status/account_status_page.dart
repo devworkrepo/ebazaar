@@ -6,17 +6,17 @@ import 'package:spayindia/util/obx_widget.dart';
 import 'package:spayindia/widget/list_component.dart';
 import 'package:spayindia/widget/no_data_found.dart';
 
-import 'settlement_bank_list_controller.dart';
+import 'account_status_controller.dart';
 
-class SettlementBankListPage extends GetView<SettlementBankListController> {
-  const SettlementBankListPage({Key? key}) : super(key: key);
+class SettlementAccountStatusPage extends GetView<SettlementAccountStatusController> {
+  const SettlementAccountStatusPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SettlementBankListController());
+    Get.put(SettlementAccountStatusController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Aeps Settlement Banks"),
+        title: const Text("Settlement Account Status"),
       ),
       body: ObsResourceWidget<AepsSettlementBankListResponse>(
           obs: controller.responseObs,
@@ -40,7 +40,7 @@ class SettlementBankListPage extends GetView<SettlementBankListController> {
   }
 }
 
-class _BankListWidget extends GetView<SettlementBankListController> {
+class _BankListWidget extends GetView<SettlementAccountStatusController> {
   final List<AepsSettlementBank> list;
 
   const _BankListWidget(this.list, {Key? key}) : super(key: key);

@@ -130,4 +130,22 @@ class AepsRepoImpl extends AepsRepo {
     var response = await client.post("/AddAEPSBank",data: data);
     return CommonResponse.fromJson(response.data);
   }
+
+  @override
+  Future<AepsSettlementBankListResponse> deletedBankLists(data) async {
+    var response = await client.post("/GetDeletedSettleBanks",data: data);
+    return AepsSettlementBankListResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> importDeletedAepsBank(data) async {
+    var response = await client.post("/ImportAEPSBank",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> deleteBankAccount(data) async {
+    var response = await client.post("/DeleteAEPSBank",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
 }

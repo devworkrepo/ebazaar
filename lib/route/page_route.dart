@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:spayindia/page/aeps/aeps_e_kyc/aeps_e_kyc_page.dart';
 import 'package:spayindia/page/aeps/aeps_airtel/aeps_page.dart';
 import 'package:spayindia/page/aeps/aeps_tramo/aeps_page.dart';
+import 'package:spayindia/page/aeps_settlement/account_status/account_status_page.dart';
+import 'package:spayindia/page/aeps_settlement/add_bank/add_bank_page.dart';
+import 'package:spayindia/page/aeps_settlement/select_bank/select_bank_page.dart';
 import 'package:spayindia/page/app_setting/login_session_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
@@ -47,13 +50,12 @@ import 'package:spayindia/test/test_pg.dart';
 
 import '../main.dart';
 import '../page/aeps/aeps_air_kyc/aeps_e_kyc_page.dart';
+import '../page/aeps_settlement/import_account/import_account_page.dart';
+import '../page/aeps_settlement/settlement/settlement_page.dart';
 import '../page/complaint/complain_post/complain_post_page.dart';
 import '../page/complaint/complaint_list/complaint_list_page.dart';
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
-import '../page/main/settlement/aeps_settlement_page.dart';
-import '../page/main/settlement_bank/add_settlement_bank/settlement_bank_add_page.dart';
-import '../page/main/settlement_bank/settlement_bank_list/settlement_bank_list_page.dart';
 import '../page/matm_tramo/matm_page.dart';
 import '../page/notification/notification_page.dart';
 import '../page/ott/ott_plan/ott_plan_page.dart';
@@ -150,11 +152,20 @@ final getAllPages = [
 
   GetPage(
     name: AppRoute.aepsSettlemenBankListtPage,
-    page: () => const SettlementBankListPage(),
+    page: () => const SettlementAccountStatusPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.aepsSelectSettlementBank,
+    page: () => const SelectAepsSettlementBankPage(),
   ),
   GetPage(
     name: AppRoute.addSettlementBank,
     page: () => const SettlementBankAddPage(),
+  ),
+  GetPage(
+    name: AppRoute.importSettlementBank,
+    page: () => const ImportSettlementAccountPage(),
   ),
 
   GetPage(

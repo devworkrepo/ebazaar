@@ -76,7 +76,9 @@ class AppRoute {
   static const senderKycInfoPage = "/sender-kyc-info-page";
   static const aepsSettlementPage = "/settlement-page";
   static const aepsSettlemenBankListtPage = "/settlement-bank-list-page";
+  static const aepsSelectSettlementBank = "/aeps_select_settlement_bank_page";
   static const addSettlementBank = "/settlement-add-bank-page";
+  static const importSettlementBank = "/import-settlement-bank-page";
 
   static const aepsOnboardingPage = "/aeps-onboarding-page";
 

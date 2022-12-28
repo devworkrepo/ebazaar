@@ -25,6 +25,9 @@ abstract class AepsRepo {
   Future<TransactionInfoResponse> bankAccountSettlement(data);
   Future<AepsSettlementBankListResponse> fetchAepsSettlementBank2();
   Future<CommonResponse> addSettlementBank(data);
+  Future<AepsSettlementBankListResponse> deletedBankLists(data);
+  Future<CommonResponse> importDeletedAepsBank(data);
+  Future<CommonResponse> deleteBankAccount(data);
 
   //matm
 

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/main/settlement_bank/add_settlement_bank/settlement_bank_add_controller.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/validator.dart';
+
+import 'add_bank_controller.dart';
 
 class SettlementBankAddPage extends GetView<SettlementBankAddController> {
   const SettlementBankAddPage({Key? key}) : super(key: key);

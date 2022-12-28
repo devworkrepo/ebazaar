@@ -16,7 +16,8 @@ import 'package:spayindia/util/date_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import 'package:spayindia/util/picker_helper.dart';
 
-import '../../../exception_page.dart';
+import '../../exception_page.dart';
+
 
 class SettlementBankAddController extends GetxController
     with TransactionHelperMixin {

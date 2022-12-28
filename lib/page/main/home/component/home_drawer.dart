@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/page/aeps_settlement/settlement/settlement_controller.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
@@ -137,7 +138,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
 
                 Card(
                   child: _NavTitle(
-                    title: "Aeps Service",
+                    title: "Aeps Settlement",
                     icon: Icons.fingerprint,
 
                     children: [
@@ -160,23 +161,35 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         count: 2,
                       ),*/
                       _NavSubTitle(
-                        title: "Balance Settlement",
+                        title: "To Spay Wallet",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(AppRoute.aepsSettlementPage);
+                          Get.toNamed(AppRoute.aepsSettlementPage,arguments: {
+                            "aeps_settlement_type" : AepsSettlementType.spayAccount
+                          });
                         },
                         underline: false,
                         count: 1,
                       ),
 
                       _NavSubTitle(
-                        title: "Settlement Banks",
+                        title: "To Bank Account",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.aepsSelectSettlementBank);
+                        },
+                        underline: false,
+                        count: 2,
+                      ),
+
+                      _NavSubTitle(
+                        title: "Account Status",
                         onClick: () {
                           Get.back();
                           Get.toNamed(AppRoute.aepsSettlemenBankListtPage);
                         },
                         underline: false,
-                        count: 2,
+                        count: 3,
                       )
                     ],
                   ),
