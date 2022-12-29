@@ -4,7 +4,7 @@ class AppConstant{
  static const liveBaseUrl = "https://apiv2app.spayindia.in/AppSpayService.svc/";
  static const uatBaseUrl = "https://api.spayindia.in/AppSpayService.svc/";
 
- //todo remove in production
+ //todo remove in production (uatBaseUrl)
  static String baseUrl = uatBaseUrl;
 
  static const profileBaseUrl = "https://spayindia.in/commonimg/user/";

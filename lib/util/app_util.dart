@@ -81,7 +81,7 @@ class AppUtil {
 
   static void throwUatExceptionOnDeployment(String mobileNumber) {
 
-    //todo remove in production
+    //todo remove in production (accidentally deploy uatUrl)
     return;
 
     var whiteListNumbers = ["7982607742", "9785172173", "9211044444"];

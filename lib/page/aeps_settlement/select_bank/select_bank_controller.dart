@@ -20,6 +20,8 @@ class SelectSettlementBankController extends GetxController {
   var beneficiaryList = <AepsSettlementBank>[];
   RxList<AepsSettlementBank> beneficiaryListObs = <AepsSettlementBank>[].obs;
 
+  var showSearchBoxObs = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -45,8 +47,14 @@ class SelectSettlementBankController extends GetxController {
       var response = await repo.fetchAepsSettlementBank2();
         beneficiaryList = response.banks!;
         beneficiaryListObs.value = beneficiaryList;
-
       responseObs.value = Resource.onSuccess(response);
+
+      if(response.code ==1 && response.banks!.isNotEmpty){
+        showSearchBoxObs.value = true;
+      }
+      else {
+        showSearchBoxObs.value = false;
+      }
     } catch (e) {
       responseObs.value = Resource.onFailure(e);
       Get.off(ExceptionPage(error: e));
@@ -77,7 +85,7 @@ class SelectSettlementBankController extends GetxController {
         _deleteBeneficiaryConfirm(bank);
       },
       title: "Confirm Delete",
-      description: "You are sure! want to delete account.",
+      description: "You are sure! want to delete account ?",
     ));
   }
 
@@ -86,7 +94,7 @@ class SelectSettlementBankController extends GetxController {
     try {
 
       var response = await repo.deleteBankAccount({
-        "acc_id ": bank.accountId.toString(),
+        "acc_id": bank.accountId.toString(),
       });
       Get.back();
 

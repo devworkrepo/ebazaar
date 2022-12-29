@@ -130,7 +130,7 @@ class AepsSettlementController extends GetxController with TransactionHelperMixi
           "transaction_no": aepsBalance!.transaction_no.toString(),
           "amount": amountWithoutRupeeSymbol(amountController),
           "remark": (remarkController.text.isEmpty) ? "Transaction" : remarkController.text,
-          "bankid": settlementBank?.accountId ?? "",
+          "acc_id": settlementBank?.accountId ?? "",
         });
       },
       amount: amountController.text,

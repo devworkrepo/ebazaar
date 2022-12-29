@@ -50,15 +50,15 @@ class ImportSettlementAccountController extends GetxController {
       var ids = "";
       for(int i =0;i<selectedListObs.length;i++){
         if(i ==0){
-          ids = selectedListObs[i].toString();
+          ids = selectedListObs[i].accountId.toString();
         }
         else{
-          ids = ids + ","+selectedListObs[i].toString();
+          ids = ids + ","+selectedListObs[i].accountId.toString();
         }
       }
 
       var response = await repo.importDeletedAepsBank({
-        "acc_ids ": ids,
+        "acc_ids": ids,
       });
       Get.back();
       if(response.code == 1){
