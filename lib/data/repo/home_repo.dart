@@ -1,4 +1,5 @@
 import 'package:spayindia/model/banner.dart';
+import 'package:spayindia/model/cms_service.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/login_session.dart';
 import 'package:spayindia/model/profile.dart';
@@ -39,4 +40,5 @@ abstract class HomeRepo{
   Future<void> downloadFileAndSaveToGallery(String baseUrl, String extension);
 
   Future<AlertMessageResponse> alertMessage();
+  Future<CmsServiceResponse> cmsService();
 }

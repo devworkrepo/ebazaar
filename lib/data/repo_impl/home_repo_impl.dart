@@ -9,6 +9,7 @@ import 'package:spayindia/data/repo/recharge_repo.dart';
 import 'package:spayindia/model/alert.dart';
 import 'package:spayindia/model/app_update.dart';
 import 'package:spayindia/model/banner.dart';
+import 'package:spayindia/model/cms_service.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/login_session.dart';
 import 'package:spayindia/model/news.dart';
@@ -151,5 +152,11 @@ class HomeRepoImpl extends HomeRepo {
     return AlertMessageResponse.fromJson(a);*/
     var response = await client.post("/GetAlertBell");
     return AlertMessageResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CmsServiceResponse> cmsService() async{
+    var response = await client.post("/CMSTransaction");
+    return CmsServiceResponse.fromJson(response.data);
   }
 }

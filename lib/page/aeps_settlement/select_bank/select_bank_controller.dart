@@ -11,6 +11,7 @@ import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
+import '../../../model/aeps/settlement/balance.dart';
 import '../../../widget/common/common_confirm_dialog.dart';
 import '../../exception_page.dart';
 
@@ -22,6 +23,9 @@ class SelectSettlementBankController extends GetxController {
 
   var showSearchBoxObs = false.obs;
 
+  var balanceResponseObs = Resource.onInit(data: AepsBalance()).obs;
+  Rx<AepsBalance> aepsBalance = AepsBalance().obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -29,6 +33,26 @@ class SelectSettlementBankController extends GetxController {
       _fetchBankList();
     });
   }
+
+  _fetchBalance() async {
+    try {
+      balanceResponseObs.value = Resource.onInit();
+      var response = await repo.fetchAepsBalance();
+      if (response.code == 1) {
+
+        aepsBalance.value = response;
+        balanceResponseObs.value = Resource.onSuccess(response);
+      } else {
+        StatusDialog.failure(title: response.message ?? "Something went wrong")
+            .then((value) {});
+      }
+    } catch (e) {
+      StatusDialog.failure(title: "Something went wrong")
+          .then((value) => Get.back());
+    }
+
+  }
+
 
   addNewBank(bool shouldPop) {
     if (shouldPop) {
@@ -43,6 +67,7 @@ class SelectSettlementBankController extends GetxController {
   _fetchBankList() async {
 
     try {
+     await _fetchBalance();
       responseObs.value = const Resource.onInit(data: null);
       var response = await repo.fetchAepsSettlementBank2();
         beneficiaryList = response.banks!;
@@ -73,9 +98,13 @@ class SelectSettlementBankController extends GetxController {
   }
 
   onTransferClick(AepsSettlementBank bank) {
-    Get.toNamed(AppRoute.aepsSettlementPage, arguments: {
-      "aeps_settlement_type": AepsSettlementType.bankAccount,
-      "bank_account": bank
+    Get.toNamed(AppRoute.aepsBankTransferPage, arguments: {
+      "bank_account": bank,
+      "aeps_balance" : double.parse((aepsBalance.value.balance ?? "0"))
+    })?.then((value) {
+      if(value != null && value is bool){
+        if(value) _fetchBankList();
+      }
     });
   }
 

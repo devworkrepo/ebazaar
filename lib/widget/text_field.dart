@@ -263,6 +263,47 @@ class AmountOutlineTextField extends StatelessWidget {
   }
 }
 
+class AmountOutlineTextFieldMini extends StatelessWidget {
+  final String hint;
+  final String label;
+  final Function(String?)? onChange;
+
+  const AmountOutlineTextFieldMini(
+      {Key? key,
+
+        this.onChange,
+        this.hint = 'Enter ₹ 0.0',
+        this.label = "Amount"})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onChanged: (value){
+        if(onChange!=null) onChange!(value);
+      },
+      keyboardType: TextInputType.number,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        AmountInputValidator()
+      ],
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      decoration: InputDecoration(
+        contentPadding:
+        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
+        label: Text(
+          label,
+          style: const TextStyle(fontSize: 14),
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.greenAccent, width: 5.0),
+        ),
+        hintText: hint,
+      ),
+    );
+  }
+}
+
 class MobileTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool focus;

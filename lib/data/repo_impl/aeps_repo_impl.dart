@@ -4,6 +4,7 @@ import 'package:spayindia/data/repo/aeps_repo.dart';
 import 'package:spayindia/model/aeps/aeps_bank.dart';
 import 'package:spayindia/model/aeps/aeps_transaction.dart';
 import 'package:spayindia/model/aeps/kyc/e_kyc.dart';
+import 'package:spayindia/model/aeps/settlement/aeps_calc.dart';
 import 'package:spayindia/model/aeps/settlement/balance.dart';
 import 'package:spayindia/model/aeps/settlement/bank.dart';
 import 'package:spayindia/model/bank.dart';
@@ -147,5 +148,11 @@ class AepsRepoImpl extends AepsRepo {
   Future<CommonResponse> deleteBankAccount(data) async {
     var response = await client.post("/DeleteAEPSBank",data: data);
     return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<AepsSettlementCalcResponse> fetchAepsCalc(data) async {
+    var response = await client.post("/CalcChargesAEPSBank",data: data);
+    return AepsSettlementCalcResponse.fromJson(response.data);
   }
 }

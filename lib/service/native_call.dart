@@ -14,6 +14,7 @@ class NativeCall {
   static const _bluetoothCheckEnable = "bluetooth_check_enable";
   static const _bluetoothCheckPaired = "bluetooth_check_paired";
   static const _credoPayService = "credo_pay_service";
+  static const _upiPayment = "upi_payment";
 
   static Future<String> launchTramoAepsService(Map<String, dynamic> data) async {
     data.addAll({"provider": "tramo"});
@@ -64,5 +65,12 @@ class NativeCall {
   static Future<bool> bluetoothCheckPaired() async {
     bool? resultData = await _methodChannel.invokeMethod(_bluetoothCheckPaired);
     return resultData ?? true;
+  }
+
+  static Future<Map<dynamic, dynamic>> upiPayment(
+      Map<String, dynamic> data) async {
+    var resultData = await _methodChannel.invokeMethod(_upiPayment, data);
+    AppUtil.logger("upiPayment Native call response : $resultData");
+    return resultData;
   }
 }

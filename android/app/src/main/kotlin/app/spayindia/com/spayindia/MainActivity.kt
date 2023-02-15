@@ -4,9 +4,11 @@ import `in`.credopay.payment.sdk.CredopayPaymentConstants
 import `in`.credopay.payment.sdk.PaymentActivity
 import `in`.credopay.payment.sdk.Utils
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
+import app.spayindia.com.R
 import app.spayindia.com.spayindia.AppConstant.AEPS_SERVICE_METHOD_NAME
 import app.spayindia.com.spayindia.AppConstant.BLUETOOTH_CHECK_ENABLE
 import app.spayindia.com.spayindia.AppConstant.BLUETOOTH_CHECK_PAIRED
@@ -15,7 +17,8 @@ import app.spayindia.com.spayindia.AppConstant.MATM_SERVICE_METHOD_NAME
 import app.spayindia.com.spayindia.AppConstant.METHOD_CHANNEL
 import app.spayindia.com.spayindia.AppConstant.RD_SERVICE_SERIAL_NUMBER
 import app.spayindia.com.spayindia.AppConstant.ROOT_CHECKER_METHOD_NAME
-import app.spayindia.com.R
+import app.spayindia.com.spayindia.AppConstant.UPI_PAYMENT
+import app.spayindia.com.spayindia.AppConstant.UPI_PAYMENT_RESULT_CODE
 import com.fingpay.microatmsdk.MicroAtmLoginScreen
 import com.fingpay.microatmsdk.utils.Constants
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -23,6 +26,8 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
+import java.util.*
+
 
 class MainActivity : FlutterFragmentActivity() {
 
@@ -70,6 +75,10 @@ class MainActivity : FlutterFragmentActivity() {
 
                 call.method.equals(BLUETOOTH_CHECK_PAIRED) -> {
                     bluetoothCheckPaired(call)
+                }
+
+                call.method.equals(UPI_PAYMENT) -> {
+                    upiPayment(call)
                 }
 
 
@@ -253,8 +262,20 @@ class MainActivity : FlutterFragmentActivity() {
             result?.error("101", "Result delivered with black response", "data is null");
         }
 
+        if (requestCode == UPI_PAYMENT_RESULT_CODE) handUpiResult(data, resultCode)
+
 
     }
+
+    private fun handUpiResult(data: Intent?, resultCode: Int) {
+        result?.success(
+            hashMapOf(
+                "code" to 1,
+                "message" to "Transaction",
+            )
+        )
+    }
+
 
     private fun handleCredoPaymentResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
@@ -445,4 +466,82 @@ class MainActivity : FlutterFragmentActivity() {
             )
         }
     }
+
+
+    private fun upiPayment(call: MethodCall) {
+
+
+        try {
+            val refId = call.argument<String>("refId")
+            val amount = call.argument<String>("amount")
+            val mobileNumber = call.argument<String>("mobile")
+            val shopName = call.argument<String>("shopName")
+
+            val uri = Uri.parse("upi://pay").buildUpon()
+                .appendQueryParameter("pa", "20220330383551@yesbank")
+                .appendQueryParameter("pn", "SPAY TECHNOLOGY PRIVATE LIMITED")
+                .appendQueryParameter("tn", "$shopName - $mobileNumber")
+                .appendQueryParameter("am", amount)
+                .appendQueryParameter("cu", "INR")
+                .appendQueryParameter("tr", "101012")
+                .build()
+
+            val upiPayIntent = Intent(Intent.ACTION_VIEW)
+            upiPayIntent.data = uri
+            val chooser = Intent.createChooser(upiPayIntent, "Pay with")
+            if (null != chooser.resolveActivity(packageManager))
+                startActivityForResult(chooser, UPI_PAYMENT_RESULT_CODE)
+            else showToast("No UPI app found, please install one to continue")
+        } catch (e: Exception) {
+            AppUtil.logD("Upi payment result : exception ${e.stackTraceToString()}")
+        }
+    }
+
+/*    private fun handUpiResult(data: Intent?, resultCode: Int) {
+        AppUtil.logD("onUpiPaymentResult : result code : $resultCode")
+        if (data == null) return
+        val resposne = data.getStringExtra("response")
+        //Log.d("UPI", "onActivityResult: " + trxt);
+        //Log.d("UPI", "onActivityResult: " + trxt);
+        val dataList: ArrayList<String?> = ArrayList()
+        AppUtil.logD("UpiPaymentResponse : $resposne")
+        dataList.add(resposne)
+        upiPaymentDataOperation(dataList);
+
+    }
+
+    private fun upiPaymentDataOperation(data: ArrayList<String?>) {
+
+        var str = data[0]
+        var paymentCancel = ""
+        if (str == null) str = "discard"
+        var status = ""
+        var approvalRefNo = ""
+        val response = str.split("&").toTypedArray()
+        for (i in response.indices) {
+            val equalStr = response[i].split("=").toTypedArray()
+            if (equalStr.size >= 2) {
+                if (equalStr[0].lowercase(Locale.getDefault()) == "Status".lowercase(Locale.getDefault())) {
+                    status = equalStr[1].lowercase(Locale.getDefault())
+                } else if (equalStr[0].lowercase(Locale.getDefault()) == "ApprovalRefNo".lowercase(
+                        Locale.getDefault()
+                    ) || equalStr[0].lowercase(Locale.getDefault()) == "txnRef".lowercase(
+                        Locale.getDefault()
+                    )
+                ) {
+                    approvalRefNo = equalStr[1]
+                }
+            } else {
+                paymentCancel = "Payment cancelled by user."
+            }
+        }
+        if (status == "success") {
+            showToast("Transaction successful")
+        } else if ("Payment cancelled by user." == paymentCancel) {
+            showToast("Payment cancelled by user.")
+        } else {
+            showToast("Transaction failed")
+        }
+    }*/
+
 }

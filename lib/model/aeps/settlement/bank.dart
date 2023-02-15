@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class AepsSettlementBankListResponse {
@@ -29,6 +30,8 @@ class AepsSettlementBank {
   String? remark;
   String? date;
   RxBool isSelectedForImport = false.obs;
+  RxBool isSelected = false.obs;
+  RxInt transferAmount = 0.obs;
 
   AepsSettlementBank.fromJson(Map<String, dynamic> json) {
     accountId = json["acc_id"];

@@ -36,6 +36,7 @@ class UserDetail {
   bool? is_aeps_air;
   bool? allow_local_apk;
   bool? is_pg;
+  bool? is_cmsv2;
 
 
   UserDetail();
@@ -75,6 +76,7 @@ class UserDetail {
     is_matm_credo = json['is_matm_credo'];
     is_aeps_air = json['is_aeps_air'];
     is_pg  = json['is_pg'];
+    is_cmsv2  = json['is_cmsv2'];
     allow_local_apk = json['allow_local_apk'];
   }
 
@@ -114,6 +116,7 @@ class UserDetail {
     data ['is_matm_credo']=is_matm_credo;
     data ['is_aeps_air']=is_aeps_air;
     data ['is_pg']=is_pg;
+    data ['is_cmsv2']=is_cmsv2;
     data ['allow_local_apk']=allow_local_apk;
     return data;
   }

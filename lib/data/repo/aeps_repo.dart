@@ -1,6 +1,7 @@
 import 'package:spayindia/model/aeps/aeps_bank.dart';
 import 'package:spayindia/model/aeps/aeps_transaction.dart';
 import 'package:spayindia/model/aeps/kyc/e_kyc.dart';
+import 'package:spayindia/model/aeps/settlement/aeps_calc.dart';
 import 'package:spayindia/model/aeps/settlement/balance.dart';
 import 'package:spayindia/model/aeps/settlement/bank.dart';
 import 'package:spayindia/model/bank.dart';
@@ -20,6 +21,7 @@ abstract class AepsRepo {
 
   //aeps settlement
   Future<AepsBalance> fetchAepsBalance();
+  Future<AepsSettlementCalcResponse> fetchAepsCalc(data);
   Future<BankListResponse> fetchAepsSettlementBank();
   Future<TransactionInfoResponse> spayAccountSettlement(data);
   Future<TransactionInfoResponse> bankAccountSettlement(data);

@@ -5,10 +5,12 @@ import 'package:spayindia/page/aeps/aeps_airtel/aeps_page.dart';
 import 'package:spayindia/page/aeps/aeps_tramo/aeps_page.dart';
 import 'package:spayindia/page/aeps_settlement/account_status/account_status_page.dart';
 import 'package:spayindia/page/aeps_settlement/add_bank/add_bank_page.dart';
+import 'package:spayindia/page/aeps_settlement/bank_transfer/aeps_bank_transfer_page.dart';
 import 'package:spayindia/page/aeps_settlement/select_bank/select_bank_page.dart';
 import 'package:spayindia/page/app_setting/login_session_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
+import 'package:spayindia/page/cms_service/cms_service_page.dart';
 import 'package:spayindia/page/complaint/complain_info/complain_info_page.dart';
 import 'package:spayindia/page/credit_card/credit_card_page.dart';
 import 'package:spayindia/page/device_security_page.dart';
@@ -38,6 +40,7 @@ import 'package:spayindia/page/report/transaction_tab.dart';
 import 'package:spayindia/page/report/wallet_pay/wallet_report_page.dart';
 import 'package:spayindia/page/security_deposit/security_deposit_page.dart';
 import 'package:spayindia/page/summary/summary_page.dart';
+import 'package:spayindia/page/upi_payment/upi_payment_page.dart';
 import 'package:spayindia/page/virtual_account/account/virtual_account_page.dart';
 import 'package:spayindia/page/virtual_account/report/transaction_tab.dart';
 import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_page.dart';
@@ -148,6 +151,11 @@ final getAllPages = [
   GetPage(
     name: AppRoute.aepsSettlementPage,
     page: () => const AepsSettlementPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.aepsBankTransferPage,
+    page: () => const AepsBankTransferPage(),
   ),
 
   GetPage(
@@ -336,6 +344,14 @@ final getAllPages = [
   GetPage(
     name: AppRoute.addFundOnline,
     page: () => const PaymentGatewayPage(),
+  ),
+  GetPage(
+    name: AppRoute.upiPayment,
+    page: () => const UpiPaymentPage(),
+  ),
+  GetPage(
+    name: AppRoute.cmsServicePage,
+    page: () => const CMSServicePage(),
   ),
 ];
 

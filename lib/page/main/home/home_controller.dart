@@ -373,6 +373,16 @@ class HomeController extends GetxController {
           Get.toNamed(AppRoute.addFundOnline);
         }
         break;
+      case HomeServiceType.upiPayment:
+        {
+          Get.toNamed(AppRoute.upiPayment);
+        }
+        break;
+      case HomeServiceType.cms:
+        {
+         Get.toNamed(AppRoute.cmsServicePage) ;
+        }
+        break;
       default:
         break;
     }
@@ -398,7 +408,6 @@ class HomeController extends GetxController {
     await FirebaseCrashlytics.instance
         .setCustomKey("Mobile", appPreference.mobileNumber);
   }
-
 
   playNotificationSound() async {
     try {
@@ -435,5 +444,4 @@ enum ProviderType {
   broadband,
   insurance,
   ott,
-
 }

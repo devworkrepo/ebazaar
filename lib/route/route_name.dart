@@ -56,6 +56,8 @@ class AppRoute {
   static const fundRequestUpiPage = "/fund-request-upi-page";
   static const showQRCodePage = "/show-qr-code-page";
   static const addFundOnline = "/add-fund-online";
+  static const upiPayment = "/upiPayment";
+  static const cmsServicePage = "/cms-service-page";
 
 
   //change pin
@@ -75,6 +77,7 @@ class AppRoute {
   static const senderKycPage = "/sender-kyc-page";
   static const senderKycInfoPage = "/sender-kyc-info-page";
   static const aepsSettlementPage = "/settlement-page";
+  static const aepsBankTransferPage = "/settlement-bank-transfer-page";
   static const aepsSettlemenBankListtPage = "/settlement-bank-list-page";
   static const aepsSelectSettlementBank = "/aeps_select_settlement_bank_page";
   static const addSettlementBank = "/settlement-add-bank-page";
