@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spayindia/data/app_pref.dart';
+import 'package:spayindia/res/style.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/lottie_constant.dart';
@@ -12,7 +13,12 @@ class ExceptionPage extends StatefulWidget {
   final dynamic error;
   final Map<String, dynamic>? data;
 
-  const ExceptionPage({required this.error, this.data, Key? key})
+
+  const ExceptionPage({
+    required this.error,
+    this.data,
+
+    Key? key})
       : super(key: key);
 
   @override
@@ -53,7 +59,7 @@ class _ExceptionPageState extends State<ExceptionPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         body: Padding(
           padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 56),
           child: _buildExceptionWidget(),
@@ -69,12 +75,12 @@ class _ExceptionPageState extends State<ExceptionPage> {
       isNoInternetException = true;
       return _buildLottieWidget(
           lottieType: LottieType.noInternet,
-          title: "No Internet",
+          title: "No Internet Connection",
           message:
-              "Internet connection not available! please check mobile data or wifi connection");
+              "Please check mobile data or wifi connection");
     } else if (exception is SocketException) {
       return _buildLottieWidget(
-          lottieType: LottieType.alert,
+          lottieType: LottieType.noInternet,
           title: "Connection Interrupted",
           message: "Connection has been interrupted, please try again");
     } else if (exception is TimeoutException) {
@@ -85,23 +91,24 @@ class _ExceptionPageState extends State<ExceptionPage> {
     } else if (exception is UnableToProcessResponseException) {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
-          title: "Un-Handle Response",
-          message: exception.message.toString());
+          title: "Oops something went wrong!",
+          message: "Sorry for interruption, it will resolved soon(uh).");
     } else if (exception is FormatException) {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
-          title: "Format Exception",
-          message: exception.message.toString());
+          title: "Oops something went wrong!",
+          message: "Sorry for interruption, it will resolved soon(f)."
+      );
     } else if (exception is ResponseException) {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
-          title: "Response Exception",
-          message: exception.message.toString());
+          title: "Oops something went wrong!",
+          message: "Sorry for interruption, it will resolved soon(r).");
     } else if (exception is InternalServerException) {
       return _buildLottieWidget(
           lottieType: LottieType.server,
-          title: "Internal Server Exception",
-          message: exception.message.toString());
+          title: "Oops something went wrong!",
+          message: "Sorry for interruption, it will resolved soon(i).");
     } else if (exception is UnauthorizedException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(
@@ -119,15 +126,15 @@ class _ExceptionPageState extends State<ExceptionPage> {
     else if (exception is BadRequestException) {
       return _buildLottieWidget(
           lottieType: LottieType.server,
-          title: "Bad Request",
-          message: exception.message.toString());
+          title: "Oops something went wrong!",
+          message: "Sorry for interruption, it will resolved soon(br).");
     } else if (exception is SessionExpireException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(
           showLoginButton: true,
           lottieType: LottieType.alert,
-          title: "Session Expired!",
-          message: exception.message.toString());
+          title: "Login Session Expired",
+          message: "Please login again!");
     } else if (exception is UatUpdateException) {
       shouldGoLoginPage = true;
       return _buildLottieWidget(
@@ -138,8 +145,8 @@ class _ExceptionPageState extends State<ExceptionPage> {
     } else {
       return _buildLottieWidget(
           lottieType: LottieType.alert,
-          title: "Error Occurred!!",
-          message: exception.message.toString());
+          title: "Oops something went wrong!",
+          message: "Sorry for interruption, it will resolved soon.");
     }
   }
 
@@ -160,66 +167,83 @@ class _ExceptionPageState extends State<ExceptionPage> {
     }
 
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-              child: LottieBuilder.asset(
-            lottieType,
-            height: 100,
-            fit: BoxFit.cover,
-          )),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: Get.textTheme.headline5
-                  ?.copyWith(color: Colors.red, fontWeight: FontWeight.bold),
-            ),
+      child: Padding(
+        padding: const EdgeInsets.all(48.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4)
+          ) ,
+          child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                  child: LottieBuilder.asset(
+                    lottieType,
+                    height: 60,
+                    fit: BoxFit.cover,
+                  )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: Get.textTheme.headline6
+                      ?.copyWith(color: Colors.red, fontWeight: FontWeight.w500),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration:BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(2)
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: Text(
+                    message,
+                    style: Get.textTheme.bodyText2,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              (showLoginButton)
+                  ? Column(
+                children: [
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  AppButton(
+                    text: "Login Now",
+                    onClick: () {
+                      Get.offAllNamed(AppRoute.loginPage);
+                    },
+                    width: 250,
+                  )
+                ],
+              )
+                  : const SizedBox(),
+              (redirectSpayWebPortal)
+                  ? Column(
+                children: [
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  AppButton(
+                    text: "Open Web Portal",
+                    onClick: () async {
+                      _launchUrl();
+                      Get.offAllNamed(AppRoute.loginPage);
+                    },
+                    width: 250,
+                  )
+                ],
+              )
+                  : const SizedBox(),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              message,
-              style: Get.textTheme.subtitle2,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          (showLoginButton)
-              ? Column(
-                  children: [
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    AppButton(
-                      text: "Login Now",
-                      onClick: () {
-                        Get.offAllNamed(AppRoute.loginPage);
-                      },
-                      width: 250,
-                    )
-                  ],
-                )
-              : const SizedBox(),
-          (redirectSpayWebPortal)
-              ? Column(
-                  children: [
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    AppButton(
-                      text: "Open Web Portal",
-                      onClick: () async {
-                        _launchUrl();
-                        Get.offAllNamed(AppRoute.loginPage);
-                      },
-                      width: 250,
-                    )
-                  ],
-                )
-              : const SizedBox(),
-        ],
+        ),),
       ),
     );
   }

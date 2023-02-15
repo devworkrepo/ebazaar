@@ -90,7 +90,7 @@ class DmtTransactionController extends GetxController
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: Exception(e)));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -156,12 +156,13 @@ class DmtTransactionController extends GetxController
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.off(() => ExceptionPage(
+      Get.dialog(ExceptionPage(
             error: e,
             data: {
               "param": _transactionParam(),
               "transaction_type": "DMT : ${dmtType.name.toString()}"
             },
+
           ));
     }
   }
@@ -214,7 +215,7 @@ class DmtTransactionController extends GetxController
       }
     } catch (e) {
       calculateChargeResponseObs.value = Resource.onFailure(e);
-      Get.to(() => () => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

@@ -52,7 +52,7 @@ class CreditCardRefundController extends GetxController {
      }
    }catch(e){
      Get.back();
-     Get.to(()=>ExceptionPage(error: e));
+     Get.dialog(ExceptionPage(error: e));
    }
   }
 
@@ -73,7 +73,7 @@ class CreditCardRefundController extends GetxController {
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       reportResponseObs.value = Resource.onFailure(e);
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

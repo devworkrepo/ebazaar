@@ -122,8 +122,8 @@ class RechargeController extends GetxController
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(
-        () => ExceptionPage(
+      Get.dialog(
+         ExceptionPage(
           error: e,
           data: {
             "param": _transactionParam(),

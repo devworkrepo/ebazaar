@@ -247,11 +247,11 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
         HomeServiceType.fundAddOnline));
   }
 
-  if (true) {//todo remove hardcoded flag
+ /* if (true) {
     itemList.add(HomeServiceItem("UPI\nPayment", "upi_payment",
         HomeServiceType.upiPayment));
   }
-
+*/
   if (user.is_cmsv2 ?? false) {
     itemList.add(HomeServiceItem("CMS\nService", "cms_service",
         HomeServiceType.cms));

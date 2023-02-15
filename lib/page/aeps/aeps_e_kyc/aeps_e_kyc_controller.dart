@@ -86,7 +86,7 @@ class AepsEKycController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -108,7 +108,7 @@ class AepsEKycController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -134,7 +134,7 @@ class AepsEKycController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -152,7 +152,7 @@ class AepsEKycController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -170,7 +170,7 @@ class AepsEKycController extends GetxController {
           Get.snackbar("Aeps Capture failed", description,
               backgroundColor: Colors.red, colorText: Colors.white);
         } catch (e) {
-          Get.to(() => ExceptionPage(error: e));
+          Get.dialog(ExceptionPage(error: e));
         }
       },
     ));
@@ -203,7 +203,7 @@ class AepsEKycController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 }

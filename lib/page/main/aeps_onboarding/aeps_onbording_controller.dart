@@ -48,7 +48,7 @@ class AepsOnboardingController extends GetxController
             aepsStateList = data.stateList!;
           });
     } catch (e) {
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -87,7 +87,7 @@ class AepsOnboardingController extends GetxController
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

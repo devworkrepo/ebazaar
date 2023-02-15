@@ -91,7 +91,7 @@ class BillPaymentController extends GetxController
       }
     } catch (e) {
       extraParamResponseObs.value = Resource.onFailure(e);
-      Get.off(ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

@@ -71,7 +71,7 @@ class SenderAddController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.off(ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -103,7 +103,7 @@ class SenderAddController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.off(ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

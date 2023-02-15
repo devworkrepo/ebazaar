@@ -75,7 +75,7 @@ class PaytmWalletController extends GetxController with TransactionHelperMixin,L
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -93,7 +93,7 @@ class PaytmWalletController extends GetxController with TransactionHelperMixin,L
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
       return null;
     }
   }
@@ -150,7 +150,7 @@ class PaytmWalletController extends GetxController with TransactionHelperMixin,L
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 }

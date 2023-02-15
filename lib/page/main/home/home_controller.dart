@@ -168,9 +168,7 @@ class HomeController extends GetxController {
       if (getDioException(e) is SessionExpireException) {
         Get.offAllNamed(AppRoute.loginPage);
       } else {
-        Get.off(ExceptionPage(
-          error: e,
-        ));
+        Get.dialog(ExceptionPage(error: e));
       }
     }
   }

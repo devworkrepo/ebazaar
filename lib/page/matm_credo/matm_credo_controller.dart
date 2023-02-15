@@ -135,7 +135,7 @@ class MatmCredoController extends GetxController
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

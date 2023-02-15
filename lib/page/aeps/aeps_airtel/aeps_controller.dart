@@ -93,9 +93,7 @@ class AepsAirtelController extends GetxController
       }
     } catch (e) {
       Get.back();
-      Get.off(() => ExceptionPage(
-            error: e,
-          ));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -140,7 +138,7 @@ class AepsAirtelController extends GetxController
           StatusDialog.failure(
               title: "Fingerprint capture failed, please try again");
         } catch (e) {
-          Get.to(() => ExceptionPage(error: e));
+          Get.dialog(ExceptionPage(error: e));
         }
       },
     ));
@@ -233,7 +231,7 @@ class AepsAirtelController extends GetxController
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.off(ExceptionPage(
+      Get.dialog(ExceptionPage(
         error: e,
         data: {"param": _param, "transaction_type": "Aeps Transaction"},
       ));

@@ -80,7 +80,7 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       reportResponseObs.value = Resource.onFailure(e);
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -107,7 +107,7 @@ class MoneyReportController extends GetxController with ReceiptPrintMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

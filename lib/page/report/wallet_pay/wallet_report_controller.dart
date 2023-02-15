@@ -66,7 +66,7 @@ class WalletPayReportController extends GetxController with ReceiptPrintMixin {
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       reportResponseObs.value = Resource.onFailure(e);
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

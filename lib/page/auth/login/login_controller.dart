@@ -94,7 +94,6 @@ class LoginController extends GetxController with LocationHelperMixin {
       AppUtil.throwUatExceptionOnDeployment(mobileController.text);
 
       AppUtil.logger(loginData.toString());
-
       LoginResponse login = await authRepo.agentLogin(loginData);
       Get.back();
 
@@ -110,7 +109,7 @@ class LoginController extends GetxController with LocationHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 }

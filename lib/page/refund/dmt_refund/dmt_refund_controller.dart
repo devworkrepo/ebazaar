@@ -78,7 +78,7 @@ class DmtRefundController extends GetxController {
       moneyReportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       moneyReportResponseObs.value = Resource.onFailure(e);
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

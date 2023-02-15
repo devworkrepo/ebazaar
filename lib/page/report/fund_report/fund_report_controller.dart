@@ -73,7 +73,7 @@ class FundRequestReportController extends GetxController
       fundRequestReportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       fundRequestReportResponseObs.value = Resource.onFailure(e);
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -130,7 +130,7 @@ class FundRequestReportController extends GetxController
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

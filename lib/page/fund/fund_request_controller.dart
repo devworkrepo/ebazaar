@@ -146,11 +146,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin, 
     } catch (e) {
       Get.back();
       AppUtil.logger("error : " + e.toString());
-      Get.to(() => ExceptionPage(
-          error: Exception(
-              "Error while making fund request, transaction may be success please "
-              "check report or try with different "
-              "image(capture using phone camera)")));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -176,7 +172,7 @@ class FundRequestController extends GetxController with TransactionHelperMixin, 
     } catch (e) {
 
       Get.back();
-      Get.to(() => ExceptionPage(error: Exception(e)));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

@@ -79,7 +79,7 @@ class BeneficiaryListController extends GetxController {
       beneficiaryResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       beneficiaryResponseObs.value = Resource.onFailure(e);
-      Get.off(ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -282,7 +282,7 @@ class BeneficiaryListController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

@@ -102,7 +102,7 @@ class OttTransactionController extends GetxController with LocationHelperMixin {
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

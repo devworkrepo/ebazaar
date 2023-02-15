@@ -130,7 +130,7 @@ class AepsController extends GetxController
           StatusDialog.failure(title: "Fingerprint capture failed, please try again");
 
         } catch (e) {
-          Get.to(() => ExceptionPage(error: e));
+          Get.dialog(ExceptionPage(error: e));
         }
       },
     ));
@@ -207,7 +207,7 @@ class AepsController extends GetxController
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.off(ExceptionPage(
+      Get.dialog(ExceptionPage(
         error: e,
         data: {
           "param": _param,
@@ -254,7 +254,7 @@ class AepsController extends GetxController
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.off(ExceptionPage(
+      Get.dialog(ExceptionPage(
         error: e,
           data: {
             "param": _param,

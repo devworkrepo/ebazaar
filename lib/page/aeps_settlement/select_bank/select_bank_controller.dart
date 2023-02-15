@@ -82,7 +82,7 @@ class SelectSettlementBankController extends GetxController {
       }
     } catch (e) {
       responseObs.value = Resource.onFailure(e);
-      Get.off(ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
 
   }
@@ -136,7 +136,7 @@ class SelectSettlementBankController extends GetxController {
 
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

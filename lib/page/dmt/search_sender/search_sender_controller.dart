@@ -78,7 +78,7 @@ class DmtSearchSenderController extends GetxController {
     } catch (e) {
       Get.back();
       AppUtil.logger(e.toString());
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -137,8 +137,7 @@ class DmtSearchSenderController extends GetxController {
       }
     } catch (e) {
       Get.back();
-      AppUtil.logger(e.toString());
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

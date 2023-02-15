@@ -3,6 +3,7 @@ import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/user/login.dart';
 import 'package:spayindia/service/network_client.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/util/api/exception.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final NetworkClient client = Get.find();

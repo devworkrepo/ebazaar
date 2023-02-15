@@ -77,7 +77,7 @@ class WalletTransferController extends GetxController with TransactionHelperMixi
     } catch (e) {
       appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(()=>ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 }

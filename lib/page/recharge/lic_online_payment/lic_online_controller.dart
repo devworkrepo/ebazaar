@@ -118,7 +118,7 @@ class LicOnlineController extends GetxController
     } catch (e) {
       await appPreference.setIsTransactionApi(true);
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -145,7 +145,7 @@ class LicOnlineController extends GetxController
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

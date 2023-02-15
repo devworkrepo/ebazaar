@@ -74,7 +74,8 @@ class AepsAirKycController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.off(ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
+
     }
   }
 
@@ -102,7 +103,7 @@ class AepsAirKycController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -121,7 +122,7 @@ class AepsAirKycController extends GetxController with TransactionHelperMixin {
           Get.snackbar("Aeps Capture failed", description,
               backgroundColor: Colors.red, colorText: Colors.white);
         } catch (e) {
-          Get.to(() => ExceptionPage(error: e));
+          Get.dialog(ExceptionPage(error: e));
         }
       },
     ));
@@ -175,7 +176,7 @@ class AepsAirKycController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 }

@@ -67,7 +67,7 @@ class RechargeRefundController extends GetxController {
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
       reportResponseObs.value = Resource.onFailure(e);
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 

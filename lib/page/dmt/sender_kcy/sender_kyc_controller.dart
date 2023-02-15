@@ -58,7 +58,7 @@ class SenderKycController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -77,7 +77,7 @@ class SenderKycController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -121,7 +121,7 @@ class SenderKycController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
@@ -146,7 +146,7 @@ class SenderKycController extends GetxController with TransactionHelperMixin {
       }
     } catch (e) {
       Get.back();
-      Get.to(() => ExceptionPage(error: e));
+      Get.dialog(ExceptionPage(error: e));
     }
   }
 
