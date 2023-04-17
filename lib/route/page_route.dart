@@ -10,6 +10,7 @@ import 'package:spayindia/page/aeps_settlement/select_bank/select_bank_page.dart
 import 'package:spayindia/page/app_setting/login_session_page.dart';
 import 'package:spayindia/page/auth/login/login_page.dart';
 import 'package:spayindia/page/auth/login_otp/login_otp_page.dart';
+import 'package:spayindia/page/auth/signup/signup_page.dart';
 import 'package:spayindia/page/cms_service/cms_service_page.dart';
 import 'package:spayindia/page/complaint/complain_info/complain_info_page.dart';
 import 'package:spayindia/page/credit_card/credit_card_page.dart';
@@ -104,6 +105,10 @@ final getAllPages = [
   GetPage(
     name: AppRoute.loginOtpPage,
     page: () => const LoginOtpPage(),
+  ),
+  GetPage(
+    name: AppRoute.signupPage,
+    page: () => const SignupPage(),
   ),
   GetPage(
     name: AppRoute.providerPage,

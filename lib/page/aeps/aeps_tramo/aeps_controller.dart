@@ -59,15 +59,17 @@ class AepsController extends GetxController
     try {
       aepsBankListResponseObs.value = const Resource.onInit();
       var response = await repo.fetchAepsBankList();
-      if (response.code == 1) {
+      if (response.code == 1 ) {
         bankListResponse = response;
         bankList = response.aepsBankList!;
         aepsBankListResponseObs.value = Resource.onSuccess(response);
         if (!(response.isEKcy ?? false)) {
           showEkcyDialog("E-Kyc is Required.",
-              "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",AppRoute.aepsEkycPage);
+              "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",
+              AppRoute.aepsEkycPage
+          );
         }
-      } else if (response.code == 2) {
+      } else if (response.code == 2 ) {
         showEkcyDialog(
             "OnBoarding Required",
             response.message ??
@@ -99,7 +101,7 @@ class AepsController extends GetxController
             message: message,
             onClick: () {
               Get.back();
-              Get.offAndToNamed(route);
+              Get.offAndToNamed(route,arguments: true);
             },
             onCancel: () {
               Get.back();

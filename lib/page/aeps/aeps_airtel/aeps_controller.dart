@@ -68,6 +68,7 @@ class AepsAirtelController extends GetxController
               "To do aeps, aadhaar pay and matm transaction"
                   " OnBoarding is required!",
           AppRoute.aepsOnboardingPage,
+          false,
         );
       } else {
         validateLocation(progress: false);
@@ -87,7 +88,7 @@ class AepsAirtelController extends GetxController
       if (result.code == 1) {
       } else if (result.code == 2) {
         showEkcyDialog(
-            "Token Expired!", result.message, AppRoute.aepsAirtelKycPage);
+            "Token Expired!", result.message, AppRoute.aepsAirtelKycPage,token);
       } else {
         StatusDialog.alert(title: result.message).then((value) => Get.back());
       }
@@ -97,14 +98,14 @@ class AepsAirtelController extends GetxController
     }
   }
 
-  void showEkcyDialog(String title, String message, String route) {
+  void showEkcyDialog(String title, String message, String route,dynamic args) {
     Get.bottomSheet(
         EkycInfoWidget(
             title: title,
             message: message,
             onClick: () {
               Get.back();
-              Get.offAndToNamed(route, arguments: token);
+              Get.offAndToNamed(route, arguments: args);
             },
             onCancel: () {
               Get.back();

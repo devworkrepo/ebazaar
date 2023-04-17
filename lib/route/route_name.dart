@@ -10,6 +10,7 @@ class AppRoute {
   static const deviceLockPage = "/device-lock-page";
   static const deviceVerificationPage = "/device-verification-page";
   static const loginOtpPage = "/login-otp";
+  static const signupPage = "/sign-up-page";
 
   //recharge and bill payments
   static const providerPage = "/provider-page";

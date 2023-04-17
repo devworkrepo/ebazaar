@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/check_box.dart';
 import 'package:spayindia/widget/common.dart';
@@ -70,6 +71,18 @@ class _LoginForm extends GetView<LoginController> {
                             isRounded: true,
                             text: "Login",
                             onClick: () => controller.login()),
+
+                        const SizedBox(height: 5,),
+                      /*  Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Don't have spay account ? "),
+                            TextButton(onPressed: (){
+                              Get.toNamed(AppRoute.signupPage);
+                            }, child: const Text("Sing Up"))
+                          ],
+                        )*/
+
                       ],
                     ))
               ],
