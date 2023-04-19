@@ -25,10 +25,10 @@ import '../aeps/widget/ekyc_info_widget.dart';
 import '../response/matm_tramo/matm_txn_response_page.dart';
 import 'matm_page.dart';
 
-const bool _redirectForReQueryPage = false;
-
 class MatmTramoController extends GetxController
     with TransactionHelperMixin, LocationHelperMixin {
+  bool _redirectForReQueryPage = false;
+
   AepsRepo repo = Get.find<AepsRepoImpl>();
   HomeRepo homeRepo = Get.find<HomeRepoImpl>();
   AppPreference appPreference = Get.find();
@@ -106,15 +106,16 @@ class MatmTramoController extends GetxController
 
     try {
       await validateLocation(progress: true);
-      if(position == null) return;
+      if (position == null) return;
     } catch (e) {
       return;
     }
 
     Get.dialog(AmountConfirmDialogWidget(
-        amount: (transactionType.value == MatmTramoTransactionType.cashWithdrawal)
-            ? amountController.text
-            : null,
+        amount:
+            (transactionType.value == MatmTramoTransactionType.cashWithdrawal)
+                ? amountController.text
+                : null,
         title: "Matm Transaction ? ",
         detailWidget: [
           ListTitleValue(title: "Mobile No.", value: mobileController.text),
@@ -152,9 +153,10 @@ class MatmTramoController extends GetxController
         "cust_mobile": mobileController.text,
         "txntype": getSpayRequestTxnType(),
         "deviceid": await AppUtil.getDeviceID(),
-        "amount": transactionType.value == MatmTramoTransactionType.balanceEnquiry
-            ? "0"
-            : amountWithoutRupeeSymbol(amountController),
+        "amount":
+            transactionType.value == MatmTramoTransactionType.balanceEnquiry
+                ? "0"
+                : amountWithoutRupeeSymbol(amountController),
         "latitude": position!.latitude.toString(),
         "longitude": position!.longitude.toString()
       });
@@ -189,6 +191,8 @@ class MatmTramoController extends GetxController
       };
       var result = await NativeCall.launchMatmService(params);
       var data = MatmResult.fromJson(result);
+
+
       if (!updateToServerCalled) {
         updateToServerCalled = true;
         _updateToServer(data);
@@ -217,58 +221,68 @@ class MatmTramoController extends GetxController
       }
     } else {
       _checkIsTransactionIsInitiated();
-
     }
   }
 
-   _checkIsTransactionIsInitiated() async {
-   try{
-     var response = await repo.isMatmInitiated({
-       "clientId":transactionNumber ?? "",
-       "merchantPassword" : requestResponse?.loginPin ?? ""
-     });
+  _checkIsTransactionIsInitiated() async {
+    try {
+      var response = await repo.isMatmInitiated({
+        "clientId": transactionNumber ?? "",
+        "merchantPassword": requestResponse?.loginPin ?? ""
+      });
 
-     if(response.status == 1 && !(response.isInitiated ?? true)){
-       _updateToServer(MatmResult.fromJson({
-         "status": false,
-         "transAmount": 0.0,
-         "balAmount": 0.0,
-         "bankRrn": "not available",
-         "time": "not available",
-         "message": response.message,
-         "cardNumber": "not available",
-         "bankName": "not available",
-       }));
-     }
-     else {
+      if (response.status == 1 && !(response.isInitiated ?? true)) {
+        _updateToServer(MatmResult.fromJson({
+          "status": false,
+          "transAmount": 0.0,
+          "balAmount": 0.0,
+          "bankRrn": "not available",
+          "time": "not available",
+          "message": response.message,
+          "cardNumber": "not available",
+          "bankName": "not available",
+        }));
+      } else {
+        _updateToServer(MatmResult.fromJson({
+          "status": false,
+          "transAmount": 0.0,
+          "balAmount": 0.0,
+          "bankRrn": "",
+          "time": "",
+          "message": "",
+          "cardNumber": "",
+          "bankName": "",
+        }));
+      }
+    } catch (e) {
       _showPendingDialog();
-     }
-   }catch(e){
-    _showPendingDialog();
-   }
+    }
   }
 
-  _showPendingDialog(){
+  _showPendingDialog() {
     StatusDialog.pending(
-        title: "Transaction in Pending, please check transaction status")
+            title: "Transaction in Pending, please check transaction status")
         .then((value) => Get.offAllNamed(AppRoute.mainPage));
   }
 
   _updateToServer(MatmResult result) async {
     StatusDialog.progress(title: "Updating to Server");
+
+    if (result.bankRrn == "" && result.message == "") {
+      _redirectForReQueryPage = true;
+    }
+
     try {
-      String status;
-      String message;
-      if (_redirectForReQueryPage) {
-        status = (transactionType.value == MatmTramoTransactionType.cashWithdrawal)
-            ? "3"
-            : (result.status)
-                ? "1"
-                : "2";
-       message ="Transaction in pending";
-      } else {
-        status = (result.status) ? "1" : "2";
-        message =  result.message;
+
+      String status = (result.status) ? "1" : "2";
+      String message = result.message;
+
+      final isCashWithdrawal =
+          transactionType.value == MatmTramoTransactionType.cashWithdrawal;
+
+      if (_redirectForReQueryPage && isCashWithdrawal) {
+        status = "3";
+        message = "Transaction in pending!";
       }
 
       await repo.updateMatmDataToServer({
@@ -281,27 +295,32 @@ class MatmTramoController extends GetxController
         "message": message,
         "providerTxnId": requestResponse!.txnId ?? "",
       });
+
       Get.back();
     } catch (e) {
       Get.back();
     } finally {
+
       result.statusId = (result.status) ? 1 : 2;
 
-      if(_redirectForReQueryPage){
-        if(transactionType.value == MatmTramoTransactionType.balanceEnquiry || !result.status){
-          result.statusId = (result.status) ? 1 : 2;
-          Get.offAll(() => MatmTramoTxnResponsePage(),
-              arguments: {"response": result, "txnType": transactionType.value});
-        }
-        else{
-          result.statusId = 3;
-          Get.offAll(() => const MatmInProcessPage(),
-              arguments: {"result": result,"transaction_number" : transactionNumber!});
-        }
+      final isCashWithdrawal = transactionType.value == MatmTramoTransactionType.cashWithdrawal;
+
+      if(result.transAmount == 0.0 && isCashWithdrawal){
+        result.transAmount = double.parse(amountWithoutRupeeSymbol(amountController));
       }
-      else{
-        Get.offAll(() => MatmTramoTxnResponsePage(),
-            arguments: {"response": result, "txnType": transactionType.value});
+
+      if (_redirectForReQueryPage && isCashWithdrawal) {
+        result.statusId = 3;
+        Get.offAll(() => const MatmInProcessPage(), arguments: {
+          "result": result,
+          "transaction_number": transactionNumber!
+        });
+
+      } else {
+        Get.offAll(() => MatmTramoTxnResponsePage(), arguments: {
+          "response": result,
+          "txnType": transactionType.value
+        });
       }
     }
   }
