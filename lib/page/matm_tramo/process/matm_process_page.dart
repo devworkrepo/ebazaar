@@ -37,7 +37,7 @@ class MatmInProcessPage extends GetView<MatmProcessController> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "Please wait, while we are processing you micro atm transaction",
+                      "Please wait, while we are processing your micro atm transaction",
                       style: Get.textTheme.headline6,
                     ),
                   ),
