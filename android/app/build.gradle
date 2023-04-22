@@ -112,8 +112,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okio:okio:1.14.0'
 
-    //credopay
-    implementation('in.credopay.payment.sdk:vm30-payment-sdk:2.0.3')
+    //credopay sdk:3.0.10'
+    implementation('in.credopay.payment.sdk:vm30-payment-sdk:3.0.10')
 
 
 }

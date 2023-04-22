@@ -113,8 +113,14 @@ class AepsAirKycController extends GetxController with TransactionHelperMixin {
         try {
           var result = await NativeCall.launchAirtelAepsService({
             "packageUrl": rdServicePackageUrl,
+            "isTransaction": false
           });
-          _verifyBiometricData(result);
+          if(result["pidData"].toString().trim() == ""){
+            StatusDialog.alert(title: "Fingerprint capture failed! Please try again!");
+          }
+          else{
+            _verifyBiometricData(result);
+          }
         } on PlatformException catch (e) {
           var description =
               "${(e.message) ?? "Capture failed, please try again! "} ${(e.details ?? "")}";

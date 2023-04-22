@@ -134,7 +134,15 @@ class AepsAirtelController extends GetxController
             "isTransaction": true,
             "provider": "airtel"
           });
-          _onRdServiceResult(result);
+
+          if(result["pidData"].toString().trim() == ""){
+            StatusDialog.alert(title: "Fingerprint capture failed! Please try again!");
+          }
+          else{
+            _onRdServiceResult(result);
+          }
+
+
         } on PlatformException catch (e) {
           StatusDialog.failure(
               title: "Fingerprint capture failed, please try again");

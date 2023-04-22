@@ -24,7 +24,8 @@ allprojects {
                 username 'myMavenRepo'
                 password 'CredoPaySDK'
             }
-            url "https://mymavenrepo.com/repo/nkkgWioPTZZyJhyjF9hy/"
+            //url "https://mymavenrepo.com/repo/nkkgWioPTZZyJhyjF9hy/"
+            url "https://mymavenrepo.com/repo/FrQdp1FhEvW3jjbX8Md4/"
         }
     }
 }
