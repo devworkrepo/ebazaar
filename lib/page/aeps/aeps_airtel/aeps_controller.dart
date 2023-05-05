@@ -70,6 +70,9 @@ class AepsAirtelController extends GetxController
           AppRoute.aepsOnboardingPage,
           false,
         );
+      } else if (response.code == 3) {
+        StatusDialog.alert(title: response.message.toString())
+            .then((value) => Get.offAllNamed(AppRoute.mainPage));
       } else {
         validateLocation(progress: false);
         if (selectedAepsBank != null) {}
@@ -87,8 +90,8 @@ class AepsAirtelController extends GetxController
       token = result.token;
       if (result.code == 1) {
       } else if (result.code == 2) {
-        showEkcyDialog(
-            "Token Expired!", result.message, AppRoute.aepsAirtelKycPage,token);
+        showEkcyDialog("Token Expired!", result.message,
+            AppRoute.aepsAirtelKycPage, token);
       } else {
         StatusDialog.alert(title: result.message).then((value) => Get.back());
       }
@@ -98,7 +101,8 @@ class AepsAirtelController extends GetxController
     }
   }
 
-  void showEkcyDialog(String title, String message, String route,dynamic args) {
+  void showEkcyDialog(
+      String title, String message, String route, dynamic args) {
     Get.bottomSheet(
         EkycInfoWidget(
             title: title,
@@ -135,14 +139,12 @@ class AepsAirtelController extends GetxController
             "provider": "airtel"
           });
 
-          if(result["pidData"].toString().trim() == ""){
-            StatusDialog.alert(title: "Fingerprint capture failed! Please try again!");
-          }
-          else{
+          if (result["pidData"].toString().trim() == "") {
+            StatusDialog.alert(
+                title: "Fingerprint capture failed! Please try again!");
+          } else {
             _onRdServiceResult(result);
           }
-
-
         } on PlatformException catch (e) {
           StatusDialog.failure(
               title: "Fingerprint capture failed, please try again");
