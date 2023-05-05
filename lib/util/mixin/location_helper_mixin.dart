@@ -1,4 +1,5 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:spayindia/widget/common.dart';
 import 'package:spayindia/service/location.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
@@ -7,14 +8,22 @@ import '../../service/location.dart';
 
 mixin LocationHelperMixin {
   Position? position;
+  var latitude = "".obs;
+  var longitude = "".obs;
 
   Future<bool> validateLocation({bool progress = true}) async {
     if (position != null) {
+      latitude.value = position!.latitude.toString();
+      longitude.value = position!.longitude.toString();
       return true;
     }
 
     try {
       position = await LocationService.determinePosition(progress: progress);
+      if(position != null){
+        latitude.value = position!.latitude.toString();
+        longitude.value = position!.longitude.toString();
+      }
       return (position == null) ? false : true;
     } catch (e) {
       if (e is LocationError) {

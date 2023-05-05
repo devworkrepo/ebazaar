@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/model/aeps/aeps_bank.dart';
 import 'package:spayindia/model/aeps/aeps_token.dart';
@@ -6,6 +7,7 @@ import 'package:spayindia/service/network_client.dart';
 
 import '../../model/common.dart';
 import '../repo/aeps_aitel_repo.dart';
+import 'package:dio/dio.dart' as dio;
 
 class AepsAirtelRepoImpl extends AepsAirtelRepo {
   NetworkClient client = Get.find();
@@ -49,6 +51,19 @@ class AepsAirtelRepoImpl extends AepsAirtelRepo {
   @override
   Future<CommonResponse> verifyBiometricData(data) async{
     var response = await client.post("/TokenBioAuth_Air",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
+
+
+
+  @override
+  Future<CommonResponse> aepsImageOnBoarding(dio.FormData data) async {
+    var response = await client.post("/OnBoardAEPS_Air",data: data,options: Options(
+        contentType : "application/json",
+        headers: {
+          "Accept" : "application/json"
+        }
+    ));
     return CommonResponse.fromJson(response.data);
   }
 }

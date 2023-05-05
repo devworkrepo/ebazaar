@@ -7,5 +7,5 @@ class AppStyle {
 
   static BoxDecoration searchDecoration({Color? color, int? borderRadius}) =>  BoxDecoration(
       color: color ?? Colors.white,
-      borderRadius: BorderRadius.circular(12));
+      borderRadius: BorderRadius.circular((borderRadius == null) ? 12 : borderRadius.toDouble()));
 }

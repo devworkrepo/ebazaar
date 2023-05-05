@@ -25,15 +25,19 @@ class ApiProgress extends StatelessWidget {
 
   _progressbar() {
     return const Center(
-      child: Card(
-        elevation: 1,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-          Radius.circular(100.0),
-        )),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: CircularProgressIndicator.adaptive(),
+      child: SizedBox(
+        height: 48,
+        width: 48,
+        child: Card(
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+            Radius.circular(100.0),
+          )),
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: CircularProgressIndicator.adaptive(),
+          ),
         ),
       ),
     );

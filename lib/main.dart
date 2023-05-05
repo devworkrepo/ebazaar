@@ -122,7 +122,7 @@ class _MyAppState extends State<MyApp> {
         cardTheme: CardTheme(
           elevation: 1,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         ),
         primaryColor: HexColor("0f1c4c"),
         primaryColorDark: HexColor("0a1233"),

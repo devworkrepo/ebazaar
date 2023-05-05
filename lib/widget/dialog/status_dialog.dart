@@ -32,7 +32,7 @@ class BaseDialogContainer extends StatelessWidget {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(2),
                     color: Colors.white),
                 child: child,
               ),
@@ -70,8 +70,8 @@ class _ProgressDialog extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(8),
                   child: SizedBox(
-                      width: 35,
-                      height: 35,
+                      width: 32,
+                      height: 32,
                       child: CircularProgressIndicator()),
                 ),
               ),
@@ -79,7 +79,8 @@ class _ProgressDialog extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   title,
-                  style: Get.textTheme.subtitle1,
+                  style: Get.textTheme.caption
+                      ?.copyWith(fontWeight: FontWeight.w500),
                 ),
               ),
             ],
@@ -110,10 +111,10 @@ class _StatusDialog extends StatelessWidget {
     var icon = _getIcon(type);
 
     return BaseDialogContainer(
-        padding: 50,
+        padding: 70,
         backPress: backPress,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -127,7 +128,7 @@ class _StatusDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: Icon(
                     icon,
-                    size: 70,
+                    size: 52,
                     color: color,
                   ),
                 ),
@@ -136,16 +137,24 @@ class _StatusDialog extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: Get.textTheme.subtitle1?.copyWith(color: color),
+                style: Get.textTheme.caption
+                    ?.copyWith(fontWeight: FontWeight.w500, fontSize: 14, color: color),
               ),
               const SizedBox(height: 16),
+
               ElevatedButton(
+                style:  ButtonStyle(
+                    shape:
+                    MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular((100)),
+                        ))
+                ),
                   onPressed: () {
-                    if(proceed!=null){
+                    if (proceed != null) {
                       Get.back();
                       proceed!();
-                    }
-                    else {
+                    } else {
                       Get.back();
                     }
                   },
@@ -161,13 +170,13 @@ class _StatusDialog extends StatelessWidget {
         return Colors.green;
         break;
       case StatusType.failure:
-        return Colors.red;
+        return Colors.grey[700];
         break;
       case StatusType.pending:
         return Colors.yellow[900];
         break;
       case StatusType.alert:
-        return Colors.blue;
+        return Colors.grey[700];
         break;
     }
   }
@@ -178,7 +187,7 @@ class _StatusDialog extends StatelessWidget {
         return Icons.verified;
         break;
       case StatusType.failure:
-        return Icons.cancel;
+        return Icons.cancel_outlined;
         break;
       case StatusType.pending:
         return Icons.update;
@@ -241,10 +250,10 @@ class StatusDialog {
   static Future alert({required String title}) {
     return Get.dialog(
       _StatusDialog(
-          title: title,
-          backPress: true,
-          type: StatusType.alert,
-          buttonText: "  Done  "),
+        title: title,
+        backPress: true,
+        type: StatusType.alert,
+      ),
       barrierDismissible: false,
     );
   }

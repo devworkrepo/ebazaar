@@ -29,12 +29,12 @@ class AppButton extends StatelessWidget {
     var style = ButtonStyle(
         backgroundColor:
             MaterialStateProperty.all<Color>(background ?? Get.theme.primaryColor),
-        shape: (isRounded)
-            ? MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape:
+             MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100.0),
+                borderRadius: BorderRadius.circular(((isRounded) ? 100 : 4)),
               ))
-            : null);
+            );
 
     return SizedBox(
       width: width?.toDouble() ?? Get.width.toDouble(),

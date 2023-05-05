@@ -38,9 +38,9 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
                   },
                   options: CarouselOptions(
                       autoPlay: true,
-                      viewportFraction: 0.95,
+                      viewportFraction: 0.88,
                       enlargeStrategy: CenterPageEnlargeStrategy.height,
-                      height: 165,
+                      height: 148,
                       onPageChanged: (index, reason) {
                         setState(() {
                           activeIndex = index;

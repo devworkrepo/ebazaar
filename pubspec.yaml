@@ -1,7 +1,7 @@
 name: spayindia
 description: Spay India a money response based fintech application service
 
-version: 1.1.48+38
+version: 1.1.49+39
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

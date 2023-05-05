@@ -61,7 +61,7 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               width: Get.width,
               decoration: AppStyle.searchDecoration(
-                  color: Colors.black38, borderRadius: 5),
+                  color: Colors.black38, borderRadius: 2),
               child: Row(
                 children: [
                   Expanded(
