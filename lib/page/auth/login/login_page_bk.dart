@@ -1,15 +1,17 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/check_box.dart';
+import 'package:spayindia/widget/common.dart';
 import 'package:spayindia/widget/common/background_image.dart';
 import 'package:spayindia/widget/text_field.dart';
 import 'package:spayindia/page/auth/login/login_controller.dart';
 import 'package:spayindia/page/update_widget.dart';
 
-class LoginPage extends GetView<LoginController> {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPageBKP extends GetView<LoginController> {
+  const LoginPageBKP({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +45,10 @@ class _LoginForm extends GetView<LoginController> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 16,),
+
                 _appLogo(),
                 buildLoginTitle(),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
                 Form(
                     key: controller.loginFormKey,
                     child: Column(
@@ -66,11 +68,27 @@ class _LoginForm extends GetView<LoginController> {
                         const SizedBox(
                           height: 16,
                         ),
-                        AppButton(
-                            width: 200,
-                            isRounded: true,
-                            text: "Login",
-                            onClick: () => controller.login()),
+                      Row(children: [
+
+                        Expanded(child: SizedBox(
+                          height: 40,
+                          child: ElevatedButton(onPressed: (){}, child: Text("Retailer Login",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400
+                          ),),),
+                        )),
+                        const SizedBox(width: 8,),
+                        Expanded(child: SizedBox(
+                          height: 40,
+                            child: ElevatedButton(onPressed: (){}, child: Text("Sub-retailer Login",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400
+                            ),),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue[900]
+                            ),))),
+                      ],)
+
 
 
                       /*  Row(
@@ -97,9 +115,9 @@ class _LoginForm extends GetView<LoginController> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        "Retailer Login",
+        "Login",
         style: Get.textTheme.headline4
-            ?.copyWith(color: Get.theme.primaryColor,fontWeight: FontWeight.w600),
+            ?.copyWith(color: Get.theme.primaryColor,fontWeight: FontWeight.bold),
       ),
     );
   }
