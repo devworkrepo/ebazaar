@@ -20,8 +20,8 @@ class SignupController extends GetxController  {
   var stepperStateEmail = StepState.indexed.obs;
   var stepperStatePan = StepState.indexed.obs;
   var stepperStateFinal = StepState.indexed.obs;
+  var stepperStateFina2 = StepState.indexed.obs;
 
-  var totalLength = 3;
   var stepperCurrentIndex = 0.obs;
 
 

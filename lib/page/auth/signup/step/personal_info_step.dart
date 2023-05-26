@@ -15,37 +15,18 @@ class PersonalInfoStepWidget extends GetView<SignupController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Personal Details",style: Get.textTheme.headline6,),
-          AppTextField(
+          Text("Contact Details",style: Get.textTheme.headline6,),
+          MobileTextField(
             controller: controller.outletNameController,
-            label: "Outlet Name",
           ),
-          AppTextField(
+          EmailTextField(
             controller: controller.outletAddressController,
-            label: "Outlet Address",
           ),
-          PasswordTextField(
-            controller: controller.passwordController,
-          ),
-          PasswordTextField(
-            controller: controller.confirmPasswordController,
-            label: "Confirm Password",
-            hint: "Required*",
-            validator: (value) {
-              var messageOne = "Enter Confirm Password";
-              var messageTwo = "Password didn't matched";
-              if (value == null) {
-                return messageOne;
-              }
-              if (value.isEmpty) {
-                return messageOne;
-              }
-              if (controller.passwordController.text != value) {
-                return messageTwo;
-              }
-              return null;
-            },
-          ),
+          AppTextField(controller: controller.passwordController,
+          label: "Pan Number",
+          hint: "10 characters pan number",),
+
+          AadhaarTextField(controller: controller.passwordController),
 
           const SizedBox(
             height: 32,

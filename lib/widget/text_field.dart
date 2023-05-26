@@ -246,13 +246,13 @@ class AmountOutlineTextField extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
         AmountInputValidator()
       ],
-      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
       decoration: InputDecoration(
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16),
+            const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
         label: Text(
           label,
-          style: const TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 16),
         ),
         border: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.greenAccent, width: 5.0),
@@ -433,6 +433,8 @@ class MPinTextField extends StatelessWidget {
   final bool enable;
   final Function(String)? onChange;
   final Widget? rightButton;
+  final String label;
+  final String hint;
 
   const MPinTextField(
       {required this.controller,
@@ -440,6 +442,8 @@ class MPinTextField extends StatelessWidget {
       this.enable = true,
       this.onChange,
       this.rightButton,
+        this.label = "Transaction MPIN",
+        this.hint = "4 - 6 digits mpin",
       Key? key})
       : super(key: key);
 
@@ -454,8 +458,8 @@ class MPinTextField extends StatelessWidget {
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
-      label: "Transaction MPIN",
-      hint: "Enter 4 - 6 digits MPIN",
+      label: label,
+      hint: hint,
       passwordMode: true,
       inputType: TextInputType.number,
       validator: (value) => (value!.length > 3 && value.length < 7)

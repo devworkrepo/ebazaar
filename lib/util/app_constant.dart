@@ -11,7 +11,7 @@ class AppConstant{
  static const bannerBaseUrl = "https://spayindia.in/commonimg/banner/";
  static const captchaBaseUrl = "https://apiv2app.spayindia.in/upload/captcha/";
  static const qrCodeBaseUrl = "https://spayindia.in/commonimg/qrcodes/";
-
+ static const rupeeSymbol = "₹ ";
 
 }
 

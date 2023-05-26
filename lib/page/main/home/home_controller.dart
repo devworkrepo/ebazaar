@@ -24,6 +24,7 @@ import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 import 'component/home_biometric_dialog.dart';
+import 'component/home_service_section_2.dart';
 
 var isLocalAuthDone = false;
 var firstNotificationPlayed = false;
@@ -208,6 +209,10 @@ class HomeController extends GetxController {
       await appPreference.logout();
       Get.offAllNamed(AppRoute.loginPage);
     }
+  }
+
+  onItemClick2(HomeServiceItem2 item) {
+    Get.toNamed(AppRoute.createInvestmentPage);
   }
 
   onItemClick(HomeServiceItem item) {

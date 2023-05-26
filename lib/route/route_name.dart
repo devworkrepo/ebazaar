@@ -65,6 +65,11 @@ class AppRoute {
   static const changePassword = "/change-password";
   static const changePin = "/change-pin";
 
+  //investment
+  static const createInvestmentPage = "/create-investment-page";
+  static const reviewInvestmentPage = "/review-investment-page";
+
+
 
 
   //report

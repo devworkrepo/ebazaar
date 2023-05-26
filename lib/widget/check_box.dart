@@ -41,7 +41,10 @@ class _AppCheckBoxState extends State<AppCheckBox> {
                 isLoginCheck = value;
               });
             }),
-        Text(widget.title,style: Get.textTheme.subtitle2,)
+        Expanded(child: Text(widget.title,style: Get.textTheme.caption?.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 14
+        ),))
       ],
     );
   }

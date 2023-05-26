@@ -20,6 +20,9 @@ import 'component/home_header_section.dart';
 import 'component/home_service_section.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 
+import 'component/home_service_section_2.dart';
+import 'component/investment_summary.dart';
+
 class HomePage extends GetView<HomeController> {
   final Function(UserDetail) userInfo;
 
@@ -84,11 +87,13 @@ class HomePage extends GetView<HomeController> {
                   children: [
                     const HomeHeaderSection(),
                     const HomeAppUpdateWidget(),
-                    const HomeCarouselWidget(),
+                  //  const HomeCarouselWidget(),
                     _buildAlertMessage(),
-                    HomeServiceSection(
-                      onClick: (item) => controller.onItemClick(item),
+
+                    HomeServiceSection2(
+                      onClick: (item) => controller.onItemClick2(item),
                     ),
+                    HomeCommissionSummaryWidget(),
                     const SizedBox(
                       height: 8,
                     ),

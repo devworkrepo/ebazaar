@@ -26,6 +26,7 @@ import 'package:spayindia/page/dmt/sender_change/change_mobile/sender_change_mob
 import 'package:spayindia/page/dmt/sender_change/change_name/sender_change_name_page.dart';
 import 'package:spayindia/page/dtm_ekyc/dmt_ekyc_page.dart';
 import 'package:spayindia/page/fund/fund_request_page.dart';
+import 'package:spayindia/page/investment/create/create_investment_page.dart';
 import 'package:spayindia/page/main/change_password/change_password_page.dart';
 import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
 import 'package:spayindia/page/main_page.dart';
@@ -59,6 +60,7 @@ import '../page/aeps_settlement/settlement/settlement_page.dart';
 import '../page/complaint/complain_post/complain_post_page.dart';
 import '../page/complaint/complaint_list/complaint_list_page.dart';
 import '../page/dmt/sender_kcy/sender_kyc_page.dart';
+import '../page/investment/review/review_investment_page.dart';
 import '../page/main/aeps_onboarding/aeps_onboarding_page.dart';
 import '../page/matm_tramo/matm_page.dart';
 import '../page/notification/notification_page.dart';
@@ -259,7 +261,8 @@ final getAllPages = [
       name: AppRoute.walletReportPage, page: () => const WalletPayReportPage()),
 
   GetPage(
-      name: AppRoute.securityDepositReportPage, page: () => const SecurityDepositReportPage()),
+      name: AppRoute.securityDepositReportPage,
+      page: () => const SecurityDepositReportPage()),
 
   GetPage(
     name: AppRoute.changePassword,
@@ -358,6 +361,14 @@ final getAllPages = [
     name: AppRoute.cmsServicePage,
     page: () => const CMSServicePage(),
   ),
+
+  //investment
+  GetPage(
+      name: AppRoute.createInvestmentPage,
+      page: () => const CreateInvestmentPage()),
+  GetPage(
+      name: AppRoute.reviewInvestmentPage,
+      page: () => const ReviewInvestmentPage())
 ];
 
 _bindController(String controllerType) {
