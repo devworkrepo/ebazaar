@@ -5,8 +5,8 @@ import 'package:spayindia/util/validator.dart';
 import '../../../../widget/text_field.dart';
 import '../signup_controller.dart';
 
-class SingUpStepTwoWidget extends GetView<SignupController> {
-  const SingUpStepTwoWidget({Key? key}) : super(key: key);
+class StepAadhaarVerify extends GetView<SignupController> {
+  const StepAadhaarVerify({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,16 @@ class SingUpStepTwoWidget extends GetView<SignupController> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Verify Mobile Number", style: Get.textTheme.headline6,),
-
-          OtpTextField(controller: controller.mobileOtpController),
+          Text("Verify Aadhaar OTP", style: Get.textTheme.headline6,),
+          
+          OtpTextField(controller: controller.aadhaarOtpController,maxLength: 6,),
 
           const SizedBox(height: 16,),
           Align(
             alignment: Alignment.centerRight,
-              child: TextButton(onPressed: (){}, child: Text("Send Otp"))),
+              child: TextButton(onPressed: (){
+                controller.verifyCaptchaAndSendEKycOtp(resendOtp: true);
+              }, child: Text("Resend Otp"))),
 
 
           const SizedBox(

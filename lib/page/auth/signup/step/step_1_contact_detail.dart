@@ -5,8 +5,8 @@ import 'package:spayindia/util/validator.dart';
 import '../../../../widget/text_field.dart';
 import '../signup_controller.dart';
 
-class SingUpStepOneWidget extends GetView<SignupController> {
-  const SingUpStepOneWidget({Key? key}) : super(key: key);
+class StepContactDetail extends GetView<SignupController> {
+  const StepContactDetail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

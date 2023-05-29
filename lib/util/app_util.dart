@@ -98,5 +98,11 @@ class AppUtil {
     }
   }
 
+  static String changeDateToMMDDYYYY(String value){
+    if(value.isEmpty) return value;
+    var mList = value.split("/");
+    return mList[1] +"/" +mList[0] +"/"+mList[2];
+  }
+
 
 }

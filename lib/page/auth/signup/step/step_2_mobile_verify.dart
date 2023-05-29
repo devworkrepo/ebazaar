@@ -5,8 +5,8 @@ import 'package:spayindia/util/validator.dart';
 import '../../../../widget/text_field.dart';
 import '../signup_controller.dart';
 
-class SingUpStepThreeWidget extends GetView<SignupController> {
-  const SingUpStepThreeWidget({Key? key}) : super(key: key);
+class StepMobileVerify extends GetView<SignupController> {
+  const StepMobileVerify({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,16 @@ class SingUpStepThreeWidget extends GetView<SignupController> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Verify Email Id", style: Get.textTheme.headline6,),
+          Text("Verify Mobile Number", style: Get.textTheme.headline6,),
 
-          OtpTextField(controller: controller.emailOtpController),
+          OtpTextField(controller: controller.mobileOtpController),
 
           const SizedBox(height: 16,),
           Align(
             alignment: Alignment.centerRight,
-              child: TextButton(onPressed: (){}, child: Text("Send Otp"))),
+              child: TextButton(onPressed: (){
+                controller.sendMobileOtp();
+              }, child: Text("Send Otp"))),
 
 
           const SizedBox(

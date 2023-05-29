@@ -5,8 +5,8 @@ import 'package:spayindia/util/validator.dart';
 import '../../../../widget/text_field.dart';
 import '../signup_controller.dart';
 
-class SingUpStepSevenWidget extends GetView<SignupController> {
-  const SingUpStepSevenWidget({Key? key}) : super(key: key);
+class StepPanVerification extends GetView<SignupController> {
+  const StepPanVerification({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SingUpStepSevenWidget extends GetView<SignupController> {
           style: Get.textTheme.headline6,
         ),
         AppTextField(
-          controller: controller.panInputController,
+          controller: controller.panInput2Controller,
           label: "Pan Number",
           hint: "10 characters pan number",
           maxLength: 10,
@@ -38,16 +38,17 @@ class SingUpStepSevenWidget extends GetView<SignupController> {
                   style: Get.textTheme.caption
                       ?.copyWith(fontWeight: FontWeight.w500),
                 ),
-                Text(
-                  "Akash Kumar Das",
+                Obx(()=>Text(controller.panName.value,
                   style: Get.textTheme.subtitle1,
-                ),
+                )),
               ],
             )),
             SizedBox(
               width: 16,
             ),
-            TextButton(onPressed: () {}, child: Text("Verify Pan"))
+            TextButton(onPressed: () {
+              controller.verifyPanNumber();
+            }, child: Text("Verify Pan"))
           ],
         ),
         const SizedBox(

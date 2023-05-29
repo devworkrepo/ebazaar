@@ -144,7 +144,7 @@ class _BuildAadhaarAndCaptchaWidget extends GetView<SenderKycController> {
                     children: [
                       Expanded(
                         child: Obx(() => CachedNetworkImage(
-                            imageUrl: AppConstant.captchaBaseUrl +
+                            imageUrl: AppConstant.baseCaptchaUrl +
                                 "" +
                                 controller.captchaObs.value.captcha_img
                                     .toString())),

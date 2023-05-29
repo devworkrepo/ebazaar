@@ -5,8 +5,8 @@ import 'package:spayindia/util/validator.dart';
 import '../../../../widget/text_field.dart';
 import '../signup_controller.dart';
 
-class SingUpStepEightWidget extends GetView<SignupController> {
-  const SingUpStepEightWidget({Key? key}) : super(key: key);
+class StepUploadDoc extends GetView<SignupController> {
+  const StepUploadDoc({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +20,13 @@ class SingUpStepEightWidget extends GetView<SignupController> {
             label: "Aadhaar Front Photo",
             controller: controller.docAadhaarController,
           onFieldTab: (){
-
+            controller.showImagePickerBottomSheetDialog(SignUpFileType.aadhaar);
           },),
           AppTextField(
             label: "PAN Front Photo",
             controller: controller.docPanController,
             onFieldTab: (){
-
+              controller.showImagePickerBottomSheetDialog(SignUpFileType.pan);
             },),
 
           const SizedBox(

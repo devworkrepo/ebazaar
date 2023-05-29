@@ -15,9 +15,12 @@ import 'package:spayindia/data/repo_impl/virtual_account_impl.dart';
 import 'package:spayindia/data/repo_impl/wallet_repo_impl.dart';
 import 'package:spayindia/page/matm_credo/matm_credo_page.dart';
 import 'package:spayindia/service/network_client.dart';
+import 'package:spayindia/service/network_sign_up_client.dart';
 import 'package:spayindia/service/provide_async.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../data/repo_impl/singup_impl.dart';
 
 appBinding() async {
   //async binding
@@ -43,9 +46,11 @@ appBinding() async {
   //network client binding
   Get.lazyPut(() => Connectivity(), fenix: true);
   Get.lazyPut(() => NetworkClient(Get.find(), Get.find()), fenix: true);
+  Get.lazyPut(() => NetworkSignUpClient(Get.find(), Get.find()), fenix: true);
 
   //repo binding
   Get.lazyPut(() => AuthRepoImpl(), fenix: true);
+  Get.lazyPut(() => SingUpRepoImpl(), fenix: true);
   Get.lazyPut(() => RechargeRepoImpl(), fenix: true);
   Get.lazyPut(() => HomeRepoImpl(), fenix: true);
   Get.lazyPut(() => DmtRepoImpl(), fenix: true);

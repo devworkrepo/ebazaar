@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/route/route_name.dart';
 
 class SingUpSuccessDialog extends StatelessWidget {
   const SingUpSuccessDialog({Key? key}) : super(key: key);
@@ -39,14 +40,15 @@ class SingUpSuccessDialog extends StatelessWidget {
                     fontWeight: FontWeight.w500
                 ),textAlign: TextAlign.center,),
               
-              SizedBox(height: 12,),
+              const SizedBox(height: 12,),
 
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Colors.green
                 ),
                 onPressed: (){
-
+                  Get.back();
+                  Get.offAllNamed(AppRoute.loginPage);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
