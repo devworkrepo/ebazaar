@@ -170,6 +170,20 @@ class _SingUpDetailDialog extends StatelessWidget {
                   subTitle: "Electricity & Water Bills, Flight Booking, Prepaid and Postpaid Services, Credit Card Payments and LIC Payments."),
               _buildItem(title: "CMS Services", subTitle: "All Loans and Insurance Payments."),
 
+
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Column(children: [
+                    Text("By clicking Sing Up, you agree to our",style: Get.textTheme.caption,),
+                    Text("Terms and Conditions",
+                    style: Get.textTheme.caption?.copyWith(fontWeight: FontWeight.w500,
+                    color: Colors.blue),),
+                  ],),
+                ),
+              ),
+
+              SizedBox(height: 12,),
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -191,41 +205,46 @@ class _SingUpDetailDialog extends StatelessWidget {
   Widget _buildItem({required String title, required String subTitle}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          const CircleAvatar(
-              backgroundColor: Colors.blue,
-              radius: 10,
-              child: Icon(
-                Icons.check,
-                color: Colors.white,
-                size: 16,
-              )),
-          const SizedBox(
-            width: 8,
-          ),
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                text: title,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: ' $subTitle',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: Colors.grey[600],
-                      height: 1.4)),
-                ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  radius: 10,
+                  child: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 16,
+                  )),
+              const SizedBox(
+                width: 8,
               ),
-            ),
-          )
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    text: title,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: ' $subTitle',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: Colors.grey[600],
+                          height: 1.4)),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+          Divider(indent: 0,color: Colors.grey.shade300,)
         ],
       ),
     );

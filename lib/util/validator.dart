@@ -137,4 +137,19 @@ class FormValidatorHelper {
       }
     }
   }
+
+ static  String? isValidPanCardNo(String? value) {
+    var message = "Enter valid pan number";
+    if(value == null) return message;
+    final result =  RegExp(
+        r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$')
+        .hasMatch(value);
+
+    if(result) {
+      return null;
+    } else {
+      return message;
+    }
+
+  }
 }
