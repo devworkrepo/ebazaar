@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
+import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/cash_convereter.dart';
 
 class SummaryHeader {
@@ -18,8 +19,7 @@ class SummaryHeader {
     this.isRupee = true,
     this.backgroundColor,
     this.titleFont = 12,
-    this.valueFont = 18,
-
+    this.valueFont = 16,
   });
 }
 
@@ -31,6 +31,8 @@ class SummaryHeaderWidget extends StatelessWidget {
   final String? availableBalance;
   final String? availableBalanceInWord;
   final VoidCallback callback;
+  final int? transactionCount;
+  final int? totalWithdrawn;
 
   const SummaryHeaderWidget(
       {required this.summaryHeader1,
@@ -40,6 +42,9 @@ class SummaryHeaderWidget extends StatelessWidget {
       this.totalDebitedAmount,
       this.availableBalance,
       this.availableBalanceInWord,
+      this.transactionCount,
+      this.totalWithdrawn,
+
       Key? key})
       : super(key: key);
 
@@ -83,9 +88,22 @@ class SummaryHeaderWidget extends StatelessWidget {
                 ],
               ),
             ),
+          if(totalWithdrawn!= null)  Container(
+              margin: EdgeInsets.only(top: 8),
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: Colors.red[50]
+              ),
+
+              child: Text("Total Withdrawn :  ${AppConstant.rupeeSymbol + totalWithdrawn.toString()}",style : Get.textTheme.subtitle2?.copyWith(
+                color: Colors.red[700]
+              )),
+            ),
             const SizedBox(
               height: 16,
             ),
+
             GestureDetector(
               onTap: () {
                 callback();
@@ -94,7 +112,7 @@ class SummaryHeaderWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Transaction",
+                      "Transaction ${(transactionCount!=null) ? transactionCount.toString() : ""}",
                       style: Get.textTheme.headline6
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
@@ -158,7 +176,7 @@ class SummaryHeaderWidget extends StatelessWidget {
                         ? "0"
                         : summaryHeader.value,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                     fontSize: summaryHeader.valueFont.toDouble(),
                     color: (summaryHeader.backgroundColor != null)
                         ? Colors.white

@@ -383,7 +383,12 @@ class HomeController extends GetxController {
         break;
       case HomeServiceType.cms:
         {
-         Get.toNamed(AppRoute.cmsServicePage) ;
+          Get.toNamed(AppRoute.cmsServicePage);
+        }
+        break;
+      case HomeServiceType.newInvestment:
+        {
+          Get.toNamed(AppRoute.createInvestmentPage);
         }
         break;
       default:

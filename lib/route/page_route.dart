@@ -27,6 +27,7 @@ import 'package:spayindia/page/dmt/sender_change/change_name/sender_change_name_
 import 'package:spayindia/page/dtm_ekyc/dmt_ekyc_page.dart';
 import 'package:spayindia/page/fund/fund_request_page.dart';
 import 'package:spayindia/page/investment/create/create_investment_page.dart';
+import 'package:spayindia/page/investment/list/investment_list_page.dart';
 import 'package:spayindia/page/main/change_password/change_password_page.dart';
 import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
 import 'package:spayindia/page/main_page.dart';
@@ -333,6 +334,11 @@ final getAllPages = [
   GetPage(
     name: AppRoute.securityDepositPage,
     page: () => const SecurityDepositPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.investmentListPage,
+    page: () => const InvestmentListPage(),
   ),
 
   GetPage(

@@ -110,4 +110,5 @@ class AppRoute {
 
   //security deposit
   static const securityDepositPage = "/security-deposit-page";
+  static const investmentListPage = "/investment-list-page";
 }

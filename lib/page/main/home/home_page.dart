@@ -87,13 +87,13 @@ class HomePage extends GetView<HomeController> {
                   children: [
                     const HomeHeaderSection(),
                     const HomeAppUpdateWidget(),
-                  //  const HomeCarouselWidget(),
+                   const HomeCarouselWidget(),
                     _buildAlertMessage(),
 
-                    HomeServiceSection2(
-                      onClick: (item) => controller.onItemClick2(item),
+                    HomeServiceSection(
+                      onClick: (item) => controller.onItemClick(item),
                     ),
-                    HomeCommissionSummaryWidget(),
+                   // HomeCommissionSummaryWidget(),
                     const SizedBox(
                       height: 8,
                     ),

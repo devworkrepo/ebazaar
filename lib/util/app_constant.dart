@@ -5,7 +5,7 @@ class AppConstant{
  static const uatBaseUrl = "https://api.spayindia.in/AppSpayService.svc/";
  static const signUpBaseUrl = "https://api.spayindia.in/AppSignUp.svc/";
 
- static String baseUrl = liveBaseUrl;
+ static String baseUrl = uatBaseUrl;//todo warning ***
 
  static const profileBaseUrl = "https://spayindia.in/commonimg/user/";
  static const requestImageBaseUrl = "https://spayindia.in/commonimg/request/";

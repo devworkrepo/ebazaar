@@ -40,6 +40,7 @@ class HomeServiceSection extends GetView<HomeController> {
                 homeServiceType == HomeServiceType.fundAddOnline ||
                 homeServiceType == HomeServiceType.upiPayment ||
                 homeServiceType == HomeServiceType.cms ||
+                homeServiceType == HomeServiceType.newInvestment ||
                 homeServiceType == HomeServiceType.paytmWallet
         )
             ? _pngPicture(iconName, innerPadding)
@@ -149,6 +150,7 @@ enum HomeServiceType {
   fundAddOnline,
   upiPayment,
   cms,
+  newInvestment,
   none
 }
 
@@ -255,6 +257,11 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
   if (user.is_cmsv2 ?? false) {
     itemList.add(HomeServiceItem("CMS\nService", "cms_service",
         HomeServiceType.cms));
+  }
+
+  if (user.is_cmsv2 ?? true) {//todo remove hardcoded true
+    itemList.add(HomeServiceItem("New\nInvestment", "credit_money",
+        HomeServiceType.newInvestment));
   }
 
 

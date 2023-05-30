@@ -194,6 +194,62 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ],
                   ),
                 ),
+                Card(
+                  child: _NavTitle(
+                    title: "Investments",
+                    icon: Icons.inventory_sharp,
+
+                    children: [
+                      /* _NavSubTitle(
+                        title: "OnBoarding",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.aepsOnboardingPage);
+                        },
+                        count: 1,
+                      ),
+
+                      _NavSubTitle(
+                        title: "E-Kyc",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.aepsEkycPage);
+                        },
+                        underline: false,
+                        count: 2,
+                      ),*/
+                      _NavSubTitle(
+                        title: "Create Investment",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.createInvestmentPage);
+                        },
+                        underline: false,
+                        count: 1,
+                      ),
+
+                      _NavSubTitle(
+                        title: "Investment List",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.investmentListPage);
+                        },
+                        underline: false,
+                        count: 2,
+                      ),
+
+                      _NavSubTitle(
+                        title: "Investment Withdrawn",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.aepsSettlemenBankListtPage);
+                        },
+                        underline: false,
+                        count: 3,
+                      )
+                    ],
+                  ),
+                ),
 
                 Card(
                   child: _NavTitle(

@@ -39,6 +39,7 @@ class UserDetail {
   bool? is_cmsv2;
 
 
+
   UserDetail();
 
   UserDetail.fromJson(Map<String, dynamic> json) {

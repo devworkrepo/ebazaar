@@ -25,7 +25,7 @@ class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              InvestmentBalanceWidget(),
+              InvestmentBalanceWidget(controller.balance),
               SizedBox(
                 width: double.infinity,
                 child: Card(
@@ -34,18 +34,18 @@ class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
                     child: Column(
                       children: [
                         Row(
-                          children: const [
+                          children:  [
                             Expanded(
                               child: _TitleValue(
                                 title: "Amount",
-                                value: AppConstant.rupeeSymbol + "10000",
+                                value: AppConstant.rupeeSymbol + (controller.amount),
                               ),
                             ),
 
                             Expanded(
                               child: _TitleValue(
                                 title: "Tenure Duration",
-                                value: "1 Year",
+                                value: controller.tenure,
                               ),
                             ),
 
@@ -55,18 +55,18 @@ class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
                         Divider(indent: 0,),
                         SizedBox(height: 8,),
                         Row(
-                          children: const [
+                          children:  [
                             Expanded(
                               child: _TitleValue(
                                 title: "Interest Rate",
-                                value: "12%",
+                                value: controller.calc.intrate.toString() + " %",
                               ),
                             ),
 
                             Expanded(
                               child: _TitleValue(
                                 title: "Total Interest Amt.",
-                                value: AppConstant.rupeeSymbol+"100000",
+                                value: AppConstant.rupeeSymbol+ (controller.calc.intamt.toString()),
                               ),
                             ),
 
@@ -75,18 +75,18 @@ class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
                         Divider(indent: 0,),
                         SizedBox(height: 8,),
                         Row(
-                          children: const [
+                          children: [
                             Expanded(
                               child: _TitleValue(
                                 title: "Maturity date",
-                                value: "12/12/1998",
+                                value: controller.calc.maturedate.toString(),
                               ),
                             ),
 
                             Expanded(
                               child: _TitleValue(
                                 title: "Maturity Amount",
-                                value: AppConstant.rupeeSymbol+"100000",
+                                value: AppConstant.rupeeSymbol+ (controller.calc.matureamt.toString()),
                                 color: Colors.green,
                                 fontSize: 22,
                               ),

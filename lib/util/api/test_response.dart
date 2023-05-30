@@ -2,15 +2,110 @@ class TestResponse {
   TestResponse._();
 
   static dynamic commonSuccessResponse() {
-    return {"status": "Success", "code": 1, "message": "Success"};
-  }
-
-  static dynamic getCaptchaCommonResponse() {
-    return {"status": "Success",
+    return {
+      "status": "Success",
       "code": 1,
-      "message": "validation success",
-      "captcha_img" : "https://static.hindawi.com/articles/scn/volume-2017/6898617/figures/6898617.fig.008b.jpg",
-      "uuid" : "13123123"
+      "message": "Success",
+      "intamt" : 1000,
+      "intrate" : 11,
+      "matureamt" : 14000,
+      "maturedate" : "01-01-2024",
     };
   }
+
+  static dynamic investmentListResponse() {
+    return {
+      "status": "Success",
+      "code": 1,
+      "message": "Success",
+      "totalcount" : "1",
+      "totalamt" : "100" ,
+      "total_int" : "12",
+      "total_withamt" : "12312" ,
+      "total_matuamt" : "2312",
+      "translist" : [
+        {
+          "fdid" : "hello dev" ,
+          "fd_refno" : "hello dev" ,
+          "pan_no" : "hello dev" ,
+          "amount" : "hello dev" ,
+          "tenure_value" : "hello dev" ,
+          "tenure_type" : "hello dev" ,
+          "int_rate" : "hello dev" ,
+          "int_earned" : "hello dev" ,
+          "current_amount" : "hello dev" ,
+          "mature_amount" : "hello dev" ,
+          "addeddate" : "hello dev" ,
+          "completedate" : "hello dev" ,
+          "closeddate" : "hello dev" ,
+          "closedtype" : "hello dev" ,
+          "trans_status" : "hello dev" ,
+          "trans_response" : "hello dev" ,
+          "pay_status" : "hello dev" ,
+          "isclosebtn" : "hello dev" ,
+        },
+        {
+          "fdid" : "hello dev" ,
+          "fd_refno" : "hello dev" ,
+          "pan_no" : "hello dev" ,
+          "amount" : "hello dev" ,
+          "tenure_value" : "hello dev" ,
+          "tenure_type" : "hello dev" ,
+          "int_rate" : "hello dev" ,
+          "int_earned" : "hello dev" ,
+          "current_amount" : "hello dev" ,
+          "mature_amount" : "hello dev" ,
+          "addeddate" : "hello dev" ,
+          "completedate" : "hello dev" ,
+          "closeddate" : "hello dev" ,
+          "closedtype" : "hello dev" ,
+          "trans_status" : "hello dev" ,
+          "trans_response" : "hello dev" ,
+          "pay_status" : "hello dev" ,
+          "isclosebtn" : "hello dev" ,
+        },
+        {
+          "fdid" : "hello dev" ,
+          "fd_refno" : "hello dev" ,
+          "pan_no" : "hello dev" ,
+          "amount" : "hello dev" ,
+          "tenure_value" : "hello dev" ,
+          "tenure_type" : "hello dev" ,
+          "int_rate" : "hello dev" ,
+          "int_earned" : "hello dev" ,
+          "current_amount" : "hello dev" ,
+          "mature_amount" : "hello dev" ,
+          "addeddate" : "hello dev" ,
+          "completedate" : "hello dev" ,
+          "closeddate" : "hello dev" ,
+          "closedtype" : "hello dev" ,
+          "trans_status" : "hello dev" ,
+          "trans_response" : "hello dev" ,
+          "pay_status" : "hello dev" ,
+          "isclosebtn" : "hello dev" ,
+        },
+        {
+          "fdid" : "hello dev" ,
+          "fd_refno" : "hello dev" ,
+          "pan_no" : "hello dev" ,
+          "amount" : "hello dev" ,
+          "tenure_value" : "hello dev" ,
+          "tenure_type" : "hello dev" ,
+          "int_rate" : "hello dev" ,
+          "int_earned" : "hello dev" ,
+          "current_amount" : "hello dev" ,
+          "mature_amount" : "hello dev" ,
+          "addeddate" : "hello dev" ,
+          "completedate" : "hello dev" ,
+          "closeddate" : "hello dev" ,
+          "closedtype" : "hello dev" ,
+          "trans_status" : "hello dev" ,
+          "trans_response" : "hello dev" ,
+          "pay_status" : "hello dev" ,
+          "isclosebtn" : "hello dev" ,
+        }
+      ] ,
+    };
+  }
+
 }

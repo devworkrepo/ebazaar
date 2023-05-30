@@ -34,13 +34,11 @@ class SingUpRepoImpl extends SignUpRepo {
   Future<SignUpCaptchaResponse> getCaptcha(Map<String, String> data) async{
     var response = await client.post("/GetCaptcha",data: data);
     return SignUpCaptchaResponse.fromJson(response.data);
-    return SignUpCaptchaResponse.fromJson(TestResponse.getCaptchaCommonResponse());
   }
   @override
   Future<SignUpCaptchaResponse> getReCaptcha(Map<String, String> data) async {
     var response = await client.post("/GetReCaptcha",data: data);
     return SignUpCaptchaResponse.fromJson(response.data);
-    return SignUpCaptchaResponse.fromJson(TestResponse.getCaptchaCommonResponse());
   }
 
   @override
