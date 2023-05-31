@@ -13,6 +13,18 @@ class TestResponse {
     };
   }
 
+  static dynamic closeCalcResponse() {
+    return {
+      "status": "Success",
+      "code": 1,
+      "message": "Success",
+      "balance" : "10000",
+      "charges" : "120",
+      "closetype" : "Early",
+      "trans_no" : "12313123123",
+    };
+  }
+
   static dynamic investmentListResponse() {
     return {
       "status": "Success",
@@ -103,6 +115,41 @@ class TestResponse {
           "trans_response" : "hello dev" ,
           "pay_status" : "hello dev" ,
           "isclosebtn" : "hello dev" ,
+        }
+      ] ,
+    };
+  }
+
+  static dynamic investmentStatement() {
+    return {
+      "code" : 1,
+      "status" : "Success",
+      "message" : "Data found",
+      "totalcr" : "1000",
+      "totaldr" : "1000",
+      "balance" : "1000",
+      "words" : "ten thousands only",
+      "fdrefno" : "123123123",
+      "openamt" : "1000",
+      "matureamt" : "1000",
+      "roi" : "10",
+      "opendate" : "12/12/2026",
+      "completedate" : "12/12/2054",
+      "tenure" : "3 Years",
+      "translist" : [
+        {
+          "date" : "12/12/1202",
+          "narration" : "Testing data",
+          "remark" : "Testing remark",
+          "in_amt" : "0",
+          "out_amt" : "20",
+          "in_charge" : "20",
+          "out_charge" : "10",
+          "in_comm" : "100",
+          "out_comm" : "200",
+          "in_tds" : "500",
+          "out_tds" : "350",
+          "balance" : "1000",
         }
       ] ,
     };

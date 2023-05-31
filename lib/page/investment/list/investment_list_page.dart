@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/model/investment/investment_list.dart';
@@ -99,15 +98,19 @@ class InvestmentListPage extends GetView<InvestmentListController> {
                     transactionCount: 12,
                     totalWithdrawn: 1000000,
                     summaryHeader1: [
-
                       SummaryHeader(
-                          title: "Total Amt", value: "${data.totalamt}",backgroundColor: Colors.blue[800]),
+                          title: "Total Amt",
+                          value: "${data.totalamt}",
+                          backgroundColor: Colors.blue[800]),
                       SummaryHeader(
-                          title: "Total Int", value: "${data.total_int}",backgroundColor: Colors.green[800]),
+                          title: "Total Int",
+                          value: "${data.total_int}",
+                          backgroundColor: Colors.green[800]),
                       SummaryHeader(
-                          title: "Maturity Amt", value: "${data.total_int}",backgroundColor: Colors.purple[800]),
+                          title: "Maturity Amt",
+                          value: "${data.total_int}",
+                          backgroundColor: Colors.purple[800]),
                     ],
-
                     callback: () {
                       _onSearch();
                     },
@@ -148,40 +151,45 @@ class _BuildListItem extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Center(
-                              child: Text(
-                        "Date : 12/12/2025",
-                        style: TextStyle(color: Colors.black87,fontWeight: FontWeight.w500),
-                      ))),
-                      Expanded(
-                          child: Center(
-                              child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Success",
-                            style: TextStyle(
-                                color: Colors.green[700],
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(width: 5,),
-                          Icon(
-                            Icons.check_circle_outline,
-                            color: Colors.green[700],
-                            size: 20,
-                          )
-                        ],
-                      ))),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Center(
+                        child: Text(
+                      "Date : 12/12/2025",
+                      style: TextStyle(
+                          color: Colors.black87, fontWeight: FontWeight.w500),
+                    )),
+                    Spacer(),
+                    Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                        decoration: BoxDecoration(
+                            color: Colors.green[100],
+                            borderRadius: BorderRadius.circular(4)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Open",
+                              style: TextStyle(
+                                  color: Colors.green[700],
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(
+                              Icons.check_circle_outline,
+                              color: Colors.green[700],
+                              size: 20,
+                            )
+                          ],
+                        )),
+                  ],
                 ),
+                Text("Investment No. 1331231983712893"),
                 Divider(
                   indent: 0,
                   color: Colors.grey[300],
@@ -195,10 +203,12 @@ class _BuildListItem extends StatelessWidget {
                     _BuildSubItem(
                       title: "Tenure",
                       value: "1 Year",
+                      mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     _BuildSubItem(
                       title: "Mature Amt.",
                       value: AppConstant.rupeeSymbol + "1000",
+                      mainAxisAlignment: MainAxisAlignment.end,
                     ),
                   ],
                 ),
@@ -215,10 +225,12 @@ class _BuildListItem extends StatelessWidget {
                     _BuildSubItem(
                       title: "Int. Earned",
                       value: AppConstant.rupeeSymbol + "900",
+                      mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     _BuildSubItem(
                       title: "Current Amt.",
                       value: AppConstant.rupeeSymbol + "12000",
+                      mainAxisAlignment: MainAxisAlignment.end,
                     ),
                   ],
                 ),
@@ -234,15 +246,20 @@ class _BuildListItem extends StatelessWidget {
 class _BuildSubItem extends StatelessWidget {
   final String title;
   final String value;
+  final MainAxisAlignment mainAxisAlignment;
 
-  const _BuildSubItem({required this.title, required this.value, Key? key})
+  const _BuildSubItem(
+      {required this.title,
+      required this.value,
+      this.mainAxisAlignment = MainAxisAlignment.start,
+      Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: mainAxisAlignment,
         children: [
           Column(
             children: [
@@ -254,7 +271,7 @@ class _BuildSubItem extends StatelessWidget {
               Text(
                 value,
                 style: Get.textTheme.subtitle2
-                    ?.copyWith(fontSize: 16, color: Colors.black87),
+                    ?.copyWith(fontSize: 14, color: Colors.black87),
               ),
             ],
           )

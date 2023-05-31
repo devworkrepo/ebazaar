@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
@@ -33,6 +34,7 @@ class SummaryHeaderWidget extends StatelessWidget {
   final VoidCallback callback;
   final int? transactionCount;
   final int? totalWithdrawn;
+  final String? extraValue1;
 
   const SummaryHeaderWidget(
       {required this.summaryHeader1,
@@ -44,6 +46,7 @@ class SummaryHeaderWidget extends StatelessWidget {
       this.availableBalanceInWord,
       this.transactionCount,
       this.totalWithdrawn,
+      this.extraValue1,
 
       Key? key})
       : super(key: key);
@@ -98,6 +101,19 @@ class SummaryHeaderWidget extends StatelessWidget {
 
               child: Text("Total Withdrawn :  ${AppConstant.rupeeSymbol + totalWithdrawn.toString()}",style : Get.textTheme.subtitle2?.copyWith(
                 color: Colors.red[700]
+              )),
+            ),
+
+            if(extraValue1!= null)  Container(
+              margin: EdgeInsets.only(top: 8),
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: Colors.grey[100]
+              ),
+
+              child: Text(extraValue1.toString(),style : Get.textTheme.subtitle2?.copyWith(
+                  color: Colors.grey[700]
               )),
             ),
             const SizedBox(
@@ -231,7 +247,7 @@ class _BuildAmountSectionWidget extends StatelessWidget {
         Text(
           "₹ $availableBalance",
           style: TextStyle(
-              fontSize: 32,
+              fontSize: 26,
               fontWeight: FontWeight.bold,
               color: Colors.green[800]),
         ),
@@ -268,8 +284,8 @@ class _BuildAmountSectionWidget extends StatelessWidget {
     return Expanded(
         child: Container(
       decoration: BoxDecoration(
-          color: backgroundColor, borderRadius: BorderRadius.circular(8)),
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 16),
+          color: backgroundColor, borderRadius: BorderRadius.circular(4)),
+      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: Column(
         children: [
           Text(
@@ -285,7 +301,7 @@ class _BuildAmountSectionWidget extends StatelessWidget {
             style: TextStyle(
                 color: Colors.white.withOpacity(0.9),
                 fontWeight: FontWeight.w600,
-                fontSize: 14),
+                fontSize: 12),
             textAlign: TextAlign.center,
           )
         ],

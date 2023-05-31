@@ -5,6 +5,7 @@ import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
 import 'package:spayindia/model/investment/investment_list.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/date_util.dart';
 
@@ -71,17 +72,7 @@ class InvestmentListController extends GetxController  {
   }
 
   void onItemClick(InvestmentListItem report) {
-    if (previousReport == null) {
-      report.isExpanded.value = true;
-      previousReport = report;
-    } else if (previousReport! == report) {
-      report.isExpanded.value = !report.isExpanded.value;
-      previousReport = null;
-    } else {
-      report.isExpanded.value = true;
-      previousReport?.isExpanded.value = false;
-      previousReport = report;
-    }
+    Get.toNamed(AppRoute.investmentDetailPage,arguments: report);
   }
 
   void onSearch() {

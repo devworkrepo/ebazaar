@@ -1,5 +1,6 @@
 import 'package:dio/src/cancel_token.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/investment/investment_statement.dart';
 import 'package:spayindia/model/money_request/bank_dertail.dart';
 import 'package:spayindia/model/receipt/aeps.dart';
 import 'package:spayindia/model/receipt/recharge.dart';
@@ -77,6 +78,7 @@ abstract class ReportRepo{
   Future<AccountStatementResponse> fetchAepsStatement(data);
   Future<CreditDebitStatementResponse> fetchCreditStatement(data);
   Future<CreditDebitStatementResponse> fetchDebitStatement(data);
+  Future<InvestmentStatementResponse> fetchInvestmentStatement(data);
 
   //summary report
 

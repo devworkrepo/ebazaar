@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/repo/security_deposit_repo.dart';
 import 'package:spayindia/data/repo/wallet_repo.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/investment/Investment_close_calc.dart';
 import 'package:spayindia/model/investment/inventment_balance.dart';
 import 'package:spayindia/model/investment/inventment_calc.dart';
 import 'package:spayindia/model/investment/investment_list.dart';
@@ -47,6 +48,13 @@ class SecurityDepositImpl extends SecurityDepositRepo{
     return InvestmentListResponse.fromJson(TestResponse.investmentListResponse());
     var response = await client.post("/GetInvestCalc",data: data);
     return InvestmentListResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<InvestmentCloseCalcResponse> fetchCloseCalc(data) async {
+    return InvestmentCloseCalcResponse.fromJson(TestResponse.closeCalcResponse());
+    var response = await client.post("/CalcInvestPay",data: data);
+    return InvestmentCloseCalcResponse.fromJson(response.data);
   }
 
 }

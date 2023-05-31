@@ -1,4 +1,5 @@
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/investment/Investment_close_calc.dart';
 import 'package:spayindia/model/investment/inventment_balance.dart';
 import 'package:spayindia/model/investment/inventment_calc.dart';
 import 'package:spayindia/model/investment/investment_list.dart';
@@ -17,4 +18,5 @@ abstract class SecurityDepositRepo{
   Future<InvestmentBalanceResponse> fetchInvestmentBalance();
   Future<InvestmentCalcResponse> fetchInvestmentCalc(data);
   Future<InvestmentListResponse> fetchInvestmentLists(data);
+  Future<InvestmentCloseCalcResponse> fetchCloseCalc(data);
 }

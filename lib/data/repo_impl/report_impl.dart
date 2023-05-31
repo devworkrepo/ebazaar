@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/model/common.dart';
+import 'package:spayindia/model/investment/investment_statement.dart';
 import 'package:spayindia/model/money_request/bank_dertail.dart';
 import 'package:spayindia/model/receipt/aeps.dart';
 import 'package:spayindia/model/receipt/recharge.dart';
@@ -17,6 +18,7 @@ import 'package:spayindia/model/report/summary/summary_statement.dart';
 import 'package:spayindia/model/report/summary/summary_wallet_pay.dart';
 import 'package:spayindia/model/virtual_account/virtual_report.dart';
 import 'package:spayindia/service/network_client.dart';
+import 'package:spayindia/util/api/test_response.dart';
 import 'package:spayindia/util/app_util.dart';
 
 import '../../model/receipt/credit_card.dart';
@@ -329,6 +331,13 @@ class ReportRepoImpl extends ReportRepo {
   Future<SummaryWalletPayReport> fetchSummaryWalletPay(data) async {
     var response = await client.post("/GetSummary_WalletPay", data: data);
     return SummaryWalletPayReport.fromJson(response.data);
+  }
+
+  @override
+  Future<InvestmentStatementResponse> fetchInvestmentStatement(data) async {
+  //  var response = await client.post("/GetInvestStatement", data: data);
+  //  return InvestmentStatementResponse.fromJson(response.data);
+    return InvestmentStatementResponse.fromJson(TestResponse.investmentStatement());
   }
 
 }
