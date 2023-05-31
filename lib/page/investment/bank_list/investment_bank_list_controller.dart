@@ -14,7 +14,7 @@ class InvestmentBankListController extends GetxController{
   AepsSettlementBank? previousBank;
   var buttonText = "".obs;
   bool fromHome = Get.arguments["origin"] ?? false;
-  InvestmentListItem item = Get.arguments["item"]!;
+  InvestmentListItem? item = Get.arguments["item"];
 
   @override
   void onInit() {
