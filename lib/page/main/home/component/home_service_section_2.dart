@@ -131,7 +131,7 @@ class HomeServiceItem2 {
 List<HomeServiceItem2> _homeServiceList(UserDetail user) {
   List<HomeServiceItem2> itemList = [];
 
-  itemList.add(HomeServiceItem2("Create Investment", "investment_list",
+  itemList.add(HomeServiceItem2("Create Investment", "credit_money",
       HomeServiceType2.createInvestment));
   itemList.add(HomeServiceItem2(
       "Investment List", "investment_list", HomeServiceType2.investmentList));

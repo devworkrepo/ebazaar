@@ -114,4 +114,6 @@ class AppRoute {
   static const investmentDetailPage = "/investment-detail-page";
   static const investmentBankListPage = "/investment-bank-list-page";
   static const investmentStatementPage = "/investment-statement-page";
+  static const investmentWithdrawnPage = "/investment-withdrawn-page";
+  static const investmentTransferPage = "/investment-transfer-page";
 }

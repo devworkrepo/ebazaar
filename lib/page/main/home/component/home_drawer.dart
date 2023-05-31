@@ -239,10 +239,10 @@ class HomeDrawerWidget extends GetView<HomeController> {
                       ),
 
                       _NavSubTitle(
-                        title: "Investment Withdrawn",
+                        title: "Investment Withdrawal",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(AppRoute.aepsSettlemenBankListtPage);
+                          Get.toNamed(AppRoute.investmentWithdrawnPage);
                         },
                         underline: false,
                         count: 3,

@@ -1,6 +1,7 @@
 import 'package:dio/src/cancel_token.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/investment/investment_statement.dart';
+import 'package:spayindia/model/investment/investment_withdrawn.dart';
 import 'package:spayindia/model/money_request/bank_dertail.dart';
 import 'package:spayindia/model/receipt/aeps.dart';
 import 'package:spayindia/model/receipt/recharge.dart';
@@ -39,6 +40,7 @@ abstract class ReportRepo{
   Future<WalletPayReportResponse> fetchWalletPayReport(data);
   Future<CreditCardReportResponse> fetchCreditCardReport(data);
   Future<CommonResponse> rechargeValues();
+  Future<InvestmentWithdrawnListResponse> investmentWithdrawnListResponse(data);
 
   //virtual transaction
   Future<VirtualTransactionReportResponse> fetchVirtualPendingReport(data);

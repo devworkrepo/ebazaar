@@ -155,4 +155,29 @@ class TestResponse {
     };
   }
 
+  static dynamic investmentWithdrawnList() {
+    return {
+      "code" : 1,
+      "status" : "Success",
+      "message" : "Data found",
+      "translist" : [
+        {
+          "trfid" : "2313123",
+          "fd_refno" : "1231323123213",
+          "trans_no" : "24242424",
+          "acc_name" : "HDFC Bank",
+          "acc_no" : "893748297482",
+          "ifsc" : "HDFC0000718",
+          "amount" : "10000",
+          "charge" : "120",
+          "utr_no" : "9329837483",
+          "remark" : "Testing transaction",
+          "addeddate" : "12/12/2022",
+          "trans_status" : "Success",
+          "trans_response" : "Success",
+        }
+      ] ,
+    };
+  }
+
 }

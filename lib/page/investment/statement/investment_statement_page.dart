@@ -95,7 +95,7 @@ class InvestmentStatementPage extends GetView<InvestmentStatementController> {
                     availableBalance: data.balance,
                     availableBalanceInWord: data.words,
                     transactionCount: list.length,
-                    extraValue1: "FD Ref : ${data.fdrefno}",
+                    extraValue1: "Investment No. : ${data.fdrefno}",
                     summaryHeader1: [
                       SummaryHeader(
                           title: "Opening Amt.",

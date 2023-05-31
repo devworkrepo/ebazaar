@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/investment/investment_statement.dart';
+import 'package:spayindia/model/investment/investment_withdrawn.dart';
 import 'package:spayindia/model/money_request/bank_dertail.dart';
 import 'package:spayindia/model/receipt/aeps.dart';
 import 'package:spayindia/model/receipt/recharge.dart';
@@ -338,6 +339,13 @@ class ReportRepoImpl extends ReportRepo {
   //  var response = await client.post("/GetInvestStatement", data: data);
   //  return InvestmentStatementResponse.fromJson(response.data);
     return InvestmentStatementResponse.fromJson(TestResponse.investmentStatement());
+  }
+
+  @override
+  Future<InvestmentWithdrawnListResponse> investmentWithdrawnListResponse(data) async {
+    //  var response = await client.post("/GetInvestPayList", data: data);
+    //  return InvestmentWithdrawnListResponse.fromJson(response.data);
+    return InvestmentWithdrawnListResponse.fromJson(TestResponse.investmentWithdrawnList());
   }
 
 }

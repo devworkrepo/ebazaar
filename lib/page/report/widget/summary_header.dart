@@ -99,7 +99,7 @@ class SummaryHeaderWidget extends StatelessWidget {
                 color: Colors.red[50]
               ),
 
-              child: Text("Total Withdrawn :  ${AppConstant.rupeeSymbol + totalWithdrawn.toString()}",style : Get.textTheme.subtitle2?.copyWith(
+              child: Text("Total Withdrawal :  ${AppConstant.rupeeSymbol + totalWithdrawn.toString()}",style : Get.textTheme.subtitle2?.copyWith(
                 color: Colors.red[700]
               )),
             ),

@@ -80,7 +80,9 @@ class InvestmentBankListPage extends GetView<InvestmentBankListController> {
                 primary: Colors.green
               ),
                 onPressed: (){
-                print(controller.previousBank!.bankName.toString());
+                Get.toNamed(AppRoute.investmentTransferPage,arguments: {
+                  "bank" : controller.previousBank!
+                });
                 }, child: Text(controller.buttonText.value)),
           ) : SizedBox())
 

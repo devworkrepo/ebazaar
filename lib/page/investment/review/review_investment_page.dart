@@ -25,7 +25,7 @@ class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              InvestmentBalanceWidget(controller.balance),
+              InvestmentBalanceWidget(controller.balance,showPanWarning: false,),
               SizedBox(
                 width: double.infinity,
                 child: Card(

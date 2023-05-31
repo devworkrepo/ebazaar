@@ -77,7 +77,8 @@ class _MainPageState extends State<MainPage> {
       },
       child: StatusBarColorWidget(
         child: Scaffold(
-          bottomNavigationBar: _buildBottomNavigationBar(),
+          //todo remove hard code false for bottom navigation bar
+          bottomNavigationBar:(false) ? _buildBottomNavigationBar() : null,
           body: _bottomNavPage(),
         ),
       ),

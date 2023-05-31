@@ -21,6 +21,7 @@ class AppExpandListWidget extends StatelessWidget {
   final List<ListTitleValue> expandList;
   final Widget? actionWidget;
   final Widget? actionWidget2;
+  final bool showDivider;
 
   AppExpandListWidget(
       {this.imageName,
@@ -36,6 +37,7 @@ class AppExpandListWidget extends StatelessWidget {
       required this.isExpanded,
       required this.expandList,
       this.actionWidget2,
+      this.showDivider = true,
       Key? key,
       this.actionWidget})
       : super(key: key);
@@ -43,14 +45,15 @@ class AppExpandListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Card(
-      elevation: (isExpanded.value) ? 16 : 0,
-      color: (isExpanded.value) ? Get.theme.primaryColorDark : Colors.white,
-      child: Column(children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          elevation: (isExpanded.value) ? 16 : 0,
+          color: (isExpanded.value) ? Get.theme.primaryColorDark : Colors.white,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   (!isExpanded.value)
-                      ? SizedBox()/* Row(
+                      ? SizedBox() /* Row(
                           children: const [
                             SizedBox(
                               width: 8,
@@ -83,30 +86,32 @@ class AppExpandListWidget extends StatelessWidget {
                                 date: date),
                             (isExpanded.value)
                                 ? const Divider(
-                      color: Colors.grey,
-                    )
-                        : const EmptyBox(),
-                    _buildExpandedSection(),
-                  ],
-                ),
+                                    color: Colors.grey,
+                                  )
+                                : const EmptyBox(),
+                            _buildExpandedSection(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ),)
-          ],
-        ),
-        (isExpanded.isFalse)
+              (isExpanded.isFalse)
                   ? Column(
                       children: [
-                        if(actionWidget2!=null)
-                          actionWidget2!,
-                        const Divider(
-                          indent: 10,
-                          color: Colors.grey,
-                        )
+                        if (actionWidget2 != null) actionWidget2!,
+                        if (showDivider)
+                          const Divider(
+                            indent: 10,
+                            color: Colors.grey,
+                          )
                       ],
                     )
                   : const SizedBox()
-            ],),
-    ));
+            ],
+          ),
+        ));
   }
 
   _buildExpandedSection() {
@@ -123,18 +128,33 @@ class AppExpandListWidget extends StatelessWidget {
                           padding: const EdgeInsets.all(4),
                           child: Row(
                             children: [
-                              BuildLeftListWidget(expandList[index].title,color: Colors.white70,),
-                              const BuildDotWidget(color: Colors.white70,),
-                              BuildRightListWidget(expandList[index].value,color: Colors.white70,),
+                              BuildLeftListWidget(
+                                expandList[index].title,
+                                color: Colors.white70,
+                              ),
+                              const BuildDotWidget(
+                                color: Colors.white70,
+                              ),
+                              BuildRightListWidget(
+                                expandList[index].value,
+                                color: Colors.white70,
+                              ),
                             ],
                           ),
                         )
                       : const SizedBox();
                 }),
-                if (actionWidget == null) const SizedBox() else Column(children: [
-                  const SizedBox(height: 16,),
-                  actionWidget!
-                ],)
+                if (actionWidget == null)
+                  const SizedBox()
+                else
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      actionWidget!
+                    ],
+                  )
               ],
             ),
           )
@@ -173,7 +193,8 @@ class _BuildHeaderSection extends StatelessWidget {
   }) : super(key: key);
 
   _buildTitle() {
-    var color =  (isExpand) ? Colors.white : Get.theme.primaryColor;
+    var color = (isExpand) ? Colors.white : Get.theme.primaryColor;
+    var subColor = (isExpand) ? Colors.white60 : Colors.grey[500];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -181,34 +202,57 @@ class _BuildHeaderSection extends StatelessWidget {
             ? const SizedBox()
             : Text(
                 titleHeader!,
-                style: const TextStyle(color: Colors.grey,fontSize: 12),
+                style: Get.textTheme.caption
+                    ?.copyWith(fontWeight: FontWeight.w500,color: subColor),
               ),
         Text(
           title,
           maxLines: 2,
-          style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.w600,fontSize: 15),
+          style: Get.textTheme.subtitle1?.copyWith(
+              color: color, fontWeight: FontWeight.w600, fontSize: 15),
           overflow: TextOverflow.ellipsis,
         ),
+        (titleHeader == null)
+            ? SizedBox()
+            : Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Divider(
+                  indent: 0,
+                  color: subColor,
+                ),
+              )
       ],
     );
   }
 
   _buildSubtitle() {
     var color = (isExpand) ? Colors.white70 : Colors.black87;
+    var subColor = (isExpand) ? Colors.white60 : Colors.grey[500];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        (subTitleHeader == null) ? const SizedBox() : Text(
-          subTitleHeader!,
-          style: const TextStyle(color: Colors.grey,fontSize: 12),
-        ),
+        (subTitleHeader == null)
+            ? const SizedBox()
+            : Text(
+                subTitleHeader!,
+                style: Get.textTheme.caption
+                    ?.copyWith(fontWeight: FontWeight.w500, color: subColor),
+              ),
         Text(
           subTitle,
           maxLines: 1,
           style: Get.textTheme.subtitle1?.copyWith(
-              fontWeight: FontWeight.w400, fontSize: 14, color: color),
+              fontWeight: FontWeight.w500, fontSize: 14, color: color),
           overflow: TextOverflow.ellipsis,
         ),
+        (subTitleHeader == null)
+            ? SizedBox()
+            : Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Divider(
+                  indent: 0,
+                  color: subColor,
+                )),
       ],
     );
   }
@@ -228,35 +272,32 @@ class _BuildHeaderSection extends StatelessWidget {
     return Text(
       "₹ " + amount,
       maxLines: 1,
-      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
+      style: Get.textTheme.subtitle1
+          ?.copyWith(color: color, fontWeight: FontWeight.bold),
       overflow: TextOverflow.ellipsis,
     );
   }
 
   Widget _buildStatus() {
-
     var mStatus = status.trim();
-    if(status.trim().isNotEmpty){
-       mStatus = status.trim().replaceAll(" ", "\n");
-    }
-    else{
+    if (status.trim().isNotEmpty) {
+      mStatus = status.trim().replaceAll(" ", "\n");
+    } else {
       mStatus = (statusId == 1)
           ? "Success"
           : ((statusId == 2) ? "Failed" : "Pending");
     }
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: (isExpand) ? 8 : 0,vertical: 4),
+      padding:
+          EdgeInsets.symmetric(horizontal: (isExpand) ? 8 : 0, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12)
-
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(12)),
       child: Text(
         mStatus,
         maxLines: 2,
         textAlign: TextAlign.center,
         style: Get.textTheme.subtitle1?.copyWith(
-          fontSize: 12,
+            fontSize: 12,
             color: ((statusId == 1 || status == "Credit")
                 ? Colors.green
                 : ((statusId == 2 || status == "Debit")
@@ -353,7 +394,9 @@ class BuildLeftListWidget extends StatelessWidget {
   final int? fontSize;
   final FontWeight? fontWeight;
 
-  const BuildLeftListWidget(this.title, {Key? key,this.color,this.fontSize,this.fontWeight}) : super(key: key);
+  const BuildLeftListWidget(this.title,
+      {Key? key, this.color, this.fontSize, this.fontWeight})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -363,7 +406,9 @@ class BuildLeftListWidget extends StatelessWidget {
         title,
         style: Get.textTheme.subtitle1?.copyWith(
           fontSize: (fontSize ?? 14).toDouble(),
-            fontWeight: fontWeight ??  FontWeight.w400, color: color ?? Colors.black54,),
+          fontWeight: fontWeight ?? FontWeight.w400,
+          color: color ?? Colors.black54,
+        ),
       ),
     );
   }
@@ -371,14 +416,15 @@ class BuildLeftListWidget extends StatelessWidget {
 
 class BuildDotWidget extends StatelessWidget {
   final Color? color;
-  const BuildDotWidget({Key? key,this.color}) : super(key: key);
+
+  const BuildDotWidget({Key? key, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       "  :  ",
-      style:
-          Get.textTheme.subtitle1?.copyWith(color: color ??  Get.theme.primaryColorDark),
+      style: Get.textTheme.subtitle1
+          ?.copyWith(color: color ?? Get.theme.primaryColorDark),
     );
   }
 }
@@ -389,7 +435,9 @@ class BuildRightListWidget extends StatelessWidget {
   final int? fontSize;
   final FontWeight? fontWeight;
 
-  const BuildRightListWidget(this.title, {Key? key,this.color, this. fontSize,this.fontWeight}) : super(key: key);
+  const BuildRightListWidget(this.title,
+      {Key? key, this.color, this.fontSize, this.fontWeight})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -398,7 +446,7 @@ class BuildRightListWidget extends StatelessWidget {
       child: Text(
         title,
         style: Get.textTheme.subtitle1?.copyWith(
-          fontSize: (fontSize ?? 14).toDouble(),
+            fontSize: (fontSize ?? 14).toDouble(),
             fontWeight: fontWeight ?? FontWeight.w400,
             color: color ?? Get.theme.primaryColor),
       ),

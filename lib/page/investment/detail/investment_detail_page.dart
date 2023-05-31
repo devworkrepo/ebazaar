@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/investment/detail/investment_detail_controller.dart';
+import 'package:spayindia/model/investment/investment_list.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
 
-class InvestmentDetailPage extends GetView<InvestmentDetailController> {
+class InvestmentDetailPage extends StatelessWidget {
   const InvestmentDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(InvestmentDetailController());
+    InvestmentListItem item = Get.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -58,43 +58,43 @@ class InvestmentDetailPage extends GetView<InvestmentDetailController> {
               ),
               _BuildItem(
                   title: "Opening date",
-                  value: controller.item.addeddate.toString()),
+                  value: item.addeddate.toString()),
               _BuildItem(
-                  title: "Closed date", value: controller.isClosed.toString()),
+                  title: "Closed date", value: item.closeddate.toString()),
               _BuildItem(
                   title: "Closed Type",
-                  value: controller.item.closedtype.toString()),
+                  value: item.closedtype.toString()),
               _BuildItem(
                   title: "Completion date",
-                  value: controller.item.completedate.toString()),
+                  value: item.completedate.toString()),
               _BuildItem(
-                  title: "Investment Ref No.",
-                  value: controller.item.fd_refno.toString()),
+                  title: "Investment No.",
+                  value: item.fd_refno.toString()),
               _BuildItem(
-                  title: "Pan No.", value: controller.item.pan_no.toString()),
+                  title: "Pan No.", value: item.pan_no.toString()),
               _BuildItem(
                   title: "Amount",
                   value: AppConstant.rupeeSymbol +
-                      controller.item.amount.toString()),
+                      item.amount.toString()),
               _BuildItem(
                   title: "Tenure",
-                  value: controller.item.tenure_value.toString() +
+                  value: item.tenure_value.toString() +
                       " " +
-                      controller.item.tenure_type.toString()),
+                      item.tenure_type.toString()),
               _BuildItem(
                   title: "Int. Rate",
-                  value: controller.item.int_rate.toString()),
+                  value: item.int_rate.toString()),
               _BuildItem(
                   title: "Current Amount",
                   value: AppConstant.rupeeSymbol +
-                      controller.item.current_amount.toString()),
+                      item.current_amount.toString()),
               _BuildItem(
                   title: "Maturity Amount",
                   value: AppConstant.rupeeSymbol +
-                      controller.item.mature_amount.toString()),
+                      item.mature_amount.toString()),
               _BuildItem(
                   title: "Message",
-                  value: controller.item.trans_response.toString()),
+                  value: item.trans_response.toString()),
               Row(
                 children: [
                   OutlinedButton(
@@ -112,16 +112,12 @@ class InvestmentDetailPage extends GetView<InvestmentDetailController> {
                     ),
                   ),
                   Spacer(),
-                  if (controller.item.isclosebtn
-                          .toString()
-                          .trim()
-                          .toLowerCase() ==
-                      "true")
+
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(primary: Colors.red),
                         onPressed: () {
-                          controller.fetchCloseCalc();
-                          // Get.toNamed(AppRoute.investmentBankListPage);
+                        
+                          Get.toNamed(AppRoute.investmentBankListPage);
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,

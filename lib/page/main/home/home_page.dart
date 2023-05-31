@@ -87,13 +87,20 @@ class HomePage extends GetView<HomeController> {
                   children: [
                     const HomeHeaderSection(),
                     const HomeAppUpdateWidget(),
-                   const HomeCarouselWidget(),
+                    const HomeCarouselWidget(),
                     _buildAlertMessage(),
-
-                    HomeServiceSection(
-                      onClick: (item) => controller.onItemClick(item),
+                    if (false)
+                      HomeServiceSection(
+                        onClick: (item) => controller.onItemClick(item),
+                      ),
+                 if(true)   Column(
+                      children: [
+                        HomeServiceSection2(
+                          onClick: (item) => controller.onItemClick2(item),
+                        ),
+                        HomeCommissionSummaryWidget(),
+                      ],
                     ),
-                   // HomeCommissionSummaryWidget(),
                     const SizedBox(
                       height: 8,
                     ),
@@ -115,7 +122,7 @@ class HomePage extends GetView<HomeController> {
     if (int.parse(alertInfo) > 0) {
       return GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: ()=>Get.toNamed(AppRoute.complaintPage),
+        onTap: () => Get.toNamed(AppRoute.complaintPage),
         child: Padding(
           padding: const EdgeInsets.only(
             right: 12,
@@ -128,18 +135,16 @@ class HomePage extends GetView<HomeController> {
               child: Row(
                 children: [
                   ShakeAnimatedWidget(
-
                     enabled: true,
                     duration: const Duration(milliseconds: 500),
                     shakeAngle: Rotation.deg(z: 20),
                     curve: Curves.linear,
-                    child:Icon(
+                    child: Icon(
                       Icons.notifications_on,
                       size: 32,
                       color: Colors.red[900],
                     ),
                   ),
-
                   const SizedBox(
                     width: 8,
                   ),
@@ -147,7 +152,7 @@ class HomePage extends GetView<HomeController> {
                     child: Text(
                       response.message.toString(),
                       maxLines: 2,
-                      style:  TextStyle(
+                      style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           fontStyle: FontStyle.normal,

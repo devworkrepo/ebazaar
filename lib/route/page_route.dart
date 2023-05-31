@@ -31,6 +31,8 @@ import 'package:spayindia/page/investment/create/create_investment_page.dart';
 import 'package:spayindia/page/investment/detail/investment_detail_page.dart';
 import 'package:spayindia/page/investment/list/investment_list_page.dart';
 import 'package:spayindia/page/investment/statement/investment_statement_page.dart';
+import 'package:spayindia/page/investment/transfer/investment_transfer_page.dart';
+import 'package:spayindia/page/investment/withdrawn/investment_withdrawn_page.dart';
 import 'package:spayindia/page/main/change_password/change_password_page.dart';
 import 'package:spayindia/page/main/change_pin/change_pin_page.dart';
 import 'package:spayindia/page/main_page.dart';
@@ -351,6 +353,17 @@ final getAllPages = [
   GetPage(
     name: AppRoute.investmentStatementPage,
     page: () => const InvestmentStatementPage(),
+  ),
+
+  GetPage(
+    name: AppRoute.investmentWithdrawnPage,
+    page: () => const InvestmentWithdrawnPage(),
+  ),
+
+
+  GetPage(
+    name: AppRoute.investmentTransferPage,
+    page: () => const InvestmentTransferPage(),
   ),
 
 

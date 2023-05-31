@@ -6,8 +6,8 @@ import '../../../util/app_constant.dart';
 
 class InvestmentBalanceWidget extends StatelessWidget {
   final InvestmentBalanceResponse data;
-
-  const InvestmentBalanceWidget(this.data, {Key? key}) : super(key: key);
+  final bool showPanWarning;
+  const InvestmentBalanceWidget(this.data, {Key? key,this.showPanWarning = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +16,18 @@ class InvestmentBalanceWidget extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-             if(data.pan_no.toString().isEmpty) Container(
+             if(data.pan_no.toString().isEmpty) if(showPanWarning) Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(color: Colors.blue[100]),
-              child: Text(
-                "Please Add Pan Card Number in Profile So You Invest Upto 2 lacs",
-                style: Get.textTheme.caption
-                    ?.copyWith(fontWeight: FontWeight.w500),
-                textAlign: TextAlign.center,
-              ),
+              child: Row(children: [
+                Expanded(child: Text(
+                  "Please Add Pan Card Number in Profile So You Invest Upto 2 lacs",
+                  style: Get.textTheme.caption
+                      ?.copyWith(fontWeight: FontWeight.w500,color: Colors.black ),
+                  textAlign: TextAlign.center,
+                )),
+                ElevatedButton(onPressed: (){}, child: Text("Add Pan"))
+              ],),
             ),
             SizedBox(
               height: 12,

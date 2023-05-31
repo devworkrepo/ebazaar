@@ -442,7 +442,7 @@ class MPinTextField extends StatelessWidget {
       this.enable = true,
       this.onChange,
       this.rightButton,
-        this.label = "Transaction MPIN",
+        this.label = "MPIN",
         this.hint = "4 - 6 digits mpin",
       Key? key})
       : super(key: key);
