@@ -51,9 +51,9 @@ class UserDetail {
     outletName = json["outlet_name"];
     picName = json['picname'];
     agentCode = json['agentcode'];
-   // userType = json['usertype'];
+   userType = json['usertype'];
 
-    userType = "SM";
+    //userType = "SM";
     isPayout = json['is_payout'];
     availableBalance = json['availbalance'].toString();
     openBalance = json['openbalance'].toString();
