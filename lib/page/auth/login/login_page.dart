@@ -67,11 +67,32 @@ class _LoginForm extends GetView<LoginController> {
                         const SizedBox(
                           height: 16,
                         ),
-                        AppButton(
-                            width: 200,
-                            isRounded: true,
-                            text: "Login",
-                            onClick: () => controller.login()),
+
+                        Row(children: [
+
+                          Expanded(child: SizedBox(
+                            height: 40,
+                            child: ElevatedButton(onPressed: (){
+                              controller.login();
+                            }, child: Text("Retailer Login",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400
+                              ),),),
+                          )),
+                          const SizedBox(width: 8,),
+                          Expanded(child: SizedBox(
+                              height: 40,
+                              child: ElevatedButton(onPressed: (){
+                                controller.login(subRetailerLogin: true);
+                              }, child: Text("Sub-retailer Login",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400
+                                ),),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.blue[900]
+                                ),))),
+                        ],),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

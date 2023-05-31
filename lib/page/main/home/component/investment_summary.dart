@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/model/investment/investment_summary.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
+import 'package:spayindia/util/obx_widget.dart';
 
 class HomeCommissionSummaryWidget extends GetView<HomeController> {
   const HomeCommissionSummaryWidget({Key? key}) : super(key: key);
@@ -9,71 +11,73 @@ class HomeCommissionSummaryWidget extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      child: ObsResourceWidget<InvestmentSummaryResponse>(obs: controller.responseObs, childBuilder: (data){
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-              Text(
-                "Investment Summary",
-                style: Get.textTheme.subtitle2?.copyWith(
-                    fontWeight: FontWeight.w600, color: Colors.grey[700]),
-              ),
-              const Divider(),
-              const SizedBox(
-                height: 8,
-              ),
-              IntrinsicHeight(
-                child: Row(
-                  children: [
-                    _buildItem(
-                        Colors.blue[500],Colors.blue[600], "Active Investments", "10",rupee: false),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    _buildItem(
-                        Colors.blue[500],Colors.blue[600], "Total Amount", "117"),
-                  ],
+                Text(
+                  "Investment Overview",
+                  style: Get.textTheme.subtitle2?.copyWith(
+                      fontWeight: FontWeight.w600, color: Colors.grey[700]),
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              IntrinsicHeight(
-                child: Row(
-                  children: [
-                    _buildItem(
-                        Colors.green[500],Colors.green[600],"Interest Earned", "1276"),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    _buildItem( Colors.blue[500],Colors.blue[600], "Completed Investment", "117"),
-                  ],
+                const Divider(indent: 0,),
+                const SizedBox(
+                  height: 8,
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              IntrinsicHeight(
-                child: Row(
-                  children: [
-                    _buildItem(
-                        Colors.green[500],Colors.green[600], "Current Available Amount", "1276"),
-                   
-                  ],
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      _buildItem(
+                          Colors.blue[500],Colors.blue[600], "Active Investments", data.tot_active.toString(),rupee: false),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      _buildItem(
+                          Colors.blue[500],Colors.blue[600], "Total Amount", data.tot_amount.toString()),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
+                const SizedBox(
+                  height: 5,
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      _buildItem(
+                          Colors.green[500],Colors.green[600],"Interest Earned", data.int_earned.toString()),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      _buildItem( Colors.blue[500],Colors.blue[600], "Completed Investment",data.completed_amt.toString()),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      _buildItem(
+                          Colors.green[500],Colors.green[600], "Current Available Amount", data.aval_amt.toString()),
+
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
 
 
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 

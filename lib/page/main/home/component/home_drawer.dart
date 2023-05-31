@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/page/aeps_settlement/settlement/settlement_controller.dart';
 import 'package:spayindia/page/main/home/home_controller.dart';
+import 'package:spayindia/page/statement/account_statement/account_statement_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
+import 'package:spayindia/util/tags.dart';
 
 import '../../../../widget/image.dart';
 import '../../../biometric_setting_page.dart';
@@ -40,6 +42,76 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ),
                     leading: Icon(
                       Icons.home,
+                      color: color,
+                    ),
+                  ),
+                ),
+                if (controller.appPreference.user.userType == "Sub-Retailer")Card(
+                  child: ListTile(
+                    onTap: () {
+                      Get.back();
+                      Get.toNamed(AppRoute.createInvestmentPage);
+                    },
+                    title: Text(
+                      "Investment",
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
+                    ),
+                    leading: Icon(
+                      Icons.wysiwyg_sharp,
+                      color: color,
+                    ),
+                  ),
+                ),
+                if (controller.appPreference.user.userType == "Sub-Retailer") Card(
+                  child: ListTile(
+                    onTap: () {
+                      Get.back();
+                      Get.toNamed(AppRoute.investmentListPage);
+                    },
+                    title: Text(
+                      "Transactions",
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
+                    ),
+                    leading: Icon(
+                      Icons.receipt_rounded,
+                      color: color,
+                    ),
+                  ),
+                ),
+                if (controller.appPreference.user.userType == "Sub-Retailer") Card(
+                  child: ListTile(
+                    onTap: () {
+                      Get.back();
+                      Get.toNamed(AppRoute.investmentBankListPage,arguments: {
+                        "origin" : true
+                      });
+                    },
+                    title: Text(
+                      "Settlement Accounts",
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
+                    ),
+                    leading: Icon(
+                      Icons.account_balance,
+                      color: color,
+                    ),
+                  ),
+                ),
+                if (controller.appPreference.user.userType == "Sub-Retailer") Card(
+                  child: ListTile(
+                    onTap: () {
+                      Get.back();
+                      Get.to(()=>AccountStatementPage(controllerTag: AppTag.accountStatementControllerTag));
+                    },
+                    title: Text(
+                      "Statements",
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
+                    ),
+                    leading: Icon(
+                      Icons.event_repeat_outlined,
                       color: color,
                     ),
                   ),
@@ -102,7 +174,8 @@ class HomeDrawerWidget extends GetView<HomeController> {
                       ],
                     ),
                   ),
-                Card(
+               if(controller.appPreference.user.userType == "Retailer")
+                 Card(
                   child: _NavTitle(
                     title: "Fund Request",
                     icon: Icons.money,
@@ -136,9 +209,10 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                if (controller.appPreference.user.userType == "Retailer")   Card(
+                if (controller.appPreference.user.userType == "Retailer")
+                  Card(
                   child: _NavTitle(
-                    title: "Aeps Settlement",
+                    title: "AePS Settlement",
                     icon: Icons.fingerprint,
                     children: [
                       /* _NavSubTitle(
@@ -192,7 +266,8 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                Card(
+                if (controller.appPreference.user.userType == "Retailer")
+                  Card(
                   child: _NavTitle(
                     title: "Investments",
                     icon: Icons.inventory_sharp,
@@ -241,6 +316,15 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         },
                         underline: false,
                         count: 3,
+                      ),
+                      _NavSubTitle(
+                        title: "Investment Summary",
+                        onClick: () {
+                          Get.back();
+                          Get.toNamed(AppRoute.investmentSummary);
+                        },
+                        underline: false,
+                        count: 4,
                       )
                     ],
                   ),
@@ -287,7 +371,8 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                if (controller.appPreference.user.userType == "Retailer")   Card(
+                if (controller.appPreference.user.userType == "Retailer")
+                  Card(
                   child: ListTile(
                     onTap: () {
                       Get.back();

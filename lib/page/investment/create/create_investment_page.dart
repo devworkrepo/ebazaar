@@ -28,7 +28,12 @@ class CreateInvestmentPage extends GetView<CreateInvestmentController> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    InvestmentBalanceWidget(data),
+                    InvestmentBalanceWidget(
+                      data,
+                      addPanCallback: () {
+                        controller.checkPanDetail();
+                      },
+                    ),
                     SizedBox(
                       width: double.infinity,
                       child: Card(
@@ -38,7 +43,9 @@ class CreateInvestmentPage extends GetView<CreateInvestmentController> {
                             children: [
                               AmountTextField(
                                   controller: controller.amountController),
-                              const SizedBox(height: 8,),
+                              const SizedBox(
+                                height: 8,
+                              ),
                               Row(
                                 children: [
                                   Expanded(
@@ -57,7 +64,11 @@ class CreateInvestmentPage extends GetView<CreateInvestmentController> {
                                           hideLabel: false,
                                           label: "Type",
                                           selectedItem: "Days",
-                                          list: const ["Days", "Months", "Years"],
+                                          list: const [
+                                            "Days",
+                                            "Months",
+                                            "Years"
+                                          ],
                                           onChange: (value) {
                                             controller.tenureType = value;
                                           }))

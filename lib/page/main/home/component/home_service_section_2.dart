@@ -113,6 +113,7 @@ enum HomeServiceType2 {
   accountStatement,
   addFundOnline,
   fundHistory,
+  investmentSummary,
   none
 }
 
@@ -139,6 +140,10 @@ List<HomeServiceItem2> _homeServiceList(UserDetail user) {
 
   itemList.add(HomeServiceItem2(
       "Fund History", "fund_add_pending", HomeServiceType2.fundHistory));
+
+
+  itemList.add(HomeServiceItem2(
+      "Investment\nSummary", "summary", HomeServiceType2.investmentSummary));
 
 
 

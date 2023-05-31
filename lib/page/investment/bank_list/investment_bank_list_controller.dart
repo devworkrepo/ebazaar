@@ -12,6 +12,7 @@ class InvestmentBankListController extends GetxController{
   var responseObs = Resource.onInit(data: AepsSettlementBankListResponse()).obs;
   AepsSettlementBank? previousBank;
   var buttonText = "".obs;
+  bool fromHome = Get.arguments["origin"] ?? false;
 
   @override
   void onInit() {
@@ -33,6 +34,7 @@ class InvestmentBankListController extends GetxController{
   }
 
   onItemClick(AepsSettlementBank bank) {
+    if(fromHome) return;
     if (previousBank == null) {
       bank.isSelected.value = true;
       previousBank = bank;

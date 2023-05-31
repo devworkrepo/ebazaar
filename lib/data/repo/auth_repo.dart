@@ -6,6 +6,7 @@ import 'package:spayindia/model/user/login.dart';
 abstract class AuthRepo {
 
   Future<LoginResponse> agentLogin(Map<String,String> data);
+  Future<LoginResponse> subAgentLogin(Map<String,String> data);
   Future<CommonResponse> checkDevice(data);
   Future<CommonResponse> registerNewDevice(data);
   Future<LoginResponse> loginOtp(Map<String,String> data);

@@ -26,11 +26,11 @@ class CreateInvestmentController extends GetxController with TransactionHelperMi
   void onInit() {
     super.onInit();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      _fetchInvestmentBalance();
+      fetchInvestmentBalance();
     });
   }
 
-  _fetchInvestmentBalance() async{
+  fetchInvestmentBalance() async{
 
     ObsResponseHandler(obs: responseObs, apiCall: repo.fetchInvestmentBalance());
 
@@ -85,6 +85,21 @@ class CreateInvestmentController extends GetxController with TransactionHelperMi
       StatusDialog.alert(title: response.message);
     }
 
+
+  }
+
+  void checkPanDetail() async{
+
+    StatusDialog.progress(title: "Checking Pan Detail");
+    CommonResponse response = await repo.checkPanDetail();
+    Get.back();
+    if(response.code ==1){
+      Get.toNamed(AppRoute.investmentPanPage)?.then(
+              (value) => fetchInvestmentBalance());
+    }
+    else{
+      StatusDialog.alert(title: response.message);
+    }
 
   }
 }

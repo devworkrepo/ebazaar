@@ -117,7 +117,9 @@ class InvestmentDetailPage extends StatelessWidget {
                         style: OutlinedButton.styleFrom(primary: Colors.red),
                         onPressed: () {
                         
-                          Get.toNamed(AppRoute.investmentBankListPage);
+                          Get.toNamed(AppRoute.investmentBankListPage,arguments: {
+                            "origin" : false
+                          });
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,

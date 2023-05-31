@@ -31,7 +31,7 @@ import '../service/native_call.dart';
 import '../widget/dialog/status_dialog.dart';
 import 'main/home/home_controller.dart';
 
-var isBottomNavShowObs = true.obs;
+var isRetailerBottomNavObs = true.obs;
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -51,6 +51,7 @@ class _MainPageState extends State<MainPage> {
   var bottomNavKey = GlobalKey();
 
   late AppPreference appPreference;
+
 
   HomeRepo rep = Get.find<HomeRepoImpl>();
 
@@ -88,7 +89,7 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildBottomNavigationBar() {
     return Obx(() => Visibility(
-          visible: isBottomNavShowObs.value,
+          visible: isRetailerBottomNavObs.value,
           child: Card(
             margin: EdgeInsets.zero,
             color: Colors.white,

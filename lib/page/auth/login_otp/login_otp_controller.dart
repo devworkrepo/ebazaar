@@ -75,7 +75,7 @@ class LoginOtpController extends GetxController  {
     await appPreference
         .setMobileNumber((isLoginCheck) ? mobileNumber : "na");
 
-    Get.offAllNamed(AppRoute.mainPage);
+    Get.offAllNamed(AppRoute.mainPage,arguments: {"retailerType" : "Sub"});
   }
 
   _checkDevice(String sessionKey) async {

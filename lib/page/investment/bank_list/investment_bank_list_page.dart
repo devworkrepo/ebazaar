@@ -18,13 +18,13 @@ class InvestmentBankListPage extends GetView<InvestmentBankListController> {
 
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text("Bank List"),
+        title: Text((controller.fromHome) ? "Settlement Bank Accounts" : "Select Bank Account"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
 
-          Align(
+         if(controller.fromHome) Align(
             alignment: Alignment.centerRight,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),

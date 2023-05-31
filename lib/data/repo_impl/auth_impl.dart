@@ -16,6 +16,12 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
+  Future<LoginResponse> subAgentLogin(Map<String, String> data) async {
+    var response = await client.post("SubAgentLogin", data: data,isAdditionalData: false);
+    return LoginResponse.fromJson(response.data);
+  }
+
+  @override
   Future<LoginResponse> loginOtp(Map<String, String> data) async {
     var response = await client.post("LoginOTPVerify", data: data,isAdditionalData: false);
     return LoginResponse.fromJson(response.data);

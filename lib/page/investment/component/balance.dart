@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/model/investment/inventment_balance.dart';
+import 'package:spayindia/route/route_name.dart';
 
 import '../../../util/app_constant.dart';
 
 class InvestmentBalanceWidget extends StatelessWidget {
   final InvestmentBalanceResponse data;
   final bool showPanWarning;
-  const InvestmentBalanceWidget(this.data, {Key? key,this.showPanWarning = true}) : super(key: key);
+  final VoidCallback? addPanCallback;
+  const InvestmentBalanceWidget(this.data, {Key? key,this.showPanWarning = true,this.addPanCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,11 @@ class InvestmentBalanceWidget extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.w500,color: Colors.black ),
                   textAlign: TextAlign.center,
                 )),
-                ElevatedButton(onPressed: (){}, child: Text("Add Pan"))
+                ElevatedButton(onPressed: (){
+                  if(addPanCallback!= null) {
+                    addPanCallback!();
+                  }
+                }, child: Text("Add Pan"))
               ],),
             ),
             SizedBox(

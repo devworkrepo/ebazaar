@@ -5,9 +5,12 @@ import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/home_repo.dart';
+import 'package:spayindia/data/repo/security_deposit_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
+import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
 import 'package:spayindia/model/alert.dart';
 import 'package:spayindia/model/banner.dart';
+import 'package:spayindia/model/investment/investment_summary.dart';
 import 'package:spayindia/model/recharge/provider.dart';
 import 'package:spayindia/model/user/user.dart';
 import 'package:spayindia/page/dmt/dmt.dart';
@@ -22,6 +25,7 @@ import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/future_util.dart';
 import 'package:spayindia/util/tags.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
@@ -35,6 +39,7 @@ class HomeController extends GetxController {
   var isUpdateObs = false.obs;
 
   HomeRepo homeRepo = Get.find<HomeRepoImpl>();
+  SecurityDepositRepo summaryRepo = Get.find<SecurityDepositImpl>();
   AppPreference appPreference = Get.find();
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -49,6 +54,7 @@ class HomeController extends GetxController {
   var bannerList = <AppBanner>[].obs;
 
   var alertMessageObs = AlertMessageResponse().obs;
+  var responseObs = Resource.onInit(data: InvestmentSummaryResponse()).obs;
 
   bool skipBiometric = false;
 
@@ -133,21 +139,25 @@ class HomeController extends GetxController {
 
   fetchUserDetails() async {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      isBottomNavShowObs.value = false;
+      isRetailerBottomNavObs.value = false;
       _fetchUserDetails();
       if (firstNotificationPlayed) _fetchAlerts();
     });
   }
 
+
   _fetchUserDetails() async {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      isBottomNavShowObs.value = false;
+      isRetailerBottomNavObs.value = false;
     });
     userDetailObs.value = const Resource.onInit();
     try {
       AppUtil.throwUatExceptionOnDeployment(appPreference.mobileNumber);
 
       UserDetail response = await homeRepo.fetchAgentInfo();
+      if(appPreference.user.userType == "Sub-Retailer"){
+        _fetchInvestmentSummary();
+      }
       user = response;
       await appPreference.setUser(user);
 
@@ -157,10 +167,10 @@ class HomeController extends GetxController {
 
       if (response.code == 1) {
         if(appPreference.user.userType == "Retailer") {
-          isBottomNavShowObs.value = true;
+          isRetailerBottomNavObs.value = true;
         }
         else{
-          isBottomNavShowObs.value = false;
+          isRetailerBottomNavObs.value = false;
         }
         appbarBackgroundOpacity.value = 0;
         appbarElevation.value = 0;
@@ -170,7 +180,7 @@ class HomeController extends GetxController {
       }
       userDetailObs.value = Resource.onSuccess(response);
     } catch (e) {
-      isBottomNavShowObs.value = false;
+      isRetailerBottomNavObs.value = false;
       userDetailObs.value = Resource.onFailure(e);
 
       if (getDioException(e) is SessionExpireException) {
@@ -181,6 +191,11 @@ class HomeController extends GetxController {
     }
   }
 
+  _fetchInvestmentSummary() async {
+    ObsResponseHandler<InvestmentSummaryResponse>(
+        obs: responseObs,
+        apiCall: summaryRepo.fetchSummary());
+  }
   _firebaseServices() async {
     FirebaseMessaging.instance.onTokenRefresh.listen((event) {
       AppUtil.logger("FirebaseService onRefreshToken: $event");
@@ -231,6 +246,9 @@ class HomeController extends GetxController {
         break;
       case HomeServiceType2.fundHistory:
         Get.toNamed(AppRoute.fundReportPage, arguments: {"is_pending": true});
+        break;
+      case HomeServiceType2.investmentSummary:
+        Get.toNamed(AppRoute.investmentSummary,);
         break;
       case HomeServiceType2.accountStatement:
         Get.to(() => const AccountStatementPage(

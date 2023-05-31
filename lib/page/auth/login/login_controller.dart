@@ -58,7 +58,7 @@ class LoginController extends GetxController with LocationHelperMixin {
     });
   }
 
-  login() async {
+  login({bool subRetailerLogin = false}) async {
     var isValidate = loginFormKey.currentState?.validate();
     if (!isValidate!) return;
 
@@ -94,7 +94,9 @@ class LoginController extends GetxController with LocationHelperMixin {
       AppUtil.throwUatExceptionOnDeployment(mobileController.text);
 
       AppUtil.logger(loginData.toString());
-      LoginResponse login = await authRepo.agentLogin(loginData);
+      LoginResponse login = (subRetailerLogin)
+          ? await authRepo.subAgentLogin(loginData)
+          : await authRepo.agentLogin(loginData);
       Get.back();
 
       if (login.code == 1) {
