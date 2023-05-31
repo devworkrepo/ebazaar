@@ -26,17 +26,17 @@ class InvestmentStatementResponse {
     code = json["code"];
     status = json["status"];
     message = json["message"];
-    totalcr = json["totalcr"];
-    totaldr = json["totaldr"];
-    balance = json["balance"];
-    words = json["words"];
-    fdrefno = json["fdrefno"];
-    openamt = json["openamt"];
-    matureamt = json["matureamt"];
-    roi = json["roi"];
-    opendate = json["opendate"];
-    completedate = json["completedate"];
-    tenure = json["tenure"];
+    totalcr = json["totalcr"].toString();
+    totaldr = json["totaldr"].toString();
+    balance = json["balance"].toString();
+    words = json["words"].toString();
+    fdrefno = json["fdrefno"].toString();
+    openamt = json["openamt"].toString();
+    matureamt = json["matureamt"].toString();
+    roi = json["roi"].toString();
+    opendate = json["opendate"].toString();
+    completedate = json["completedate"].toString();
+    tenure = json["tenure"].toString();
     if (json["translist"] != null) {
       reportList = List.from(json['translist'])
           .map((e) => InvestmentStatement.fromJson(e))
@@ -64,17 +64,17 @@ class InvestmentStatement {
 
   InvestmentStatement.fromJson(Map<String, dynamic> json) {
 
-    date = json["date"];
-    narration = json["narration"];
-    remark = json["remark"];
-    in_amt = json["in_amt"];
-    out_amt = json["out_amt"];
-    in_charge = json["in_charge"];
-    out_charge = json["out_charge"];
-    in_comm = json["in_comm"];
-    out_comm = json["out_comm"];
-    in_tds = json["in_tds"];
-    out_tds = json["out_tds"];
-    balance = json["balance"];
+    date = json["date"].toString();
+    narration = json["narration"].toString();
+    remark = json["remark"].toString();
+    in_amt = json["in_amt"].toString();
+    out_amt = json["out_amt"].toString();
+    in_charge = json["in_charge"].toString();
+    out_charge = json["out_charge"].toString();
+    in_comm = json["in_comm"].toString();
+    out_comm = json["out_comm"].toString();
+    in_tds = json["in_tds"].toString();
+    out_tds = json["out_tds"].toString();
+    balance = json["balance"].toString();
   }
 }

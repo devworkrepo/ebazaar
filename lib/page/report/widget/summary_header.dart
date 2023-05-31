@@ -33,7 +33,7 @@ class SummaryHeaderWidget extends StatelessWidget {
   final String? availableBalanceInWord;
   final VoidCallback callback;
   final int? transactionCount;
-  final int? totalWithdrawn;
+  final String? totalWithdrawn;
   final String? extraValue1;
 
   const SummaryHeaderWidget(
@@ -91,7 +91,7 @@ class SummaryHeaderWidget extends StatelessWidget {
                 ],
               ),
             ),
-          if(totalWithdrawn!= null)  Container(
+          if(totalWithdrawn!= null && totalWithdrawn!.isNotEmpty)  Container(
               margin: EdgeInsets.only(top: 8),
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(

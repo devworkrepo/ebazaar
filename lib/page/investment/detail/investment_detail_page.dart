@@ -10,6 +10,14 @@ class InvestmentDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     InvestmentListItem item = Get.arguments;
+
+    var status = item.trans_status.toString().toLowerCase();
+    var statusColor = (status == "active")
+        ? Colors.green[700]
+        : (status == "closed" || status == "closed")
+        ? Colors.red[700]
+        : Colors.blue[700];
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -29,15 +37,15 @@ class InvestmentDetailPage extends StatelessWidget {
                   Container(
                       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                       decoration: BoxDecoration(
-                          color: Colors.green[100],
+                          color: statusColor?.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(4)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "Open",
+                            item.trans_status.toString(),
                             style: TextStyle(
-                                color: Colors.green[700],
+                                color: statusColor,
                                 fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
@@ -45,7 +53,7 @@ class InvestmentDetailPage extends StatelessWidget {
                           ),
                           Icon(
                             Icons.check_circle_outline,
-                            color: Colors.green[700],
+                            color: statusColor,
                             size: 20,
                           )
                         ],
@@ -99,7 +107,7 @@ class InvestmentDetailPage extends StatelessWidget {
                 children: [
                   OutlinedButton(
                     onPressed: () {
-                      Get.toNamed(AppRoute.investmentStatementPage);
+                      Get.toNamed(AppRoute.investmentStatementPage,arguments: {"item" : item});
                     },
                     child: Row(
                       children: [
@@ -113,12 +121,14 @@ class InvestmentDetailPage extends StatelessWidget {
                   ),
                   Spacer(),
 
-                    OutlinedButton(
+                if(item.isclosebtn ?? false)
+                  OutlinedButton(
                         style: OutlinedButton.styleFrom(primary: Colors.red),
                         onPressed: () {
                         
                           Get.toNamed(AppRoute.investmentBankListPage,arguments: {
-                            "origin" : false
+                            "origin" : false,
+                            "item" : item
                           });
                         },
                         child: Row(
@@ -150,7 +160,7 @@ class _BuildItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return (value.trim().isEmpty) ? SizedBox() :  Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 1.0),

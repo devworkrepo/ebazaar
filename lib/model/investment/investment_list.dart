@@ -4,8 +4,8 @@ class InvestmentListResponse {
   late int code;
   late String status;
   late String message;
-  String? totalcount;
-  String? totalamt;
+  int? totalcount;
+  int? totalamt;
   String? total_int;
   String? total_withamt;
   String? total_matuamt;
@@ -48,7 +48,7 @@ class InvestmentListItem {
   String? trans_status;
   String? trans_response;
   String? pay_status;
-  String? isclosebtn;
+  bool? isclosebtn;
   RxBool isExpanded = false.obs;
 
   InvestmentListItem.fromJson(Map<String, dynamic> json) {

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
+import 'package:spayindia/model/investment/investment_list.dart';
 import 'package:spayindia/model/investment/investment_statement.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/model/report/recharge.dart';
@@ -15,6 +16,7 @@ import '../../../model/statement/account_statement.dart';
 
 class InvestmentStatementController extends GetxController  {
   ReportRepo repo = Get.find<ReportRepoImpl>();
+  InvestmentListItem item = Get.arguments["item"]!;
 
   String fromDate = "";
   String toDate = "";
@@ -40,6 +42,7 @@ class InvestmentStatementController extends GetxController  {
         {
           "fromdate": fromDate,
           "todate": toDate,
+          "fdid": item.fdid.toString(),
         };
 
     try {
@@ -55,6 +58,7 @@ class InvestmentStatementController extends GetxController  {
       }
       reportResponseObs.value = Resource.onSuccess(response);
     } catch (e) {
+      print("HelloDev : "+e.toString());
       reportResponseObs.value = Resource.onFailure(e);
       Get.dialog(ExceptionPage(error: e));
     }

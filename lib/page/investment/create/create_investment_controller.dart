@@ -55,7 +55,7 @@ class CreateInvestmentController extends GetxController with TransactionHelperMi
       return;
     }
     if(!isAgree){
-      StatusDialog.alert(title: "Need to agree terms and conditions for further process!");
+      StatusDialog.alert(title: "Need to agree kyc detail with this investment!");
       return;
     }
 
@@ -78,7 +78,8 @@ class CreateInvestmentController extends GetxController with TransactionHelperMi
         "balance" : balance,
         "calc" : response,
         "amount" : amount.toString(),
-        "tenure" : tenure + " "+tenureType
+        "tenureDuration" : tenure,
+        "tenureType" : tenureType,
       });
     }
     else {

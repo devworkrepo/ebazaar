@@ -45,7 +45,7 @@ class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
                             Expanded(
                               child: _TitleValue(
                                 title: "Tenure Duration",
-                                value: controller.tenure,
+                                value: controller.tenureDuration + " "+controller.tenureType,
                               ),
                             ),
 
@@ -104,18 +104,18 @@ class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
                         SizedBox(height: 16,),
                         SizedBox(
                           height: 42,
-                          child: ElevatedButton(
-                              onPressed: (){
-
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.green
-                              ),
-                              child: Row(children: [
-                                Icon(Icons.done),
-                                SizedBox(width: 5,),
-                                Text("Submit")
-                              ],)),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 48,
+                            child: ElevatedButton(
+                                onPressed: (){
+                                  controller.onSubmit();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.green
+                                ),
+                                child: Text("Submit")),
+                          ),
                         )
 
                       ],

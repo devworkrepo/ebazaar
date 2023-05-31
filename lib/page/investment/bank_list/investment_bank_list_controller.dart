@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/data/repo/aeps_repo.dart';
 import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
 import 'package:spayindia/model/aeps/settlement/bank.dart';
+import 'package:spayindia/model/investment/investment_list.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/future_util.dart';
 
@@ -13,6 +14,7 @@ class InvestmentBankListController extends GetxController{
   AepsSettlementBank? previousBank;
   var buttonText = "".obs;
   bool fromHome = Get.arguments["origin"] ?? false;
+  InvestmentListItem item = Get.arguments["item"]!;
 
   @override
   void onInit() {

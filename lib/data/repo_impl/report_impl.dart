@@ -336,16 +336,16 @@ class ReportRepoImpl extends ReportRepo {
 
   @override
   Future<InvestmentStatementResponse> fetchInvestmentStatement(data) async {
-  //  var response = await client.post("/GetInvestStatement", data: data);
-  //  return InvestmentStatementResponse.fromJson(response.data);
-    return InvestmentStatementResponse.fromJson(TestResponse.investmentStatement());
+   var response = await client.post("/GetInvestStatement", data: data);
+    return InvestmentStatementResponse.fromJson(response.data);
+
   }
 
   @override
   Future<InvestmentWithdrawnListResponse> investmentWithdrawnListResponse(data) async {
-    //  var response = await client.post("/GetInvestPayList", data: data);
-    //  return InvestmentWithdrawnListResponse.fromJson(response.data);
-    return InvestmentWithdrawnListResponse.fromJson(TestResponse.investmentWithdrawnList());
+     var response = await client.post("/GetInvestPayList", data: data);
+     return InvestmentWithdrawnListResponse.fromJson(response.data);
+
   }
 
 }

@@ -4,6 +4,7 @@ import 'package:spayindia/model/investment/Investment_close_calc.dart';
 import 'package:spayindia/page/investment/transfer/investment_transfer_controller.dart';
 import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/obx_widget.dart';
+import 'package:spayindia/util/validator.dart';
 import 'package:spayindia/widget/text_field.dart';
 
 class InvestmentTransferPage extends GetView<InvestmentTransferController> {
@@ -34,7 +35,9 @@ class InvestmentTransferPage extends GetView<InvestmentTransferController> {
                         height: 48,
                         width: double.infinity,
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.onSubmit();
+                            },
                             child: Text("Confirm And Transfer")))
                   ],
                 ),
@@ -97,7 +100,7 @@ class InvestmentTransferPage extends GetView<InvestmentTransferController> {
               Row(
                 children: [
                   Text(
-                    "Charge Details",
+                    "Amount Details",
                     style: Get.textTheme.subtitle1
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
@@ -129,27 +132,31 @@ class InvestmentTransferPage extends GetView<InvestmentTransferController> {
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Fill Input",
-                    style: Get.textTheme.subtitle1
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Icon(Icons.input)
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              MPinTextField(controller: controller.mpinController),
-              AppTextField(
-                  label: "Remark", controller: controller.remarkController),
-            ],
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Fill Input",
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                    Icon(Icons.input)
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                MPinTextField(controller: controller.mpinController),
+                AppTextField(
+                    label: "Remark", controller: controller.remarkController,
+                validator: FormValidatorHelper.empty,),
+              ],
+            ),
           ),
         ),
       ),

@@ -21,7 +21,9 @@ abstract class SecurityDepositRepo{
   Future<InvestmentCalcResponse> fetchInvestmentCalc(data);
   Future<InvestmentListResponse> fetchInvestmentLists(data);
   Future<InvestmentCloseCalcResponse> fetchCloseCalc(data);
+  Future<CommonResponse> closeInvestment(data);
   Future<InvestmentSummaryResponse> fetchSummary();
   Future<CommonResponse> checkPanDetail();
   Future<CommonResponse> uploadPanDetail(dio.FormData data);
+  Future<CommonResponse> createInvestment(data);
 }

@@ -38,6 +38,7 @@ class InvestmentListPage extends GetView<InvestmentListController> {
                     return ExceptionPage(error: Exception(data.message));
                   }
                 }, onFailure: (e) {
+                  print(e.toString());
                   return ExceptionPage(error: e);
                 }, onInit: (data) {
                   return ApiProgress(data);
@@ -96,7 +97,7 @@ class InvestmentListPage extends GetView<InvestmentListController> {
                 children: [
                   SummaryHeaderWidget(
                     transactionCount: 12,
-                    totalWithdrawn: 1000000,
+                    totalWithdrawn: data.total_withamt.toString(),
                     summaryHeader1: [
                       SummaryHeader(
                           title: "Total Amt",
@@ -142,6 +143,13 @@ class _BuildListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var status = report.trans_status.toString().toLowerCase();
+    var statusColor = (status == "active")
+        ? Colors.green[700]
+        : (status == "closed" || status == "closed")
+            ? Colors.red[700]
+            : Colors.blue[700];
+
     return InkResponse(
       onTap: () => controller.onItemClick(report),
       child: Padding(
@@ -157,7 +165,7 @@ class _BuildListItem extends StatelessWidget {
                   children: [
                     Center(
                         child: Text(
-                      "Date : 12/12/2025",
+                      "Date : ${report.addeddate}",
                       style: TextStyle(
                           color: Colors.black87, fontWeight: FontWeight.w500),
                     )),
@@ -166,15 +174,15 @@ class _BuildListItem extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                         decoration: BoxDecoration(
-                            color: Colors.green[100],
+                            color: statusColor?.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(4)),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              "Open",
+                              report.trans_status.toString(),
                               style: TextStyle(
-                                  color: Colors.green[700],
+                                  color: statusColor,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
@@ -182,14 +190,14 @@ class _BuildListItem extends StatelessWidget {
                             ),
                             Icon(
                               Icons.check_circle_outline,
-                              color: Colors.green[700],
+                              color: statusColor,
                               size: 20,
                             )
                           ],
                         )),
                   ],
                 ),
-                Text("Investment No. 1331231983712893"),
+                Text("Investment No. ${report.fd_refno}"),
                 Divider(
                   indent: 0,
                   color: Colors.grey[300],
@@ -198,16 +206,16 @@ class _BuildListItem extends StatelessWidget {
                   children: [
                     _BuildSubItem(
                       title: "Amount",
-                      value: AppConstant.rupeeSymbol + "1000",
+                      value: AppConstant.rupeeSymbol + report.amount.toString(),
                     ),
                     _BuildSubItem(
                       title: "Tenure",
-                      value: "1 Year",
+                      value: report.tenure_value.toString() +" "+report.tenure_type.toString(),
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     _BuildSubItem(
                       title: "Mature Amt.",
-                      value: AppConstant.rupeeSymbol + "1000",
+                      value: AppConstant.rupeeSymbol + report.mature_amount.toString(),
                       mainAxisAlignment: MainAxisAlignment.end,
                     ),
                   ],
@@ -220,16 +228,16 @@ class _BuildListItem extends StatelessWidget {
                   children: [
                     _BuildSubItem(
                       title: "Int. Rate",
-                      value: "10%",
+                      value: report.int_rate.toString() + " %",
                     ),
                     _BuildSubItem(
                       title: "Int. Earned",
-                      value: AppConstant.rupeeSymbol + "900",
+                      value: AppConstant.rupeeSymbol + report.int_earned.toString(),
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     _BuildSubItem(
                       title: "Current Amt.",
-                      value: AppConstant.rupeeSymbol + "12000",
+                      value: AppConstant.rupeeSymbol + report.current_amount.toString(),
                       mainAxisAlignment: MainAxisAlignment.end,
                     ),
                   ],
