@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/report_repo.dart';
 import 'package:spayindia/data/repo_impl/report_impl.dart';
 import 'package:spayindia/model/report/dmt.dart';
@@ -18,6 +19,8 @@ class AccountStatementController extends GetxController with ReceiptPrintMixin {
 
   String fromDate = "";
   String toDate = "";
+
+  AppPreference appPreference = Get.find();
 
   var reportResponseObs = Resource
       .onInit(data: AccountStatementResponse())

@@ -11,13 +11,7 @@ class HomeServiceSection2 extends GetView<HomeController> {
   const HomeServiceSection2({Key? key, required this.onClick})
       : super(key: key);
 
-  _svgPicture(name, int innerPadding) {
-    return AppCircleAssetSvg(
-      "assets/svg/$name.svg",
-      size: 60,
-      innerPadding: innerPadding,
-    );
-  }
+
 
   _pngPicture(name, int innerPadding) {
     return AppCircleAssetPng(
@@ -29,6 +23,7 @@ class HomeServiceSection2 extends GetView<HomeController> {
 
   _buildItem(String iconName, String title, HomeServiceType2 homeServiceType,
       {int innerPadding = 4}) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -102,7 +97,9 @@ class HomeServiceSection2 extends GetView<HomeController> {
   }
 
   int innerPadding(HomeServiceItem2 item) {
-    if (item.homeServiceType == HomeServiceType2.virtualAccount) {
+    if (
+       item.homeServiceType == HomeServiceType2.accountStatement
+    ) {
       return 12;
     } else {
       return 8;
@@ -116,7 +113,6 @@ enum HomeServiceType2 {
   accountStatement,
   addFundOnline,
   fundHistory,
-  virtualAccount,
   none
 }
 
@@ -136,18 +132,15 @@ List<HomeServiceItem2> _homeServiceList(UserDetail user) {
   itemList.add(HomeServiceItem2(
       "Investment List", "investment_list", HomeServiceType2.investmentList));
 
-  itemList.add(HomeServiceItem2("Account Statement", "create_investment",
+  itemList.add(HomeServiceItem2("Account Statement", "statement",
       HomeServiceType2.accountStatement));
   itemList.add(HomeServiceItem2(
       "Add Fund Online", "fund_add_online", HomeServiceType2.addFundOnline));
 
   itemList.add(HomeServiceItem2(
-      "Fund History", "investment_list", HomeServiceType2.fundHistory));
+      "Fund History", "fund_add_pending", HomeServiceType2.fundHistory));
 
-  if (user.isVirtualAccount ?? false) {
-    itemList.add(HomeServiceItem2("Virtual\nAccount", "virtual_account",
-        HomeServiceType2.virtualAccount));
-  }
+
 
   var length = itemList.length;
 

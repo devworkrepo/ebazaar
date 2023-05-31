@@ -47,7 +47,7 @@ class HomeAppbarSection extends GetView<HomeController> {
             const Spacer(),
 
 
-            IconButton(
+            if (controller.appPreference.user.userType == "Retailer")   IconButton(
               color: Get.theme.primaryColorDark,
               iconSize: 32,
               onPressed: ()=>controller.onSummaryClick(),

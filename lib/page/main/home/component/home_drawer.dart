@@ -13,12 +13,11 @@ import '../../logout_confirm_dialog.dart';
 class HomeDrawerWidget extends GetView<HomeController> {
   const HomeDrawerWidget({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     final Color color = Get.theme.primaryColorDark;
-    return Drawer(elevation: 16,
+    return Drawer(
+      elevation: 16,
       child: Material(
         child: SafeArea(
           child: Card(
@@ -26,77 +25,83 @@ class HomeDrawerWidget extends GetView<HomeController> {
             clipBehavior: Clip.antiAlias,
             margin: const EdgeInsets.all(4),
             child: ListView(
-
               children: [
-
                 _buildUserInfo(),
-
                 Card(
                   child: ListTile(
-                    onTap: (){
+                    onTap: () {
                       Get.back();
                       controller.fetchUserDetails();
                     },
                     title: Text(
                       "Home",
-                      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
                     ),
-                    leading:  Icon(Icons.home,color: color,),
+                    leading: Icon(
+                      Icons.home,
+                      color: color,
+                    ),
                   ),
                 ),
-
-
-                Card(
-                  child: _NavTitle(
-                    title: "Reports",
-                    icon: Icons.receipt_outlined,
-                    children: [
-                      _NavSubTitle(
-                        title: "Transaction",
-                        onClick: () {
-                          Get.back();
-                          Get.toNamed(AppRoute.transactionReportPage);
-                        },
-                        count: 1,
-                      ),
-                      _NavSubTitle(
-                        title: "Statement",
-                        onClick: () {
-                          Get.back();
-                          Get.toNamed(AppRoute.statementReportPage);
-                        },
-                        count: 2,
-                      ),
-                      _NavSubTitle(
-                        title: "Refund Pending",
-                        onClick: () {
-                          Get.back();
-                          Get.toNamed(AppRoute.refundReportPage);
-                        },
-                        count: 3,
-                      ),
-
-                      _NavSubTitle(
-                        title: "Wallet Pay",
-                        onClick: ()=>Get.toNamed(AppRoute.walletReportPage),
-                        count: 4,
-                      ),
-
-                      if(controller.appPreference.user.isVirtualAccount ?? false) _NavSubTitle(
-                        title: "Virtual Account",
-                        onClick: ()=>Get.toNamed(AppRoute.virtualAccountTransactionTabPage),
-                        count: 5,
-                      ),
-
-                      if(controller.appPreference.user.isSecurityDeposit ?? false) _NavSubTitle(
-                        title: "Security Deposit",
-                        onClick: ()=>Get.toNamed(AppRoute.securityDepositReportPage),
-                        count: (controller.appPreference.user.isVirtualAccount ?? false) ? 6 : 5,
-                      ),
-                    ],
+                if (controller.appPreference.user.userType == "Retailer")
+                  Card(
+                    child: _NavTitle(
+                      title: "Reports",
+                      icon: Icons.receipt_outlined,
+                      children: [
+                        _NavSubTitle(
+                          title: "Transaction",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.transactionReportPage);
+                          },
+                          count: 1,
+                        ),
+                        _NavSubTitle(
+                          title: "Statement",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.statementReportPage);
+                          },
+                          count: 2,
+                        ),
+                        _NavSubTitle(
+                          title: "Refund Pending",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.refundReportPage);
+                          },
+                          count: 3,
+                        ),
+                        _NavSubTitle(
+                          title: "Wallet Pay",
+                          onClick: () => Get.toNamed(AppRoute.walletReportPage),
+                          count: 4,
+                        ),
+                        if (controller.appPreference.user.isVirtualAccount ??
+                            false)
+                          _NavSubTitle(
+                            title: "Virtual Account",
+                            onClick: () => Get.toNamed(
+                                AppRoute.virtualAccountTransactionTabPage),
+                            count: 5,
+                          ),
+                        if (controller.appPreference.user.isSecurityDeposit ??
+                            false)
+                          _NavSubTitle(
+                            title: "Security Deposit",
+                            onClick: () =>
+                                Get.toNamed(AppRoute.securityDepositReportPage),
+                            count: (controller
+                                        .appPreference.user.isVirtualAccount ??
+                                    false)
+                                ? 6
+                                : 5,
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-
                 Card(
                   child: _NavTitle(
                     title: "Fund Request",
@@ -114,9 +119,8 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "Pending Request",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(AppRoute.fundReportPage,arguments: {
-                            "is_pending" : true
-                          });
+                          Get.toNamed(AppRoute.fundReportPage,
+                              arguments: {"is_pending": true});
                         },
                         count: 2,
                       ),
@@ -125,24 +129,19 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         onClick: () {
                           Get.back();
                           Get.toNamed(AppRoute.fundReportPage,
-                              arguments: {
-                                "is_pending" : false
-                              });
+                              arguments: {"is_pending": false});
                         },
                         count: 3,
                       ),
                     ],
                   ),
                 ),
-
-
-                Card(
+                if (controller.appPreference.user.userType == "Retailer")   Card(
                   child: _NavTitle(
                     title: "Aeps Settlement",
                     icon: Icons.fingerprint,
-
                     children: [
-                     /* _NavSubTitle(
+                      /* _NavSubTitle(
                         title: "OnBoarding",
                         onClick: () {
                           Get.back();
@@ -164,14 +163,14 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "To Spay Wallet",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(AppRoute.aepsSettlementPage,arguments: {
-                            "aeps_settlement_type" : AepsSettlementType.spayAccount
+                          Get.toNamed(AppRoute.aepsSettlementPage, arguments: {
+                            "aeps_settlement_type":
+                                AepsSettlementType.spayAccount
                           });
                         },
                         underline: false,
                         count: 1,
                       ),
-
                       _NavSubTitle(
                         title: "To Bank Account",
                         onClick: () {
@@ -181,7 +180,6 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         underline: false,
                         count: 2,
                       ),
-
                       _NavSubTitle(
                         title: "Account Status",
                         onClick: () {
@@ -198,7 +196,6 @@ class HomeDrawerWidget extends GetView<HomeController> {
                   child: _NavTitle(
                     title: "Investments",
                     icon: Icons.inventory_sharp,
-
                     children: [
                       /* _NavSubTitle(
                         title: "OnBoarding",
@@ -227,7 +224,6 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         underline: false,
                         count: 1,
                       ),
-
                       _NavSubTitle(
                         title: "Investment List",
                         onClick: () {
@@ -237,7 +233,6 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         underline: false,
                         count: 2,
                       ),
-
                       _NavSubTitle(
                         title: "Investment Withdrawal",
                         onClick: () {
@@ -250,12 +245,10 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ],
                   ),
                 ),
-
                 Card(
                   child: _NavTitle(
                     title: "Settings",
                     icon: Icons.settings_rounded,
-
                     children: [
                       _NavSubTitle(
                         title: "Login Sessions",
@@ -267,13 +260,12 @@ class HomeDrawerWidget extends GetView<HomeController> {
                       ),
                       _NavSubTitle(
                         title: "Change Password",
-                        onClick: (){
+                        onClick: () {
                           Get.back();
                           Get.toNamed(AppRoute.changePassword);
                         },
                         count: 2,
                       ),
-
                       _NavSubTitle(
                         title: "Change Pin",
                         onClick: () {
@@ -287,7 +279,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "Biometric Login",
                         onClick: () {
                           Get.back();
-                          Get.to(()=>const BiometricSettingPage());
+                          Get.to(() => const BiometricSettingPage());
                         },
                         underline: false,
                         count: 4,
@@ -295,49 +287,54 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ],
                   ),
                 ),
-
-                Card(
+                if (controller.appPreference.user.userType == "Retailer")   Card(
                   child: ListTile(
-                    onTap: (){
+                    onTap: () {
                       Get.back();
                       Get.toNamed(AppRoute.complaintPage);
                     },
                     title: Text(
                       "Complaints",
-                      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
                     ),
-                    leading:  Icon(Icons.messenger_outline,color: color,),
+                    leading: Icon(
+                      Icons.messenger_outline,
+                      color: color,
+                    ),
                   ),
                 ),
-
                 Card(
                   child: ListTile(
-                    onTap: (){
+                    onTap: () {
                       Get.back();
-                      Get.dialog(LogoutConfirmDialog(onConfirm: (){
-                        controller.logout();
-                      },));
-
+                      Get.dialog(LogoutConfirmDialog(
+                        onConfirm: () {
+                          controller.logout();
+                        },
+                      ));
                     },
                     title: Text(
                       "Logout",
-                      style: Get.textTheme.subtitle1?.copyWith(color: color,fontWeight: FontWeight.bold),
+                      style: Get.textTheme.subtitle1
+                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
                     ),
-                    leading:  Icon(Icons.power_settings_new,color: color,),
+                    leading: Icon(
+                      Icons.power_settings_new,
+                      color: color,
+                    ),
                   ),
                 ),
-
-
-
-                
                 Align(
-                 alignment: Alignment.center,
-                 child: Padding(
-                   padding: const EdgeInsets.all(12.0),
-
-                   child: Text("App Version :N/A",style: Get.textTheme.subtitle2,),
-                 ),
-               )
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      "App Version :N/A",
+                      style: Get.textTheme.subtitle2,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -346,23 +343,35 @@ class HomeDrawerWidget extends GetView<HomeController> {
     );
   }
 
-   _buildUserInfo() {
+  _buildUserInfo() {
     return Card(
       color: Get.theme.primaryColor,
-
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppCircleNetworkImage(AppConstant.profileBaseUrl+controller.user.picName.toString(),size: 70,),
-                    const SizedBox(height: 8),
-                  Text("Welcome",style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),),
-                    const SizedBox(height: 4),
-                  Text("${controller.appPreference.user.fullName} - ${controller.appPreference.user.userType}",style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
-                    const SizedBox(height: 4),
-                  Text(controller.appPreference.mobileNumber,style: Get.textTheme.subtitle2?.copyWith(color: Colors.white70),),
-                ],),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppCircleNetworkImage(
+              AppConstant.profileBaseUrl + controller.user.picName.toString(),
+              size: 70,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "Welcome",
+              style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              "${controller.appPreference.user.fullName} - ${controller.appPreference.user.userType}",
+              style: Get.textTheme.bodyText2?.copyWith(color: Colors.white70),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              controller.appPreference.mobileNumber,
+              style: Get.textTheme.bodySmall?.copyWith(color: Colors.white70),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -373,7 +382,11 @@ class _NavTitle extends StatelessWidget {
   final IconData icon;
   final List<_NavSubTitle> children;
 
-  const _NavTitle({Key? key, required this.title, required this.children, required this.icon})
+  const _NavTitle(
+      {Key? key,
+      required this.title,
+      required this.children,
+      required this.icon})
       : super(key: key);
 
   @override
@@ -381,16 +394,19 @@ class _NavTitle extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
-
         expandedAlignment: Alignment.centerLeft,
         maintainState: true,
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         iconColor: Get.theme.primaryColorDark,
-        leading: Icon(icon,color: Get.theme.primaryColorDark,),
+        leading: Icon(
+          icon,
+          color: Get.theme.primaryColorDark,
+        ),
         childrenPadding: const EdgeInsets.only(left: 0, right: 8, bottom: 16),
         title: Text(
           title,
-          style: Get.textTheme.subtitle1?.copyWith(color: Get.theme.primaryColorDark,fontWeight: FontWeight.bold),
+          style: Get.textTheme.subtitle1?.copyWith(
+              color: Get.theme.primaryColorDark, fontWeight: FontWeight.bold),
         ),
         children: children,
       ),
@@ -416,7 +432,7 @@ class _NavSubTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: (){
+      onTap: () {
         Get.back();
         onClick();
       },
@@ -444,12 +460,13 @@ class _NavSubTitle extends StatelessWidget {
                   width: 8,
                 ),
                 Text(title,
-                    style: Get.textTheme.subtitle1
-                        ?.copyWith(fontWeight: FontWeight.w500,color: Colors.black54,fontSize: 16))
+                    style: Get.textTheme.subtitle1?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54,
+                        fontSize: 16))
               ],
             ),
           ),
-
         ],
       ),
     );

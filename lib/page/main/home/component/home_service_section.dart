@@ -259,7 +259,8 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
         HomeServiceType.cms));
   }
 
-  if ( true) {//todo remove hardcoded true for new investment
+  //todo remove hardcoded true for new investment
+  if ( true) {
     itemList.add(HomeServiceItem("New\nInvestment", "credit_money",
         HomeServiceType.newInvestment));
   }

@@ -51,7 +51,9 @@ class UserDetail {
     outletName = json["outlet_name"];
     picName = json['picname'];
     agentCode = json['agentcode'];
-    userType = json['usertype'];
+   // userType = json['usertype'];
+    //todo remove hardcoded userType
+    userType = "Sub-Retailer";
     isPayout = json['is_payout'];
     availableBalance = json['availbalance'].toString();
     openBalance = json['openbalance'].toString();

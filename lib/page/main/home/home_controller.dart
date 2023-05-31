@@ -16,11 +16,13 @@ import 'package:spayindia/page/main/home/component/bottom_sheet_option.dart';
 import 'package:spayindia/page/main/home/component/home_service_section.dart';
 import 'package:spayindia/page/main_page.dart';
 import 'package:spayindia/page/recharge/provider/provider_controller.dart';
+import 'package:spayindia/page/statement/account_statement/account_statement_page.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/local_auth.dart';
 import 'package:spayindia/util/api/exception.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
+import 'package:spayindia/util/tags.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
 import 'component/home_biometric_dialog.dart';
@@ -154,7 +156,12 @@ class HomeController extends GetxController {
       await setupCrashID();
 
       if (response.code == 1) {
-        isBottomNavShowObs.value = true;
+        if(appPreference.user.userType == "Retailer") {
+          isBottomNavShowObs.value = true;
+        }
+        else{
+          isBottomNavShowObs.value = false;
+        }
         appbarBackgroundOpacity.value = 0;
         appbarElevation.value = 0;
 
@@ -212,7 +219,27 @@ class HomeController extends GetxController {
   }
 
   onItemClick2(HomeServiceItem2 item) {
-    Get.toNamed(AppRoute.createInvestmentPage);
+    switch (item.homeServiceType) {
+      case HomeServiceType2.createInvestment:
+        Get.toNamed(AppRoute.createInvestmentPage);
+        break;
+      case HomeServiceType2.investmentList:
+        Get.toNamed(AppRoute.investmentListPage);
+        break;
+      case HomeServiceType2.addFundOnline:
+        Get.toNamed(AppRoute.addFundOnline);
+        break;
+      case HomeServiceType2.fundHistory:
+        Get.toNamed(AppRoute.fundReportPage, arguments: {"is_pending": true});
+        break;
+      case HomeServiceType2.accountStatement:
+        Get.to(() => const AccountStatementPage(
+            controllerTag: AppTag.accountStatementControllerTag));
+        break;
+
+      default:
+        {}
+    }
   }
 
   onItemClick(HomeServiceItem item) {

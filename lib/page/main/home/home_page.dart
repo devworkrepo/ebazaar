@@ -89,11 +89,11 @@ class HomePage extends GetView<HomeController> {
                     const HomeAppUpdateWidget(),
                     const HomeCarouselWidget(),
                     _buildAlertMessage(),
-                    if (false)
+                    if (controller.appPreference.user.userType == "Retailer")
                       HomeServiceSection(
                         onClick: (item) => controller.onItemClick(item),
                       ),
-                 if(true)   Column(
+                    if (controller.appPreference.user.userType == "Sub-Retailer")   Column(
                       children: [
                         HomeServiceSection2(
                           onClick: (item) => controller.onItemClick2(item),

@@ -50,13 +50,14 @@ class _MainPageState extends State<MainPage> {
   var selectedItemColor = Get.theme.primaryColorDark;
   var bottomNavKey = GlobalKey();
 
-  AppPreference appPreference = Get.find();
+  late AppPreference appPreference;
 
   HomeRepo rep = Get.find<HomeRepoImpl>();
 
   @override
   void initState() {
     super.initState();
+    appPreference = Get.find();
     setTransactionApi();
   }
 
@@ -77,8 +78,8 @@ class _MainPageState extends State<MainPage> {
       },
       child: StatusBarColorWidget(
         child: Scaffold(
-          //todo remove hard code false for bottom navigation bar
-          bottomNavigationBar:(false) ? _buildBottomNavigationBar() : null,
+
+          bottomNavigationBar: _buildBottomNavigationBar() ,
           body: _bottomNavPage(),
         ),
       ),

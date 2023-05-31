@@ -16,6 +16,7 @@ class AccountStatementPage extends GetView<AccountStatementController> {
   @override
   String? get tag => controllerTag;
 
+
   const AccountStatementPage({Key? key, required this.controllerTag})
       : super(key: key);
 
@@ -23,6 +24,9 @@ class AccountStatementPage extends GetView<AccountStatementController> {
   Widget build(BuildContext context) {
     Get.put(AccountStatementController(controllerTag), tag: controllerTag);
     return Scaffold(
+      appBar: (controller.appPreference.user.userType == "Sub-Retailer") ? AppBar(
+        title: Text("Account Statement"),
+      ) : null,
         body: Obx(
             () => controller.reportResponseObs.value.when(onSuccess: (data) {
                   if (data.code == 1) {
