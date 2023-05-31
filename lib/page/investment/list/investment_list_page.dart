@@ -96,7 +96,7 @@ class InvestmentListPage extends GetView<InvestmentListController> {
               return Column(
                 children: [
                   SummaryHeaderWidget(
-                    transactionCount: 12,
+                    transactionCount: list.length,
                     totalWithdrawn: data.total_withamt.toString(),
                     summaryHeader1: [
                       SummaryHeader(

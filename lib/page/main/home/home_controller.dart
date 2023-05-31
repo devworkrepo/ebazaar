@@ -155,7 +155,7 @@ class HomeController extends GetxController {
       AppUtil.throwUatExceptionOnDeployment(appPreference.mobileNumber);
 
       UserDetail response = await homeRepo.fetchAgentInfo();
-      if(appPreference.user.userType == "Sub-Retailer"){
+      if(appPreference.user.userType == "SM"){
         _fetchInvestmentSummary();
       }
       user = response;

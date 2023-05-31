@@ -46,7 +46,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                if (controller.appPreference.user.userType == "Sub-Retailer")Card(
+                if (controller.appPreference.user.userType == "SM")Card(
                   child: ListTile(
                     onTap: () {
                       Get.back();
@@ -63,7 +63,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                if (controller.appPreference.user.userType == "Sub-Retailer") Card(
+                if (controller.appPreference.user.userType == "SM") Card(
                   child: ListTile(
                     onTap: () {
                       Get.back();
@@ -80,7 +80,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                if (controller.appPreference.user.userType == "Sub-Retailer") Card(
+                if (controller.appPreference.user.userType == "SM") Card(
                   child: ListTile(
                     onTap: () {
                       Get.back();
@@ -99,7 +99,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                if (controller.appPreference.user.userType == "Sub-Retailer") Card(
+                if (controller.appPreference.user.userType == "SM") Card(
                   child: ListTile(
                     onTap: () {
                       Get.back();

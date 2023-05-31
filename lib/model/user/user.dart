@@ -52,8 +52,8 @@ class UserDetail {
     picName = json['picname'];
     agentCode = json['agentcode'];
    // userType = json['usertype'];
-    //todo remove hardcoded userType
-    userType = "Retailer";
+
+    userType = "SM";
     isPayout = json['is_payout'];
     availableBalance = json['availbalance'].toString();
     openBalance = json['openbalance'].toString();

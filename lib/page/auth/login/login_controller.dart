@@ -59,6 +59,7 @@ class LoginController extends GetxController with LocationHelperMixin {
   }
 
   login({bool subRetailerLogin = false}) async {
+    appPreference.logout();
     var isValidate = loginFormKey.currentState?.validate();
     if (!isValidate!) return;
 

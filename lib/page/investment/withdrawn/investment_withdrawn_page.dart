@@ -121,22 +121,11 @@ class _BuildListItem extends GetView<InvestmentWithdrawnController> {
             ListTitleValue(title: "Charge", value:AppConstant.rupeeSymbol + report.charge.toString()),
             ListTitleValue(title: "UTR", value:report.utr_no.toString()),
             ListTitleValue(title: "Response", value: report.trans_response.toString()),
-
             ListTitleValue(
                 title: "Remark",
                 value: report.remark.toString()),
 
           ],
-          actionWidget: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ReportActionButton(
-                title: "Print",
-                icon: Icons.print,
-                onClick: () {},
-              ),
-            ],
-          ),
         ),
       ),
     );
