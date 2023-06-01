@@ -20,14 +20,12 @@ class SingUpRepoImpl extends SignUpRepo {
   Future<CommonResponse> sendMobileOtp(Map<String, String> data)  async{
    var response = await client.post("/SendOTP",data: data);
    return CommonResponse.fromJson(response.data);
-    return CommonResponse.fromJson(TestResponse.commonSuccessResponse());
   }
 
   @override
   Future<CommonResponse> verifyMobileOtp(Map<String, String> data) async{
     var response = await client.post("/SendOTPVerify",data: data);
     return CommonResponse.fromJson(response.data);
-    return CommonResponse.fromJson(TestResponse.commonSuccessResponse());
   }
 
   @override
@@ -45,14 +43,12 @@ class SingUpRepoImpl extends SignUpRepo {
   Future<SignUpEKycResponse> sendEKycOtp(Map<String, String> data) async{
     var response = await client.post("/SendEKycOTP",data: data);
     return SignUpEKycResponse.fromJson(response.data);
-    return SignUpEKycResponse.fromJson(TestResponse.commonSuccessResponse());
   }
   
   @override
   Future<SignUpEKycResponse> resendEKycOtp(Map<String, String> data) async{
     var response = await client.post("/ReSendEKycOTP",data: data);
     return SignUpEKycResponse.fromJson(response.data);
-    return SignUpEKycResponse.fromJson(TestResponse.commonSuccessResponse());
   }
 
 
@@ -61,7 +57,6 @@ class SingUpRepoImpl extends SignUpRepo {
   Future<SignUpEKycResponse> verifyEKycOtp(Map<String, String> data) async{
     var response = await client.post("/VerifyEKycOTP",data: data);
     return SignUpEKycResponse.fromJson(response.data);
-    return SignUpEKycResponse.fromJson(TestResponse.commonSuccessResponse());
   }
 
 

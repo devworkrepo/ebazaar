@@ -50,8 +50,7 @@ class SignupPage extends GetView<SignupController> {
           return Stepper(
             elevation: 1,
             onStepTapped: (value) {
-              print(value);
-              controller.stepperCurrentIndex.value = value;
+
             },
             currentStep: controller.stepperCurrentIndex.value,
             onStepContinue: controller.onContinue,

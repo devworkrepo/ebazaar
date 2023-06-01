@@ -110,7 +110,7 @@ class _LoginForm extends GetView<LoginController> {
                                 fontSize: 14
                               ),),
                                GestureDetector(
-                                 onTap: ()=>Get.toNamed(AppRoute.signupPage),
+                                 onTap: ()=>Get.dialog(const _SingUpDetailDialog()),
                                  child: Text("Sign Up Now",style: Get.textTheme.caption?.copyWith(
                                   fontWeight: FontWeight.w500,
                                    color: Colors.blue[600]

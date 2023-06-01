@@ -73,7 +73,6 @@ class CreateInvestmentController extends GetxController with TransactionHelperMi
 
   _fetchCalc(String amount,String tenure) async{
     StatusDialog.progress(title: "Fetching Detail...");
-    await Future.delayed(Duration(seconds: 2));
     InvestmentCalcResponse response = await repo.fetchInvestmentCalc({
       "investamt" : amount,
       "durationtype" : tenureType,

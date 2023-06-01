@@ -121,7 +121,6 @@ class SignupController extends GetxController with TransactionHelperMixin {
     StatusDialog.progress(title: "Verifying...");
     try {
       CommonResponse response = await repo.verifyMobileOtp(param);
-      await Future.delayed(const Duration(seconds: 2));
       Get.back();
       if (response.code == 1) {
         StatusDialog.success(title: response.message).then((value) {
@@ -317,7 +316,7 @@ class SignupController extends GetxController with TransactionHelperMixin {
       Get.back();
       if (response.code == 1) {
         aadhaarDetail = response;
-        proceedButtonText.value = "Verify Aadhaar Detail";
+        proceedButtonText.value = "Continue";
         detailFetched.value = true;
       } else {
         StatusDialog.alert(title: response.message);
