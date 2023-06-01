@@ -35,6 +35,7 @@ class SummaryHeaderWidget extends StatelessWidget {
   final int? transactionCount;
   final String? totalWithdrawn;
   final String? extraValue1;
+  final String balanceTitle;
 
   const SummaryHeaderWidget(
       {required this.summaryHeader1,
@@ -47,6 +48,7 @@ class SummaryHeaderWidget extends StatelessWidget {
       this.transactionCount,
       this.totalWithdrawn,
       this.extraValue1,
+      this.balanceTitle = "Your Available Balance",
 
       Key? key})
       : super(key: key);
@@ -63,7 +65,7 @@ class SummaryHeaderWidget extends StatelessWidget {
           children: [
             if (totalCreditedAmount != null && totalDebitedAmount != null)
               _BuildAmountSectionWidget(totalDebitedAmount, totalCreditedAmount,
-                  availableBalance, availableBalanceInWord),
+                  availableBalance, availableBalanceInWord,balanceTitle),
             Text(
               "Summary",
               style: Get.textTheme.headline6
@@ -223,12 +225,14 @@ class _BuildAmountSectionWidget extends StatelessWidget {
   final String? totalCreditedAmount;
   final String? availableBalance;
   final String? availableBalanceInWord;
+  final String balanceTitle;
 
   const _BuildAmountSectionWidget(
       this.totalDebitedAmount,
       this.totalCreditedAmount,
       this.availableBalance,
-      this.availableBalanceInWord);
+      this.availableBalanceInWord,
+      this.balanceTitle,);
 
   @override
   Widget build(BuildContext context) {
@@ -236,8 +240,8 @@ class _BuildAmountSectionWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Your Available Balance",
+         Text(
+          balanceTitle,
           style: TextStyle(
               fontWeight: FontWeight.w600, fontSize: 14, color: Colors.black),
         ),

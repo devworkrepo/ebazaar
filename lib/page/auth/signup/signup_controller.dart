@@ -132,7 +132,16 @@ class SignupController extends GetxController with TransactionHelperMixin {
           fetchCaptcha();
         });
       } else {
-        StatusDialog.alert(title: response.message);
+        StatusDialog.alert(title: response.message).then((value) {
+
+          if(response.message.toLowerCase() == "mobile no already exists !"){
+            stepContactDetail.value = StepState.editing;
+            stepMobileVerify.value = StepState.disabled;
+            stepperCurrentIndex.value = 0;
+            proceedButtonText.value = "Continue";
+          }
+
+        });
       }
     } catch (e) {
       Get.back();

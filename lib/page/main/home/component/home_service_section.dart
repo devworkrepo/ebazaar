@@ -238,11 +238,11 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
         "Virtual\nAccount", "virtual_account", HomeServiceType.virtualAccount));
   }
 
-  if (user.isSecurityDeposit ?? false) {
+ /* if (user.isSecurityDeposit ?? false) {
     itemList.add(HomeServiceItem("Security\nDeposit", "security_deposit",
         HomeServiceType.securityDeposity));
   }
-
+*/
 
   if (user.is_pg ?? false) {
     itemList.add(HomeServiceItem("Add Fund\nOnline", "fund_add_online",
@@ -259,8 +259,7 @@ List<HomeServiceItem> _homeServiceList(UserDetail user) {
         HomeServiceType.cms));
   }
 
-  //todo remove hardcoded true for new investment
-  if ( true) {
+  if ( user.isSecurityDeposit ?? false) {
     itemList.add(HomeServiceItem("Investment", "credit_money",
         HomeServiceType.newInvestment));
   }

@@ -93,7 +93,7 @@ class HomePage extends GetView<HomeController> {
                       HomeServiceSection(
                         onClick: (item) => controller.onItemClick(item),
                       ),
-                    if (controller.appPreference.user.userType == "SM")   Column(
+                    if (controller.appPreference.user.userType == "Sub-Merchant")   Column(
                       children: [
                         HomeServiceSection2(
                           onClick: (item) => controller.onItemClick2(item),

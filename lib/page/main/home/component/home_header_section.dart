@@ -56,7 +56,9 @@ class _UserBalance extends GetView<HomeController> {
         ),
 
 
-        if(controller.appPreference.user.isMoneyRequest ?? true) GestureDetector(
+        if(controller.appPreference.user.isMoneyRequest ?? true)
+
+          if(controller.appPreference.user.userType == "Retailer")GestureDetector(
           onTap: ()=>controller.onAddFundClick(),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 5),

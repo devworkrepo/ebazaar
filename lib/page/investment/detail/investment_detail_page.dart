@@ -7,16 +7,41 @@ import 'package:spayindia/util/app_constant.dart';
 class InvestmentDetailPage extends StatelessWidget {
   const InvestmentDetailPage({Key? key}) : super(key: key);
 
+  statusColor(String? value){
+    var status = value.toString().toLowerCase();
+    var statusColor = Colors.blue[700];
+
+    if (status == "active" || status == "completed" || status == "settled") {
+      statusColor = Colors.green[700];
+    } else if (status == "closed" || status == "rejected") {
+      statusColor = Colors.red[700];
+    } else if (status == "closed") {
+      statusColor = Colors.red[700];
+    }
+
+    return statusColor;
+  }
+
+  statusIcon (String? value){
+    var status = value.toString().toLowerCase();
+    var statusIcon = Icons.query_builder_outlined;
+
+    if (status == "active" || status == "completed" || status == "settled") {
+      statusIcon = Icons.check_circle_outline;
+    } else if (status == "closed" || status == "rejected") {
+      statusIcon = Icons.cancel_outlined;
+    } else if (status == "closed") {
+      statusIcon = Icons.cancel_outlined;
+    }
+
+    return statusIcon;
+  }
+
   @override
   Widget build(BuildContext context) {
     InvestmentListItem item = Get.arguments;
 
-    var status = item.trans_status.toString().toLowerCase();
-    var statusColor = (status == "active")
-        ? Colors.green[700]
-        : (status == "closed" || status == "closed")
-        ? Colors.red[700]
-        : Colors.blue[700];
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -32,12 +57,12 @@ class InvestmentDetailPage extends StatelessWidget {
                 children: [
                   Text(
                     "Status  :  ",
-                    style: Get.textTheme.subtitle1,
+                    style: Get.textTheme.bodyText1,
                   ),
                   Container(
                       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                       decoration: BoxDecoration(
-                          color: statusColor?.withOpacity(0.2),
+                          color: statusColor(item.trans_status).withOpacity(0.2),
                           borderRadius: BorderRadius.circular(4)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -45,69 +70,91 @@ class InvestmentDetailPage extends StatelessWidget {
                           Text(
                             item.trans_status.toString(),
                             style: TextStyle(
-                                color: statusColor,
+                                color: statusColor(item.trans_status),
                                 fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Icon(
-                            Icons.check_circle_outline,
-                            color: statusColor,
+                            statusIcon(item.trans_status),
+                            color: statusColor(item.trans_status),
                             size: 20,
                           )
                         ],
                       )),
                   Spacer(),
+                  if(item.pay_status.toString().isNotEmpty)Text(
+                    "Payment  :  ",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  if(item.pay_status.toString().isNotEmpty)  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                      decoration: BoxDecoration(
+                          color: statusColor(item.pay_status)?.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(4)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            item.pay_status.toString(),
+                            style: TextStyle(
+                                color: statusColor(item.pay_status),
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            statusIcon(item.pay_status),
+                            color: statusColor(item.pay_status),
+                            size: 20,
+                          )
+                        ],
+                      )),
                 ],
               ),
               SizedBox(
                 height: 8,
               ),
-              _BuildItem(
-                  title: "Opening date",
-                  value: item.addeddate.toString()),
-              _BuildItem(
-                  title: "Closed date", value: item.closeddate.toString()),
-              _BuildItem(
-                  title: "Closed Type",
-                  value: item.closedtype.toString()),
-              _BuildItem(
-                  title: "Completion date",
-                  value: item.completedate.toString()),
-              _BuildItem(
-                  title: "Investment No.",
-                  value: item.fd_refno.toString()),
-              _BuildItem(
-                  title: "Pan No.", value: item.pan_no.toString()),
+              _BuildItem(title: "Pan No.", value: item.pan_no.toString()),
+
               _BuildItem(
                   title: "Amount",
-                  value: AppConstant.rupeeSymbol +
-                      item.amount.toString()),
+                  value: AppConstant.rupeeSymbol + item.amount.toString()),
               _BuildItem(
                   title: "Tenure",
                   value: item.tenure_value.toString() +
                       " " +
                       item.tenure_type.toString()),
               _BuildItem(
-                  title: "Int. Rate",
-                  value: item.int_rate.toString()),
+                  title: "Int. Rate", value: item.int_rate.toString() + " %"),
               _BuildItem(
-                  title: "Current Amount",
-                  value: AppConstant.rupeeSymbol +
-                      item.current_amount.toString()),
+                  title: "Int. Earned", value:AppConstant.rupeeSymbol+ item.int_earned.toString() ),
+
               _BuildItem(
-                  title: "Maturity Amount",
-                  value: AppConstant.rupeeSymbol +
-                      item.mature_amount.toString()),
+                  title: "Current Balance", value:AppConstant.rupeeSymbol+ item.current_amount.toString() ),
+
               _BuildItem(
-                  title: "Message",
-                  value: item.trans_response.toString()),
+                  title: "Maturity Amount", value:AppConstant.rupeeSymbol+ item.mature_amount.toString() ),
+              _BuildItem(
+                  title: "Created Date", value: item.addeddate.toString() ),
+              _BuildItem(
+                  title: "Completion Date", value: item.completedate.toString() ),
+              _BuildItem(
+                  title: "Closed Date", value: item.addeddate.toString() ),
+              _BuildItem(
+                  title: "Closed Type", value: item.closedtype.toString() ),
+              _BuildItem(
+                  title: "Response", value: item.trans_response.toString() ),
+
+
               Row(
                 children: [
                   OutlinedButton(
                     onPressed: () {
-                      Get.toNamed(AppRoute.investmentStatementPage,arguments: {"item" : item});
+                      Get.toNamed(AppRoute.investmentStatementPage,
+                          arguments: {"item": item});
                     },
                     child: Row(
                       children: [
@@ -115,21 +162,17 @@ class InvestmentDetailPage extends StatelessWidget {
                         SizedBox(
                           width: 4,
                         ),
-                        Text("Statement")
+                        Text("View Statement")
                       ],
                     ),
                   ),
                   Spacer(),
-
-                if(item.isclosebtn ?? false)
-                  OutlinedButton(
+                  if (item.isclosebtn ?? false)
+                    OutlinedButton(
                         style: OutlinedButton.styleFrom(primary: Colors.red),
                         onPressed: () {
-                        
-                          Get.toNamed(AppRoute.investmentBankListPage,arguments: {
-                            "origin" : false,
-                            "item" : item
-                          });
+                          Get.toNamed(AppRoute.investmentBankListPage,
+                              arguments: {"origin": false, "item": item});
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -160,7 +203,7 @@ class _BuildItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (value.trim().isEmpty) ? SizedBox() :  Column(
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 1.0),

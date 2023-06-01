@@ -155,9 +155,7 @@ class HomeController extends GetxController {
       AppUtil.throwUatExceptionOnDeployment(appPreference.mobileNumber);
 
       UserDetail response = await homeRepo.fetchAgentInfo();
-      if(appPreference.user.userType == "SM"){
-        _fetchInvestmentSummary();
-      }
+
       user = response;
       await appPreference.setUser(user);
 
@@ -179,6 +177,9 @@ class HomeController extends GetxController {
         _firebaseServices();
       }
       userDetailObs.value = Resource.onSuccess(response);
+      if(appPreference.user.userType == "Sub-Merchant"){
+        _fetchInvestmentSummary();
+      }
     } catch (e) {
       isRetailerBottomNavObs.value = false;
       userDetailObs.value = Resource.onFailure(e);
@@ -239,7 +240,9 @@ class HomeController extends GetxController {
         Get.toNamed(AppRoute.createInvestmentPage);
         break;
       case HomeServiceType2.investmentList:
-        Get.toNamed(AppRoute.investmentListPage);
+        Get.toNamed(AppRoute.investmentListPage,arguments: {
+          "home": false
+        });
         break;
       case HomeServiceType2.addFundOnline:
         Get.toNamed(AppRoute.addFundOnline);

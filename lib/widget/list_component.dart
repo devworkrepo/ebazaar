@@ -123,8 +123,7 @@ class AppExpandListWidget extends StatelessWidget {
               key: key1,
               children: [
                 ...List.generate(expandList.length, (index) {
-                  return (expandList[index].value.trim().isNotEmpty)
-                      ? Container(
+                  return Container(
                           padding: const EdgeInsets.all(4),
                           child: Row(
                             children: [
@@ -141,8 +140,8 @@ class AppExpandListWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
-                      : const SizedBox();
+                        );
+
                 }),
                 if (actionWidget == null)
                   const SizedBox()

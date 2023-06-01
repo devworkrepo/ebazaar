@@ -66,8 +66,8 @@ class CreateInvestmentPage extends GetView<CreateInvestmentController> {
                                           selectedItem: "Days",
                                           list: const [
                                             "Days",
-                                            "Months",
-                                            "Years"
+                                            "Month",
+                                            "Year"
                                           ],
                                           onChange: (value) {
                                             controller.tenureType = value;

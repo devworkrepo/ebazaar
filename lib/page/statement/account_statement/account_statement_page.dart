@@ -24,7 +24,7 @@ class AccountStatementPage extends GetView<AccountStatementController> {
   Widget build(BuildContext context) {
     Get.put(AccountStatementController(controllerTag), tag: controllerTag);
     return Scaffold(
-      appBar: (controller.appPreference.user.userType == "SM") ? AppBar(
+      appBar: (controller.appPreference.user.userType == "Sub-Merchant") ? AppBar(
         title: Text("Account Statement"),
       ) : null,
         body: Obx(

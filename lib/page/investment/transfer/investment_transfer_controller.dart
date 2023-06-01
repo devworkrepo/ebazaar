@@ -10,11 +10,13 @@ import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 
-class InvestmentTransferController extends GetxController{
+class InvestmentTransferController extends GetxController {
 
   AepsSettlementBank bank = Get.arguments["bank"]!;
 
-  var calcObs = Resource.onInit(data: InvestmentCloseCalcResponse()).obs;
+  var calcObs = Resource
+      .onInit(data: InvestmentCloseCalcResponse())
+      .obs;
   late InvestmentCloseCalcResponse calc;
   TextEditingController mpinController = TextEditingController();
   TextEditingController remarkController = TextEditingController();
@@ -31,45 +33,49 @@ class InvestmentTransferController extends GetxController{
   }
 
   void fetchCloseCalc() async {
-
     calcObs.value = const Resource.onInit();
     var response = await repo.fetchCloseCalc({
-      "fdid" : item.fdid.toString()
+      "fdid": item.fdid.toString()
     });
     calc = response;
-    calcObs.value  = Resource.onSuccess(response);
-
+    calcObs.value = Resource.onSuccess(response);
   }
 
   void onSubmit() async {
     var isValid = formKey.currentState!.validate();
-    if(!isValid){
+    if (!isValid) {
       return;
     }
 
     StatusDialog.progress();
 
-    CommonResponse response = await repo.closeInvestment({
-      "transaction_no" :calc.trans_no.toString() ,
-      "fdid" : item.fdid.toString(),
-      "acc_id" : bank.accountId.toString(),
-      "amount" : calc.balance.toString(),
-      "charges" : calc.charges.toString(),
-      "closedtype" : calc.closetype.toString(),
-      "mpin" : mpinController.text.toString(),
-      "remark" : remarkController.text.toString(),
-    });
+    try {
+      CommonResponse response = await repo.closeInvestment({
+        "transaction_no": calc.trans_no.toString(),
+        "fdid": item.fdid.toString(),
+        "acc_id": bank.accountId.toString(),
+        "amount": calc.balance.toString(),
+        "charges": calc.charges.toString(),
+        "closedtype": calc.closetype.toString(),
+        "mpin": mpinController.text.toString(),
+        "remark": remarkController.text.toString(),
+      });
 
-    Get.back();
+      Get.back();
 
-    if(response.code ==1){
-      StatusDialog.success(title:response.message).then((value) => Get.offAllNamed(AppRoute.mainPage));
+      if (response.code == 1) {
+        StatusDialog.success(title: response.transResponse.toString()).then((value) =>
+            Get.offAllNamed(AppRoute.mainPage));
+      }
+      else {
+        StatusDialog.alert(title: response.message);
+      }
+    } catch (e) {
+      Get.back();
+      StatusDialog.pending(
+          title: "Something went wrong, while closing request! please check report. Thank you"
+              ).then((value) => Get.offAllNamed(AppRoute.mainPage));
     }
-    else {
-      StatusDialog.alert(title: response.message);
-    }
-
-
   }
 
 }

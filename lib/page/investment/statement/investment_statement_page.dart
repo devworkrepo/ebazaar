@@ -95,6 +95,7 @@ class InvestmentStatementPage extends GetView<InvestmentStatementController> {
                     availableBalance: data.balance,
                     availableBalanceInWord: data.words,
                     transactionCount: list.length,
+                    balanceTitle: "Current Balance",
                     extraValue1: "Investment No. : ${data.fdrefno}",
                     summaryHeader1: [
                       SummaryHeader(
@@ -219,7 +220,7 @@ class _BuildListItem extends GetView<InvestmentStatementController> {
               Expanded(
                   child: Column(
                     children: [
-                      Text("Commission", style: headerStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                      Text("Interest", style: headerStyle,maxLines: 1,overflow: TextOverflow.ellipsis,),
                       Text(
                           inCommission > 0.0
                               ? inCommission.toString()

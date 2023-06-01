@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/util/hex_color.dart';
 import 'package:spayindia/widget/button.dart';
 import 'package:spayindia/widget/check_box.dart';
 import 'package:spayindia/widget/common/background_image.dart';
@@ -47,7 +48,8 @@ class _LoginForm extends GetView<LoginController> {
                 ),
                 _appLogo(),
                 buildLoginTitle(),
-                const SizedBox(height: 24),
+                const SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Form(
                     key: controller.loginFormKey,
                     child: Column(
@@ -72,38 +74,50 @@ class _LoginForm extends GetView<LoginController> {
 
                           Expanded(child: SizedBox(
                             height: 40,
-                            child: ElevatedButton(onPressed: (){
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: HexColor("2ebf14")
+                                ),
+                              onPressed: (){
                               controller.login();
-                            }, child: Text("Retailer Login",
+                            }, child: Text("Merchant Login",
                               style: TextStyle(
-                                  fontWeight: FontWeight.w400
+                                  fontWeight: FontWeight.w400,
+                                fontSize: 13
                               ),),),
                           )),
-                          const SizedBox(width: 8,),
+                          const SizedBox(width: 4,),
                           Expanded(child: SizedBox(
                               height: 40,
                               child: ElevatedButton(onPressed: (){
                                 controller.login(subRetailerLogin: true);
-                              }, child: Text("Sub-retailer Login",
+                              }, child: Text("Sub-Merchant Login",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w400
+                                    fontWeight: FontWeight.w400,
+                                  fontSize: 13
                                 ),),
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.blue[900]
+                                    primary: Colors.blue
                                 ),))),
                         ],),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Don't have spay account ? "),
-                            TextButton(
-                                onPressed: () {
-                                  //  Get.toNamed(AppRoute.signupPage);
-                                  Get.dialog(_SingUpDetailDialog());
-                                },
-                                child: const Text("Sing Up"))
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 24,bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Don't have Sub-Merchant account? ",style: TextStyle(
+                                fontSize: 14
+                              ),),
+                               GestureDetector(
+                                 onTap: ()=>Get.toNamed(AppRoute.signupPage),
+                                 child: Text("Sign Up Now",style: Get.textTheme.caption?.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                   color: Colors.blue[600]
+                              ),),
+                               )
+                            ],
+                          ),
                         )
                       ],
                     ))
@@ -117,10 +131,11 @@ class _LoginForm extends GetView<LoginController> {
 
   Widget buildLoginTitle() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
       child: Text(
-        "Retailer Login",
-        style: Get.textTheme.headline4?.copyWith(
+        "Spay Hai To Bharosa Hai... Dil Se Dil Tak",
+        textAlign: TextAlign.center,
+        style: Get.textTheme.bodyText1?.copyWith(
             color: Get.theme.primaryColor, fontWeight: FontWeight.w600),
       ),
     );
@@ -182,14 +197,6 @@ class _SingUpDetailDialog extends StatelessWidget {
                   title: "Financial Secure :  ",
                   subTitle:
                       "We use industry leading technology to protect your money."),
-              _buildItem(
-                  title: "Banking Services :  ",
-                  subTitle:
-                      "AePS, Aadhaar Pay, Micro ATM, MPOS, Money Transfer."),
-              _buildItem(
-                  title: "Utility Services :  ",
-                  subTitle: "Electricity & Water Bills, Flight Booking, Prepaid and Postpaid Services, Credit Card Payments and LIC Payments."),
-              _buildItem(title: "CMS Services", subTitle: "All Loans and Insurance Payments."),
 
 
               Center(

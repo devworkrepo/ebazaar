@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/util/app_constant.dart';
@@ -19,49 +20,56 @@ class StepAadhaarDetail extends GetView<SignupController> {
           style: Get.textTheme.headline6,
         ),
         Obx(() {
-
           var isFetched = controller.detailFetched.value;
 
-          return (!isFetched) ? const SizedBox()
+          return (!isFetched)
+              ? const SizedBox()
               : Container(
-            margin: const EdgeInsets.only(top: 12),
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(color: Colors.blue.withOpacity(0.1)),
-            child: Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all()
-                    ),
-                    child: Image.network(
-                      controller.aadhaarDetail.picname.toString(),
-                      width: 80,
-
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _TitleValueWidget(
-                              title: "Name", value: controller.aadhaarDetail.name ?? ""),
-                          _TitleValueWidget(title: "DOB", value: controller.aadhaarDetail.dob ?? ""),
-                          _TitleValueWidget(title: "Gender", value: controller.aadhaarDetail.gender ?? ""),
-                          _TitleValueWidget(
-                              title: "Address",
-                              value: controller.aadhaarDetail.address ?? ""),
-                        ],
+                  margin: const EdgeInsets.only(top: 12),
+                  padding: const EdgeInsets.all(6),
+                  decoration:
+                      BoxDecoration(color: Colors.blue.withOpacity(0.1)),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(border: Border.all()),
+                        child: CachedNetworkImage(
+                          imageUrl: controller.aadhaarDetail.picname.toString(),
+                          errorWidget: (context,value,value2){
+                            return SizedBox(
+                              height: 60,
+                              width: 60,
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _TitleValueWidget(
+                                  title: "Name",
+                                  value: controller.aadhaarDetail.name ?? ""),
+                              _TitleValueWidget(
+                                  title: "DOB",
+                                  value: controller.aadhaarDetail.dob ?? ""),
+                              _TitleValueWidget(
+                                  title: "Gender",
+                                  value: controller.aadhaarDetail.gender ?? ""),
+                              _TitleValueWidget(
+                                  title: "Address",
+                                  value:
+                                      controller.aadhaarDetail.address ?? ""),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
         }),
         const SizedBox(
           height: 32,
@@ -85,19 +93,25 @@ class _TitleValueWidget extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: Text(title), flex: 1,),
-            Text("  :  "),
+            Expanded(
+              child: Text(title),
+              flex: 1,
+            ),
+            const Text("  :  "),
             Expanded(
                 flex: 2,
                 child: Text(
                   value,
                   textAlign: TextAlign.start,
-                  style: Get.textTheme.caption?.copyWith(
-                      fontWeight: FontWeight.w500),
+                  style: Get.textTheme.caption
+                      ?.copyWith(fontWeight: FontWeight.w500),
                 )),
           ],
         ),
-        Divider(indent: 0, color: Colors.grey.shade300,)
+        Divider(
+          indent: 0,
+          color: Colors.grey.shade300,
+        )
       ],
     );
   }

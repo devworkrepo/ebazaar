@@ -46,41 +46,64 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                if (controller.appPreference.user.userType == "SM")Card(
-                  child: ListTile(
-                    onTap: () {
-                      Get.back();
-                      Get.toNamed(AppRoute.createInvestmentPage);
-                    },
-                    title: Text(
-                      "Investment",
-                      style: Get.textTheme.subtitle1
-                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
-                    ),
-                    leading: Icon(
-                      Icons.wysiwyg_sharp,
-                      color: color,
-                    ),
-                  ),
-                ),
-                if (controller.appPreference.user.userType == "SM") Card(
-                  child: ListTile(
-                    onTap: () {
-                      Get.back();
-                      Get.toNamed(AppRoute.investmentListPage);
-                    },
-                    title: Text(
-                      "Transactions",
-                      style: Get.textTheme.subtitle1
-                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
-                    ),
-                    leading: Icon(
-                      Icons.receipt_rounded,
-                      color: color,
+
+
+                if (controller.appPreference.user.userType == "Sub-Merchant")
+                  Card(
+                    child: _NavTitle(
+                      title: "Investments",
+                      icon: Icons.inventory_sharp,
+                      children: [
+                        _NavSubTitle(
+                          title: "Create Investment",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.createInvestmentPage);
+                          },
+                          underline: false,
+                          count: 1,
+                        ),
+                        _NavSubTitle(
+                          title: "Investment List",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.investmentListPage,arguments:{"home" : false});
+                          },
+                          underline: false,
+                          count: 2,
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                if (controller.appPreference.user.userType == "SM") Card(
+                if (controller.appPreference.user.userType == "Sub-Merchant")
+                  Card(
+                    child: _NavTitle(
+                      title: "Transactions",
+                      icon: Icons.receipt_outlined,
+                      children: [
+                        _NavSubTitle(
+                          title: "Investment Withdrawal",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.investmentWithdrawnPage);
+                          },
+                          underline: false,
+                          count: 1,
+                        ),
+                        _NavSubTitle(
+                          title: "Fund Transaction",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.fundReportPage,arguments: {"is_pending": false});
+                          },
+                          underline: false,
+                          count: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                if (controller.appPreference.user.userType == "Sub-Merchant") Card(
                   child: ListTile(
                     onTap: () {
                       Get.back();
@@ -99,23 +122,36 @@ class HomeDrawerWidget extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                if (controller.appPreference.user.userType == "SM") Card(
-                  child: ListTile(
-                    onTap: () {
-                      Get.back();
-                      Get.to(()=>AccountStatementPage(controllerTag: AppTag.accountStatementControllerTag));
-                    },
-                    title: Text(
-                      "Statements",
-                      style: Get.textTheme.subtitle1
-                          ?.copyWith(color: color, fontWeight: FontWeight.bold),
-                    ),
-                    leading: Icon(
-                      Icons.event_repeat_outlined,
-                      color: color,
+
+
+                if (controller.appPreference.user.userType == "Sub-Merchant")
+                  Card(
+                    child: _NavTitle(
+                      title: "Statements",
+                      icon: Icons.receipt_long_sharp,
+                      children: [
+                        _NavSubTitle(
+                          title: "Account Statement",
+                          onClick: () {
+                            Get.back();
+                            Get.to(()=>const AccountStatementPage(controllerTag: AppTag.accountStatementControllerTag));
+                          },
+                          underline: false,
+                          count: 1,
+                        ),
+                        _NavSubTitle(
+                          title: "Wallet Receipt List",
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(AppRoute.walletReportPage);
+                          },
+                          underline: false,
+                          count: 2,
+                        ),
+                      ],
                     ),
                   ),
-                ),
+
                 if (controller.appPreference.user.userType == "Retailer")
                   Card(
                     child: _NavTitle(
@@ -267,29 +303,11 @@ class HomeDrawerWidget extends GetView<HomeController> {
                   ),
                 ),
                 if (controller.appPreference.user.userType == "Retailer")
-                  Card(
+                  if ( controller.user.isSecurityDeposit ?? false)  Card(
                   child: _NavTitle(
                     title: "Investments",
                     icon: Icons.inventory_sharp,
                     children: [
-                      /* _NavSubTitle(
-                        title: "OnBoarding",
-                        onClick: () {
-                          Get.back();
-                          Get.toNamed(AppRoute.aepsOnboardingPage);
-                        },
-                        count: 1,
-                      ),
-
-                      _NavSubTitle(
-                        title: "E-Kyc",
-                        onClick: () {
-                          Get.back();
-                          Get.toNamed(AppRoute.aepsEkycPage);
-                        },
-                        underline: false,
-                        count: 2,
-                      ),*/
                       _NavSubTitle(
                         title: "Create Investment",
                         onClick: () {
@@ -303,7 +321,7 @@ class HomeDrawerWidget extends GetView<HomeController> {
                         title: "Investment List",
                         onClick: () {
                           Get.back();
-                          Get.toNamed(AppRoute.investmentListPage);
+                          Get.toNamed(AppRoute.investmentListPage,arguments:{"home" : false});
                         },
                         underline: false,
                         count: 2,

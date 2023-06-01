@@ -203,9 +203,9 @@ class _BuildListItem extends GetView<FundRequestReportController> {
                             children: const [
                               Icon(Icons.remove_red_eye),
                               SizedBox(
-                                width: 5,
+                                width: 2,
                               ),
-                              Text("View Receipt")
+                              Text("Receipt")
                             ],
                           )),
                     )

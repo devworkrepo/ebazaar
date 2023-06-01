@@ -19,6 +19,7 @@ class InvestmentListController extends GetxController  {
   String searchStatus = "";
   String searchInput = "";
   var showFabObs = false.obs;
+  bool goHome = Get.arguments["home"] ?? false;
 
   var reportResponseObs = Resource.onInit(data: InvestmentListResponse()).obs;
   InvestmentListItem? previousReport;
@@ -45,7 +46,6 @@ class InvestmentListController extends GetxController  {
 
     try {
       reportResponseObs.value = const Resource.onInit();
-      await Future.delayed(Duration(seconds: 2));
       final response = await repo.fetchInvestmentLists(_param());
       if (response.code == 1) {
        if(response.reports!.isNotEmpty) {

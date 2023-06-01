@@ -179,5 +179,20 @@ class TestResponse {
       ] ,
     };
   }
+  static dynamic aadhaarDetail() {
+    return
+        {
+          "code" : 1,
+          "status" : "asdf",
+          "message" : "asd",
+          "picname" : "ads",
+          "name" : "ad",
+          "dob" : "ad",
+          "gender" : "ad",
+          "address" : "dlfjaslkfj klajsdfklla sjfkls j;dfkajsf",
+          "aadharno" : "adfjakslkjf ajsdfklasj fksaj fksajfklasj fkl",
+
+    };
+  }
 
 }

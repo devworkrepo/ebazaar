@@ -3,6 +3,8 @@ class CommonResponse {
   late String status;
   late String message;
   String? transactionNumber;
+  String? transactionStatus;
+  String? transResponse;
 
 
   CommonResponse();
@@ -12,6 +14,8 @@ class CommonResponse {
     status = json['status'].toString();
     code = json["code"];
     transactionNumber = json["transaction_no"];
+    transactionStatus  = json["trans_status"];
+    transResponse  = json["trans_response"];
 
   }
 

@@ -5,6 +5,7 @@ import 'package:spayindia/model/investment/investment_withdrawn.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/report/receipt_print_mixin.dart';
+import 'package:spayindia/page/report/report_search2.dart';
 import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 import 'package:spayindia/util/tags.dart';
@@ -51,16 +52,18 @@ class InvestmentWithdrawnPage extends GetView<InvestmentWithdrawnController> {
 
   _onSearch() {
     Get.bottomSheet(
-        CommonReportSearchDialog(
+        CommonReportSearchDialog2(
           fromDate: controller.fromDate,
           toDate: controller.toDate,
           status: controller.searchStatus,
           inputFieldOneTile: "Transaction Number",
+          inputFieldTwoTile: "Investment Number",
           onSubmit:
-              (fromDate, toDate, searchInput, searchInputType, status, _, __) {
+              (fromDate, toDate, searchInput,searchInput2, searchInputType, status, _, __) {
             controller.fromDate = fromDate;
             controller.toDate = toDate;
             controller.searchInput = searchInput;
+            controller.searchInput2 = searchInput2;
             controller.searchStatus = status;
             controller.onSearch();
           },

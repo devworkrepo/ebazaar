@@ -22,6 +22,7 @@ class InvestmentWithdrawnController extends GetxController with ReceiptPrintMixi
   String toDate = "";
   String searchStatus = "";
   String searchInput = "";
+  String searchInput2 = "";
   var showFabObs = false.obs;
 
   var reportResponseObs = Resource.onInit(data: InvestmentWithdrawnListResponse()).obs;
@@ -44,6 +45,7 @@ class InvestmentWithdrawnController extends GetxController with ReceiptPrintMixi
           "fromdate": fromDate,
           "todate": toDate,
           "transaction_no": searchInput,
+          "investrefno": searchInput2,
           "status": searchStatus,
         };
 
@@ -70,8 +72,7 @@ class InvestmentWithdrawnController extends GetxController with ReceiptPrintMixi
     toDate = DateUtil.currentDateInYyyyMmDd();
     searchStatus = "";
     searchInput = "";
-
-    searchStatus = "InProgress";
+    searchInput2 = "";
 
     fetchReport();
   }

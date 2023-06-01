@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/security_deposit_repo.dart';
 import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
 import 'package:spayindia/model/common.dart';
@@ -18,9 +19,9 @@ class CreateInvestmentController extends GetxController with TransactionHelperMi
   late InvestmentBalanceResponse balance;
   var tenureType = "Days";
   var isAgree = false;
-
   SecurityDepositRepo repo = Get.find<SecurityDepositImpl>();
   var responseObs = Resource.onInit(data: InvestmentBalanceResponse()).obs;
+  AppPreference appPreference = Get.find();
 
   @override
   void onInit() {
@@ -48,6 +49,13 @@ class CreateInvestmentController extends GetxController with TransactionHelperMi
 
     if(amount < 1){
       StatusDialog.alert(title: "Enter valid amount!");
+      return;
+    }
+    if (amount.toDouble() >
+        double.parse(appPreference.user.availableBalance!)) {
+      StatusDialog.alert(
+          title: "Insufficient balance, your available balance is : " +
+              appPreference.user.availableBalance!.toString());
       return;
     }
     if(tenure < 1){

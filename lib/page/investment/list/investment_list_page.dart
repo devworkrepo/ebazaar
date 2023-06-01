@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/model/investment/investment_list.dart';
 import 'package:spayindia/model/report/dmt.dart';
 import 'package:spayindia/page/exception_page.dart';
+import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/util/app_constant.dart';
 import 'package:spayindia/util/etns/on_string.dart';
 import 'package:spayindia/widget/api_component.dart';
@@ -22,35 +23,45 @@ class InvestmentListPage extends GetView<InvestmentListController> {
   Widget build(BuildContext context) {
     Get.put(InvestmentListController());
 
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Investment List"),
-        ),
-        body: Obx(
-            () => controller.reportResponseObs.value.when(onSuccess: (data) {
-                  if (data.code == 1) {
-                    if (data.reports!.isEmpty) {
-                      return const NoItemFoundWidget();
+    return WillPopScope(
+      onWillPop: () async {
+        if (controller.goHome) {
+          Get.offAllNamed(AppRoute.mainPage);
+          return false;
+        } else {
+          return true;
+        }
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text("Investment List"),
+          ),
+          body: Obx(
+              () => controller.reportResponseObs.value.when(onSuccess: (data) {
+                    if (data.code == 1) {
+                      if (data.reports!.isEmpty) {
+                        return const NoItemFoundWidget();
+                      } else {
+                        return _buildListBody(data);
+                      }
                     } else {
-                      return _buildListBody(data);
+                      return ExceptionPage(error: Exception(data.message));
                     }
-                  } else {
-                    return ExceptionPage(error: Exception(data.message));
-                  }
-                }, onFailure: (e) {
-                  print(e.toString());
-                  return ExceptionPage(error: e);
-                }, onInit: (data) {
-                  return ApiProgress(data);
-                })),
-        floatingActionButton: Obx(() {
-          return (controller.showFabObs.value)
-              ? FloatingActionButton.extended(
-                  icon: const Icon(Icons.search),
-                  onPressed: () => _onSearch(),
-                  label: const Text("Search"))
-              : const SizedBox();
-        }));
+                  }, onFailure: (e) {
+                    print(e.toString());
+                    return ExceptionPage(error: e);
+                  }, onInit: (data) {
+                    return ApiProgress(data);
+                  })),
+          floatingActionButton: Obx(() {
+            return (controller.showFabObs.value)
+                ? FloatingActionButton.extended(
+                    icon: const Icon(Icons.search),
+                    onPressed: () => _onSearch(),
+                    label: const Text("Search"))
+                : const SizedBox();
+          })),
+    );
   }
 
   _onSearch() {
@@ -60,6 +71,14 @@ class InvestmentListPage extends GetView<InvestmentListController> {
           toDate: controller.toDate,
           status: controller.searchStatus,
           inputFieldOneTile: "Transaction Number",
+          statusList: const [
+            "Active",
+            "Closed",
+            "Completed",
+            "Settled",
+            "Rejected",
+            "Queued",
+          ],
           onSubmit:
               (fromDate, toDate, searchInput, searchInputType, status, _, __) {
             controller.fromDate = fromDate;
@@ -144,11 +163,19 @@ class _BuildListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var status = report.trans_status.toString().toLowerCase();
-    var statusColor = (status == "active")
-        ? Colors.green[700]
-        : (status == "closed" || status == "closed")
-            ? Colors.red[700]
-            : Colors.blue[700];
+    var statusColor = Colors.blue[700];
+    var statusIcon = Icons.query_builder_outlined;
+
+    if (status == "active" || status == "completed" || status == "settled") {
+      statusColor = Colors.green[700];
+      statusIcon = Icons.check_circle_outline;
+    } else if (status == "closed" || status == "rejected") {
+      statusColor = Colors.red[700];
+      statusIcon = Icons.cancel_outlined;
+    } else if (status == "closed") {
+      statusColor = Colors.red[700];
+      statusIcon = Icons.cancel_outlined;
+    }
 
     return InkResponse(
       onTap: () => controller.onItemClick(report),
@@ -189,7 +216,7 @@ class _BuildListItem extends StatelessWidget {
                               width: 5,
                             ),
                             Icon(
-                              Icons.check_circle_outline,
+                              statusIcon,
                               color: statusColor,
                               size: 20,
                             )
@@ -210,12 +237,15 @@ class _BuildListItem extends StatelessWidget {
                     ),
                     _BuildSubItem(
                       title: "Tenure",
-                      value: report.tenure_value.toString() +" "+report.tenure_type.toString(),
+                      value: report.tenure_value.toString() +
+                          " " +
+                          report.tenure_type.toString(),
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     _BuildSubItem(
                       title: "Mature Amt.",
-                      value: AppConstant.rupeeSymbol + report.mature_amount.toString(),
+                      value: AppConstant.rupeeSymbol +
+                          report.mature_amount.toString(),
                       mainAxisAlignment: MainAxisAlignment.end,
                     ),
                   ],
@@ -232,12 +262,14 @@ class _BuildListItem extends StatelessWidget {
                     ),
                     _BuildSubItem(
                       title: "Int. Earned",
-                      value: AppConstant.rupeeSymbol + report.int_earned.toString(),
+                      value: AppConstant.rupeeSymbol +
+                          report.int_earned.toString(),
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     _BuildSubItem(
                       title: "Current Amt.",
-                      value: AppConstant.rupeeSymbol + report.current_amount.toString(),
+                      value: AppConstant.rupeeSymbol +
+                          report.current_amount.toString(),
                       mainAxisAlignment: MainAxisAlignment.end,
                     ),
                   ],
