@@ -22,10 +22,20 @@ class ObsResourceWidget<T> extends StatelessWidget {
                return childBuilder(data);
           } else {
             return Center(
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Text(response.message),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 64.0),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.info_outline,size: 62,),
+                        SizedBox(height: 16,),
+                        Text(response.message),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             );

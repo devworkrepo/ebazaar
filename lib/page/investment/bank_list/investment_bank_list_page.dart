@@ -24,7 +24,7 @@ class InvestmentBankListPage extends GetView<InvestmentBankListController> {
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
 
-         if(controller.fromHome) Align(
+         Align(
             alignment: Alignment.centerRight,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),

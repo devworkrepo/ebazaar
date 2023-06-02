@@ -15,7 +15,7 @@ class NetworkSignUpClient {
   static const timeoutInSecond = 0;
 
   final _options = BaseOptions(
-      baseUrl: AppConstant.signUpBaseUrl,
+      baseUrl: AppConstant.liveSignUpBaseUrl,
       connectTimeout: timeoutInSecond,
       receiveTimeout: timeoutInSecond,
       maxRedirects: 0,
