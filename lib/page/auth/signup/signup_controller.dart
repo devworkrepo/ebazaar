@@ -397,7 +397,7 @@ class SignupController extends GetxController with TransactionHelperMixin {
 
     var param = {
       "image1": aadhaarFilePart,
-      "image2 ": panFileFilePart,
+      "image2": panFileFilePart,
       "mobileno": mobileInputController.text.toString(),
       "fullname": aadhaarDetail.name,
       "address": aadhaarDetail.address,
