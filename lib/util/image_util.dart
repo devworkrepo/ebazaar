@@ -11,7 +11,7 @@ class ImageUtil {
     String newFilePath = map["filePath"];
 
     Im.Image image = Im.decodeImage(file.readAsBytesSync())!;
-    Im.Image smallerImage = Im.copyResize(image, height: 1280, width: 720);
+    Im.Image smallerImage = Im.copyResize(image, height: 1260);
     return  await decodeImageFile(smallerImage,newFilePath);
   }
 

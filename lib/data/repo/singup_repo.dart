@@ -9,6 +9,8 @@ import 'package:spayindia/model/singup/verify_pan_response.dart';
 import 'package:spayindia/model/user/login.dart';
 import 'package:dio/dio.dart' as dio;
 
+import '../../model/singup/final_signup_response.dart';
+
 
 abstract class SignUpRepo {
 
@@ -21,6 +23,8 @@ abstract class SignUpRepo {
   Future<SignUpEKycResponse> verifyEKycOtp(Map<String,String> data);
   Future<SignUpKycDetailResponse> getKycDetail(Map<String,String> data);
   Future<SignUpVerifyPanResponse> verifyPan(Map<String,String> data);
-  Future<CommonResponse> signUpUser(dio.FormData data);
+  Future<SignUpResponse> signUpUser(dio.FormData data);
+  Future<CommonResponse> updateAadhaarImage(dio.FormData data);
+  Future<CommonResponse> updatePanImage(dio.FormData data);
 
 }

@@ -9,6 +9,7 @@ import 'package:spayindia/util/api/test_response.dart';
 
 import '../../model/common.dart';
 
+import '../../model/singup/final_signup_response.dart';
 import '../repo/singup_repo.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -68,11 +69,29 @@ class SingUpRepoImpl extends SignUpRepo {
 
 
 
- 
   @override
-  Future<CommonResponse> signUpUser(dio.FormData data) async{
+  Future<SignUpVerifyPanResponse> verifyPan(Map<String, String> data) async{
+    var response = await client.post("/VerifyPAN",data: data);
+    return SignUpVerifyPanResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<SignUpResponse> signUpUser(dio.FormData data) async{
 
     var response = await client.post("/AddSignUp",data: data,options: Options(
+        contentType : "application/json",
+        headers: {
+          "Accept" : "application/json"
+        }
+    ));
+    return SignUpResponse.fromJson(response.data);
+
+  }
+
+
+  @override
+  Future<CommonResponse> updateAadhaarImage(dio.FormData data) async {
+    var response = await client.post("/UpdateAadharPic",data: data,options: Options(
         contentType : "application/json",
         headers: {
           "Accept" : "application/json"
@@ -81,12 +100,15 @@ class SingUpRepoImpl extends SignUpRepo {
     return CommonResponse.fromJson(response.data);
   }
 
-
-
   @override
-  Future<SignUpVerifyPanResponse> verifyPan(Map<String, String> data) async{
-    var response = await client.post("/VerifyPAN",data: data);
-    return SignUpVerifyPanResponse.fromJson(response.data);
+  Future<CommonResponse> updatePanImage(dio.FormData data) async {
+    var response = await client.post("/UpdatePanPic",data: data,options: Options(
+        contentType : "application/json",
+        headers: {
+          "Accept" : "application/json"
+        }
+    ));
+    return CommonResponse.fromJson(response.data);
   }
 
 

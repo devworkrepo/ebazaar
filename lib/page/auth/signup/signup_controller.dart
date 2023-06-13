@@ -20,6 +20,7 @@ import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart' as dio;
 
 import '../../../data/app_pref.dart';
+import '../../../model/singup/final_signup_response.dart';
 import '../../../widget/dialog/status_dialog.dart';
 
 class SignupController extends GetxController with TransactionHelperMixin {
@@ -132,14 +133,12 @@ class SignupController extends GetxController with TransactionHelperMixin {
         });
       } else {
         StatusDialog.alert(title: response.message).then((value) {
-
-          if(response.message.toLowerCase() == "mobile no already exists !"){
+          if (response.message.toLowerCase() == "mobile no already exists !") {
             stepContactDetail.value = StepState.editing;
             stepMobileVerify.value = StepState.disabled;
             stepperCurrentIndex.value = 0;
             proceedButtonText.value = "Continue";
           }
-
         });
       }
     } catch (e) {
@@ -368,10 +367,41 @@ class SignupController extends GetxController with TransactionHelperMixin {
     StatusDialog.progress(title: "Submitting...");
 
     try {
-      var formDataParam = await _finalRequestParam();
-      CommonResponse response = await repo.signUpUser(formDataParam);
+
+     String picName = aadhaarDetail.picname.toString();
+      picName =
+          picName.replaceAll("https://spayindia.in//commonimg//user//", "");
+      picName =
+          picName.replaceAll("https://spayindia.in//commonimg//user/", "");
+      picName = picName.replaceAll("https://spayindia.in//commonimg/user/", "");
+      picName = picName.replaceAll("https://spayindia.in/commonimg/user/", "");
+      picName = picName.trim();
+
+      String panNumber = panInput2Controller.text.toString();
+      if (panNumber.isEmpty) panNumber = panInputController.text.toString();
+
+     var param = {
+        "mobileno": mobileInputController.text.toString(),
+        "fullname": aadhaarDetail.name.toString(),
+        "address": aadhaarDetail.address.toString(),
+        "emailid": emailInputController.text.toString(),
+        "gender": aadhaarDetail.gender.toString(),
+        "dob": AppUtil.changeDateToMMDDYYYY(aadhaarDetail.dob ?? ""),
+        "pan_no": panNumber,
+        "aadhar_no": aadhaarWithoutSymbol(aadhaarInputController),
+        "picname": picName,
+      };
+
+      var multiParam = dio.FormData.fromMap(param);
+
+      SignUpResponse response = await repo.signUpUser(multiParam);
       Get.back();
       if (response.code == 1) {
+        await Future.wait<CommonResponse?>([
+          _uploadAadhaarImage(response.regid),
+          _uploadPanImage(response.regid)
+        ]);
+
         Get.dialog(const SingUpSuccessDialog()).then((value) {
           Get.offAllNamed(AppRoute.loginPage);
         });
@@ -379,6 +409,7 @@ class SignupController extends GetxController with TransactionHelperMixin {
         StatusDialog.failure(title: response.message);
       }
     } catch (e) {
+
       Get.back();
       StatusDialog.alert(
           title:
@@ -386,29 +417,40 @@ class SignupController extends GetxController with TransactionHelperMixin {
     }
   }
 
-  Future<dio.FormData> _finalRequestParam() async {
-    dio.MultipartFile? aadhaarFilePart;
-    dio.MultipartFile? panFileFilePart;
+  Future<CommonResponse?> _uploadAadhaarImage(String? regid) async {
+    try {
+      var filePath = aadhaarFile!.path;
+      var fileName = docAadhaarController.text.toString();
 
-    aadhaarFilePart = await dio.MultipartFile.fromFile(aadhaarFile!.path,
-        filename: aadhaarFile!.path.split("/").last.replaceAll("..", "."));
-    panFileFilePart = await dio.MultipartFile.fromFile(panFile!.path,
-        filename: panFile!.path.split("/").last.replaceAll("..", "."));
+      dio.MultipartFile? filePart =
+          await dio.MultipartFile.fromFile(filePath, filename: fileName);
 
-    var param = {
-      "image1": aadhaarFilePart,
-      "image2": panFileFilePart,
-      "mobileno": mobileInputController.text.toString(),
-      "fullname": aadhaarDetail.name,
-      "address": aadhaarDetail.address,
-      "emailid": emailInputController.text.toString(),
-      "gender": aadhaarDetail.gender,
-      "dob": AppUtil.changeDateToMMDDYYYY(aadhaarDetail.dob ?? ""),
-      "pan_no": panInput2Controller.text.toString(),
-      "aadhar_no": aadhaarWithoutSymbol(aadhaarInputController),
-      "picname": aadhaarDetail.picname,
-    };
-    return dio.FormData.fromMap(param);
+      var param = {"image1": filePart, "regid": regid.toString()};
+      var multiParam = dio.FormData.fromMap(param);
+
+      CommonResponse response = await repo.updateAadhaarImage(multiParam);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<CommonResponse?> _uploadPanImage(String? regid) async {
+    try {
+      var filePath = panFile!.path;
+      var fileName = docPanController.text.toString();
+
+      dio.MultipartFile? filePart =
+          await dio.MultipartFile.fromFile(filePath, filename: fileName);
+
+      var param = {"image2": filePart, "regid": regid.toString()};
+      var multiParam = dio.FormData.fromMap(param);
+
+      CommonResponse response = await repo.updatePanImage(multiParam);
+      return response;
+    } catch (e) {
+      return null;
+    }
   }
 }
 
