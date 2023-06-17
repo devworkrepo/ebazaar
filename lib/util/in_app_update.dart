@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:in_app_update/in_app_update.dart';
+import 'package:in_app_update/in_app_update.dart';
+import 'package:in_app_update/in_app_update.dart' as inAppUpdate;
 import 'package:spayindia/data/repo/home_repo.dart';
 import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
 import 'package:spayindia/model/app_update.dart';
@@ -54,6 +57,11 @@ class AppUpdateUtil {
           "InAppUpdateError _performImmediateUpdate: " + e.toString());
       if(isForceUpdate){
         checkUpdate();
+      }
+    }).then((value) {
+     var success =  inAppUpdate.AppUpdateResult.success;
+      if( value != success){
+        if(isForceUpdate){ checkUpdate();}
       }
     });
   }
