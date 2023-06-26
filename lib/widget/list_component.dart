@@ -9,6 +9,7 @@ class AppExpandListWidget extends StatelessWidget {
 
   final RxBool isExpanded;
   final String? imageName;
+  final String? txnNumber;
   final String title;
   final String? titleHeader;
   final String subTitle;
@@ -25,6 +26,7 @@ class AppExpandListWidget extends StatelessWidget {
 
   AppExpandListWidget(
       {this.imageName,
+      required this.txnNumber,
       required this.title,
       this.titleHeader,
       required this.subTitle,
@@ -74,6 +76,7 @@ class AppExpandListWidget extends StatelessWidget {
                         child: Column(
                           children: [
                             _BuildHeaderSection(isExpanded.value,
+                                txnNumber: txnNumber,
                                 imageName: imageName,
                                 title: title,
                                 titleHeader: titleHeader,
@@ -167,6 +170,7 @@ class _BuildHeaderSection extends StatelessWidget {
 
   final String? imageName;
   final String title;
+  final String? txnNumber;
   final String? titleHeader;
   final String subTitle;
   final String? subTitleHeader;
@@ -179,6 +183,7 @@ class _BuildHeaderSection extends StatelessWidget {
   _BuildHeaderSection(
     this.isExpand, {
     required this.title,
+    required this.txnNumber,
     this.titleHeader,
     this.subTitleHeader,
     required this.subTitle,
@@ -197,6 +202,25 @@ class _BuildHeaderSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
+        (txnNumber == null)
+            ? const SizedBox()
+       : Container(
+          padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 4),
+          margin: const EdgeInsets.only(bottom: 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            color: Colors.blue.withOpacity(0.1)
+          ),
+          child: Text(
+           "Txn No : "+ txnNumber!,
+            maxLines: 2,
+            style: Get.textTheme.subtitle2?.copyWith(
+                color: color, fontWeight: FontWeight.w500, fontSize: 13),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+
         (titleHeader == null)
             ? const SizedBox()
             : Text(

@@ -104,6 +104,7 @@ class _BuildListItem extends GetView<RechargeRefundController> {
     return InkResponse(
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
+        txnNumber: report.transactionNumber,
         isExpanded: report.isExpanded,
         title: "No : " + report.number.orNA(),
         subTitle: report.rechargeType.orNA().toUpperCase(),

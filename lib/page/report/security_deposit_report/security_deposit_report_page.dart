@@ -106,6 +106,7 @@ class _BuildListItem extends GetView<SecurityDepositReportController> {
     return InkResponse(
         onTap: () => controller.onItemClick(report),
         child: AppExpandListWidget(
+          txnNumber: null,
           isExpanded: report.isExpanded,
           title: report.first_name.orNA() + " " + report.first_name.orNA(),
           subTitle: "Email : " + report.email_id.orNA(),

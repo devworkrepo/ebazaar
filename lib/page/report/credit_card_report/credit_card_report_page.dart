@@ -132,6 +132,7 @@ class _BuildListItem extends GetView<CreditCardReportController> {
     return InkResponse(
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
+        txnNumber: report.transactionNumber,
         isExpanded: report.isExpanded,
         title:"Card No  : "+ report.cardNumber.orNA(),
         subTitle:"Bank : "+ report.bankName.orNA().toUpperCase(),

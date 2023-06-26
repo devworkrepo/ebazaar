@@ -101,15 +101,8 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
         controller.swipeRefresh();
       },
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(2)
-        ),
-        margin: EdgeInsets.only(
-          top: 4,
-          left: 4,
-          right: 4,
-          bottom: 0
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+        margin: EdgeInsets.only(top: 4, left: 4, right: 4, bottom: 0),
         child: ListView.builder(
           padding: EdgeInsets.only(top: 0, bottom: 100),
           itemBuilder: (context, index) {
@@ -140,18 +133,17 @@ class FundRequestReportPage extends GetView<FundRequestReportController> {
                 SummaryHeader(
                     title: "Total\nAmount", value: "${mData.total_amt}"),
                 SummaryHeader(
-                    title: "Cash/Cheque/\nFund Transfer", value: "${mData.cash_tot}"),
+                    title: "Cash/Cheque/\nFund Transfer",
+                    value: "${mData.cash_tot}"),
               ],
               summaryHeader2: [
                 SummaryHeader(
                     title: "IMPS/NEFT/\nRTGS", value: "${mData.imps_tot}"),
+                SummaryHeader(title: "CDM Card\n", value: "${mData.cdm_tot}"),
                 SummaryHeader(
-                    title: "CDM Card\n",
-                    value: "${mData.cdm_tot}"),
-                SummaryHeader(
-                    title: "Online\nGateway",
-                    value: "${mData.online_tot}",
-                    ),
+                  title: "Online\nGateway",
+                  value: "${mData.online_tot}",
+                ),
               ],
               callback: () {
                 _onSearch();
@@ -178,6 +170,7 @@ class _BuildListItem extends GetView<FundRequestReportController> {
     return InkResponse(
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
+          txnNumber: null,
           isExpanded: report.isExpanded,
           title: report.referenceNumber.orNA(),
           subTitle: "Type : " + report.type.orNA(),

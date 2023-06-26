@@ -121,6 +121,7 @@ class _BuildListItem extends StatelessWidget {
     return InkResponse(
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
+        txnNumber: null,
         isExpanded: report.isExpanded,
         title: "V. A/C : " + report.van.orNA(),
         subTitle: "Mode  : " + report.mode.orNA(),

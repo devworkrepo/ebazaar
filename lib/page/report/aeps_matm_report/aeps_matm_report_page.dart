@@ -172,6 +172,7 @@ class _BuildListItem extends StatelessWidget {
     return InkResponse(
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
+        txnNumber: report.transactionNumber,
         isExpanded: report.isExpanded,
         title: (controller.tag == AppTag.aepsReportControllerTag ||
                 controller.tag == AppTag.aadhaarPayReportControllerTag)

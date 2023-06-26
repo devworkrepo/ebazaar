@@ -144,6 +144,7 @@ class _BuildListItem extends GetView<WalletPayReportController> {
     return InkResponse(
       onTap: () => controller.onItemClick(report),
       child: AppExpandListWidget(
+        txnNumber: null,
         isExpanded: report.isExpanded,
         title: "Received By : "+report.receivedBy.orNA(),
         subTitle:"Ref : "+ report.refNumber.orNA(),

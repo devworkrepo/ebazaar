@@ -103,6 +103,7 @@ class _BuildListItem extends GetView<InvestmentWithdrawnController> {
       onTap: () => controller.onItemClick(report),
       child: Card(
         child: AppExpandListWidget(
+          txnNumber: null,
           isExpanded: report.isExpanded,
           showDivider: false,
           titleHeader: "Investment Number",
