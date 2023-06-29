@@ -132,7 +132,7 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
           },
         ),
       ],
-      expandedHeight: controller.sender!.isKycVerified ?? false ? 190 : 270,
+      expandedHeight: (controller.sender!.showNonKycDetail == true) ? 270 : 190,
       pinned: true,
       title: const Text("Beneficiary List"),
       flexibleSpace: FlexibleSpaceBar(background: LayoutBuilder(
@@ -158,25 +158,24 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                   });
                 },
               ),
-              (controller.sender!.isKycVerified ?? false)
-                  ? const SizedBox()
-                  : Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(color: Colors.blue),
-                      child: Row(
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              "You can get monthly sender limit upto 2 Lac by doing EKYC of Customer.",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                /*Get.dialog(SenderKycDialog((aadhaarNumber) {
+              (controller.sender!.showNonKycDetail == true)
+                  ? Container(
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(color: Colors.blue),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        "You can get monthly sender limit upto 2 Lac by doing EKYC of Customer.",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          /*Get.dialog(SenderKycDialog((aadhaarNumber) {
                                   Get.back();
                                   Get.toNamed(AppRoute
                                           .dmtEkycPage)
@@ -196,16 +195,17 @@ class BeneficiaryListPage extends GetView<BeneficiaryListController> {
                                   });
                                 }));
 */
-                                Get.toNamed(AppRoute.senderKycPage, arguments: {
-                                  "dmt_type": controller.dmtType,
-                                  "mobile_number":
-                                      controller.sender!.senderNumber!
-                                });
-                              },
-                              child: const Text("Do Kyc"))
-                        ],
-                      ),
-                    )
+                          Get.toNamed(AppRoute.senderKycPage, arguments: {
+                            "dmt_type": controller.dmtType,
+                            "mobile_number":
+                            controller.sender!.senderNumber!
+                          });
+                        },
+                        child: const Text("Do Kyc"))
+                  ],
+                ),
+              )
+                  : const SizedBox()
             ],
           );
         },

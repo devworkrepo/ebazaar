@@ -77,4 +77,5 @@ abstract class DmtRepo {
   Future<CommonResponse> senderKycSendOtp(data);
   Future<CommonResponse> senderKycReSendOtp(data);
   Future<CommonResponse> senderKycVerifyOtp(data);
+  Future<CommonResponse> checkDmtKycStatus();
 }

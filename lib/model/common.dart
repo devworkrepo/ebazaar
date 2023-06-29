@@ -5,6 +5,7 @@ class CommonResponse {
   String? transactionNumber;
   String? transactionStatus;
   String? transResponse;
+  bool? kyc_dmt;
 
 
   CommonResponse();
@@ -16,6 +17,7 @@ class CommonResponse {
     transactionNumber = json["transaction_no"];
     transactionStatus  = json["trans_status"];
     transResponse  = json["trans_response"];
+    kyc_dmt  = json["kyc_dmt"];
 
   }
 

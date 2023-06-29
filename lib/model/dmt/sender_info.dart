@@ -6,6 +6,7 @@ class SenderInfo{
         late String message;
         late String status;
         bool? isKycVerified;
+        bool? showNonKycDetail;
         String? impsKycLimitAll;
         String? impsKycLimitView;
         String? impsNKycLimitAll;

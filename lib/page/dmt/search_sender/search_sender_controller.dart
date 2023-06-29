@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:spayindia/model/common.dart';
 import 'package:spayindia/widget/dialog/status_dialog.dart';
 import 'package:spayindia/data/app_pref.dart';
 import 'package:spayindia/data/repo/dmt_repo.dart';
@@ -109,6 +110,17 @@ class DmtSearchSenderController extends GetxController {
       final data = {"mobileno": mobile};
 
       SenderInfo sender = await repo.searchSender(data);
+
+      sender.showNonKycDetail = sender.isKycVerified == false;
+
+      if(sender.isKycVerified == true){
+        CommonResponse kycStatus = await repo.checkDmtKycStatus();
+        if(kycStatus.kyc_dmt == false){
+          sender.isKycVerified = false;
+          sender.showNonKycDetail = false;
+        }
+      }
+
       Get.back();
 
       if (sender.code == 1) {

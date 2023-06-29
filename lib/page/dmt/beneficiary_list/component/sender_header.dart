@@ -29,7 +29,7 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white70),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(5),
       ),
       margin: EdgeInsets.only(
           top: statusBarHeight + kToolbarHeight, left: 8, right: 8, bottom: 16),
@@ -45,18 +45,27 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _buildName(senderName),
+                  SizedBox(height: 3,),
                   _buildName(mobileNumber),
+                  SizedBox(height: 3,),
+                if((controller.sender!.showNonKycDetail ?? false) == false)  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                    Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                    Text("Kyc Customer",style: TextStyle(
+                        color: Colors.white
+                    ),),
+                  ],),
                   const SizedBox(
                     height: 8,
                   ),
-                  (controller.sender!.isKycVerified!)
-                      ? const SizedBox()/*_buildIconTitleButton(
-                      onClick: () {
-                        controller.fetchKycInfo();
-                      },
-                      title: "View Kyc Detail",
-                      icon: Icons.fingerprint)*/
-                      : _buildChangeWidget()
+                  (controller.sender!.showNonKycDetail == true)
+                      ? _buildChangeWidget()
+                      : const SizedBox()
                 ],
               ),
             ),
@@ -96,7 +105,7 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
 
   SingleChildRenderObjectWidget _buildNonKycWidget() {
     return (controller.dmtType == DmtType.instantPay)
-        ? (!controller.sender!.isKycVerified!)
+        ? (controller.sender!.showNonKycDetail == true)
             ? Padding(
                 padding: const EdgeInsets.all(4),
                 child: Text(
@@ -191,10 +200,13 @@ class BeneficiarySenderHeader extends GetView<BeneficiaryListController> {
     );
   }
 
-  Text _buildName(String senderName) {
-    return Text(
-      senderName,
-      style: Get.textTheme.headline6?.copyWith(color: Colors.white),
+  Widget _buildName(String senderName) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: Text(
+        senderName,
+        style: Get.textTheme.subtitle1?.copyWith(color: Colors.white),
+      ),
     );
   }
 

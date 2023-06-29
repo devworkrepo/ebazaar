@@ -224,10 +224,7 @@ class BeneficiaryListController extends GetxController {
           title: "Import Beneficiary", icon: Icons.import_export),
       BeneficiaryListPopMenu(title: "Sync Beneficiary", icon: Icons.sync),
     ];
-    if ((sender?.isKycVerified ?? false)) {
-      /*mList.add(BeneficiaryListPopMenu(
-          title: "Kyc Info", icon: Icons.qr_code_scanner));*/
-    } else {
+    if ((sender?.showNonKycDetail == true)) {
       mList.add(
           BeneficiaryListPopMenu(title: "Do Kyc", icon: Icons.qr_code_scanner));
     }

@@ -216,4 +216,10 @@ class DmtRepoImpl extends DmtRepo {
     var response = await client.post("/SyncBeneficiary",data: data);
     return CommonResponse.fromJson(response.data);
   }
+
+  @override
+  Future<CommonResponse> checkDmtKycStatus() async {
+    var response = await client.post("/KycDmtStatus");
+    return CommonResponse.fromJson(response.data);
+  }
 }

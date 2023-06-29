@@ -53,7 +53,7 @@ class DmtCalculateChargeWidget extends GetView<DmtTransactionController> {
                     Expanded(
                         child: Align(
                             alignment: Alignment.centerRight,
-                            child: _chargeCommonText("Total",
+                            child: _chargeCommonText("Charge",
                                 color: Colors.black54))),
                   ],
                 ),
