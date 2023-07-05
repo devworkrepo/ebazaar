@@ -4,6 +4,7 @@ import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/singup/captcha_response.dart';
 import 'package:spayindia/model/singup/kyc_detail_response.dart';
 import 'package:spayindia/model/singup/kyc_otp_response.dart';
+import 'package:spayindia/model/singup/signup_state.dart';
 import 'package:spayindia/model/singup/singup_user_response.dart';
 import 'package:spayindia/model/singup/verify_pan_response.dart';
 import 'package:spayindia/model/user/login.dart';
@@ -23,6 +24,7 @@ abstract class SignUpRepo {
   Future<SignUpEKycResponse> verifyEKycOtp(Map<String,String> data);
   Future<SignUpKycDetailResponse> getKycDetail(Map<String,String> data);
   Future<SignUpVerifyPanResponse> verifyPan(Map<String,String> data);
+  Future<SignupStateListResponse> getStateList();
   Future<SignUpResponse> signUpUser(dio.FormData data);
   Future<CommonResponse> updateAadhaarImage(dio.FormData data);
   Future<CommonResponse> updatePanImage(dio.FormData data);

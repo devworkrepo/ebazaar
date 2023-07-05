@@ -13,6 +13,18 @@ class FormValidatorHelper {
       }
     }
   }
+  static String? pincode(value) {
+    var msg = "Enter 6 digits pincode";
+    if (value == null) {
+      return msg;
+    } else {
+      if (value.length == 6) {
+        return null;
+      } else {
+        return msg;
+      }
+    }
+  }
 
   static String? passwordValidation(value) {
     var msg = "Enter min 6 characters password";

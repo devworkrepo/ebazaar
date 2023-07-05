@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spayindia/model/singup/captcha_response.dart';
 import 'package:spayindia/model/singup/kyc_detail_response.dart';
 import 'package:spayindia/model/singup/kyc_otp_response.dart';
+import 'package:spayindia/model/singup/signup_state.dart';
 import 'package:spayindia/model/singup/verify_pan_response.dart';
 import 'package:spayindia/service/network_sign_up_client.dart';
 import 'package:spayindia/util/api/test_response.dart';
@@ -73,6 +74,12 @@ class SingUpRepoImpl extends SignUpRepo {
   Future<SignUpVerifyPanResponse> verifyPan(Map<String, String> data) async{
     var response = await client.post("/VerifyPAN",data: data);
     return SignUpVerifyPanResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<SignupStateListResponse> getStateList() async{
+    var response = await client.post("/GetStatesList");
+    return SignupStateListResponse.fromJson(response.data);
   }
 
   @override

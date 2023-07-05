@@ -9,10 +9,12 @@ import 'package:spayindia/model/common.dart';
 import 'package:spayindia/model/singup/captcha_response.dart';
 import 'package:spayindia/model/singup/kyc_detail_response.dart';
 import 'package:spayindia/model/singup/kyc_otp_response.dart';
+import 'package:spayindia/model/singup/signup_state.dart';
 import 'package:spayindia/model/singup/verify_pan_response.dart';
 import 'package:spayindia/page/auth/signup/singup_success.dart';
 import 'package:spayindia/route/route_name.dart';
 import 'package:spayindia/service/network_sign_up_client.dart';
+import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import 'package:spayindia/util/picker_helper.dart';
@@ -27,16 +29,20 @@ class SignupController extends GetxController with TransactionHelperMixin {
   AppPreference appPreference = Get.find();
   SignUpRepo repo = Get.find<SingUpRepoImpl>();
 
+  String? selectedState;
   var mobileInputController = TextEditingController();
   var emailInputController = TextEditingController();
   var panInputController = TextEditingController();
+  var cityInputController = TextEditingController();
+  var pinCodeInputController = TextEditingController();
   var panInput2Controller = TextEditingController();
   var aadhaarInputController = TextEditingController();
   var mobileOtpController = TextEditingController();
   var emailOtpController = TextEditingController();
   var aadhaarOtpController = TextEditingController();
   var captchaController = TextEditingController();
-  var docAadhaarController = TextEditingController();
+
+  /*var docAadhaarController = TextEditingController();*/
   var docPanController = TextEditingController();
   var stepOneFormKey = GlobalKey<FormState>();
 
@@ -58,8 +64,36 @@ class SignupController extends GetxController with TransactionHelperMixin {
   var detailFetched = false.obs;
   late SignUpKycDetailResponse aadhaarDetail;
 
-  File? aadhaarFile;
+  /* File? aadhaarFile;*/
   File? panFile;
+
+  var stateListFetched = false;
+
+  var stateListResponse = Resource
+      .onInit(data: SignupStateListResponse())
+      .obs;
+
+  late List<SignupStateList> stateList;
+
+  @override
+  onInit(){
+    super.onInit();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _fetchStateList();
+    });
+  }
+
+  _fetchStateList() async{
+    try {
+      stateListResponse.value = const Resource.onInit();
+      final response =  await repo.getStateList();
+      stateList = response.data;
+    stateListResponse.value = Resource.onSuccess(response);
+    } catch (e) {
+    stateListResponse.value = Resource.onFailure(e);
+
+    }
+  }
 
   onContinue() {
     if (stepperCurrentIndex.value == 0) {
@@ -89,10 +123,12 @@ class SignupController extends GetxController with TransactionHelperMixin {
       stepperCurrentIndex.value = 6;
       proceedButtonText.value = "   Submit   ";
     } else if (stepperCurrentIndex.value == 6) {
-      if (aadhaarFile == null) {
+
+
+      /*if (aadhaarFile == null) {
         StatusDialog.alert(title: "Upload aadhaar file !");
         return;
-      }
+      }*/
       if (panFile == null) {
         StatusDialog.alert(title: "Upload pan file !");
         return;
@@ -330,7 +366,7 @@ class SignupController extends GetxController with TransactionHelperMixin {
 
   showImagePickerBottomSheetDialog(SignUpFileType type) async {
     ImagePickerHelper.pickImageWithCrop((File? image) {
-      if (type == SignUpFileType.aadhaar) {
+      /*  if (type == SignUpFileType.aadhaar) {
         aadhaarFile = image;
         if (image == null) {
           docAadhaarController.text = "";
@@ -341,25 +377,27 @@ class SignupController extends GetxController with TransactionHelperMixin {
               "aadhaar_${DateTime.now().millisecondsSinceEpoch}" +
                   fileExtension;
         }
-      } else {
-        panFile = image;
-        if (image == null) {
-          docPanController.text = "";
-        } else {
-          var fileName = panFile!.path.split("/").last;
-          var fileExtension = path.extension(fileName);
-          docPanController.text =
-              "pan_${DateTime.now().millisecondsSinceEpoch}" + fileExtension;
-        }
       }
+      */
+      // else {
+      panFile = image;
+      if (image == null) {
+        docPanController.text = "";
+      } else {
+        var fileName = panFile!.path.split("/").last;
+        var fileExtension = path.extension(fileName);
+        docPanController.text =
+            "pan_${DateTime.now().millisecondsSinceEpoch}" + fileExtension;
+      }
+      //}
     }, () {
-      if (type == SignUpFileType.aadhaar) {
+      /*if (type == SignUpFileType.aadhaar) {
         aadhaarFile = null;
         docAadhaarController.text = "Uploading please wait...";
-      } else {
-        panFile = null;
-        docPanController.text = "Uploading please wait...";
-      }
+      } else {*/
+      panFile = null;
+      docPanController.text = "Uploading please wait...";
+      //}
     });
   }
 
@@ -380,7 +418,9 @@ class SignupController extends GetxController with TransactionHelperMixin {
       String panNumber = panInput2Controller.text.toString();
       if (panNumber.isEmpty) panNumber = panInputController.text.toString();
 
-     var param = {
+      var state = stateList.firstWhere((element) => element.name == selectedState!);
+
+      var param = {
         "mobileno": mobileInputController.text.toString(),
         "fullname": aadhaarDetail.name.toString(),
         "address": aadhaarDetail.address.toString(),
@@ -390,6 +430,10 @@ class SignupController extends GetxController with TransactionHelperMixin {
         "pan_no": panNumber,
         "aadhar_no": aadhaarWithoutSymbol(aadhaarInputController),
         "picname": picName,
+        "stateid": state.id.toString(),
+        "statename": state.name.toString(),
+        "cityname": cityInputController.text.toString(),
+        "pincode": pinCodeInputController.text.toString(),
       };
 
       var multiParam = dio.FormData.fromMap(param);
@@ -398,7 +442,7 @@ class SignupController extends GetxController with TransactionHelperMixin {
       Get.back();
       if (response.code == 1) {
         await Future.wait<CommonResponse?>([
-          _uploadAadhaarImage(response.regid),
+         // _uploadAadhaarImage(response.regid),
           _uploadPanImage(response.regid)
         ]);
 
@@ -417,7 +461,7 @@ class SignupController extends GetxController with TransactionHelperMixin {
     }
   }
 
-  Future<CommonResponse?> _uploadAadhaarImage(String? regid) async {
+  /*Future<CommonResponse?> _uploadAadhaarImage(String? regid) async {
     try {
       var filePath = aadhaarFile!.path;
       var fileName = docAadhaarController.text.toString();
@@ -433,7 +477,7 @@ class SignupController extends GetxController with TransactionHelperMixin {
     } catch (e) {
       return null;
     }
-  }
+  }*/
 
   Future<CommonResponse?> _uploadPanImage(String? regid) async {
     try {
@@ -443,7 +487,15 @@ class SignupController extends GetxController with TransactionHelperMixin {
       dio.MultipartFile? filePart =
           await dio.MultipartFile.fromFile(filePath, filename: fileName);
 
-      var param = {"image2": filePart, "regid": regid.toString()};
+      String panNumber = panInput2Controller.text.toString();
+      if (panNumber.isEmpty) panNumber = panInputController.text.toString();
+
+      var param = {
+        "image2": filePart,
+        "regid": regid.toString(),
+        "pan_no" : panNumber,
+        "pan_name": panName.value
+      };
       var multiParam = dio.FormData.fromMap(param);
 
       CommonResponse response = await repo.updatePanImage(multiParam);

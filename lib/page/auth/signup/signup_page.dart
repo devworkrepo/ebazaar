@@ -9,8 +9,8 @@ import 'package:spayindia/page/auth/signup/step/step_6_pan_verification.dart';
 import 'package:spayindia/page/auth/signup/step/step_5_aadhaar_detail.dart';
 import 'package:spayindia/page/auth/signup/step/step_2_mobile_verify.dart';
 import 'package:spayindia/route/route_name.dart';
+import 'package:spayindia/util/obx_widget.dart';
 
-import '../../../widget/button.dart';
 
 class SignupPage extends GetView<SignupController> {
   const SignupPage({Key? key}) : super(key: key);
@@ -18,51 +18,56 @@ class SignupPage extends GetView<SignupController> {
   @override
   Widget build(BuildContext context) {
     Get.put(SignupController());
-    return WillPopScope(
-      onWillPop: () async {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Sign Up'),
-              content: Text('Sign up is incompleted!',style: Get.textTheme.subtitle2,),
-              actions: <Widget>[
-                FlatButton(
-                  onPressed: () {
-                    Get.back();
-                    Get.offAllNamed(AppRoute.loginPage);
-                  },
-                  child: Text('Go Back'),
-                ),
-              ],
-            );
-          },
-        );
-        return false;
-      },
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text("Sign Up"),
         ),
-        body: Obx(() {
-          return Stepper(
-            elevation: 1,
-            onStepTapped: (value) {
+        body: ObsResourceWidget(
+          obs: controller.stateListResponse, childBuilder: (data) =>
+            WillPopScope(
+              onWillPop: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Sign Up'),
+                      content: Text('Sign up is incompleted!',
+                        style: Get.textTheme.subtitle2,),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.offAllNamed(AppRoute.loginPage);
+                          },
+                          child: Text('Go Back'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                return false;
+              },
+              child: Obx(() {
+                return Stepper(
+                  elevation: 1,
+                  onStepTapped: (value) {
 
-            },
-            currentStep: controller.stepperCurrentIndex.value,
-            onStepContinue: controller.onContinue,
-            onStepCancel: () {},
-            controlsBuilder: (BuildContext context, ControlsDetails details) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Obx(() {
-                  return (controller.proceedButtonText.value.isEmpty)
-                      ? const SizedBox()
-                      : ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.green),
+                  },
+                  currentStep: controller.stepperCurrentIndex.value,
+                  onStepContinue: controller.onContinue,
+                  onStepCancel: () {},
+                  controlsBuilder: (BuildContext context,
+                      ControlsDetails details) {
+                    return Align(
+                      alignment: Alignment.centerRight,
+                      child: Obx(() {
+                        return (controller.proceedButtonText.value.isEmpty)
+                            ? const SizedBox()
+                            : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.green),
                           onPressed: () {
                             controller.onContinue();
                           },
@@ -75,50 +80,51 @@ class SignupPage extends GetView<SignupController> {
                             ],
                           ),
                         );
-                }),
-              );
-            },
-            type: StepperType.horizontal,
-            steps: [
-              Step(
-                  state: controller.stepContactDetail.value,
-                  isActive: controller.isStepperActive(0),
-                  title: const Text(""),
-                  content: const StepContactDetail()),
-              Step(
-                  state: controller.stepMobileVerify.value,
-                  isActive: controller.isStepperActive(1),
-                  title: const Text(""),
-                  content: const StepMobileVerify()),
-              Step(
-                  state: controller.stepCaptchaVerify.value,
-                  isActive: controller.isStepperActive(2),
-                  title: const Text(""),
-                  content: const StepCaptchaVerify()),
-              Step(
-                  state: controller.stepAadhaarVerify.value,
-                  isActive: controller.isStepperActive(3),
-                  title: const Text(""),
-                  content: const StepAadhaarVerify()),
-              Step(
-                  state: controller.stepAadhaarDetail.value,
-                  isActive: controller.isStepperActive(4),
-                  title: const Text(""),
-                  content: const StepAadhaarDetail()),
-              Step(
-                  state: controller.stepPanVerification.value,
-                  isActive: controller.isStepperActive(5),
-                  title: const Text(""),
-                  content: const StepPanVerification()),
-              Step(
-                  state: controller.stepUploadDoc.value,
-                  isActive: controller.isStepperActive(6),
-                  title: const Text(""),
-                  content: const StepUploadDoc()),
-            ],
-          );
-        }),
-      ),
+                      }),
+                    );
+                  },
+                  type: StepperType.horizontal,
+                  steps: [
+                    Step(
+                        state: controller.stepContactDetail.value,
+                        isActive: controller.isStepperActive(0),
+                        title: const Text(""),
+                        content: const StepContactDetail()),
+                    Step(
+                        state: controller.stepMobileVerify.value,
+                        isActive: controller.isStepperActive(1),
+                        title: const Text(""),
+                        content: const StepMobileVerify()),
+                    Step(
+                        state: controller.stepCaptchaVerify.value,
+                        isActive: controller.isStepperActive(2),
+                        title: const Text(""),
+                        content: const StepCaptchaVerify()),
+                    Step(
+                        state: controller.stepAadhaarVerify.value,
+                        isActive: controller.isStepperActive(3),
+                        title: const Text(""),
+                        content: const StepAadhaarVerify()),
+                    Step(
+                        state: controller.stepAadhaarDetail.value,
+                        isActive: controller.isStepperActive(4),
+                        title: const Text(""),
+                        content: const StepAadhaarDetail()),
+                    Step(
+                        state: controller.stepPanVerification.value,
+                        isActive: controller.isStepperActive(5),
+                        title: const Text(""),
+                        content: const StepPanVerification()),
+                    Step(
+                        state: controller.stepUploadDoc.value,
+                        isActive: controller.isStepperActive(6),
+                        title: const Text(""),
+                        content: const StepUploadDoc()),
+                  ],
+                );
+              }),
+            ),
+        )
     );
   }
 }

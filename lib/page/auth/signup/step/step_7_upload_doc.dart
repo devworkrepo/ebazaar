@@ -16,12 +16,12 @@ class StepUploadDoc extends GetView<SignupController> {
         children: [
           Text("Upload Docs", style: Get.textTheme.headline6,),
 
-          AppTextField(
+        /*  AppTextField(
             label: "Aadhaar Photo",
             controller: controller.docAadhaarController,
           onFieldTab: (){
             controller.showImagePickerBottomSheetDialog(SignUpFileType.aadhaar);
-          },),
+          },),*/
           AppTextField(
             label: "PAN Photo",
             controller: controller.docPanController,
