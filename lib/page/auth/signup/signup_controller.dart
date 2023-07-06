@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:spayindia/data/repo/singup_repo.dart';
 import 'package:spayindia/data/repo_impl/singup_impl.dart';
@@ -13,7 +12,6 @@ import 'package:spayindia/model/singup/signup_state.dart';
 import 'package:spayindia/model/singup/verify_pan_response.dart';
 import 'package:spayindia/page/auth/signup/singup_success.dart';
 import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/service/network_sign_up_client.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
 import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
@@ -66,8 +64,6 @@ class SignupController extends GetxController with TransactionHelperMixin {
 
   /* File? aadhaarFile;*/
   File? panFile;
-
-  var stateListFetched = false;
 
   var stateListResponse = Resource
       .onInit(data: SignupStateListResponse())
