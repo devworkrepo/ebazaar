@@ -11,7 +11,6 @@ import 'package:spayindia/page/exception_page.dart';
 import 'package:spayindia/page/response/aeps/aeps_txn_response_page.dart';
 import 'package:spayindia/service/native_call.dart';
 import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/app_util.dart';
 import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
 import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
 import 'package:spayindia/widget/dialog/aeps_rd_service_dialog.dart';
@@ -65,8 +64,6 @@ class AepsController extends GetxController
       aepsBankListResponseObs.value = const Resource.onInit();
       var response = await repo.fetchAepsBankList();
 
-
-
       if (response.code == 1 ) {
         bankListResponse = response;
         bankList = response.aepsBankList!;
@@ -80,11 +77,10 @@ class AepsController extends GetxController
         else{
 
           var mResponse = await  repo.checkF2FAuth();
-          if(mResponse.code == 2){
-            requireAuth.value = true;
-          }
-          else {
+          if(mResponse.code == 1){
             requireAuth.value = false;
+          } else {
+            requireAuth.value = true;
           }
           aepsBankListResponseObs.value = Resource.onSuccess(response);
         }
