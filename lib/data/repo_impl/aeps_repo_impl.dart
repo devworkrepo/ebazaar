@@ -155,4 +155,16 @@ class AepsRepoImpl extends AepsRepo {
     var response = await client.post("/CalcChargesAEPSBank",data: data);
     return AepsSettlementCalcResponse.fromJson(response.data);
   }
+
+  @override
+  Future<CommonResponse> checkF2FAuth() async{
+    var response = await client.post("/CheckAuthStatus");
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> proceedF2FAuth(data) async {
+    var response = await client.post("/AepsDailyAuth",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
 }

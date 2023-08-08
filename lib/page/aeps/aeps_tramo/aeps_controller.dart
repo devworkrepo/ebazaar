@@ -46,6 +46,8 @@ class AepsController extends GetxController
 
   getTitle() => isAadhaarPay ? "Aadhaar Pay" : "AEPS - KING";
 
+  var requireAuth = true.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -55,19 +57,36 @@ class AepsController extends GetxController
     });
   }
 
+
+
+
   void _fetchBankList() async {
     try {
       aepsBankListResponseObs.value = const Resource.onInit();
       var response = await repo.fetchAepsBankList();
+
+
+
       if (response.code == 1 ) {
         bankListResponse = response;
         bankList = response.aepsBankList!;
-        aepsBankListResponseObs.value = Resource.onSuccess(response);
+
         if (!(response.isEKcy ?? false)) {
           showEkcyDialog("E-Kyc is Required.",
               "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",
               AppRoute.aepsEkycPage
           );
+        }
+        else{
+
+          var mResponse = await  repo.checkF2FAuth();
+          if(mResponse.code == 2){
+            requireAuth.value = true;
+          }
+          else {
+            requireAuth.value = false;
+          }
+          aepsBankListResponseObs.value = Resource.onSuccess(response);
         }
       } else if (response.code == 2 ) {
         showEkcyDialog(
@@ -84,6 +103,9 @@ class AepsController extends GetxController
             .then((value) => Get.back());
       }
       else{
+
+
+
         validateLocation(progress: false);
 
         if(selectedAepsBank != null){
@@ -113,8 +135,11 @@ class AepsController extends GetxController
   }
 
   void onProceed() async {
-    var isValidate = aepsFormKey.currentState!.validate();
-    if (!isValidate) return;
+
+    if(!requireAuth.value){
+      var isValidate = aepsFormKey.currentState!.validate();
+      if (!isValidate) return;
+    }
     try {
       await validateLocation(progress: true);
       if(position == null) return;
@@ -138,7 +163,47 @@ class AepsController extends GetxController
     ));
   }
 
+
+  void _proceedF2FAuth(String data) async{
+
+    var _param = <String, String>{
+      "IIN": selectedAepsBank?.id ?? "",
+      "latitude": position!.latitude.toString(),
+      "longitude": position!.longitude.toString(),
+      "biometricData": data,
+      "deviceSerialNumber": await NativeCall.getRdSerialNumber(data),
+    };
+    try {
+      StatusDialog.progress();
+      var response = await repo.proceedF2FAuth(_param);
+      Get.back();
+      if (response.code == 1) {
+        StatusDialog.success(title: response.message).then((value){
+          _fetchBankList();
+        });
+      } else {
+        StatusDialog.alert(title: response.message ?? "");
+      }
+    } catch (e) {
+      Get.back();
+      Get.dialog(ExceptionPage(
+          error: e,
+          data: {
+            "param": _param,
+            "transaction_type": "Aeps Transaction"
+          }
+      ));
+    }
+
+  }
+
   _onRdServiceResult(String data) async {
+
+    if(requireAuth.value){
+      _proceedF2FAuth(data);
+      return;
+    }
+
     var transactionType = "";
     if (aepsTransactionType.value == AepsTransactionType.cashWithdrawal ||
         isAadhaarPay) {

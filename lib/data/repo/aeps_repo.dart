@@ -17,10 +17,12 @@ abstract class AepsRepo {
   Future<AepsBankResponse> fetchAepsBankList();
   Future<AepsTransactionResponse> aepsTransaction(data);
   Future<AepsTransactionResponse> aadhaaPayTransaction(data);
+  Future<CommonResponse> proceedF2FAuth(data);
 
 
   //aeps settlement
   Future<AepsBalance> fetchAepsBalance();
+  Future<CommonResponse> checkF2FAuth();
   Future<AepsSettlementCalcResponse> fetchAepsCalc(data);
   Future<BankListResponse> fetchAepsSettlementBank();
   Future<TransactionInfoResponse> spayAccountSettlement(data);

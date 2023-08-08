@@ -40,7 +40,11 @@ class AepsPage extends GetView<AepsController> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [_buildFormKeyOne()],
+              children: [
+                (!controller.requireAuth.value)
+                    ? _buildFormKeyOne()
+                    : _buildF2FWidget()
+              ],
             ),
           ),
         ),
@@ -49,6 +53,109 @@ class AepsPage extends GetView<AepsController> {
           onClick: controller.onProceed,
         )
       ],
+    );
+  }
+
+  _buildF2FWidget() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Column(
+            children: [
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      Image.asset("assets/image/aeps.png"),
+                      SizedBox(width: 8,),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "2FA Authentication",
+                              style: Get.textTheme.headline2
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                            Text(
+                              "Just 2fa yourself to use aeps withdraw services.",
+                              style: Get.textTheme.subtitle1
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      )
+
+                    ],
+                  ),
+                ),
+                color: Get.theme.primaryColorDark,
+              ),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 8, bottom: 24, right: 24, left: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Text("Select Bank and proceed",
+                      style: TextStyle(
+                        color: Get.theme.primaryColorDark,
+                        fontSize: 18
+                      ),),
+
+                      const SizedBox(height: 5,),
+
+                      Text("This process need to do once in a day",
+                        style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14
+                        ),),
+
+                      const SizedBox(height: 16,),
+
+                      AppDropDown(
+                        maxHeight: Get.height * 0.75,
+                        list:
+                            List.from(controller.bankList.map((e) => e.name)),
+                        selectedItem: (controller.selectedAepsBank == null)
+                            ? null
+                            : controller.selectedAepsBank!.name!,
+                        onChange: (value) {
+                          try {
+                            controller.selectedAepsBank = controller.bankList
+                                .firstWhere(
+                                    (element) => element.name == value);
+                          } catch (e) {
+                            controller.selectedAepsBank = null;
+                            Get.snackbar("Bank is not selected",
+                                "Exception raised while selecting bank",
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white);
+                          }
+                        },
+                        validator: (value) {
+                          if (controller.selectedAepsBank == null) {
+                            return "Select bank";
+                          } else {
+                            return null;
+                          }
+                        },
+                        searchMode: true,
+                        label: "Select Bank",
+                        hint: "Select Bank",
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -195,5 +302,3 @@ class AepsPage extends GetView<AepsController> {
     );
   }
 }
-
-
