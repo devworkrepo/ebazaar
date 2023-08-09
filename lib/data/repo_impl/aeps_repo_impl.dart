@@ -167,4 +167,16 @@ class AepsRepoImpl extends AepsRepo {
     var response = await client.post("/AepsDailyAuth",data: data);
     return CommonResponse.fromJson(response.data);
   }
+
+  @override
+  Future<CommonResponse> checkF2FAuthAP() async {
+    var response = await client.post("/CheckAuthStatusAP");
+    return CommonResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CommonResponse> proceedF2FAuthAP(data) async {
+    var response = await client.post("/AepsDailyAuthAP",data: data);
+    return CommonResponse.fromJson(response.data);
+  }
 }

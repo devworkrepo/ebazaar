@@ -56,40 +56,37 @@ class AepsController extends GetxController
     });
   }
 
-
-
-
   void _fetchBankList() async {
     try {
       aepsBankListResponseObs.value = const Resource.onInit();
       var response = await repo.fetchAepsBankList();
 
-      if (response.code == 1 ) {
+      if (response.code == 1) {
         bankListResponse = response;
         bankList = response.aepsBankList!;
 
         if (!(response.isEKcy ?? false)) {
-          showEkcyDialog("E-Kyc is Required.",
+          showEkcyDialog(
+              "E-Kyc is Required.",
               "To do aeps, aadhaar pay and matm transaction E-Kyc is required!",
-              AppRoute.aepsEkycPage
-          );
-        }
-        else{
-
-          var mResponse = await  repo.checkF2FAuth();
-          if(mResponse.code == 1){
+              AppRoute.aepsEkycPage);
+        } else {
+          var mResponse = (isAadhaarPay)
+              ? await repo.checkF2FAuthAP()
+              : await repo.checkF2FAuth();
+          if (mResponse.code == 1) {
             requireAuth.value = false;
           } else {
             requireAuth.value = true;
           }
           aepsBankListResponseObs.value = Resource.onSuccess(response);
         }
-      } else if (response.code == 2 ) {
+      } else if (response.code == 2) {
         showEkcyDialog(
-            "OnBoarding Required",
-            response.message ??
-                "To do aeps, aadhaar pay and matm transaction"
-                    " OnBoarding is required!",
+          "OnBoarding Required",
+          response.message ??
+              "To do aeps, aadhaar pay and matm transaction"
+                  " OnBoarding is required!",
           AppRoute.aepsOnboardingPage,
         );
       } else if (response.code == 3) {
@@ -97,29 +94,24 @@ class AepsController extends GetxController
                 title: response.message ?? "Pending",
                 buttonText: "Bank to Home")
             .then((value) => Get.back());
-      }
-      else{
-
-
-
+      } else {
         validateLocation(progress: false);
 
-        if(selectedAepsBank != null){
-        }
+        if (selectedAepsBank != null) {}
       }
     } catch (e) {
       aepsBankListResponseObs.value = Resource.onFailure(e);
     }
   }
 
-  void showEkcyDialog(String title, String message,String route) {
+  void showEkcyDialog(String title, String message, String route) {
     Get.bottomSheet(
         EkycInfoWidget(
             title: title,
             message: message,
             onClick: () {
               Get.back();
-              Get.offAndToNamed(route,arguments: true);
+              Get.offAndToNamed(route, arguments: true);
             },
             onCancel: () {
               Get.back();
@@ -131,14 +123,13 @@ class AepsController extends GetxController
   }
 
   void onProceed() async {
-
-    if(!requireAuth.value){
+    if (!requireAuth.value) {
       var isValidate = aepsFormKey.currentState!.validate();
       if (!isValidate) return;
     }
     try {
       await validateLocation(progress: true);
-      if(position == null) return;
+      if (position == null) return;
     } catch (e) {
       return;
     }
@@ -150,8 +141,8 @@ class AepsController extends GetxController
               {"packageUrl": rdServicePackageUrl, "isTransaction": true});
           _onRdServiceResult(result);
         } on PlatformException catch (e) {
-          StatusDialog.failure(title: "Fingerprint capture failed, please try again");
-
+          StatusDialog.failure(
+              title: "Fingerprint capture failed, please try again");
         } catch (e) {
           Get.dialog(ExceptionPage(error: e));
         }
@@ -159,9 +150,7 @@ class AepsController extends GetxController
     ));
   }
 
-
-  void _proceedF2FAuth(String data) async{
-
+  void _proceedF2FAuth(String data) async {
     var _param = <String, String>{
       "IIN": selectedAepsBank?.id ?? "",
       "latitude": position!.latitude.toString(),
@@ -171,10 +160,12 @@ class AepsController extends GetxController
     };
     try {
       StatusDialog.progress();
-      var response = await repo.proceedF2FAuth(_param);
+      var response = (isAadhaarPay)
+          ? await repo.proceedF2FAuthAP(_param)
+          : await repo.proceedF2FAuth(_param);
       Get.back();
       if (response.code == 1) {
-        StatusDialog.success(title: response.message).then((value){
+        StatusDialog.success(title: response.message).then((value) {
           _fetchBankList();
         });
       } else {
@@ -184,18 +175,12 @@ class AepsController extends GetxController
       Get.back();
       Get.dialog(ExceptionPage(
           error: e,
-          data: {
-            "param": _param,
-            "transaction_type": "Aeps Transaction"
-          }
-      ));
+          data: {"param": _param, "transaction_type": "Aeps Transaction"}));
     }
-
   }
 
   _onRdServiceResult(String data) async {
-
-    if(requireAuth.value){
+    if (requireAuth.value) {
       _proceedF2FAuth(data);
       return;
     }
@@ -221,27 +206,26 @@ class AepsController extends GetxController
               title: "Aadhaar No.",
               value: aadhaarNumberController.text.toString()),
           ListTitleValue(title: "Txn Type", value: transactionType),
-          ListTitleValue(title: "Bank Name", value: selectedAepsBank?.name ?? ""),
+          ListTitleValue(
+              title: "Bank Name", value: selectedAepsBank?.name ?? ""),
         ],
         onConfirm: () {
-          if(isAadhaarPay){
+          if (isAadhaarPay) {
             _aadhaarPayTransaction(data);
-          }
-          else{
+          } else {
             _aepsTransaction(data);
           }
         }));
   }
 
   _aepsTransaction(String data) async {
-
     var _param = <String, String>{
       "bankiin": selectedAepsBank?.id ?? "",
       "bankName": selectedAepsBank?.name ?? "",
       "txntype": _transactionTypeInCode(),
       "devicetype": appPreference.rdService,
       "amount": (isAadhaarPay ||
-          aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+              aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
           ? amountWithoutRupeeSymbol(amountController)
           : "0",
       "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
@@ -272,24 +256,19 @@ class AepsController extends GetxController
       Get.back();
       Get.dialog(ExceptionPage(
         error: e,
-        data: {
-          "param": _param,
-          "transaction_type": "Aeps Transaction"
-        },
+        data: {"param": _param, "transaction_type": "Aeps Transaction"},
       ));
     }
   }
 
-
   _aadhaarPayTransaction(String data) async {
-
     var _param = <String, String>{
       "bankiin": selectedAepsBank?.id ?? "",
       "bankName": selectedAepsBank?.name ?? "",
       "txntype": _transactionTypeInCode(),
       "devicetype": appPreference.rdService,
       "amount": (isAadhaarPay ||
-          aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
+              aepsTransactionType.value == AepsTransactionType.cashWithdrawal)
           ? amountWithoutRupeeSymbol(amountController)
           : "0",
       "aadharno": aadhaarWithoutSymbol(aadhaarNumberController),
@@ -318,18 +297,13 @@ class AepsController extends GetxController
       await appPreference.setIsTransactionApi(true);
       Get.back();
       Get.dialog(ExceptionPage(
-        error: e,
-          data: {
-            "param": _param,
-            "transaction_type": "Aeps Transaction"
-          }
-      ));
+          error: e,
+          data: {"param": _param, "transaction_type": "Aeps Transaction"}));
     }
   }
 
   _transactionTypeInCode() {
-
-    switch(aepsTransactionType.value){
+    switch (aepsTransactionType.value) {
       case AepsTransactionType.cashWithdrawal:
         return "CW";
       case AepsTransactionType.balanceEnquiry:
