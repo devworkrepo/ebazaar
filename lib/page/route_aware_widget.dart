@@ -29,12 +29,7 @@ class _RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
     return widget.child;
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var pageRoute = ModalRoute.of(context) as PageRoute;
-    routeObserver.subscribe(this, pageRoute);
-  }
+
 
   @override
   void didPush() {
@@ -64,9 +59,4 @@ class _RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
 
   }
 
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
-  }
 }

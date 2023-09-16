@@ -1,3 +1,4 @@
+/*
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -26,7 +27,7 @@ final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 bool _isBiometricAvailable = false;
 bool _isDeviceRooted = true;
 
-/*bool isLocalApk = true;*/
+
 
 Widget? testPageMode() => null;
 
@@ -36,8 +37,10 @@ Future<void> _initBiometric() async {
 
 Future<void> _iniSafeDevice() async {
   _isDeviceRooted =await NativeCall.isDeviceRooted();
-  /*await PalTrustedDevice.check(onFail: () {  },rooted: true,devMode: false,
-      emulator: true,onExtStorage: false);*/
+  */
+/*await PalTrustedDevice.check(onFail: () {  },rooted: true,devMode: false,
+      emulator: true,onExtStorage: false);*//*
+
 
 }
 
@@ -172,13 +175,39 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
   }
+}*/
+
+import 'package:flutter/material.dart';
+import 'package:spayindia/home2/home_page_2.dart';
+import 'package:spayindia/util/hex_color.dart';
+
+void main(){
+  runApp(const MyApp());
 }
 
 
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-/*App To Do*/
-/*
-*
-*
-* */
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return  MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+
+        primaryColor: HexColor("c20298"),
+        primaryColorDark: HexColor("960276"),
+        colorScheme: ColorScheme.light(
+            primary: HexColor("c20298"),
+            secondary: Colors.green,
+            onSecondary: Colors.white),
+      ),
+      home: const HomePage2(),
+    );
+  }
+}

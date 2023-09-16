@@ -91,16 +91,7 @@ final getAllPages = [
     page: () => const RootPage(),
   ),
 
-  GetPage(
-    name: AppRoute.testPage,
-    page: () =>
-        testPageMode() ??
-        const Scaffold(
-          body: Center(
-            child: Text("Test Page Not Found!"),
-          ),
-        ),
-  ),
+
 
   GetPage(
     name: AppRoute.loginPage,
