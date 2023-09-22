@@ -28,66 +28,40 @@ class HomeBottomBarWidget extends StatelessWidget {
         primaryColor: Colors.white
       ),
       child: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColorDark,
+
         key: bottomNavKey,
         elevation: 20,
 
         selectedLabelStyle: selectedTextStyle,
         unselectedLabelStyle: unSelectedTextStyle,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white60,
+        selectedItemColor: Theme.of(context).primaryColorDark,
+        unselectedItemColor: Colors.grey[600],
+        selectedIconTheme: IconThemeData(
+          color: Theme.of(context).primaryColorDark
+        ),
         // backgroundColor: Get.theme.primaryColor,
         type: BottomNavigationBarType.fixed,
         currentIndex: bottomNavSelectedIndex,
         onTap: (index){
 
         },
-        items:  [
+        items:  const [
 
           BottomNavigationBarItem(
-              icon: Container(
-                padding: EdgeInsets.all(4),
-                decoration: BoxDecoration(
-
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: Colors.white60)
-                ),
-                  child: Icon(Icons.keyboard_return)), label: "Refund"),
+              icon: Icon(Icons.keyboard_return), label: "Refund"),
           BottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: Colors.white60)
-                  ),
-                  child: Icon(Icons.receipt_long_rounded)),
+              icon: Icon(Icons.receipt_long_rounded),
               label: "Statement"),
-          BottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
 
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: Colors.white60)
-                  ),child: Icon(Icons.home)), label: "Home"),
           BottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
+              icon: SizedBox(height: 24,),
+              label: "Home"),
 
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: Colors.white60)
-                  ),child: Icon(Icons.receipt_outlined)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.receipt_outlined),
               label: "Transaction"),
           BottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: Colors.white60)
-                  ),child: Icon(Icons.person)), label: "Profile"),
+              icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );

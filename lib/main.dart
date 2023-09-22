@@ -179,6 +179,7 @@ class _MyAppState extends State<MyApp> {
 
 import 'package:flutter/material.dart';
 import 'package:spayindia/home2/home_page_2.dart';
+import 'package:spayindia/login/login_new.dart';
 import 'package:spayindia/util/hex_color.dart';
 
 void main(){
@@ -200,11 +201,11 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
 
-        primaryColor: HexColor("c20298"),
-        primaryColorDark: HexColor("960276"),
+        primaryColor: HexColor("FF063B6D"),
+        primaryColorDark: HexColor("FF063B6D"),
         colorScheme: ColorScheme.light(
-            primary: HexColor("c20298"),
-            secondary: Colors.green,
+            primary: HexColor("FF063B6D"),
+            secondary: Colors.deepPurple,
             onSecondary: Colors.white),
       ),
       home: const HomePage2(),

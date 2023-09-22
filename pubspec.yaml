@@ -86,3 +86,10 @@ flutter:
     - assets/json/
     - assets/html/
     - assets/sound/
+  fonts:
+    - family : Montserrat
+      fonts:
+        - asset: assets/font/Montserrat-Medium.ttf
+          weight: 500
+
+

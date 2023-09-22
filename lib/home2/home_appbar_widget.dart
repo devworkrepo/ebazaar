@@ -45,7 +45,7 @@ class HomePage2AppBar extends StatelessWidget {
                 fontSize: 16
               ),),
               SizedBox(width: 8,),
-              CircleAvatar(child: Icon(Icons.person))
+              CircleAvatar(child: Icon(Icons.add))
             ],
           ),
         ),

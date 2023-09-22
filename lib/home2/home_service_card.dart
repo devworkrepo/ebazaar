@@ -11,7 +11,7 @@ class HomeServiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Expanded> renderExpandedWidget(int itemCount) {
-    var count = 4 - itemCount;
+      var count = 4 - itemCount;
       List<Expanded> mList = [];
       for (int i = 0; i < count; i++) {
         mList.add(const Expanded(
@@ -31,14 +31,15 @@ class HomeServiceCard extends StatelessWidget {
             Row(
               children: [...firstRow],
             ),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             Row(
               children: [...secondRow, if (mList.isNotEmpty) ...mList],
             ),
           ],
         );
       } else {
-
         var mList = renderExpandedWidget(items.length);
         return Row(
           children: [...items, if (mList.isNotEmpty) ...mList],
@@ -63,9 +64,7 @@ class HomeServiceCard extends StatelessWidget {
                   height: 20,
                 ),
                 Column(
-                  children: [
-                   renderRowItems()
-                  ],
+                  children: [renderRowItems()],
                 )
               ],
             ),
@@ -79,9 +78,10 @@ class HomeServiceCard extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: Colors.blueGrey[900]),
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: Colors.blueGrey[700],
+      ),
     );
   }
 }
@@ -100,33 +100,46 @@ class HomeCardItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
+            margin: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-               gradient: LinearGradient(
-                 colors: [
-                    Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                 ]
-               ),
-          borderRadius: BorderRadius.circular(5)),
-            child: Container(
-              margin: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(5)),
-              child: SvgPicture.asset(
-                "assets/svg/$iconName.svg",
-                width: 48,
-                height: 48,
-              ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                boxShadow: [
+                  const BoxShadow(
+                    color: Color(0x5C1F1FA2),
+                    blurRadius: 10,
+                    spreadRadius: 1,
+                  ),
+                  const BoxShadow(
+                    color: Colors.white,
+
+                    blurRadius: 10,
+                    spreadRadius: 1,
+                  ),
+                ]
+                /*boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.shade100,
+                      spreadRadius: 4,
+                      blurRadius: 1
+                  )
+                ]*/
+            ),
+            child: Image.asset(
+              "assets/image/$iconName.png",
+              width: 42,
+              height: 42,
+              color: Theme.of(context).primaryColorDark,
             ),
           ),
           const SizedBox(
-            height: 12,
+            height: 4,
           ),
           Text(
             title,
-            style:  TextStyle(
-                color: Colors.blueGrey.shade900,
-                fontWeight: FontWeight.w500,
+            style: TextStyle(
+                color: Colors.blueGrey.shade400,
+                fontWeight: FontWeight.w400,
                 fontSize: 12),
           )
         ],
