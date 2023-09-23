@@ -50,7 +50,7 @@ class AppCircleNetworkImage extends StatelessWidget {
   final int size;
 
   const AppCircleNetworkImage(this.imageUrl,
-      {this.horizontalPadding = 12, this.size = 50, Key? key})
+      {this.horizontalPadding = 12, this.size = 60, Key? key})
       : super(key: key);
 
   @override
@@ -59,7 +59,7 @@ class AppCircleNetworkImage extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       margin: EdgeInsets.symmetric(horizontal: horizontalPadding.toDouble()),
       decoration: BoxDecoration(
-        color: AppColor.backgroundColor,
+        color: Theme.of(context).colorScheme.secondary,
         shape: BoxShape.circle,
       ),
       child: Container(
@@ -70,6 +70,7 @@ class AppCircleNetworkImage extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: CachedNetworkImage(
+          fit: BoxFit.fitHeight,
           imageUrl: imageUrl,
           placeholder: (context,url){
            // return Icon(Icons.image_outlined,size: (size-8).toDouble(),);

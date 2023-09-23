@@ -22,7 +22,7 @@ class HomePage2AppBar extends StatelessWidget {
             color: Colors.black12,
             borderRadius: BorderRadius.circular(50),
             border: Border.all(
-              color: Colors.white70,
+              color: Colors.white38,
             )
           ),
           padding: EdgeInsets.all(4),
@@ -45,7 +45,7 @@ class HomePage2AppBar extends StatelessWidget {
                 fontSize: 16
               ),),
               SizedBox(width: 8,),
-              CircleAvatar(child: Icon(Icons.add))
+              CircleAvatar(radius: 15,child: Icon(Icons.add)),
             ],
           ),
         ),

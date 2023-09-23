@@ -51,7 +51,7 @@ class HomeServiceCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-        elevation: 2,
+        elevation: 1,
         child: SizedBox(
           width: double.infinity,
           child: Padding(
@@ -105,16 +105,16 @@ class HomeCardItem extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
                 boxShadow: [
-                  const BoxShadow(
-                    color: Color(0x5C1F1FA2),
+                   BoxShadow(
+                    color: Theme.of(context).primaryColor.withOpacity(0.5),
                     blurRadius: 10,
-                    spreadRadius: 1,
+                    spreadRadius: 0,
                   ),
-                  const BoxShadow(
-                    color: Colors.white,
+                   BoxShadow(
+                    color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
 
                     blurRadius: 10,
-                    spreadRadius: 1,
+                    spreadRadius: 0,
                   ),
                 ]
                 /*boxShadow: [
@@ -125,11 +125,18 @@ class HomeCardItem extends StatelessWidget {
                   )
                 ]*/
             ),
-            child: Image.asset(
-              "assets/image/$iconName.png",
-              width: 42,
-              height: 42,
-              color: Theme.of(context).primaryColorDark,
+            child: Container(
+              margin: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                border: Border.all(color: Theme.of(context).primaryColorDark.withOpacity(0.2)),
+                borderRadius: BorderRadius.circular(4)
+              ),
+              child: Image.asset(
+                "assets/image/$iconName.png",
+                width: 42,
+                height: 42,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
             ),
           ),
           const SizedBox(

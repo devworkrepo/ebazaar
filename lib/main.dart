@@ -200,12 +200,10 @@ class _MyAppState extends State<MyApp> {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
-        primaryColor: HexColor("FF063B6D"),
-        primaryColorDark: HexColor("FF063B6D"),
+        primaryColorDark: HexColor("9c0376"),
         colorScheme: ColorScheme.light(
-            primary: HexColor("FF063B6D"),
-            secondary: Colors.deepPurple,
+            primary: HexColor("fc03be"),
+            secondary: HexColor("66039c"),
             onSecondary: Colors.white),
       ),
       home: const HomePage2(),

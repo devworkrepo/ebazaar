@@ -41,7 +41,7 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
                     autoPlay: true,
                     viewportFraction: 0.88,
                     enlargeStrategy: CenterPageEnlargeStrategy.height,
-                    height: 148,
+                    height: 176,
                     onPageChanged: (index, reason) {
                       setState(() {
                         activeIndex = index;
@@ -79,10 +79,20 @@ class _BuildItem extends StatelessWidget {
       width: double.infinity,
       child: LayoutBuilder(
         builder: (context, constraint) {
-          return Card(
-            color: Colors.blue[900],
-            elevation: 1,
-            clipBehavior: Clip.antiAlias,
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Theme.of(context).primaryColorDark,
+                  Theme.of(context).primaryColorDark,
+                  Theme.of(context).colorScheme.secondary
+                ]
+              ),
+              borderRadius: BorderRadius.circular(8)
+            ),
+
             margin: const EdgeInsets.all(4),
             child: CachedNetworkImage(
               placeholder: (context, url) => const Center(
