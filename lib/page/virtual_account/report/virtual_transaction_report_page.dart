@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/virtual_account/virtual_report.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/etns/on_string.dart';
-import 'package:spayindia/util/tags.dart';
-import 'package:spayindia/widget/api_component.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/list_component.dart';
-import 'package:spayindia/widget/no_data_found.dart';
+import 'package:ebazaar/model/virtual_account/virtual_report.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/util/etns/on_string.dart';
+import 'package:ebazaar/util/tags.dart';
+import 'package:ebazaar/widget/api_component.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/list_component.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
 
 import '../../report/report_helper.dart';
 import '../../report/report_search.dart';

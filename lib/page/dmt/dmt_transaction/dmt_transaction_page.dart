@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:number_to_words/number_to_words.dart';
-import 'package:spayindia/page/dmt/dmt_transaction/component/bank_detail_widget.dart';
-import 'package:spayindia/page/dmt/dmt_transaction/component/dmt_calculate_charge.dart';
-import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_controller.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/util/validator.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/common/wallet_widget.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/page/dmt/dmt_transaction/component/bank_detail_widget.dart';
+import 'package:ebazaar/page/dmt/dmt_transaction/component/dmt_calculate_charge.dart';
+import 'package:ebazaar/page/dmt/dmt_transaction/dmt_transaction_controller.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/common/wallet_widget.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 import '../dmt.dart';
 

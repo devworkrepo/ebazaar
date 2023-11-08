@@ -1,9 +1,9 @@
-import 'package:spayindia/data/repo/auth_repo.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/user/login.dart';
-import 'package:spayindia/service/network_client.dart';
+import 'package:ebazaar/data/repo/auth_repo.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/user/login.dart';
+import 'package:ebazaar/service/network_client.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/api/exception.dart';
+import 'package:ebazaar/util/api/exception.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final NetworkClient client = Get.find();

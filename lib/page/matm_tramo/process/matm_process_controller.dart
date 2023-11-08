@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo_impl/report_impl.dart';
-import 'package:spayindia/model/matm/matm_request_response.dart';
-import 'package:spayindia/page/report/report_helper.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/data/repo_impl/report_impl.dart';
+import 'package:ebazaar/model/matm/matm_request_response.dart';
+import 'package:ebazaar/page/report/report_helper.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 import '../../../data/repo/report_repo.dart';
 import '../../../model/report/requery.dart';

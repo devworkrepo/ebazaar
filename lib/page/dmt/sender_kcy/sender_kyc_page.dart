@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/dmt/sender_kcy/sender_kyc_controller.dart';
-import 'package:spayindia/res/color.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/dmt/sender_kcy/sender_kyc_controller.dart';
+import 'package:ebazaar/res/color.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 import '../../../widget/common/counter_widget.dart';
 import '../../../util/app_constant.dart';

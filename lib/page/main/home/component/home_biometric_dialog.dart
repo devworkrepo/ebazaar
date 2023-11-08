@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/widget/button.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/widget/button.dart';
 
 import '../../../biometric_setting_page.dart';
 

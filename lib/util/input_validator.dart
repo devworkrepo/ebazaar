@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class AadhaarInputValidator extends TextInputFormatter {
   @override

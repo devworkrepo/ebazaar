@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/home_repo.dart';
-import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/util/security/encription.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/home_repo.dart';
+import 'package:ebazaar/data/repo_impl/home_repo_impl.dart';
+import 'package:ebazaar/util/security/encription.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 import '../../../widget/common.dart';
 import '../../exception_page.dart';

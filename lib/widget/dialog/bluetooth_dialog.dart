@@ -1,8 +1,8 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class BluetoothDialog extends StatelessWidget {
   const BluetoothDialog({Key? key}) : super(key: key);

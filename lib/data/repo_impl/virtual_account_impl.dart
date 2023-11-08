@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/virtual_account_repo.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/virtual_account/virtual_account.dart';
-import 'package:spayindia/service/network_client.dart';
+import 'package:ebazaar/data/repo/virtual_account_repo.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/virtual_account/virtual_account.dart';
+import 'package:ebazaar/service/network_client.dart';
 
 class VirtualAccountImpl extends VirtualAccountRepo {
   NetworkClient client = Get.find();

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/investment/investment_list.dart';
-import 'package:spayindia/model/report/dmt.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/etns/on_string.dart';
-import 'package:spayindia/widget/api_component.dart';
-import 'package:spayindia/widget/list_component.dart';
-import 'package:spayindia/widget/no_data_found.dart';
+import 'package:ebazaar/model/investment/investment_list.dart';
+import 'package:ebazaar/model/report/dmt.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/etns/on_string.dart';
+import 'package:ebazaar/widget/api_component.dart';
+import 'package:ebazaar/widget/list_component.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
 
-import 'package:spayindia/widget/common/report_action_button.dart';
-import 'package:spayindia/page/report/report_helper.dart';
-import 'package:spayindia/page/report/report_search.dart';
+import 'package:ebazaar/widget/common/report_action_button.dart';
+import 'package:ebazaar/page/report/report_helper.dart';
+import 'package:ebazaar/page/report/report_search.dart';
 import '../../report/widget/summary_header.dart';
 import 'investment_list_controller.dart';
 

@@ -1,6 +1,6 @@
-# spayindia
+# ebazaar
 
-Spay India a money transaction based fintech application service
+Smart Bazaar a money transaction based fintech application service
 
 ## Getting Started
 

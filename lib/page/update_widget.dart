@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo/home_repo.dart';
-import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/model/app_update.dart';
-import 'package:spayindia/res/style.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/common/amount_background.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo/home_repo.dart';
+import 'package:ebazaar/data/repo_impl/home_repo_impl.dart';
+import 'package:ebazaar/model/app_update.dart';
+import 'package:ebazaar/res/style.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/common/amount_background.dart';
 
 
 import '../util/in_app_update.dart';
@@ -340,7 +340,7 @@ class _UpdateHelpWidget extends StatelessWidget {
                       height: 5,
                     ),
                     const Text(
-                      "If you don't see update available for spay India. Use method 2",
+                      "If you don't see update available for Smart Bazaar. Use method 2",
                       style: TextStyle(color: Colors.red),
                     ),
                     const SizedBox(
@@ -354,14 +354,14 @@ class _UpdateHelpWidget extends StatelessWidget {
                       height: 5,
                     ),
                     const Text(
-                      "If you don't see update available for spay India. Use method 3",
+                      "If you don't see update available for Smart Bazaar. Use method 3",
                       style: TextStyle(color: Colors.red),
                     ),
                     SizedBox(
                       height: 16,
                     ),
                     Text(
-                      "Method 3. Uninstall the spay india app and reinstall from play store.",
+                      "Method 3. Uninstall the Smart Bazaar app and reinstall from play store.",
                       style: Get.textTheme.subtitle2,
                     ),
                   ],

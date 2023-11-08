@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/singup/captcha_response.dart';
-import 'package:spayindia/model/singup/kyc_detail_response.dart';
-import 'package:spayindia/model/singup/kyc_otp_response.dart';
-import 'package:spayindia/model/singup/signup_state.dart';
-import 'package:spayindia/model/singup/verify_pan_response.dart';
-import 'package:spayindia/service/network_sign_up_client.dart';
-import 'package:spayindia/util/api/test_response.dart';
+import 'package:ebazaar/model/singup/captcha_response.dart';
+import 'package:ebazaar/model/singup/kyc_detail_response.dart';
+import 'package:ebazaar/model/singup/kyc_otp_response.dart';
+import 'package:ebazaar/model/singup/signup_state.dart';
+import 'package:ebazaar/model/singup/verify_pan_response.dart';
+import 'package:ebazaar/service/network_sign_up_client.dart';
+import 'package:ebazaar/util/api/test_response.dart';
 
 import '../../model/common.dart';
 

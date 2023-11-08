@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:spayindia/model/banner.dart';
-import 'package:spayindia/util/app_constant.dart';
+import 'package:ebazaar/model/banner.dart';
+import 'package:ebazaar/util/app_constant.dart';
 
 class HomeCarouselWidget extends StatefulWidget {
   const HomeCarouselWidget({Key? key}) : super(key: key);

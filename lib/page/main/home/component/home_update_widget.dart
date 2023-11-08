@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/widget/common/animate_icon_widget.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/widget/common/animate_icon_widget.dart';
 
 class HomeAppUpdateWidget extends GetView<HomeController> {
   const HomeAppUpdateWidget({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class HomeAppUpdateWidget extends GetView<HomeController> {
                           height: 5,
                         ),
                         Text(
-                          "New version of Spay India is available for update.",
+                          "New version of Smart Bazaar is available for update.",
                           style: Get.textTheme.bodyText1
                               ?.copyWith(color: Colors.grey[700]),
                         ),

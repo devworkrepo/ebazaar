@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/common/counter_widget.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/dmt/sender_add/sender_add_controller.dart';
-import 'package:spayindia/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/common/counter_widget.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/dmt/sender_add/sender_add_controller.dart';
+import 'package:ebazaar/util/validator.dart';
 
 class SenderAddPage extends GetView<SenderAddController> {
   const SenderAddPage({Key? key}) : super(key: key);

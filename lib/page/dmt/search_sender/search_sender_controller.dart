@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo/dmt_repo.dart';
-import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
-import 'package:spayindia/model/dmt/account_search.dart';
-import 'package:spayindia/model/dmt/sender_info.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo/dmt_repo.dart';
+import 'package:ebazaar/data/repo_impl/dmt_repo_impl.dart';
+import 'package:ebazaar/model/dmt/account_search.dart';
+import 'package:ebazaar/model/dmt/sender_info.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 import 'account_list_dialog.dart';
 

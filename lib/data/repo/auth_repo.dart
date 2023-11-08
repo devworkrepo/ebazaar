@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/user/login.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/user/login.dart';
 
 abstract class AuthRepo {
 

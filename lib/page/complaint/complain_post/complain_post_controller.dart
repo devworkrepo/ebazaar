@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/complain_repo.dart';
-import 'package:spayindia/data/repo_impl/complain_repo_impl.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/complain_repo.dart';
+import 'package:ebazaar/data/repo_impl/complain_repo_impl.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class ComplainPostController extends GetxController {
   final ComplainRepo repo = Get.find<ComplainRepoImpl>();

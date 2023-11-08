@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/cash_convereter.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/cash_convereter.dart';
 
 class SummaryHeader {
   final String title;

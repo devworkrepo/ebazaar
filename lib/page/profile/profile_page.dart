@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/model/profile.dart';
-import 'package:spayindia/model/user/user.dart';
-import 'package:spayindia/page/profile/profile_controller.dart';
-import 'package:spayindia/page/recharge/recharge/component/recharge_confirm_dialog.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/model/profile.dart';
+import 'package:ebazaar/model/user/user.dart';
+import 'package:ebazaar/page/profile/profile_controller.dart';
+import 'package:ebazaar/page/recharge/recharge/component/recharge_confirm_dialog.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 class ProfilePage extends GetView<ProfileController> {
   const ProfilePage({Key? key}) : super(key: key);

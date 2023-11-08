@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/page/dmt/import_beneficiary/from_deleted/import_deleted_page.dart';
-import 'package:spayindia/page/dmt/import_beneficiary/from_sender/import_sender_page.dart';
+import 'package:ebazaar/page/dmt/import_beneficiary/from_deleted/import_deleted_page.dart';
+import 'package:ebazaar/page/dmt/import_beneficiary/from_sender/import_sender_page.dart';
 
 class ImportBeneficiaryTabPage extends StatefulWidget {
   const ImportBeneficiaryTabPage({Key? key}) : super(key: key);

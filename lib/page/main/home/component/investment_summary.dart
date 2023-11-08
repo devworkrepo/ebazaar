@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/investment/investment_summary.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/model/investment/investment_summary.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 class HomeCommissionSummaryWidget extends GetView<HomeController> {
   const HomeCommissionSummaryWidget({Key? key}) : super(key: key);

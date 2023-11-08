@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/res/color.dart';
-import 'package:spayindia/util/hex_color.dart';
+import 'package:ebazaar/res/color.dart';
+import 'package:ebazaar/util/hex_color.dart';
 
 class AppNetworkImage extends StatelessWidget {
   final String imageUrl;

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/aeps_repo.dart';
-import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
-import 'package:spayindia/model/aeps/settlement/bank.dart';
-import 'package:spayindia/model/investment/investment_list.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/future_util.dart';
+import 'package:ebazaar/data/repo/aeps_repo.dart';
+import 'package:ebazaar/data/repo_impl/aeps_repo_impl.dart';
+import 'package:ebazaar/model/aeps/settlement/bank.dart';
+import 'package:ebazaar/model/investment/investment_list.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/future_util.dart';
 
 class InvestmentBankListController extends GetxController{
 

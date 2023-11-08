@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/aeps/aeps_bank.dart';
-import 'package:spayindia/model/aeps/aeps_token.dart';
-import 'package:spayindia/model/aeps/aeps_transaction.dart';
-import 'package:spayindia/service/network_client.dart';
+import 'package:ebazaar/model/aeps/aeps_bank.dart';
+import 'package:ebazaar/model/aeps/aeps_token.dart';
+import 'package:ebazaar/model/aeps/aeps_transaction.dart';
+import 'package:ebazaar/service/network_client.dart';
 
 import '../../model/common.dart';
 import '../repo/aeps_aitel_repo.dart';

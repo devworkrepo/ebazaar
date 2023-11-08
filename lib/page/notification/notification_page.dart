@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/no_data_found.dart';
-import 'package:spayindia/model/notification.dart';
-import 'package:spayindia/page/notification/notification_controller.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
+import 'package:ebazaar/model/notification.dart';
+import 'package:ebazaar/page/notification/notification_controller.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 class NotificationPage extends GetView<NotificationController> {
   const NotificationPage({Key? key}) : super(key: key);

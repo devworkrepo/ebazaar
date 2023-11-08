@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/money_request_repo.dart';
-import 'package:spayindia/data/repo_impl/money_request_impl.dart';
-import 'package:spayindia/service/native_call.dart';
-import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:ebazaar/data/repo/money_request_repo.dart';
+import 'package:ebazaar/data/repo_impl/money_request_impl.dart';
+import 'package:ebazaar/service/native_call.dart';
+import 'package:ebazaar/util/mixin/transaction_helper_mixin.dart';
 
 class UpiPaymentController extends GetxController with TransactionHelperMixin {
   final MoneyRequestRepo repo = Get.find<MoneyRequestImpl>();

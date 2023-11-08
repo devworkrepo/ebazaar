@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/hex_color.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/hex_color.dart';
 
 import '../../../../widget/text_field.dart';
 import '../beneficiary_controller.dart';

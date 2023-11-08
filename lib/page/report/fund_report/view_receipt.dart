@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' as getx;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spayindia/model/fund/request_report.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/widget/image.dart';
+import 'package:ebazaar/model/fund/request_report.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/image.dart';
 
 
 

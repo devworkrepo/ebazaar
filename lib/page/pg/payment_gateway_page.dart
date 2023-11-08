@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/money_request/pg_payment_mode.dart';
-import 'package:spayindia/page/pg/payment_gateway_controller.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/common/amount_background.dart';
+import 'package:ebazaar/model/money_request/pg_payment_mode.dart';
+import 'package:ebazaar/page/pg/payment_gateway_controller.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/widget/common.dart';
+import 'package:ebazaar/widget/common/amount_background.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../util/validator.dart';

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
+import 'package:ebazaar/data/repo_impl/home_repo_impl.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
 
 import '../../data/repo/home_repo.dart';
 import '../../model/notification.dart';

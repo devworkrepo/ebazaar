@@ -1,6 +1,6 @@
-import 'package:spayindia/model/dmt/bank.dart';
-import 'package:spayindia/model/dmt/beneficiary.dart';
-import 'package:spayindia/model/dmt/check_status.dart';
+import 'package:ebazaar/model/dmt/bank.dart';
+import 'package:ebazaar/model/dmt/beneficiary.dart';
+import 'package:ebazaar/model/dmt/check_status.dart';
 
 
 class DmtBeneficiaryResponse {

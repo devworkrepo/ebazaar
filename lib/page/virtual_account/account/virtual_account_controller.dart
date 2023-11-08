@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo/virtual_account_repo.dart';
-import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/data/repo_impl/virtual_account_impl.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/virtual_account/virtual_account.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/future_util.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/widget/image.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo/virtual_account_repo.dart';
+import 'package:ebazaar/data/repo_impl/home_repo_impl.dart';
+import 'package:ebazaar/data/repo_impl/virtual_account_impl.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/virtual_account/virtual_account.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/future_util.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/image.dart';
 
 class VirtualAccountController extends GetxController  {
   VirtualAccountRepo repo = Get.find<VirtualAccountImpl>();

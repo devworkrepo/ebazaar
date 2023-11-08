@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/virtual_account/virtual_account.dart';
-import 'package:spayindia/page/virtual_account/account/virtual_account_controller.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/widget/no_data_found.dart';
+import 'package:ebazaar/model/virtual_account/virtual_account.dart';
+import 'package:ebazaar/page/virtual_account/account/virtual_account_controller.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
 
 class VirtualAccountPage extends GetView<VirtualAccountController> {
   const VirtualAccountPage({Key? key}) : super(key: key);

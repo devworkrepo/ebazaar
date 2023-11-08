@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/res/color.dart';
+import 'package:ebazaar/res/color.dart';
 
 class TestSummaryHeaderPage extends StatelessWidget {
   const TestSummaryHeaderPage({Key? key}) : super(key: key);

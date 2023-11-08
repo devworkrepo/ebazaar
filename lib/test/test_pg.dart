@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/widget/common.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/widget/common.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TestPgWebView extends StatefulWidget {

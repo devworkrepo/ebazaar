@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:spayindia/model/money_request/bank_dertail.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/fund/component/bond_dialog.dart';
-import 'package:spayindia/page/report/receipt_print_mixin.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/date_util.dart';
-import 'package:spayindia/util/tags.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/model/money_request/bank_dertail.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/page/fund/component/bond_dialog.dart';
+import 'package:ebazaar/page/report/receipt_print_mixin.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/date_util.dart';
+import 'package:ebazaar/util/tags.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 import '../../../model/virtual_account/virtual_report.dart';
 

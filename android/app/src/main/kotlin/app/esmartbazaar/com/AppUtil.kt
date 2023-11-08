@@ -1,9 +1,9 @@
-package app.spayindia.com.spayindia
+package app.esmartbazaar.com
 
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import app.spayindia.com.BuildConfig
+import app.esmartbazaar.com.BuildConfig
 
 object AppUtil {
     private const val TAG = "Spay Log"

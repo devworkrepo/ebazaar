@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/investment/pan/investment_pan_controller.dart';
-import 'package:spayindia/util/validator.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/page/investment/pan/investment_pan_controller.dart';
+import 'package:ebazaar/util/validator.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 class InvestmentPanPage extends GetView<InvestmentPanController> {
   const InvestmentPanPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/complaint.dart';
-import 'package:spayindia/service/network_client.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/complaint.dart';
+import 'package:ebazaar/service/network_client.dart';
 
 import '../repo/complain_repo.dart';
 

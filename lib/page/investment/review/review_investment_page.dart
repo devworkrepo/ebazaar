@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:number_to_words/number_to_words.dart';
-import 'package:spayindia/page/investment/component/balance.dart';
-import 'package:spayindia/page/investment/create/create_investment_controller.dart';
-import 'package:spayindia/page/investment/review/review_investment_controller.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/security/app_config.dart';
-import 'package:spayindia/widget/check_box.dart';
-import 'package:spayindia/widget/drop_down.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/page/investment/component/balance.dart';
+import 'package:ebazaar/page/investment/create/create_investment_controller.dart';
+import 'package:ebazaar/page/investment/review/review_investment_controller.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/security/app_config.dart';
+import 'package:ebazaar/widget/check_box.dart';
+import 'package:ebazaar/widget/drop_down.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 class ReviewInvestmentPage extends GetView<ReviewInvestmentController> {
   const ReviewInvestmentPage({Key? key}) : super(key: key);

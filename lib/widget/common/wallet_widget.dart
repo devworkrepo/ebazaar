@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo/home_repo.dart';
-import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo/home_repo.dart';
+import 'package:ebazaar/data/repo_impl/home_repo_impl.dart';
 
 class WalletWidget extends GetView<_WalletWidgetController> {
   const WalletWidget({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class WalletWidget extends GetView<_WalletWidgetController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Spay India wallet",
+                            "Smart Bazaar wallet",
                             style: Get.textTheme.subtitle1
                                 ?.copyWith(color: Get.theme.primaryColorDark),
                           ),

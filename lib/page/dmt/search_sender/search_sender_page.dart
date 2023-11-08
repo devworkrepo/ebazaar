@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/radio.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/page/dmt/search_sender/search_sender_controller.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/radio.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/page/dmt/search_sender/search_sender_controller.dart';
 
 
 class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
@@ -158,7 +158,7 @@ class DmtSearchSenderPage extends GetView<DmtSearchSenderController> {
           child: Wrap(
             children: [
               Text(
-                "Note : - Dear Merchants Please be note that this service is for your vendor payout transfer not for the use of Domestic money transfer transactions if you use this service of Domestic money transfer you will be held liable for all the taxable liability. Spay India is not responcialble for this missuse of the service.",
+                "Note : - Dear Merchants Please be note that this service is for your vendor payout transfer not for the use of Domestic money transfer transactions if you use this service of Domestic money transfer you will be held liable for all the taxable liability. Smart Bazaar is not responcialble for this missuse of the service.",
                 style: Get.textTheme.bodyText1
                     ?.copyWith(color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.w500),
               )

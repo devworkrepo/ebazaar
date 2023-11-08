@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/investment/investment_summary.dart';
-import 'package:spayindia/page/investment/summary/investment_summary_controller.dart';
-import 'package:spayindia/page/route_aware_widget.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/model/investment/investment_summary.dart';
+import 'package:ebazaar/page/investment/summary/investment_summary_controller.dart';
+import 'package:ebazaar/page/route_aware_widget.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 class InvestmentSummaryPage extends GetView<InvestmentSummaryController> {
   const InvestmentSummaryPage({Key? key}) : super(key: key);

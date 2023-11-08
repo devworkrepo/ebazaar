@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spayindia/model/user/user.dart';
-import 'package:spayindia/util/security/encription.dart';
+import 'package:ebazaar/model/user/user.dart';
+import 'package:ebazaar/util/security/encription.dart';
 
 import '../model/alert.dart';
 

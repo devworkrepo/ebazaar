@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/dmt/sender_change/change_name/sender_change_name_controller.dart';
-import 'package:spayindia/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/dmt/sender_change/change_name/sender_change_name_controller.dart';
+import 'package:ebazaar/util/validator.dart';
 
 class SenderNameChangePage extends StatelessWidget {
   const SenderNameChangePage({Key? key}) : super(key: key);

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/dmt/beneficiary.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/component/transfer_mode_dailog.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_controller.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/component/beneficiary_list_mixin.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/route/route_name.dart';
+import 'package:ebazaar/model/dmt/beneficiary.dart';
+import 'package:ebazaar/page/dmt/beneficiary_list/component/transfer_mode_dailog.dart';
+import 'package:ebazaar/page/dmt/beneficiary_list/beneficiary_controller.dart';
+import 'package:ebazaar/page/dmt/beneficiary_list/component/beneficiary_list_mixin.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/route/route_name.dart';
 
 class DmtBeneficiaryListItem extends GetView<BeneficiaryListController>
     with BeneficiaryListMixin {

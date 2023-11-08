@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/matm_credo_repo.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/service/network_client.dart';
+import 'package:ebazaar/data/repo/matm_credo_repo.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/service/network_client.dart';
 
 import '../../model/matm_credo/matm_credo_initiate.dart';
 

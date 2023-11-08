@@ -38,10 +38,10 @@ class RootPage extends StatelessWidget {
                         height: 16,
                       ),
                       Text(
-                        "Sorry! your device isn't passing Spay India's security checks.This "
+                        "Sorry! your device isn't passing Smart Bazaar's security checks.This "
                         "may be because your device is rooted or is running an un-certified "
                         "or custom OS build. As a result, SpayIndia can't confirm that device"
-                        " meets Spay India's security standards.",
+                        " meets Smart Bazaar's security standards.",
                         style: Get.textTheme.subtitle2?.copyWith(
                             color: Colors.white70,
                             wordSpacing: 1.5,

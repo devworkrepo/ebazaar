@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/aeps/settlement/bank.dart';
-import 'package:spayindia/page/aeps_settlement/import_account/list_item.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/model/aeps/settlement/bank.dart';
+import 'package:ebazaar/page/aeps_settlement/import_account/list_item.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 import '../../../../widget/button.dart';
 import '../../../widget/no_data_found.dart';

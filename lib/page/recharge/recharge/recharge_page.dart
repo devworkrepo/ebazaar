@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/api_component.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/common/amount_background.dart';
-import 'package:spayindia/widget/common/wallet_widget.dart';
-import 'package:spayindia/widget/drop_down.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/recharge/provider/provider_controller.dart';
-import 'package:spayindia/page/recharge/recharge/recharge_controller.dart';
-import 'package:spayindia/util/validator.dart';
+import 'package:ebazaar/widget/api_component.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/common/amount_background.dart';
+import 'package:ebazaar/widget/common/wallet_widget.dart';
+import 'package:ebazaar/widget/drop_down.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/page/recharge/provider/provider_controller.dart';
+import 'package:ebazaar/page/recharge/recharge/recharge_controller.dart';
+import 'package:ebazaar/util/validator.dart';
 
 class RechargePage extends GetView<RechargeController> {
   const RechargePage({Key? key}) : super(key: key);

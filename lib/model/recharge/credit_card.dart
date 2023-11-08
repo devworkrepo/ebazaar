@@ -1,4 +1,4 @@
-import 'package:spayindia/model/bank.dart';
+import 'package:ebazaar/model/bank.dart';
 
 class CreditCardType{
   String? name;

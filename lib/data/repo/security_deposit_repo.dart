@@ -1,11 +1,11 @@
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/investment/Investment_close_calc.dart';
-import 'package:spayindia/model/investment/inventment_balance.dart';
-import 'package:spayindia/model/investment/inventment_calc.dart';
-import 'package:spayindia/model/investment/investment_list.dart';
-import 'package:spayindia/model/investment/investment_summary.dart';
-import 'package:spayindia/model/user/signup/mobile_submit.dart';
-import 'package:spayindia/model/wallet/wallet_fav.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/investment/Investment_close_calc.dart';
+import 'package:ebazaar/model/investment/inventment_balance.dart';
+import 'package:ebazaar/model/investment/inventment_calc.dart';
+import 'package:ebazaar/model/investment/investment_list.dart';
+import 'package:ebazaar/model/investment/investment_summary.dart';
+import 'package:ebazaar/model/user/signup/mobile_submit.dart';
+import 'package:ebazaar/model/wallet/wallet_fav.dart';
 import 'package:dio/dio.dart' as dio;
 
 import '../../model/report/security_deposit.dart';

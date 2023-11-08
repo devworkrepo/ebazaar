@@ -1,7 +1,7 @@
-import 'package:spayindia/model/aeps/aeps_bank.dart';
-import 'package:spayindia/model/aeps/aeps_token.dart';
-import 'package:spayindia/model/aeps/aeps_transaction.dart';
-import 'package:spayindia/model/common.dart';
+import 'package:ebazaar/model/aeps/aeps_bank.dart';
+import 'package:ebazaar/model/aeps/aeps_token.dart';
+import 'package:ebazaar/model/aeps/aeps_transaction.dart';
+import 'package:ebazaar/model/common.dart';
 import 'package:dio/dio.dart' as dio;
 
 

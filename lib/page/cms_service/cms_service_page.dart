@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/cms_service.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/model/cms_service.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../util/validator.dart';
 import '../../widget/button.dart';

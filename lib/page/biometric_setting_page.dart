@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
+import 'package:ebazaar/data/app_pref.dart';
 
 class BiometricSettingPage extends StatefulWidget {
   const BiometricSettingPage({Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class _BiometricSettingPageState extends State<BiometricSettingPage> {
                 ],
               ),
                Text(
-                "Enable biometric authentication to secure spay india app login from unknown user.",
+                "Enable biometric authentication to secure Smart Bazaar app login from unknown user.",
                 style: TextStyle(color: Colors.grey[700]),
               )
             ],

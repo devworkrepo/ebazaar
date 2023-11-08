@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/data/repo/aeps_repo.dart';
-import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
-import 'package:spayindia/model/aeps/aeps_state.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/future_util.dart';
-import 'package:spayindia/util/mixin/location_helper_mixin.dart';
-import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/aeps_repo.dart';
+import 'package:ebazaar/data/repo_impl/aeps_repo_impl.dart';
+import 'package:ebazaar/model/aeps/aeps_state.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/future_util.dart';
+import 'package:ebazaar/util/mixin/location_helper_mixin.dart';
+import 'package:ebazaar/util/mixin/transaction_helper_mixin.dart';
 
 import '../../../data/repo/aeps_aitel_repo.dart';
 import '../../../data/repo_impl/aeps_aitel_impl.dart';

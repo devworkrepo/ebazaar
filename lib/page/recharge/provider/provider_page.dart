@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/progress.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/model/recharge/provider.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/page/recharge/provider/provider_controller.dart';
-import 'package:spayindia/util/hex_color.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/widget/progress.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/model/recharge/provider.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/page/recharge/provider/provider_controller.dart';
+import 'package:ebazaar/util/hex_color.dart';
 
 class ProviderPage extends GetView<ProviderController> {
   const ProviderPage({Key? key}) : super(key: key);

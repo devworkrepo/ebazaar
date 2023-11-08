@@ -1,5 +1,5 @@
-import 'package:spayindia/model/recharge/provider.dart';
-import 'package:spayindia/model/recharge/recharge_plan.dart';
+import 'package:ebazaar/model/recharge/provider.dart';
+import 'package:ebazaar/model/recharge/recharge_plan.dart';
 
 class ProviderResponse {
   late int code;

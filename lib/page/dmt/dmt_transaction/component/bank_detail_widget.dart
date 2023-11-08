@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/dmt/beneficiary.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/res/color.dart';
+import 'package:ebazaar/model/dmt/beneficiary.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/res/color.dart';
 
 import '../dmt_transaction_controller.dart';
 

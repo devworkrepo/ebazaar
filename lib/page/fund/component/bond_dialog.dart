@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
+import 'package:ebazaar/widget/button.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class BondDialog extends StatelessWidget {

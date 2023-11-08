@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/summary/summary_controller.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/page/summary/summary_controller.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 import '../route_aware_widget.dart';
 

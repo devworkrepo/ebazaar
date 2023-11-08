@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/dmt_repo.dart';
-import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
-import 'package:spayindia/model/bank.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/widget/common/common_confirm_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/dmt_repo.dart';
+import 'package:ebazaar/data/repo_impl/dmt_repo_impl.dart';
+import 'package:ebazaar/model/bank.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/widget/common/common_confirm_dialog.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class BeneficiaryAddController extends GetxController {
   DmtRepo repo = Get.find<DmtRepoImpl>();

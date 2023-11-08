@@ -1,15 +1,15 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/widget/drop_down.dart';
-import 'package:spayindia/widget/progress.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/drop_down.dart';
+import 'package:ebazaar/widget/progress.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/util/validator.dart';
 
 import 'beneficiary_add_controller.dart';
 

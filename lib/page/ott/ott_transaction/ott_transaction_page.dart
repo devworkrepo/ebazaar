@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:number_to_words/number_to_words.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/recharge/recharge/component/recharge_confirm_dialog.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/recharge/recharge/component/recharge_confirm_dialog.dart';
 
 import 'ott_transaction_controller.dart';
 

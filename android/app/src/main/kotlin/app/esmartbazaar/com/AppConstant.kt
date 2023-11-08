@@ -1,11 +1,11 @@
-package app.spayindia.com.spayindia
+package app.esmartbazaar.com
 
 import android.content.Intent
 
 object AppConstant {
 
 
-    const val METHOD_CHANNEL = "app.spayindia.com"
+    const val METHOD_CHANNEL = "app.esmartbazaar.com"
     const val AEPS_SERVICE_METHOD_NAME = "launch_aeps_service"
     const val RD_SERVICE_SERIAL_NUMBER = "rd_service_serial_number"
     const val AEPS_TRAMO_RESULT_CODE = 1000

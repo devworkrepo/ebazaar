@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common/amount_background.dart';
-import 'package:spayindia/page/credit_card/credit_card_controller.dart';
-import 'package:spayindia/page/paytm_wallet/paytm_wallet_controller.dart';
+import 'package:ebazaar/widget/common/amount_background.dart';
+import 'package:ebazaar/page/credit_card/credit_card_controller.dart';
+import 'package:ebazaar/page/paytm_wallet/paytm_wallet_controller.dart';
 
 import '../../../widget/text_field.dart';
 import '../../../util/validator.dart';

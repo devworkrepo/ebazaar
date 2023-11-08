@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo/recharge_repo.dart';
-import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
-import 'package:spayindia/model/ott/ott_operator.dart';
-import 'package:spayindia/model/ott/ott_plan.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/page/response/recharge/recharge_txn_response_page.dart';
+import 'package:ebazaar/widget/common/confirm_amount_dialog.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo/recharge_repo.dart';
+import 'package:ebazaar/data/repo_impl/recharge_repo_impl.dart';
+import 'package:ebazaar/model/ott/ott_operator.dart';
+import 'package:ebazaar/model/ott/ott_plan.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/page/response/recharge/recharge_txn_response_page.dart';
 
 import '../../../util/mixin/location_helper_mixin.dart';
 import '../../../util/security/encription.dart';

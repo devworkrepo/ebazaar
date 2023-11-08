@@ -4,18 +4,18 @@ import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/data/repo/report_repo.dart';
-import 'package:spayindia/data/repo_impl/report_impl.dart';
-import 'package:spayindia/model/receipt/aeps.dart';
-import 'package:spayindia/model/receipt/credit_card.dart';
-import 'package:spayindia/model/receipt/money.dart';
-import 'package:spayindia/model/receipt/recharge.dart';
-import 'package:spayindia/page/pdf_html/aeps_receipt_html.dart';
-import 'package:spayindia/page/pdf_html/credit_card_receipt_html.dart';
-import 'package:spayindia/page/pdf_html/dmt_receipt_html.dart';
-import 'package:spayindia/page/pdf_html/recharge_receipt_html.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/report_repo.dart';
+import 'package:ebazaar/data/repo_impl/report_impl.dart';
+import 'package:ebazaar/model/receipt/aeps.dart';
+import 'package:ebazaar/model/receipt/credit_card.dart';
+import 'package:ebazaar/model/receipt/money.dart';
+import 'package:ebazaar/model/receipt/recharge.dart';
+import 'package:ebazaar/page/pdf_html/aeps_receipt_html.dart';
+import 'package:ebazaar/page/pdf_html/credit_card_receipt_html.dart';
+import 'package:ebazaar/page/pdf_html/dmt_receipt_html.dart';
+import 'package:ebazaar/page/pdf_html/recharge_receipt_html.dart';
 
 enum ReceiptType {
   money,

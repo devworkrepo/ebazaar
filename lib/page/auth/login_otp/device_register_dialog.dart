@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class ShowDeviceRegisterDialog extends StatelessWidget {
 

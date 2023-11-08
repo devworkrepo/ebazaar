@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/no_data_found.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/model/wallet/wallet_fav.dart';
-import 'package:spayindia/page/wallet_to_wallet/wallet_search/wallet_search_controller.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/model/wallet/wallet_fav.dart';
+import 'package:ebazaar/page/wallet_to_wallet/wallet_search/wallet_search_controller.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 class WalletSearchPage extends GetView<WalletSearchController> {
   const WalletSearchPage({Key? key}) : super(key: key);

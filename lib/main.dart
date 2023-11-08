@@ -6,19 +6,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/res/color.dart';
-import 'package:spayindia/route/page_route.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/service/app_lifecycle.dart';
-import 'package:spayindia/service/binding.dart';
-import 'package:spayindia/service/local_auth.dart';
-import 'package:spayindia/service/local_notifications.dart';
-import 'package:spayindia/service/native_call.dart';
-import 'package:spayindia/test/test_credo_pay.dart';
-import 'package:spayindia/test/test_summary_header.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/hex_color.dart';
-import 'package:spayindia/util/security/app_config.dart';
+import 'package:ebazaar/res/color.dart';
+import 'package:ebazaar/route/page_route.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/service/app_lifecycle.dart';
+import 'package:ebazaar/service/binding.dart';
+import 'package:ebazaar/service/local_auth.dart';
+import 'package:ebazaar/service/local_notifications.dart';
+import 'package:ebazaar/service/native_call.dart';
+import 'package:ebazaar/test/test_credo_pay.dart';
+import 'package:ebazaar/test/test_summary_header.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/util/hex_color.dart';
+import 'package:ebazaar/util/security/app_config.dart';
 
 import 'data/app_pref.dart';
 
@@ -178,9 +178,9 @@ class _MyAppState extends State<MyApp> {
 }*/
 
 import 'package:flutter/material.dart';
-import 'package:spayindia/home2/home_page_2.dart';
-import 'package:spayindia/login/login_new.dart';
-import 'package:spayindia/util/hex_color.dart';
+import 'package:ebazaar/home2/home_page_2.dart';
+import 'package:ebazaar/login/login_new.dart';
+import 'package:ebazaar/util/hex_color.dart';
 
 void main(){
   runApp(const MyApp());

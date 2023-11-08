@@ -1,4 +1,4 @@
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class FormValidatorHelper {
   static String? normalValidation(value, {int minLength = 3}) {

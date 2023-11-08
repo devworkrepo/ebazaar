@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 import '../../../../widget/button.dart';
 import '../common.dart';

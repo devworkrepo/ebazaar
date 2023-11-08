@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/util/validator.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/radio.dart';
-import 'package:spayindia/widget/status_bar_color_widget.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/radio.dart';
+import 'package:ebazaar/widget/status_bar_color_widget.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 import 'matm_controller.dart';
 

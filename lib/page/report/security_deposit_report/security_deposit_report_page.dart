@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/report/security_deposit.dart';
-import 'package:spayindia/widget/api_component.dart';
-import 'package:spayindia/widget/list_component.dart';
-import 'package:spayindia/widget/no_data_found.dart';
-import 'package:spayindia/model/fund/request_report.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/util/etns/on_string.dart';
+import 'package:ebazaar/model/report/security_deposit.dart';
+import 'package:ebazaar/widget/api_component.dart';
+import 'package:ebazaar/widget/list_component.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
+import 'package:ebazaar/model/fund/request_report.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/util/etns/on_string.dart';
 
 import '../../../model/report/wallet.dart';
 import '../report_helper.dart';

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/investment/inventment_balance.dart';
-import 'package:spayindia/page/investment/component/balance.dart';
-import 'package:spayindia/page/investment/create/create_investment_controller.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/widget/check_box.dart';
-import 'package:spayindia/widget/drop_down.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/model/investment/inventment_balance.dart';
+import 'package:ebazaar/page/investment/component/balance.dart';
+import 'package:ebazaar/page/investment/create/create_investment_controller.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/widget/check_box.dart';
+import 'package:ebazaar/widget/drop_down.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 class CreateInvestmentPage extends GetView<CreateInvestmentController> {
   const CreateInvestmentPage({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/mixin/location_helper_mixin.dart';
-import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo/recharge_repo.dart';
-import 'package:spayindia/data/repo_impl/recharge_repo_impl.dart';
-import 'package:spayindia/page/report/report_helper.dart';
+import 'package:ebazaar/util/mixin/location_helper_mixin.dart';
+import 'package:ebazaar/widget/common/confirm_amount_dialog.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo/recharge_repo.dart';
+import 'package:ebazaar/data/repo_impl/recharge_repo_impl.dart';
+import 'package:ebazaar/page/report/report_helper.dart';
 
 import '../../util/security/encription.dart';
 import '../../widget/common.dart';

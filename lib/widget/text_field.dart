@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/input_validator.dart';
-import 'package:spayindia/util/validator.dart';
+import 'package:ebazaar/util/input_validator.dart';
+import 'package:ebazaar/util/validator.dart';
 
 class AppTextField extends StatefulWidget {
   static var numberOnly = [FilteringTextInputFormatter.allow(RegExp("[0-9]"))];

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/list_component.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/widget/list_component.dart';
 
 class BillPaymentConfirmDialogWidget extends StatelessWidget {
   final String mobileNumber;

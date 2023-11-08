@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/security_deposit_repo.dart';
-import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
-import 'package:spayindia/model/investment/investment_list.dart';
-import 'package:spayindia/model/report/dmt.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/date_util.dart';
+import 'package:ebazaar/data/repo/security_deposit_repo.dart';
+import 'package:ebazaar/data/repo_impl/security_deposit_impl.dart';
+import 'package:ebazaar/model/investment/investment_list.dart';
+import 'package:ebazaar/model/report/dmt.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/date_util.dart';
 
 
 class InvestmentListController extends GetxController  {

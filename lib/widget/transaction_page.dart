@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:spayindia/widget/status_bar_color_widget.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/widget_util.dart';
+import 'package:ebazaar/widget/status_bar_color_widget.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/widget_util.dart';
 
 import 'image.dart';
 

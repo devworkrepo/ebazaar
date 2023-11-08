@@ -1,4 +1,4 @@
-package app.spayindia.com.spayindia
+package app.esmartbazaar.com
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter

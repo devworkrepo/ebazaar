@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
-import 'package:spayindia/util/file_util.dart';
-import 'package:spayindia/util/image_util.dart';
-import 'package:spayindia/widget/common/image_picker_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/util/file_util.dart';
+import 'package:ebazaar/util/image_util.dart';
+import 'package:ebazaar/widget/common/image_picker_dialog.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class ImagePickerHelper {
   static final ImagePicker _imagePicker = ImagePicker();

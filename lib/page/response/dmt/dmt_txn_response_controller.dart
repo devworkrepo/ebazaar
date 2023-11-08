@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:spayindia/model/dmt/response.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/model/dmt/response.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class DmtTxnResponseController extends GetxController {
   var screenshotController = ScreenshotController();

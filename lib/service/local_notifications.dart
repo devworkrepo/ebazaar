@@ -78,7 +78,7 @@ class LocalNotificationService {
       message?.notification?.title,
       message?.notification?.body,
       notificationDetail,
-      payload: "Welcome to spay india",
+      payload: "Welcome to Smart Bazaar",
     );
   }
 }

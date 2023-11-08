@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/model/user/user.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/util/etns/on_bool.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/model/user/user.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/util/etns/on_bool.dart';
 
 class HomeServiceSection extends GetView<HomeController> {
   final Function(HomeServiceItem) onClick;

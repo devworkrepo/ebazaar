@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/ott/ott_operator.dart';
-import 'package:spayindia/page/ott/ott_operator/ott_operator_controller.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/model/ott/ott_operator.dart';
+import 'package:ebazaar/page/ott/ott_operator/ott_operator_controller.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 class OttOperatorPage extends GetView<OttOperatorController> {
   const OttOperatorPage({Key? key}) : super(key: key);

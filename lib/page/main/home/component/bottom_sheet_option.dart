@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/res/color.dart';
-import 'package:spayindia/widget/button.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/res/color.dart';
+import 'package:ebazaar/widget/button.dart';
 
 class AepsDialogWidget extends StatelessWidget {
   final VoidCallback onTramo;

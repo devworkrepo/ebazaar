@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/dmt/account_search.dart';
+import 'package:ebazaar/model/dmt/account_search.dart';
 
 class AccountListDialogWidget extends StatelessWidget {
   final String accountNumber;

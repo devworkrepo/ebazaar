@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/service/native_call.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/security/encription.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/radio.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/service/native_call.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/util/security/encription.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/radio.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 enum _TestTransactionType {
   microAtm,

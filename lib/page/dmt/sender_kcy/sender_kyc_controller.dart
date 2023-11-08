@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/data/repo/dmt_repo.dart';
-import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
-import 'package:spayindia/page/dmt/dmt.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/future_util.dart';
-import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/dmt_repo.dart';
+import 'package:ebazaar/data/repo_impl/dmt_repo_impl.dart';
+import 'package:ebazaar/page/dmt/dmt.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/future_util.dart';
+import 'package:ebazaar/util/mixin/transaction_helper_mixin.dart';
 
 import '../../../widget/common.dart';
 import '../../../model/dmt/sender_kyc.dart';

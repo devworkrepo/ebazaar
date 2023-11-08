@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/aeps_repo.dart';
-import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
-import 'package:spayindia/model/aeps/settlement/bank.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/data/repo/dmt_repo.dart';
-import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/dmt/beneficiary.dart';
-import 'package:spayindia/model/dmt/response.dart';
-import 'package:spayindia/model/dmt/sender_info.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/future_util.dart';
+import 'package:ebazaar/data/repo/aeps_repo.dart';
+import 'package:ebazaar/data/repo_impl/aeps_repo_impl.dart';
+import 'package:ebazaar/model/aeps/settlement/bank.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/dmt_repo.dart';
+import 'package:ebazaar/data/repo_impl/dmt_repo_impl.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/dmt/beneficiary.dart';
+import 'package:ebazaar/model/dmt/response.dart';
+import 'package:ebazaar/model/dmt/sender_info.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/future_util.dart';
 
 import '../../dmt/import_beneficiary/common.dart';
 

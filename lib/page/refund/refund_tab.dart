@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/model/user/user.dart';
-import 'package:spayindia/page/refund/credit_card_refund/credit_card_refund_page.dart';
-import 'package:spayindia/page/refund/dmt_refund/dmt_refund_controller.dart';
-import 'package:spayindia/page/refund/recharge_refund/recharge_refund_page.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/tags.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/model/user/user.dart';
+import 'package:ebazaar/page/refund/credit_card_refund/credit_card_refund_page.dart';
+import 'package:ebazaar/page/refund/dmt_refund/dmt_refund_controller.dart';
+import 'package:ebazaar/page/refund/recharge_refund/recharge_refund_page.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/util/tags.dart';
 
 import 'dmt_refund/dmt_refund_page.dart';
 

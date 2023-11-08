@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/common/background_image.dart';
-import 'package:spayindia/widget/common/counter_widget.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/res/color.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/common/background_image.dart';
+import 'package:ebazaar/widget/common/counter_widget.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/res/color.dart';
 
 import 'login_otp_controller.dart';
 

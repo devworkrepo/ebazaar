@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/check_box.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/common/background_image.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/auth/login/login_controller.dart';
-import 'package:spayindia/page/update_widget.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/check_box.dart';
+import 'package:ebazaar/widget/common.dart';
+import 'package:ebazaar/widget/common/background_image.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/auth/login/login_controller.dart';
+import 'package:ebazaar/page/update_widget.dart';
 
 class LoginPageBKP extends GetView<LoginController> {
   const LoginPageBKP({Key? key}) : super(key: key);

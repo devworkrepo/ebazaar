@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/aeps/settlement/bank.dart';
-import 'package:spayindia/page/report/report_helper.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/widget/list_component.dart';
-import 'package:spayindia/widget/no_data_found.dart';
+import 'package:ebazaar/model/aeps/settlement/bank.dart';
+import 'package:ebazaar/page/report/report_helper.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/widget/list_component.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
 
 import 'account_status_controller.dart';
 

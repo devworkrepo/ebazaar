@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/widget/drop_down.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/util/mixin/dialog_helper_mixin.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/drop_down.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/util/mixin/dialog_helper_mixin.dart';
 
 class AepsRdServiceDialog extends StatelessWidget with DialogHelperMixin {
   AppPreference appPreference = Get.find();

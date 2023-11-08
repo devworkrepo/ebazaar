@@ -1,9 +1,9 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/drop_down.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/util/date_util.dart';
+import 'package:ebazaar/widget/drop_down.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/util/date_util.dart';
 
 class CommonReportSearchDialog2 extends StatefulWidget {
   final String fromDate;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/res/style.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/res/style.dart';
 
 class EkycInfoWidget extends StatelessWidget {
   final VoidCallback onClick;

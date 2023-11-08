@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/service/local_auth.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/service/local_auth.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class TestLocalAuthPage extends StatelessWidget {
   const TestLocalAuthPage({Key? key}) : super(key: key);

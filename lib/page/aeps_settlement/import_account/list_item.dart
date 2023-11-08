@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/aeps/settlement/bank.dart';
+import 'package:ebazaar/model/aeps/settlement/bank.dart';
 
 
 class ImportSettlementBankListWidget extends StatelessWidget {

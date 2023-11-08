@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/investment/Investment_close_calc.dart';
-import 'package:spayindia/page/investment/transfer/investment_transfer_controller.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/util/validator.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/model/investment/Investment_close_calc.dart';
+import 'package:ebazaar/page/investment/transfer/investment_transfer_controller.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/util/validator.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 class InvestmentTransferPage extends GetView<InvestmentTransferController> {
   const InvestmentTransferPage({Key? key}) : super(key: key);

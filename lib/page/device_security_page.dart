@@ -2,11 +2,11 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/service/app_lifecycle.dart';
-import 'package:spayindia/service/local_auth.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/widget/button.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/service/app_lifecycle.dart';
+import 'package:ebazaar/service/local_auth.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/widget/button.dart';
 
 class DeviceLockPage extends StatelessWidget {
   const DeviceLockPage({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class DeviceLockPage extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                          "Spay India wants to make user login as simple as possible with high security. Don't need to login app with otp everytime so screen lock is required without it you will not able to access app features. ",
+                          "Smart Bazaar wants to make user login as simple as possible with high security. Don't need to login app with otp everytime so screen lock is required without it you will not able to access app features. ",
                           style: Get.textTheme.subtitle2?.copyWith(
                               color: Colors.grey[700],
                               wordSpacing: 1.5,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/route/route_name.dart';
+import 'package:ebazaar/route/route_name.dart';
 
 class SingUpSuccessDialog extends StatelessWidget {
   const SingUpSuccessDialog({Key? key}) : super(key: key);

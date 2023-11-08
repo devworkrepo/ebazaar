@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:spayindia/model/dmt/response.dart';
-import 'package:spayindia/model/recharge/bill_payment.dart';
-import 'package:spayindia/model/recharge/recharge.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/page/recharge/provider/provider_controller.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/model/dmt/response.dart';
+import 'package:ebazaar/model/recharge/bill_payment.dart';
+import 'package:ebazaar/model/recharge/recharge.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/page/recharge/provider/provider_controller.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class BillPaymentTxnResponseController extends GetxController {
   var screenshotController = ScreenshotController();

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class NativeCall {
-  static const _methodChannelName = "app.spayindia.com";
+  static const _methodChannelName = "app.esmartbazaar.com";
   static const _methodChannel = MethodChannel(_methodChannelName);
   static const _aepsServiceMethodName = "launch_aeps_service";
   static const _matmServiceMethodName = "launch_matm_service";

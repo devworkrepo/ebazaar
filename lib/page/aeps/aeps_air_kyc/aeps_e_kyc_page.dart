@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/aeps/aeps_air_kyc/aeps_e_kyc_controller.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/page/aeps/aeps_air_kyc/aeps_e_kyc_controller.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 class AepsAirEKycPage extends GetView<AepsAirKycController> {
   const AepsAirEKycPage({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/hex_color.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/hex_color.dart';
 
 
 class HomeHeaderSection extends StatelessWidget {

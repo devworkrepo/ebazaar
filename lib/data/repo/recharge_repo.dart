@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:spayindia/model/bank.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/recharge/bill_payment.dart';
-import 'package:spayindia/model/recharge/extram_param.dart';
-import 'package:spayindia/model/recharge/provider.dart';
-import 'package:spayindia/model/recharge/recharge.dart';
-import 'package:spayindia/model/recharge/recharge_plan.dart';
-import 'package:spayindia/model/recharge/response.dart';
-import 'package:spayindia/model/report/requery.dart';
+import 'package:ebazaar/model/bank.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/recharge/bill_payment.dart';
+import 'package:ebazaar/model/recharge/extram_param.dart';
+import 'package:ebazaar/model/recharge/provider.dart';
+import 'package:ebazaar/model/recharge/recharge.dart';
+import 'package:ebazaar/model/recharge/recharge_plan.dart';
+import 'package:ebazaar/model/recharge/response.dart';
+import 'package:ebazaar/model/report/requery.dart';
 
 import '../../model/ott/ott_operator.dart';
 import '../../model/ott/ott_plan.dart';

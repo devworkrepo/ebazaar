@@ -1,4 +1,4 @@
-package app.spayindia.com.spayindia
+package app.esmartbazaar.com
 
 import `in`.credopay.payment.sdk.CredopayPaymentConstants
 import `in`.credopay.payment.sdk.PaymentActivity
@@ -8,17 +8,17 @@ import android.net.Uri
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
-import app.spayindia.com.R
-import app.spayindia.com.spayindia.AppConstant.AEPS_SERVICE_METHOD_NAME
-import app.spayindia.com.spayindia.AppConstant.BLUETOOTH_CHECK_ENABLE
-import app.spayindia.com.spayindia.AppConstant.BLUETOOTH_CHECK_PAIRED
-import app.spayindia.com.spayindia.AppConstant.CREDO_PAY_METHOD_NAME
-import app.spayindia.com.spayindia.AppConstant.MATM_SERVICE_METHOD_NAME
-import app.spayindia.com.spayindia.AppConstant.METHOD_CHANNEL
-import app.spayindia.com.spayindia.AppConstant.RD_SERVICE_SERIAL_NUMBER
-import app.spayindia.com.spayindia.AppConstant.ROOT_CHECKER_METHOD_NAME
-import app.spayindia.com.spayindia.AppConstant.UPI_PAYMENT
-import app.spayindia.com.spayindia.AppConstant.UPI_PAYMENT_RESULT_CODE
+import app.esmartbazaar.com.R
+import app.esmartbazaar.com.AppConstant.AEPS_SERVICE_METHOD_NAME
+import app.esmartbazaar.com.AppConstant.BLUETOOTH_CHECK_ENABLE
+import app.esmartbazaar.com.AppConstant.BLUETOOTH_CHECK_PAIRED
+import app.esmartbazaar.com.AppConstant.CREDO_PAY_METHOD_NAME
+import app.esmartbazaar.com.AppConstant.MATM_SERVICE_METHOD_NAME
+import app.esmartbazaar.com.AppConstant.METHOD_CHANNEL
+import app.esmartbazaar.com.AppConstant.RD_SERVICE_SERIAL_NUMBER
+import app.esmartbazaar.com.AppConstant.ROOT_CHECKER_METHOD_NAME
+import app.esmartbazaar.com.AppConstant.UPI_PAYMENT
+import app.esmartbazaar.com.AppConstant.UPI_PAYMENT_RESULT_CODE
 import com.fingpay.microatmsdk.MicroAtmLoginScreen
 import com.fingpay.microatmsdk.utils.Constants
 import io.flutter.embedding.android.FlutterFragmentActivity

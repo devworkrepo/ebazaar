@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/transaction_page.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
+import 'package:ebazaar/widget/transaction_page.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
 
 import 'recharge_txn_response_controller.dart';
 

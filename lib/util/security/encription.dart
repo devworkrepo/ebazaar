@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 import 'app_config.dart';
 

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/security_deposit_repo.dart';
-import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/investment/inventment_balance.dart';
-import 'package:spayindia/model/investment/inventment_calc.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/security_deposit_repo.dart';
+import 'package:ebazaar/data/repo_impl/security_deposit_impl.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/investment/inventment_balance.dart';
+import 'package:ebazaar/model/investment/inventment_calc.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class ReviewInvestmentController extends GetxController {
   TextEditingController pinController = TextEditingController();

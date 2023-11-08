@@ -1,8 +1,8 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/service/location.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/common.dart';
+import 'package:ebazaar/service/location.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 import '../../service/location.dart';
 

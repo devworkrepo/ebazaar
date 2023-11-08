@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/security_deposit_repo.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/investment/Investment_close_calc.dart';
-import 'package:spayindia/model/investment/inventment_balance.dart';
-import 'package:spayindia/model/investment/inventment_calc.dart';
-import 'package:spayindia/model/investment/investment_list.dart';
-import 'package:spayindia/model/investment/investment_summary.dart';
-import 'package:spayindia/service/network_client.dart';
+import 'package:ebazaar/data/repo/security_deposit_repo.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/investment/Investment_close_calc.dart';
+import 'package:ebazaar/model/investment/inventment_balance.dart';
+import 'package:ebazaar/model/investment/inventment_calc.dart';
+import 'package:ebazaar/model/investment/investment_list.dart';
+import 'package:ebazaar/model/investment/investment_summary.dart';
+import 'package:ebazaar/service/network_client.dart';
 import 'package:dio/dio.dart' as dio;
 
 import '../../model/report/security_deposit.dart';

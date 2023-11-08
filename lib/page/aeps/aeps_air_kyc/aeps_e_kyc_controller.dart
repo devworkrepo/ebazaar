@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/aeps_aitel_repo.dart';
-import 'package:spayindia/data/repo_impl/aeps_aitel_impl.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/widget/dialog/aeps_rd_service_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/model/aeps/kyc/e_kyc.dart';
-import 'package:spayindia/page/exception_page.dart';
+import 'package:ebazaar/data/repo/aeps_aitel_repo.dart';
+import 'package:ebazaar/data/repo_impl/aeps_aitel_impl.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/widget/dialog/aeps_rd_service_dialog.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/model/aeps/kyc/e_kyc.dart';
+import 'package:ebazaar/page/exception_page.dart';
 
 import '../../../service/native_call.dart';
 import '../../../util/mixin/transaction_helper_mixin.dart';

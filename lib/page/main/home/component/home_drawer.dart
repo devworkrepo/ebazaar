@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/aeps_settlement/settlement/settlement_controller.dart';
-import 'package:spayindia/page/main/home/home_controller.dart';
-import 'package:spayindia/page/statement/account_statement/account_statement_page.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/tags.dart';
+import 'package:ebazaar/page/aeps_settlement/settlement/settlement_controller.dart';
+import 'package:ebazaar/page/main/home/home_controller.dart';
+import 'package:ebazaar/page/statement/account_statement/account_statement_page.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/tags.dart';
 
 import '../../../../widget/image.dart';
 import '../../../biometric_setting_page.dart';

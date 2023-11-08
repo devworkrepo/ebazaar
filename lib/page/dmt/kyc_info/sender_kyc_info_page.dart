@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/page/dmt/kyc_info/sender_kyc_info_controller.dart';
-import 'package:spayindia/page/dmt/sender_kcy/sender_kyc_controller.dart';
-import 'package:spayindia/page/recharge/recharge/component/recharge_confirm_dialog.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/page/dmt/kyc_info/sender_kyc_info_controller.dart';
+import 'package:ebazaar/page/dmt/sender_kcy/sender_kyc_controller.dart';
+import 'package:ebazaar/page/recharge/recharge/component/recharge_confirm_dialog.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 import '../../../route/route_name.dart';
 

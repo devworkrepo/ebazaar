@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/api_component.dart';
-import 'package:spayindia/widget/no_data_found.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/recharge/recharge/component/recharge_confirm_dialog.dart';
+import 'package:ebazaar/widget/api_component.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/page/recharge/recharge/component/recharge_confirm_dialog.dart';
 
 import '../../../model/statement/credit_debit_statement.dart';
 import '../../report/report_search.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/validator.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/drop_down.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/drop_down.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 import 'complain_post_controller.dart';
 

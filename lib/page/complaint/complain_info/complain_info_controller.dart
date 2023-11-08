@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo_impl/complain_repo_impl.dart';
-import 'package:spayindia/model/complaint.dart';
-import 'package:spayindia/util/date_util.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo_impl/complain_repo_impl.dart';
+import 'package:ebazaar/model/complaint.dart';
+import 'package:ebazaar/util/date_util.dart';
 
 import '../../../data/repo/complain_repo.dart';
 

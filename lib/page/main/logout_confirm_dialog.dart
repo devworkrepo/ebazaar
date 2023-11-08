@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class LogoutConfirmDialog extends StatelessWidget {
   final Function onConfirm;

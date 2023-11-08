@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/page/report/credit_card_report/credit_card_report_page.dart';
-import 'package:spayindia/page/report/money_report/money_report_page.dart';
-import 'package:spayindia/page/report/recharge_report/recharge_report_page.dart';
-import 'package:spayindia/util/tags.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/page/report/credit_card_report/credit_card_report_page.dart';
+import 'package:ebazaar/page/report/money_report/money_report_page.dart';
+import 'package:ebazaar/page/report/recharge_report/recharge_report_page.dart';
+import 'package:ebazaar/util/tags.dart';
 
 import 'aeps_matm_report/aeps_matm_report_page.dart';
 

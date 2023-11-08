@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/widget/dialog/location.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/widget/dialog/location.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 enum LocationError {
   locationNotEnable,

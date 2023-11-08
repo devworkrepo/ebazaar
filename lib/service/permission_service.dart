@@ -1,6 +1,6 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class PermissionService {
   static Future<bool> checkBluetoothPermission() async {

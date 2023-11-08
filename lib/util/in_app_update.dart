@@ -5,9 +5,9 @@ import 'package:in_app_update/in_app_update.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:in_app_update/in_app_update.dart' as inAppUpdate;
-import 'package:spayindia/data/repo/home_repo.dart';
-import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/model/app_update.dart';
+import 'package:ebazaar/data/repo/home_repo.dart';
+import 'package:ebazaar/data/repo_impl/home_repo_impl.dart';
+import 'package:ebazaar/model/app_update.dart';
 
 import '../widget/common.dart';
 import 'app_util.dart';

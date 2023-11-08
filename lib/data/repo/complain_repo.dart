@@ -1,5 +1,5 @@
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/complaint.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/complaint.dart';
 
 abstract class ComplainRepo {
 

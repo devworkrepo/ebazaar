@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/util/hex_color.dart';
+import 'package:ebazaar/util/hex_color.dart';
 
 class HomePage2AppBar extends StatelessWidget {
   const HomePage2AppBar({Key? key}) : super(key: key);

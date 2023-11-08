@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 class RefundBottomSheetDialog extends StatefulWidget {
 

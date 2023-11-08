@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/investment/inventment_balance.dart';
-import 'package:spayindia/route/route_name.dart';
+import 'package:ebazaar/model/investment/inventment_balance.dart';
+import 'package:ebazaar/route/route_name.dart';
 
 import '../../../util/app_constant.dart';
 

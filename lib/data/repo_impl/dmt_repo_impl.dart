@@ -1,18 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/dmt_repo.dart';
-import 'package:spayindia/model/bank.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/dmt/account_search.dart';
-import 'package:spayindia/model/dmt/calculate_charge.dart';
-import 'package:spayindia/model/dmt/kyc_info.dart';
-import 'package:spayindia/model/dmt/response.dart';
-import 'package:spayindia/model/dmt/sender_info.dart';
-import 'package:spayindia/model/dmt/sender_kyc.dart';
-import 'package:spayindia/model/dmt/verification_charge.dart';
-import 'package:spayindia/model/money_request/bank_dertail.dart';
-import 'package:spayindia/service/network_client.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/data/repo/dmt_repo.dart';
+import 'package:ebazaar/model/bank.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/dmt/account_search.dart';
+import 'package:ebazaar/model/dmt/calculate_charge.dart';
+import 'package:ebazaar/model/dmt/kyc_info.dart';
+import 'package:ebazaar/model/dmt/response.dart';
+import 'package:ebazaar/model/dmt/sender_info.dart';
+import 'package:ebazaar/model/dmt/sender_kyc.dart';
+import 'package:ebazaar/model/dmt/verification_charge.dart';
+import 'package:ebazaar/model/money_request/bank_dertail.dart';
+import 'package:ebazaar/service/network_client.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class DmtRepoImpl extends DmtRepo {
   final NetworkClient client = Get.find();

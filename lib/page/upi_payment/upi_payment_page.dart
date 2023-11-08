@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/upi_payment/upi_payment_controller.dart';
+import 'package:ebazaar/page/upi_payment/upi_payment_controller.dart';
 
 import '../../util/validator.dart';
 import '../../widget/button.dart';

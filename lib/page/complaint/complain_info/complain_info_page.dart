@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/complaint.dart';
-import 'package:spayindia/page/complaint/complain_info/complain_info_controller.dart';
+import 'package:ebazaar/model/complaint.dart';
+import 'package:ebazaar/page/complaint/complain_info/complain_info_controller.dart';
 import '../../../util/app_constant.dart';
 
 class ComplainInfoPage extends GetView<ComplainInfoController> {

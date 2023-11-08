@@ -1,4 +1,4 @@
-import 'package:spayindia/model/receipt/money.dart';
+import 'package:ebazaar/model/receipt/money.dart';
 
 class MoneyReceiptHtmlData {
   final MoneyReceiptResponse response;

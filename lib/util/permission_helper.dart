@@ -1,5 +1,5 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:spayindia/widget/common.dart';
+import 'package:ebazaar/widget/common.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionHelper {

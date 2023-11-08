@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/credit_card/credit_card_controller.dart';
-import 'package:spayindia/page/credit_card/widget/card_info_widget.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/credit_card/credit_card_controller.dart';
+import 'package:ebazaar/page/credit_card/widget/card_info_widget.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/util/validator.dart';
 
 import '../../widget/common/wallet_widget.dart';
 import '../../widget/drop_down.dart';

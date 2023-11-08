@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/hex_color.dart';
-import 'package:spayindia/widget/api_component.dart';
+import 'package:ebazaar/util/hex_color.dart';
+import 'package:ebazaar/widget/api_component.dart';
 
 class AppExpandListWidget extends StatelessWidget {
   final key1 = UniqueKey();

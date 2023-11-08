@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/data/repo/dmt_repo.dart';
-import 'package:spayindia/data/repo_impl/dmt_repo_impl.dart';
-import 'package:spayindia/model/dmt/sender_info.dart';
-import 'package:spayindia/page/exception_page.dart';
+import 'package:ebazaar/widget/common.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/dmt_repo.dart';
+import 'package:ebazaar/data/repo_impl/dmt_repo_impl.dart';
+import 'package:ebazaar/model/dmt/sender_info.dart';
+import 'package:ebazaar/page/exception_page.dart';
 
 class SenderMobileChangeController extends GetxController {
   DmtRepo repo = Get.find<DmtRepoImpl>();

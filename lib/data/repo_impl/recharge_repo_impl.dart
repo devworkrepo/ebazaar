@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/recharge_repo.dart';
-import 'package:spayindia/model/bank.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/ott/ott_operator.dart';
-import 'package:spayindia/model/recharge/bill_payment.dart';
-import 'package:spayindia/model/recharge/extram_param.dart';
-import 'package:spayindia/model/recharge/recharge.dart';
-import 'package:spayindia/model/recharge/response.dart';
-import 'package:spayindia/model/report/requery.dart';
-import 'package:spayindia/service/network_client.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/data/repo/recharge_repo.dart';
+import 'package:ebazaar/model/bank.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/ott/ott_operator.dart';
+import 'package:ebazaar/model/recharge/bill_payment.dart';
+import 'package:ebazaar/model/recharge/extram_param.dart';
+import 'package:ebazaar/model/recharge/recharge.dart';
+import 'package:ebazaar/model/recharge/response.dart';
+import 'package:ebazaar/model/report/requery.dart';
+import 'package:ebazaar/service/network_client.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 import '../../model/ott/ott_plan.dart';
 import '../../model/paytm_wallet/paytm_wallet.dart';

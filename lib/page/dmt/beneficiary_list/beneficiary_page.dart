@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/beneficiary_controller.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/component/dmt_beneficiary_list_item.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/component/sender_header.dart';
-import 'package:spayindia/page/dmt/beneficiary_list/component/sender_kyc_dialog.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/res/style.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/api/exception.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/widget/api_component.dart';
+import 'package:ebazaar/page/dmt/beneficiary_list/beneficiary_controller.dart';
+import 'package:ebazaar/page/dmt/beneficiary_list/component/dmt_beneficiary_list_item.dart';
+import 'package:ebazaar/page/dmt/beneficiary_list/component/sender_header.dart';
+import 'package:ebazaar/page/dmt/beneficiary_list/component/sender_kyc_dialog.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/res/style.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/api/exception.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/widget/api_component.dart';
 
 import '../../../widget/text_field.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/page/statement/account_statement/account_statement_page.dart';
-import 'package:spayindia/page/statement/credit_debit/credit_debit_page.dart';
-import 'package:spayindia/util/tags.dart';
+import 'package:ebazaar/page/statement/account_statement/account_statement_page.dart';
+import 'package:ebazaar/page/statement/credit_debit/credit_debit_page.dart';
+import 'package:ebazaar/util/tags.dart';
 
 
 

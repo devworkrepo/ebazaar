@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/page/recharge/recharge/recharge_controller.dart';
+import 'package:ebazaar/page/recharge/recharge/recharge_controller.dart';
 
 mixin RechargeHelperMixin {
 

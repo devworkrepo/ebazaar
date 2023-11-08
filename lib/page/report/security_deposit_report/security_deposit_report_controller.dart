@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/security_deposit_repo.dart';
-import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
-import 'package:spayindia/model/report/security_deposit.dart';
-import 'package:spayindia/model/report/wallet.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/date_util.dart';
+import 'package:ebazaar/data/repo/security_deposit_repo.dart';
+import 'package:ebazaar/data/repo_impl/security_deposit_impl.dart';
+import 'package:ebazaar/model/report/security_deposit.dart';
+import 'package:ebazaar/model/report/wallet.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/date_util.dart';
 
 class SecurityDepositReportController extends GetxController {
   SecurityDepositRepo repo = Get.find<SecurityDepositImpl>();

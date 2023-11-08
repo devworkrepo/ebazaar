@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/util/app_util.dart';
+import 'package:ebazaar/util/app_util.dart';
 
 class AppLifecycleWidget extends StatefulWidget {
   final VoidCallback? onResume;

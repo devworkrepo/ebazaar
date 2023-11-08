@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/data/repo_impl/home_repo_impl.dart';
-import 'package:spayindia/model/login_session.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/future_util.dart';
-import 'package:spayindia/widget/common/common_confirm_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/data/repo_impl/home_repo_impl.dart';
+import 'package:ebazaar/model/login_session.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/future_util.dart';
+import 'package:ebazaar/widget/common/common_confirm_dialog.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 import '../../data/repo/home_repo.dart';
 import '../../util/api/resource/resource.dart';

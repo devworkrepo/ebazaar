@@ -2,12 +2,12 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/res/style.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/api/exception.dart';
-import 'package:spayindia/util/lottie_constant.dart';
-import 'package:spayindia/widget/button.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/res/style.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/api/exception.dart';
+import 'package:ebazaar/util/lottie_constant.dart';
+import 'package:ebazaar/widget/button.dart';
 import 'package:url_launcher/url_launcher.dart';
 class ExceptionPage extends StatefulWidget {
   final dynamic error;

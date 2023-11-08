@@ -1,4 +1,4 @@
-import 'package:spayindia/model/receipt/recharge.dart';
+import 'package:ebazaar/model/receipt/recharge.dart';
 
 class RechargeReceiptHtmlData{
 

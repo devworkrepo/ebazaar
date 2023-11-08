@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/auth/signup/signup_controller.dart';
-import 'package:spayindia/page/auth/signup/step/step_7_upload_doc.dart';
-import 'package:spayindia/page/auth/signup/step/step_3_captcha_verify.dart';
-import 'package:spayindia/page/auth/signup/step/step_4_aadhaar_verify.dart';
-import 'package:spayindia/page/auth/signup/step/step_1_contact_detail.dart';
-import 'package:spayindia/page/auth/signup/step/step_6_pan_verification.dart';
-import 'package:spayindia/page/auth/signup/step/step_5_aadhaar_detail.dart';
-import 'package:spayindia/page/auth/signup/step/step_2_mobile_verify.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/page/auth/signup/signup_controller.dart';
+import 'package:ebazaar/page/auth/signup/step/step_7_upload_doc.dart';
+import 'package:ebazaar/page/auth/signup/step/step_3_captcha_verify.dart';
+import 'package:ebazaar/page/auth/signup/step/step_4_aadhaar_verify.dart';
+import 'package:ebazaar/page/auth/signup/step/step_1_contact_detail.dart';
+import 'package:ebazaar/page/auth/signup/step/step_6_pan_verification.dart';
+import 'package:ebazaar/page/auth/signup/step/step_5_aadhaar_detail.dart';
+import 'package:ebazaar/page/auth/signup/step/step_2_mobile_verify.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 
 class SignupPage extends GetView<SignupController> {

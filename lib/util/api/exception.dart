@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/exception_page.dart';
+import 'package:ebazaar/page/exception_page.dart';
 
 class _BaseException implements Exception {
   _BaseException({this.msg = "Error occurred"});
@@ -41,7 +41,7 @@ class UatUpdateException extends _BaseException {
 class LocalApkException extends _BaseException {
   LocalApkException(
       {this.message =
-          "Please uninstall and install spay india application from google play console"})
+          "Please uninstall and install Smart Bazaar application from google play console"})
       : super(msg: message);
   String message;
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/model/dmt/calculate_charge.dart';
-import 'package:spayindia/page/dmt/dmt_transaction/dmt_transaction_controller.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/model/dmt/calculate_charge.dart';
+import 'package:ebazaar/page/dmt/dmt_transaction/dmt_transaction_controller.dart';
 
 class DmtCalculateChargeWidget extends GetView<DmtTransactionController> {
   const DmtCalculateChargeWidget({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/complaint.dart';
-import 'package:spayindia/page/complaint/widget/complaint_filter_dialog.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/model/complaint.dart';
+import 'package:ebazaar/page/complaint/widget/complaint_filter_dialog.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 import 'complaint_list_controller.dart';
 

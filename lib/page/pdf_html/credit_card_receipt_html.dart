@@ -1,4 +1,4 @@
-import 'package:spayindia/model/receipt/credit_card.dart';
+import 'package:ebazaar/model/receipt/credit_card.dart';
 
 import '../../model/receipt/aeps.dart';
 

@@ -2,11 +2,11 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/util/api/exception.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/security/encription.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/util/api/exception.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/util/security/encription.dart';
 
 class NetworkClient {
   late var dio = Dio();

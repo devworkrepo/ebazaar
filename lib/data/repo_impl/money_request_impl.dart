@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/money_request_repo.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/fund/request_report.dart';
-import 'package:spayindia/model/money_request/bank_dertail.dart';
-import 'package:spayindia/model/money_request/update_detail.dart';
-import 'package:spayindia/service/network_client.dart';
+import 'package:ebazaar/data/repo/money_request_repo.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/fund/request_report.dart';
+import 'package:ebazaar/model/money_request/bank_dertail.dart';
+import 'package:ebazaar/model/money_request/update_detail.dart';
+import 'package:ebazaar/service/network_client.dart';
 import 'package:dio/dio.dart' as dio;
 
 import '../../model/money_request/pg_charge.dart';

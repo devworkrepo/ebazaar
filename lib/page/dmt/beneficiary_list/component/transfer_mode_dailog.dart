@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/model/dmt/beneficiary.dart';
-import 'package:spayindia/model/dmt/sender_info.dart';
-import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/text_field.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/model/dmt/beneficiary.dart';
+import 'package:ebazaar/model/dmt/sender_info.dart';
+import 'package:ebazaar/util/mixin/transaction_helper_mixin.dart';
+import 'package:ebazaar/widget/common.dart';
+import 'package:ebazaar/widget/text_field.dart';
 
 import '../../dmt.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/widget/button.dart';
+import 'package:ebazaar/widget/button.dart';
 
 import '../../widget/dialog/status_dialog.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/page/matm_credo/matm_credo_controller.dart';
+import 'package:ebazaar/page/matm_credo/matm_credo_controller.dart';
 import '../../util/validator.dart';
 import '../../widget/button.dart';
 import '../../widget/radio.dart';

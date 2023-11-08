@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/common.dart';
-import 'package:spayindia/widget/common/counter_widget.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/service/network_client.dart';
-import 'package:spayindia/util/mixin/dialog_helper_mixin.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/common.dart';
+import 'package:ebazaar/widget/common/counter_widget.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/service/network_client.dart';
+import 'package:ebazaar/util/mixin/dialog_helper_mixin.dart';
 import 'package:dio/dio.dart' as dio;
 
 class OtpDialogWidget extends GetView<_ResendOtpController>

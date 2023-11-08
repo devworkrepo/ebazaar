@@ -1,10 +1,10 @@
-import 'package:spayindia/model/banner.dart';
-import 'package:spayindia/model/cms_service.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/login_session.dart';
-import 'package:spayindia/model/profile.dart';
-import 'package:spayindia/model/summary.dart';
-import 'package:spayindia/model/user/user.dart';
+import 'package:ebazaar/model/banner.dart';
+import 'package:ebazaar/model/cms_service.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/login_session.dart';
+import 'package:ebazaar/model/profile.dart';
+import 'package:ebazaar/model/summary.dart';
+import 'package:ebazaar/model/user/user.dart';
 
 import '../../model/alert.dart';
 import '../../model/app_update.dart';

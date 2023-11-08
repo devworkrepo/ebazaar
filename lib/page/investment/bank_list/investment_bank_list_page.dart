@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/aeps/aeps_bank.dart';
-import 'package:spayindia/model/aeps/settlement/bank.dart';
-import 'package:spayindia/page/investment/bank_list/investment_bank_list_controller.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/obx_widget.dart';
-import 'package:spayindia/widget/exception.dart';
-import 'package:spayindia/widget/no_data_found.dart';
+import 'package:ebazaar/model/aeps/aeps_bank.dart';
+import 'package:ebazaar/model/aeps/settlement/bank.dart';
+import 'package:ebazaar/page/investment/bank_list/investment_bank_list_controller.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/obx_widget.dart';
+import 'package:ebazaar/widget/exception.dart';
+import 'package:ebazaar/widget/no_data_found.dart';
 
 class InvestmentBankListPage extends GetView<InvestmentBankListController> {
   const InvestmentBankListPage({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/model/login_session.dart';
-import 'package:spayindia/page/app_setting/login_session_controller.dart';
-import 'package:spayindia/util/obx_widget.dart';
+import 'package:ebazaar/model/login_session.dart';
+import 'package:ebazaar/page/app_setting/login_session_controller.dart';
+import 'package:ebazaar/util/obx_widget.dart';
 
 import '../../widget/no_data_found.dart';
 

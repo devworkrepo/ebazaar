@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/check_box.dart';
-import 'package:spayindia/widget/common/wallet_widget.dart';
-import 'package:spayindia/widget/image.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/page/wallet_to_wallet/wallet_transfer/wallet_transfer_controller.dart';
-import 'package:spayindia/util/app_constant.dart';
-import 'package:spayindia/util/validator.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/check_box.dart';
+import 'package:ebazaar/widget/common/wallet_widget.dart';
+import 'package:ebazaar/widget/image.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/page/wallet_to_wallet/wallet_transfer/wallet_transfer_controller.dart';
+import 'package:ebazaar/util/app_constant.dart';
+import 'package:ebazaar/util/validator.dart';
 
 class WalletTransferPage extends GetView<WalletTransferController> {
   const WalletTransferPage({Key? key}) : super(key: key);

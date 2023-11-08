@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/util/widget_util.dart';
+import 'package:ebazaar/util/widget_util.dart';
 
 class StatusBarColorWidget extends StatefulWidget {
   final Color? color;

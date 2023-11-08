@@ -2,7 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/widget/dialog/full_screen_transaction.dart';
+import 'package:ebazaar/widget/dialog/full_screen_transaction.dart';
 
 import '../button.dart';
 

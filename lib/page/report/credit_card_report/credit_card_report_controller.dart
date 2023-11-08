@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/report_repo.dart';
-import 'package:spayindia/data/repo_impl/report_impl.dart';
-import 'package:spayindia/model/report/credit_card.dart';
-import 'package:spayindia/model/report/summary/summary_credit_card.dart';
-import 'package:spayindia/page/exception_page.dart';
-import 'package:spayindia/page/report/receipt_print_mixin.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/util/date_util.dart';
+import 'package:ebazaar/data/repo/report_repo.dart';
+import 'package:ebazaar/data/repo_impl/report_impl.dart';
+import 'package:ebazaar/model/report/credit_card.dart';
+import 'package:ebazaar/model/report/summary/summary_credit_card.dart';
+import 'package:ebazaar/page/exception_page.dart';
+import 'package:ebazaar/page/report/receipt_print_mixin.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/util/date_util.dart';
 
 import '../../../widget/dialog/status_dialog.dart';
 import '../report_helper.dart';

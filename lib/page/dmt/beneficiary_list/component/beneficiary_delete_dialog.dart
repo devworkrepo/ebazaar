@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spayindia/widget/button.dart';
-import 'package:spayindia/widget/text_field.dart';
-import 'package:spayindia/util/mixin/dialog_helper_mixin.dart';
+import 'package:ebazaar/widget/button.dart';
+import 'package:ebazaar/widget/text_field.dart';
+import 'package:ebazaar/util/mixin/dialog_helper_mixin.dart';
 
 class DeleteBeneficiaryDialog extends StatefulWidget {
   final Function(String) onDeleteConfirm;

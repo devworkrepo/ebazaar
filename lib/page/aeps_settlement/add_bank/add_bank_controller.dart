@@ -4,17 +4,17 @@ import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as path;
-import 'package:spayindia/data/repo/aeps_repo.dart';
-import 'package:spayindia/data/repo_impl/aeps_repo_impl.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/widget/common/confirm_amount_dialog.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
-import 'package:spayindia/data/app_pref.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/util/app_util.dart';
-import 'package:spayindia/util/date_util.dart';
-import 'package:spayindia/util/mixin/transaction_helper_mixin.dart';
-import 'package:spayindia/util/picker_helper.dart';
+import 'package:ebazaar/data/repo/aeps_repo.dart';
+import 'package:ebazaar/data/repo_impl/aeps_repo_impl.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/widget/common/confirm_amount_dialog.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/app_pref.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/util/app_util.dart';
+import 'package:ebazaar/util/date_util.dart';
+import 'package:ebazaar/util/mixin/transaction_helper_mixin.dart';
+import 'package:ebazaar/util/picker_helper.dart';
 
 import '../../exception_page.dart';
 

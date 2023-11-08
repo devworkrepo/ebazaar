@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:spayindia/data/repo/security_deposit_repo.dart';
-import 'package:spayindia/data/repo_impl/security_deposit_impl.dart';
-import 'package:spayindia/model/aeps/settlement/bank.dart';
-import 'package:spayindia/model/common.dart';
-import 'package:spayindia/model/investment/Investment_close_calc.dart';
-import 'package:spayindia/model/investment/investment_list.dart';
-import 'package:spayindia/route/route_name.dart';
-import 'package:spayindia/util/api/resource/resource.dart';
-import 'package:spayindia/widget/dialog/status_dialog.dart';
+import 'package:ebazaar/data/repo/security_deposit_repo.dart';
+import 'package:ebazaar/data/repo_impl/security_deposit_impl.dart';
+import 'package:ebazaar/model/aeps/settlement/bank.dart';
+import 'package:ebazaar/model/common.dart';
+import 'package:ebazaar/model/investment/Investment_close_calc.dart';
+import 'package:ebazaar/model/investment/investment_list.dart';
+import 'package:ebazaar/route/route_name.dart';
+import 'package:ebazaar/util/api/resource/resource.dart';
+import 'package:ebazaar/widget/dialog/status_dialog.dart';
 
 class InvestmentTransferController extends GetxController {
 
